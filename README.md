@@ -1,17 +1,18 @@
-# InAppConsent_android
-In-App Consent APK
+## In-App Consent APK Overview
 
-This repository is comprised of two workspaces: InAppConsent and Use_InAppConsentSDK.
+This repository is comprised of two workspaces: __InAppConsent__ and __Use_InAppConsentSDK__.
 
-The InAppConsent workspace is where the In-App Consent APK is built. It includes these two projects:
+####InAppConsent
+This workspace is where the In-App Consent APK is built. It includes these two projects:
 
 InAppConsentSDK project: This is the SDK project. It can be built and used directly as a module, exported as an AAR and exported as a JAR.
 
 Use_SDK_module project: This project uses the InAppConsentSDK project as a dependent module. It is used to rapidly develop and test the InAppConsentSDK without having to export it as a library.
 
-The Use_InAppConsentSDK workspace is used to develop test apps that include the Use_InAppConsentSDK as an AAR or as a JAR. It includes these three projects:
+####Use_InAppConsentSDK
+This workspace is used to develop test apps that include InAppConsentSDK as an AAR or as a JAR. It includes these three projects:
 
-InAppConsentSDK: This project is a duplicate of the InAppConsentSDK project from the InAppConsent workspace with these changes:
+InAppConsentSDK: This project is a duplicate of the InAppConsentSDK project from the __InAppConsent__ workspace with these changes:
 1. The java source code has been removed.
 2. The JAR that is exported from InAppConsent.InAppConsentSDK is included in the libs folder.
 3. Text and graphics changes are made to customize it for the Use_SDK_jar (IceCube) test/sample app.
@@ -21,9 +22,10 @@ Use_SDK_aar: This project includes the InAppConsentSDK project as an AAR and pro
 
 Use_SDK_jar: This project includes the InAppConsentSDK project as a JAR-based module and provides In-App Consent functionality to the resulting WaterDrop app.
 
+###Build AAR and JAR
 To build and use the AAR and JAR, follow these steps:
 
-Initial Processing
+####Initial Processing
 
 1.	Clean the InAppConsent workspace. This causes the AAR library files to be rebuilt.
 
@@ -34,7 +36,7 @@ Initial Processing
     b.	Double-click InAppNotice.InAppNoticeSDK.jarrelease
 
 
-AAR
+####AAR
 
 1.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
 
@@ -89,7 +91,7 @@ a.	To a new location for archiving the ProGuard mapping.
 11.	Clean and rebuild the AAR project.
 
 
-JAR
+####JAR
 
 1.	Copy the JAR file to the SDK lib folder: …\YourProject\InAppConsentSDK\libs
 
