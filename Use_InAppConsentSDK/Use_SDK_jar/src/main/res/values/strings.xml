@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">.JAR: Use In-App Consent as JAR</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_inappnotice_implicit">In-App Consent: Implied</string>
+    <string name="action_inappnotice_explicit">In-App Consent: Explicit</string>
+    <string name="action_inappnotice_preferences">Manage Preferences</string>
+    <string name="action_inappnotice_reset">Reset In-App Consent APK</string>
+    <string name="action_inappnotice_close">Close App</string>
+    <string name="hint_companyId">Company ID</string>
+    <string name="hint_pubNoticeId">Pub-notice ID</string>
+    <string name="checkBox_useRemoteValues">Use remote config values</string>
+
+</resources>

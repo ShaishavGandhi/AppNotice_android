@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/info_icon"
+        android:icon="@drawable/ghostery_back_button"
+        app:showAsAction="always"
+        android:title="@string/app_name"/>
+
+</menu><!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/menu/ghostery_app_info.xml -->

@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    packagingOptions{
+        exclude 'desktop.ini'
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.google.android.gms:play-services:6.5.87'
+}
+
+android.libraryVariants.all { variant ->
+    task("generate${variant.name}Javadoc", type: Javadoc) {
+        description "Generates Javadoc for $variant.name."
+        source = variant.javaCompile.source
+        ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+        classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+    }
+
+    task("javadoc${variant.name}", type: Jar) {
+        classifier = "javadoc"
+        description "Bundles Javadoc into a JAR file for $variant.name."
+        from tasks["generate${variant.name}Javadoc"]
+        exclude 'allclasses-frame.html', 'allclasses-noframe.html', 'constant-values.html', 'deprecated-list.html'
+        exclude 'help-doc.html', 'index-all.html', 'index.html', 'overview-tree.html', 'package-list'
+        exclude 'stylesheet.css'
+        exclude 'resources/background.gif', 'resources/tab.gif', 'resources/titlebar.gif', 'resources/titlebar_end.gif'
+    }
+
+    task("jar${variant.name}", type: Jar) {
+        description "Bundles compiled .class files into a JAR file for $variant.name."
+        dependsOn variant.javaCompile
+        from variant.javaCompile.destinationDir
+//        exclude '**/R.class', '**/R$*.class'
+//        exclude '**/R.html', '**/R.*.html'
+        exclude '**/BuildConfig.class'
+    }
+}

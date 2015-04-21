@@ -1,0 +1,14 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_privacy"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/ghostery_link_privacy_statement"/>
+    <item
+        android:id="@+id/menu_terms"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/ghostery_link_terms_of_use"/>
+</menu><!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/menu/ghostery_legal_docs.xml -->

@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_footer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/ghostery_border_top_right"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/choose_all_companies"
+        android:layout_height="40dp"
+        android:layout_width="100dp"
+        android:layout_gravity="center"
+        android:text="@string/ghostery_footer_button_choose_all"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="16dp"
+        android:background="@drawable/ghostery_rounded_corner_blue"
+        android:textColor="#FFFFFF"
+        android:fontFamily="arial"
+        android:onClick="optOutAll" />
+
+</LinearLayout>
