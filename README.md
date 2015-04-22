@@ -31,42 +31,43 @@ To build and use the AAR and JAR, follow these steps:
 
 2.	Build the JAR file manually via Gradle
 
-    a.	Expand the Gradle panel in AS
+    1.	Expand the Gradle panel in AS
 
-    b.	Double-click InAppNotice.InAppNoticeSDK.jarrelease
+    2.	Double-click InAppNotice.InAppNoticeSDK.jarrelease
 
 
 ####AAR
 
 1.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
 
-a.	To a new location for archiving the ProGuard mapping.
+    1.	To a new location for archiving the ProGuard mapping.
 
 2.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\libs
 
-    a.	To the copy of the "outputs" folder from the previous sub-step
+    1.	To the copy of the "outputs" folder from the previous sub-step
 
 3.	Copy this file: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs\aar\InAppConsentSDK-release.aar
 
-    a.	To this folder: …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\
+    1.	To this folder: …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\
 
 4.	Rename the copied AAR library:
- .	From InAppConsentSDK-release.aar
+ 	From InAppConsentSDK-release.aar
     To InAppConsentSDK.aar
 
 5.	Unzip InAppConsentSDK.aar to a new folder
 
 6.	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
 
-    a.	For example:
-    i.	ghostery_app_desc_1
-      1.	From "Our company with help from…"
-      2.	To "(YourCompanyName) with help from…"
-    ii.	ghostery_dialog_header_text
-      1.	From "We Care About Your Privacy"
-      2.	To "(YourCompanyName) Cares About Your Privacy"
+    1.	For example:
+    	ghostery_app_desc_1
+        	From "Our company with help from…"
+        	To "(YourCompanyName) with help from…"
+    	ghostery_dialog_header_text
+        	From "We Care About Your Privacy"
+        	To "(YourCompanyName) Cares About Your Privacy"
 
-    b.	For AAR WaterDrop app it may look like this:
+    2.	For AAR WaterDrop app it may look like this:
+```JavaScript
         <!-- Common strings to customize: -->
         <string name="app_name">CompanyName</string>
         <string name="ghostery_app_desc_1">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
@@ -79,6 +80,7 @@ a.	To a new location for archiving the ProGuard mapping.
         <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
         <string name="ghostery_ric_max_default">3</string>
         <string name="ghostery_ric_session_max_default">1</string>
+```
 
 7.	Update any graphics or logos in …\InAppConsentSDK\res\...
 
@@ -102,46 +104,34 @@ a.	To a new location for archiving the ProGuard mapping.
 4.	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_strings.xml
 
 5.	For example:
-    a.	ghostery_app_desc_1
-        From "Our company with help from…"
-        To "(YourCompanyName) with help from…"
-    b.	ghostery_dialog_header_text
-     .	From "We Care About Your Privacy"
-        To "(YourCompanyName) Cares About Your Privacy"
+    	ghostery_app_desc_1
+            From "Our company with help from…"
+            To "(YourCompanyName) with help from…"
+    	ghostery_dialog_header_text
+        	From "We Care About Your Privacy"
+            To "(YourCompanyName) Cares About Your Privacy"
 
 6.	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
 
 7.	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
 
-      R$anim.class
-
-      R$attr.class
-
-      R$bool.class
-
-      R$color.class
-
-      R$dimen.class
-
-      R$drawable.class
-
-      R$id.class
-
-      R$integer.class
-
-      R$layout.class
-
-      R$menu.class
-
-      R$raw.class
-
-      R$string.class
-
-      R$style.class
-
-      R$styleable.class
-
-      R.class
+```JavaScript
+        R$anim.class
+        R$attr.class
+        R$bool.class
+        R$color.class
+        R$dimen.class
+        R$drawable.class
+        R$id.class
+        R$integer.class
+        R$layout.class
+        R$menu.class
+        R$raw.class
+        R$string.class
+        R$style.class
+        R$styleable.class
+        R.class
+```
 
 8.	Clean and rebuild the JAR project.
 
