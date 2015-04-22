@@ -27,38 +27,38 @@ To build and use the AAR and JAR, follow these steps:
 
 ####Initial Processing
 
-1.	Clean the InAppConsent workspace. This causes the AAR library files to be rebuilt.
+*	Clean the InAppConsent workspace. This causes the AAR library files to be rebuilt.
 
-2.	Build the JAR file manually via Gradle
+*	Build the JAR file manually via Gradle
 
-    1.	Expand the Gradle panel in AS
+    *	Expand the Gradle panel in AS
 
-    2.	Double-click InAppNotice.InAppNoticeSDK.jarrelease
+    *	Double-click InAppNotice.InAppNoticeSDK.jarrelease
 
 
 ####AAR
 
-1.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
+*	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
 
-    1.	To a new location for archiving the ProGuard mapping.
+    *	To a new location for archiving the ProGuard mapping.
 
-2.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\libs
+*	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\libs
 
-    1.	To the copy of the "outputs" folder from the previous sub-step
+    *	To the copy of the "outputs" folder from the previous sub-step
 
-3.	Copy this file: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs\aar\InAppConsentSDK-release.aar
+*	Copy this file: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs\aar\InAppConsentSDK-release.aar
 
-    1.	To this folder: …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\
+    *	To this folder: …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\
 
-4.	Rename the copied AAR library:
+*	Rename the copied AAR library:
  	From InAppConsentSDK-release.aar
     To InAppConsentSDK.aar
 
-5.	Unzip InAppConsentSDK.aar to a new folder
+*	Unzip InAppConsentSDK.aar to a new folder
 
-6.	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
+*	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
 
-    1.	For example:
+    *	For example:
     	ghostery_app_desc_1
         	From "Our company with help from…"
         	To "(YourCompanyName) with help from…"
@@ -66,7 +66,7 @@ To build and use the AAR and JAR, follow these steps:
         	From "We Care About Your Privacy"
         	To "(YourCompanyName) Cares About Your Privacy"
 
-    2.	For AAR WaterDrop app it may look like this:
+    *	For AAR WaterDrop app it may look like this:
 ```JavaScript
         <!-- Common strings to customize: -->
         <string name="app_name">CompanyName</string>
@@ -82,28 +82,28 @@ To build and use the AAR and JAR, follow these steps:
         <string name="ghostery_ric_session_max_default">1</string>
 ```
 
-7.	Update any graphics or logos in …\InAppConsentSDK\res\...
+*	Update any graphics or logos in …\InAppConsentSDK\res\...
 
-8.	Zip the contents of the unzipped AAR back into a ZIP file
+*	Zip the contents of the unzipped AAR back into a ZIP file
 
-9.	Copy that ZIP file back to lib folder it came from.
+*	Copy that ZIP file back to lib folder it came from.
 
-10.	Delete the old AAR file and rename the new ZIP file to InAppConsentSDK.aar
+*	Delete the old AAR file and rename the new ZIP file to InAppConsentSDK.aar
 
-11.	Clean and rebuild the AAR project.
+*	Clean and rebuild the AAR project.
 
 
 ####JAR
 
-1.	Copy the JAR file to the SDK lib folder: …\YourProject\InAppConsentSDK\libs
+*	Copy the JAR file to the SDK lib folder: …\YourProject\InAppConsentSDK\libs
 
-2.	Delete the SDK res folder: …\YourProject\InAppConsentSDK\src\main\res
+*	Delete the SDK res folder: …\YourProject\InAppConsentSDK\src\main\res
 
-3.	Copy the inappnotice res folder to the SDK res folder
+*	Copy the inappnotice res folder to the SDK res folder
 
-4.	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_strings.xml
+*	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_strings.xml
 
-5.	For example:
+*	For example:
     	ghostery_app_desc_1
             From "Our company with help from…"
             To "(YourCompanyName) with help from…"
@@ -111,9 +111,9 @@ To build and use the AAR and JAR, follow these steps:
         	From "We Care About Your Privacy"
             To "(YourCompanyName) Cares About Your Privacy"
 
-6.	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
+*	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
 
-7.	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
+*	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
 
 ```JavaScript
         R$anim.class
@@ -133,5 +133,5 @@ To build and use the AAR and JAR, follow these steps:
         R.class
 ```
 
-8.	Clean and rebuild the JAR project.
+*	Clean and rebuild the JAR project.
 
