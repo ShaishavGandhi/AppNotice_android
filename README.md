@@ -17,6 +17,7 @@ InAppConsentSDK: This project is a duplicate of the InAppConsentSDK project from
 2. The JAR that is exported from InAppConsent.InAppConsentSDK is included in the libs folder.
 3. Text and graphics changes are made to customize it for the Use_SDK_jar (IceCube) test/sample app.
 This project is included in the Use_SDK_jar project as a module and provides In-App Consent functionality to the resulting IceCube app.
+   *	Note: This module folder (after the JAR processing listed below) (along with documentation) is the product that gets sent to clients who use Eclipse.
 
 Use_SDK_aar: This project includes the InAppConsentSDK project as an AAR and provides In-App Consent functionality to the resulting WaterDrop app.
 
@@ -89,6 +90,7 @@ To build and use the AAR and JAR, follow these steps:
 *	Copy that ZIP file back to lib folder it came from.
 
 *	Delete the old AAR file and rename the new ZIP file to InAppConsentSDK.aar
+   *	Note: This AAR file (along with documentation) is the product that gets sent to clients who use Android Studio.
 
 *	Clean and rebuild the AAR project.
 
