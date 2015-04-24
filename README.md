@@ -1,9 +1,9 @@
 # InAppConsent_android
-In-App Consent APK
+In-App Consent SDK
 
 This repository is comprised of two workspaces: InAppConsent and Use_InAppConsentSDK.
 
-The InAppConsent workspace is where the In-App Consent APK is built. It includes these two projects:
+The InAppConsent workspace is where the In-App Consent SDK is built. It includes these two projects:
 
 InAppConsentSDK project: This is the SDK project. It can be built and used directly as a module, exported as an AAR and exported as a JAR.
 
