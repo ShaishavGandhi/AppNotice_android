@@ -21,9 +21,10 @@ Use_SDK_aar: This project includes the InAppConsentSDK project as an AAR and pro
 
 Use_SDK_jar: This project includes the InAppConsentSDK project as a JAR-based module and provides In-App Consent functionality to the resulting WaterDrop app.
 
+##Build Process
 To build and use the AAR and JAR, follow these steps:
 
-Initial Processing
+###Initial Processing
 
 1.	Clean the InAppConsent workspace. This causes the AAR library files to be rebuilt.
 
@@ -34,7 +35,7 @@ Initial Processing
     b.	Double-click InAppNotice.InAppNoticeSDK.jarrelease
 
 
-AAR
+###AAR
 
 1.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
 
@@ -89,7 +90,7 @@ a.	To a new location for archiving the ProGuard mapping.
 11.	Clean and rebuild the AAR project.
 
 
-JAR
+###JAR
 
 1.	Copy the JAR file to the SDK lib folder: …\YourProject\InAppConsentSDK\libs
 
