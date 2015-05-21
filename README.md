@@ -32,14 +32,14 @@ To build and use the AAR and JAR, follow these steps:
 
     a.	Expand the Gradle panel in AS
 
-    b.	Double-click InAppNotice.InAppNoticeSDK.jarrelease
+    b.	Double-click InAppConsent.InAppConsentSDK.Tasks.other.jarrelease
 
 
 ###AAR
 
 1.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
 
-a.	To a new location for archiving the ProGuard mapping.
+    a.	To a new location for archiving the ProGuard mapping.
 
 2.	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\libs
 
@@ -66,6 +66,7 @@ a.	To a new location for archiving the ProGuard mapping.
       2.	To "(YourCompanyName) Cares About Your Privacy"
 
     b.	For AAR WaterDrop app it may look like this:
+    ```
         <!-- Common strings to customize: -->
         <string name="app_name">CompanyName</string>
         <string name="ghostery_app_desc_1">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
@@ -78,7 +79,7 @@ a.	To a new location for archiving the ProGuard mapping.
         <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
         <string name="ghostery_ric_max_default">3</string>
         <string name="ghostery_ric_session_max_default">1</string>
-
+```
 7.	Update any graphics or logos in …\InAppConsentSDK\res\...
 
 8.	Zip the contents of the unzipped AAR back into a ZIP file
@@ -111,36 +112,22 @@ a.	To a new location for archiving the ProGuard mapping.
 6.	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
 
 7.	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
-
+    ```
       R$anim.class
-
       R$attr.class
-
       R$bool.class
-
       R$color.class
-
       R$dimen.class
-
       R$drawable.class
-
       R$id.class
-
       R$integer.class
-
       R$layout.class
-
       R$menu.class
-
       R$raw.class
-
       R$string.class
-
       R$style.class
-
       R$styleable.class
-
       R.class
-
+    ```
 8.	Clean and rebuild the JAR project.
 
