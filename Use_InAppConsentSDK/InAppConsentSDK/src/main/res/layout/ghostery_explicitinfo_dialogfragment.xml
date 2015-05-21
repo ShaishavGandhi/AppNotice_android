@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/bric_header_text_color"
         android:text="@string/ghostery_dialog_header_text"
         android:id="@+id/textView_title"
         android:layout_gravity="center_horizontal"
@@ -31,6 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ghostery_dialog_button_preferences"
+        android:textColor="@color/bric_access_button_text_color"
+        android:background="@color/bric_access_button_color"
         android:id="@+id/preferences_button"
         android:layout_gravity="center_horizontal" />
 
@@ -44,6 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_consent"
+            android:textColor="@color/bric_access_button_text_color"
+            android:background="@color/bric_access_button_color"
             android:id="@+id/accept_button"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1" />
@@ -52,8 +57,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_decline"
+            android:textColor="@color/bric_decline_button_text_color"
             android:id="@+id/decline_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@color/bric_decline_button_color" />
 
     </LinearLayout>
 

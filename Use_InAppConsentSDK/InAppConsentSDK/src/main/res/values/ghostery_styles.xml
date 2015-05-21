@@ -47,7 +47,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ghostery_loading_dialog_theme" parent="android:Theme.Holo.Dialog">
+    <style name="ghostery_loading_dialog_theme" parent="Theme.AppCompat.Light">
         <item name="android:alertDialogStyle">@style/ghostery_CustomAlertDialogStyle</item>
         <item name="android:windowBackground">@color/ghostery_transparent</item>
         <item name="android:textColorPrimary">#FFFFFF</item>

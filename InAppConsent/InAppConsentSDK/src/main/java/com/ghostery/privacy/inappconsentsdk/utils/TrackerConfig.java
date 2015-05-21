@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
-import java.util.MissingResourceException;
 
 
 /**
@@ -30,6 +29,9 @@ public class TrackerConfig {
     private boolean initialized = false;
     private static int company_id;
     private static int pub_notice_id;
+    private int ric_max_default = 3;
+    private int ric_session_max_default = 1;
+    private int ric_opacity_default = 100;
 
     private final static String TAG_TRACKERCONFIG = "trackerconfig";
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
@@ -62,62 +64,58 @@ public class TrackerConfig {
     private static final String FILE_NOT_FOUND = "File not found";
 
     // Field tags
-    private static final String TAG_RIC_BG = "ric_bg";
-    private static final String TAG_RIC_OPACITY = "ric_opacity";
-    private static final String TAG_RIC_TITLE = "ric_title";
-    private static final String TAG_RIC_TITLE_COLOR = "ric_title_color";
-    private static final String TAG_RIC = "ric";
-    private static final String TAG_RIC_INTRO = "ric_intro";
-    private static final String TAG_RIC_COLOR = "ric_color";
-    private static final String TAG_RIC_LEARN_MORE = "ric_learn_more";
-    private static final String TAG_CLOSE_BUTTON = "close_button";
-
-    private static final String TAG_BRIC_BG = "bric_bg";
-    private static final String TAG_BRIC_HEADER_TEXT = "bric_header_text";
-    private static final String TAG_BRIC_HEADER_TEXT_COLOR = "bric_header_text_color";
-    private static final String TAG_RIC_CLICK_MANAGE_SETTINGS = "ric_click_manage_settings";
-    private static final String TAG_BRIC_CONTENT1 = "bric_content1";
-    private static final String TAG_BRIC_CONTENT2 = "bric_content2";
-    private static final String TAG_BRIC_CONTENT3 = "bric_content3";
-    private static final String TAG_BRIC_ACCESS_BUTTON_TEXT = "bric_access_button_text";
-    private static final String TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR = "bric_access_button_text_color";
-    private static final String TAG_BRIC_ACCESS_BUTTON_COLOR = "bric_access_button_color";
-    private static final String TAG_BRIC_DECLINE_BUTTON_TEXT = "bric_decline_button_text";
-    private static final String TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR = "bric_decline_button_text_color";
-    private static final String TAG_BRIC_DECLINE_BUTTON_COLOR = "bric_decline_button_color";
-    private static final String TAG_RIC_MAX = "ric_max";
-    private static final String TAG_RIC_SESSION_MAX = "ric_session_max";
+    private static final String TAG_BRIC = "bric";                                                      // If true, display the Explicit Consent dialog; If false, display the Implied Consent dialog
+    private static final String TAG_BRIC_ACCESS_BUTTON_COLOR = "bric_access_button_color";              // Button background color for these buttons: Explicit Accept button on  Consent dialog
+    private static final String TAG_BRIC_ACCESS_BUTTON_TEXT = "bric_access_button_text";                // Button text for Accept button on Explicit Consent dialog
+    private static final String TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR = "bric_access_button_text_color";    // Button text color for Accept button on Explicit Consent dialog
+    private static final String TAG_BRIC_BG = "bric_bg";                                                // Dialog background color for Explicit Consent dialog (missing in doc)
+    private static final String TAG_BRIC_CONTENT1 = "bric_content1";                                    // Message on Explicit Consent dialog (Combine bric_content1, bric_content2 and bric_content3 into paragraphs of this message)
+    private static final String TAG_BRIC_DECLINE_BUTTON_COLOR = "bric_decline_button_color";            // Button background color for Decline button on Explicit Consent dialog
+    private static final String TAG_BRIC_DECLINE_BUTTON_TEXT = "bric_decline_button_text";              // Button text for Decline button on Explicit Consent dialog
+    private static final String TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR = "bric_decline_button_text_color";  // Button text color for Decline button on Explicit Consent dialog
+    private static final String TAG_BRIC_HEADER_TEXT = "bric_header_text";                              // Title on Explicit Consent dialog
+    private static final String TAG_BRIC_HEADER_TEXT_COLOR = "bric_header_text_color";                  // Title color on Explicit Consent dialog
+    private static final String TAG_CLOSE_BUTTON = "close_button";                                      // Button text for Close buttons on both Implied Consent and Explicit Consent dialogs
+    private static final String TAG_MANAGE_PREFERENCES_DESCRIPTION = "manage_preferences_description";  // Text for the header of the Manage Privacy Preferences screen
+    private static final String TAG_MANAGE_PREFERENCES_HEADER = "manage_preferences_header";            // Text for the description section of the Manage Privacy Preferences screen
+    private static final String TAG_RIC = "ric";                                                        // Message on Implied Consent dialog
+    private static final String TAG_RIC_BG = "ric_bg";                                                  // Dialog background color for Implied Consent dialog
+    private static final String TAG_RIC_CLICK_MANAGE_SETTINGS = "ric_click_manage_settings";            // Button text for Manage Preferences button on Explicit Consent dialog
+    private static final String TAG_RIC_COLOR = "ric_color";                                            // Message text color for all dialogs
+    private static final String TAG_RIC_MAX = "ric_max";                                                // Maximum number of times the Implied Consent dialog should be displayed in 30 days.
+    private static final String TAG_RIC_OPACITY = "ric_opacity";                                        // Opacity setting (scale 0 to 100) for all dialogs
+    private static final String TAG_RIC_SESSION_MAX = "ric_session_max";                                // Maximum number of times the Implied Consent dialog should be displayed in a session.
+    private static final String TAG_RIC_TITLE = "ric_title";                                            // Title on Implied Consent dialog
+    private static final String TAG_RIC_TITLE_COLOR = "ric_title_color";                                // Title color on Implied Consent dialog
 
     // Field values
-    private String ric_bg;
-    private String ric_opacityString;
-    private float ric_opacity = 1F;
-    private String ric_title;
-    private String ric_title_color;
-    private String ric;
-    private String ric_intro;
-    private String ric_color;
-    private String ric_learn_more;
-    private String close_button;
-
-    private String bric_bg;
-    private String bric_header_text;
-    private String bric_header_text_color;
-    private String ric_click_manage_settings;
-    private String bric_content;
-    private String bric_content1;
-    private String bric_content2;
-    private String bric_content3;
+    private boolean bric = false;
+    private String bric_access_button_color;
     private String bric_access_button_text;
     private String bric_access_button_text_color;
-    private String bric_access_button_color;
+    private String bric_bg;
+    private String bric_content1;
+    private String bric_decline_button_color;
     private String bric_decline_button_text;
     private String bric_decline_button_text_color;
-    private String bric_decline_button_color;
-    private String ric_maxString;
+    private String bric_header_text;
+    private String bric_header_text_color;
+    private String close_button;
+    private String manage_preferences_description;
+    private String manage_preferences_header;
+    private String ric;
+    private String ric_bg;
+    private String ric_click_manage_settings;
+    private String ric_color;
     private int ric_max;
-    private String ric_session_maxString;
+//    private String ric_maxString;
+    private float ric_opacity = 1F;
+//    private String ric_opacityString;
     private int ric_session_max;
+//    private String ric_session_maxString;
+    private String ric_title;
+    private String ric_title_color;
+
 
     // Public getters and setters
     public Boolean isInitialized() { return initialized; }
@@ -126,29 +124,29 @@ public class TrackerConfig {
     public int getPub_notice_id() { return pub_notice_id; }
     public void setPub_notice_id(int pub_notice_id) { this.pub_notice_id = pub_notice_id; }
 
-    public String getRic_bg() { return ric_bg; }
-    public float getRic_opacity() { return ric_opacity; }
-    public String getRic_title() { return ric_title; }
-    public String getRic_title_color() { return ric_title_color; }
-    public String getRic() { return ric; }
-    public String getRic_intro() { return ric_intro; }
-    public String getRic_color() { return ric_color; }
-    public String getRic_learn_more() { return ric_learn_more; }
-    public String getClose_button() { return close_button; }
-
-    public String getBric_bg() { return bric_bg; }
-    public String getBric_header_text() { return bric_header_text; }
-    public String getBric_header_text_color() { return bric_header_text_color; }
-    public String getRic_click_manage_settings() { return ric_click_manage_settings; }
-    public String getBric_content() { return bric_content; }
+    public boolean getBric() { return bric; }
+    public String getBric_access_button_color() { return bric_access_button_color; }
     public String getBric_access_button_text() { return bric_access_button_text; }
     public String getBric_access_button_text_color() { return bric_access_button_text_color; }
-    public String getBric_access_button_color() { return bric_access_button_color; }
+    public String getBric_bg() { return bric_bg; }
+    public String getBric_content1() { return bric_content1; }
+    public String getBric_decline_button_color() { return bric_decline_button_color; }
     public String getBric_decline_button_text() { return bric_decline_button_text; }
     public String getBric_decline_button_text_color() { return bric_decline_button_text_color; }
-    public String getBric_decline_button_color() { return bric_decline_button_color; }
+    public String getBric_header_text() { return bric_header_text; }
+    public String getBric_header_text_color() { return bric_header_text_color; }
+    public String getClose_button() { return close_button; }
+    public String getManage_preferences_description() { return manage_preferences_description; }
+    public String getManage_preferences_header() { return manage_preferences_header; }
+    public String getRic() { return ric; }
+    public String getRic_bg() { return ric_bg; }
+    public String getRic_click_manage_settings() { return ric_click_manage_settings; }
+    public String getRic_color() { return ric_color; }
     public int getRic_max() { return ric_max; }
+    public float getRic_opacity() { return ric_opacity; }
     public int getRic_session_max() { return ric_session_max; }
+    public String getRic_title() { return ric_title; }
+    public String getRic_title_color() { return ric_title_color; }
 
 
     // Single instance
@@ -166,10 +164,9 @@ public class TrackerConfig {
     // Constructor
     public TrackerConfig() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
-        ric_maxString = _activity.getResources().getString(R.string.ghostery_ric_max_default);
-        ric_max = Integer.parseInt(ric_maxString);
-        ric_session_maxString = _activity.getResources().getString(R.string.ghostery_ric_session_max_default);
-        ric_session_max = Integer.parseInt(ric_session_maxString);
+        ric_max = ric_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_max_default);
+        ric_session_max = ric_session_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
+        ric_opacity = ric_opacity_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
     }
 
     // Sends a report back through the Site Notice Channel
@@ -344,74 +341,56 @@ public class TrackerConfig {
 
                         JSONObject jsonObj = new JSONObject(jsonStr);
 
-                        ric_bg = jsonObj.isNull(TAG_RIC_BG)? null : jsonObj.getString(TAG_RIC_BG);
-                        ric_opacityString = jsonObj.isNull(TAG_RIC_OPACITY)? null : jsonObj.getString(TAG_RIC_OPACITY);
-                        ric = jsonObj.isNull(TAG_RIC)? null : jsonObj.getString(TAG_RIC);
-                        ric_intro = jsonObj.isNull(TAG_RIC_INTRO)? null : jsonObj.getString(TAG_RIC_INTRO);
-                        ric_color = jsonObj.isNull(TAG_RIC_COLOR)? null : jsonObj.getString(TAG_RIC_COLOR);
-                        ric_title = jsonObj.isNull(TAG_RIC_TITLE)? null : jsonObj.getString(TAG_RIC_TITLE);
-                        ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? null : jsonObj.getString(TAG_RIC_TITLE_COLOR);
-                        ric_learn_more = jsonObj.isNull(TAG_RIC_LEARN_MORE)? null : jsonObj.getString(TAG_RIC_LEARN_MORE);
-                        close_button = jsonObj.isNull(TAG_CLOSE_BUTTON)? null : jsonObj.getString(TAG_CLOSE_BUTTON);
-
-                        bric_bg = jsonObj.isNull(TAG_BRIC_BG)? null : jsonObj.getString(TAG_BRIC_BG);
-                        bric_header_text = jsonObj.isNull(TAG_BRIC_HEADER_TEXT)? null : jsonObj.getString(TAG_BRIC_HEADER_TEXT);
-                        bric_header_text_color = jsonObj.isNull(TAG_BRIC_HEADER_TEXT_COLOR)? null : jsonObj.getString(TAG_BRIC_HEADER_TEXT_COLOR);
-                        ric_click_manage_settings = jsonObj.isNull(TAG_RIC_CLICK_MANAGE_SETTINGS)? null : jsonObj.getString(TAG_RIC_CLICK_MANAGE_SETTINGS);
-                        bric_content1 = jsonObj.isNull(TAG_BRIC_CONTENT1)? null : jsonObj.getString(TAG_BRIC_CONTENT1);
-                        bric_content2 = jsonObj.isNull(TAG_BRIC_CONTENT2)? null : jsonObj.getString(TAG_BRIC_CONTENT2);
-                        bric_content3 = jsonObj.isNull(TAG_BRIC_CONTENT3)? null : jsonObj.getString(TAG_BRIC_CONTENT3);
+                        bric = jsonObj.isNull(TAG_BRIC)? null : jsonObj.getBoolean(TAG_BRIC);
+                        bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? null : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR);
                         bric_access_button_text = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT)? null : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT);
                         bric_access_button_text_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR)? null : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR);
-                        bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? null : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR);
+                        bric_bg = jsonObj.isNull(TAG_BRIC_BG)? null : jsonObj.getString(TAG_BRIC_BG);
+                        bric_content1 = jsonObj.isNull(TAG_BRIC_CONTENT1)? null : jsonObj.getString(TAG_BRIC_CONTENT1);
+                        bric_decline_button_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_COLOR)? null : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_COLOR);
                         bric_decline_button_text = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT)? null : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT);
                         bric_decline_button_text_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR)? null : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR);
-                        bric_decline_button_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_COLOR)? null : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_COLOR);
-                        ric_maxString = jsonObj.isNull(TAG_RIC_MAX)? null : jsonObj.getString(TAG_RIC_MAX);
-                        ric_session_maxString = jsonObj.isNull(TAG_RIC_SESSION_MAX)? null : jsonObj.getString(TAG_RIC_SESSION_MAX);
+                        bric_header_text = jsonObj.isNull(TAG_BRIC_HEADER_TEXT)? null : jsonObj.getString(TAG_BRIC_HEADER_TEXT);
+                        bric_header_text_color = jsonObj.isNull(TAG_BRIC_HEADER_TEXT_COLOR)? null : jsonObj.getString(TAG_BRIC_HEADER_TEXT_COLOR);
+                        close_button = jsonObj.isNull(TAG_CLOSE_BUTTON)? null : jsonObj.getString(TAG_CLOSE_BUTTON);
+                        manage_preferences_description = jsonObj.isNull(TAG_MANAGE_PREFERENCES_DESCRIPTION)? null : jsonObj.getString(TAG_MANAGE_PREFERENCES_DESCRIPTION);
+                        manage_preferences_header = jsonObj.isNull(TAG_MANAGE_PREFERENCES_HEADER)? null : jsonObj.getString(TAG_MANAGE_PREFERENCES_HEADER);
+                        ric = jsonObj.isNull(TAG_RIC)? null : jsonObj.getString(TAG_RIC);
+                        ric_bg = jsonObj.isNull(TAG_RIC_BG)? null : jsonObj.getString(TAG_RIC_BG);
+                        ric_click_manage_settings = jsonObj.isNull(TAG_RIC_CLICK_MANAGE_SETTINGS)? null : jsonObj.getString(TAG_RIC_CLICK_MANAGE_SETTINGS);
+                        ric_color = jsonObj.isNull(TAG_RIC_COLOR)? null : jsonObj.getString(TAG_RIC_COLOR);
+                        ric_max = jsonObj.isNull(TAG_RIC_MAX)? ric_max_default : jsonObj.getInt(TAG_RIC_MAX);
+                        ric_opacity = jsonObj.isNull(TAG_RIC_OPACITY)? ric_opacity_default : jsonObj.getInt(TAG_RIC_OPACITY);
+                        ric_session_max = jsonObj.isNull(TAG_RIC_SESSION_MAX)? ric_session_max_default : jsonObj.getInt(TAG_RIC_SESSION_MAX);
+                        ric_title = jsonObj.isNull(TAG_RIC_TITLE)? null : jsonObj.getString(TAG_RIC_TITLE);
+                        ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? null : jsonObj.getString(TAG_RIC_TITLE_COLOR);
 
-                        // Convert the opacity string (value "0" to "100") to a float (value 0.0 to 1.0)
-                        if (ric_opacityString != null) {
-                            int opacityInt = Integer.parseInt(ric_opacityString);
-                            ric_opacity = ((float)opacityInt) / 100;
-                        }
-
-                        // Combine the content strings into one
-                        if (bric_content1 != null || bric_content2 != null || bric_content3 != null) {
-                            if (bric_content1 != null)          // If content1 has content,
-                                bric_content = bric_content1;   //   use it
-                            if (bric_content2 != null) {        // If content2 has content,
-                                if (bric_content.length() > 0)  //   and if content already has content,
-                                    bric_content += "\n\n";     //     add vertical white space
-                                bric_content += bric_content2;  //   tack on content2
-                            }
-                            if (bric_content3 != null) {        // If content3 has content,
-                                if (bric_content.length() > 0)  //   and if content already has content,
-                                    bric_content += "\n\n";     //     add vertical white space
-                                bric_content += bric_content3;  //   tack on content3
-                            }
-                        }
-
-                        // Convert the ric_max value from either the retrieved JSON parameter or the default value
-                        if (ric_maxString == null || ric_maxString.length() == 0)
-                            ric_maxString = _activity.getResources().getString(R.string.ghostery_ric_max_default);
-
-                        if (ric_maxString != null) {
-                            Log.d(TAG, "ric_maxString = " + ric_maxString);
-                            ric_max = Integer.parseInt(ric_maxString);
-                        } else {
-                            throw(new MissingResourceException("A default value for ric_max is missing as a string resource.", TAG, "ric_max"));
-                        }
-
-                        // Convert the ric_session_max value from either the retrieved JSON parameter or the default value
-                        if (ric_session_maxString == null || ric_session_maxString.length() == 0)
-                            ric_session_maxString = _activity.getResources().getString(R.string.ghostery_ric_session_max_default);
-
-                        if (ric_session_maxString != null) {
-                            ric_session_max = Integer.parseInt(ric_session_maxString);
-                        } else {
-                            throw(new MissingResourceException("A default value for ric_session_max is missing as a string resource.", TAG, "ric_session_max"));
-                        }
+//                        // Convert the opacity string (value "0" to "100") to a float (value 0.0 to 1.0)
+//                        if (ric_opacityString != null) {
+//                            int opacityInt = Integer.parseInt(ric_opacityString);
+//                            ric_opacity = ((float)opacityInt) / 100;
+//                        }
+//
+//                        // Convert the ric_max value from either the retrieved JSON parameter or the default value
+//                        if (ric_maxString == null || ric_maxString.length() == 0)
+//                            ric_maxString = _activity.getResources().getString(R.string.ghostery_ric_max_default);
+//
+//                        if (ric_maxString != null) {
+//                            Log.d(TAG, "ric_maxString = " + ric_maxString);
+//                            ric_max = Integer.parseInt(ric_maxString);
+//                        } else {
+//                            throw(new MissingResourceException("A default value for ric_max is missing as a string resource.", TAG, "ric_max"));
+//                        }
+//
+//                        // Convert the ric_session_max value from either the retrieved JSON parameter or the default value
+//                        if (ric_session_maxString == null || ric_session_maxString.length() == 0)
+//                            ric_session_maxString = _activity.getResources().getString(R.string.ghostery_ric_session_max_default);
+//
+//                        if (ric_session_maxString != null) {
+//                            ric_session_max = Integer.parseInt(ric_session_maxString);
+//                        } else {
+//                            throw(new MissingResourceException("A default value for ric_session_max is missing as a string resource.", TAG, "ric_session_max"));
+//                        }
 
                         initialized = true;
                     } catch (JSONException e) {

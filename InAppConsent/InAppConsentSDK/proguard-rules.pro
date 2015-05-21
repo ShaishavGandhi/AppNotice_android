@@ -2,9 +2,9 @@
 ##-dontobfuscate
 
 #============================================================
-# Keep and don't obfuscate both the InAppNotice entry points and the callback interfaces
--keep public class com.ghostery.privacy.inappconsentsdk.model.InAppNotice {public *;}
--keep public interface com.ghostery.privacy.inappconsentsdk.callbacks.InAppNotice_Callback {
+# Keep and don't obfuscate both the InAppConsent entry points and the callback interfaces
+-keep public class com.ghostery.privacy.inappconsentsdk.model.InAppConsent {public *;}
+-keep public interface com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback {
     public void onOptionSelected(boolean);
     public void onNoticeSkipped();
 }
