@@ -1,34 +1,4 @@
 <resources>
-    <!--Branded strings-->
-    <!--<string name="app_name">In-App Consent SDK</string>-->
-
-    <!--Original strings-->
-    <string name="ghostery_dialog_implicit_intro_message">Learn about how to set your tracking options.</string>
-    <string name="ghostery_dialog_header_text">IceCube Cares About Your Privacy</string>
-    <string name="ghostery_dialog_implicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
-    <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
-    <string name="ghostery_dialog_button_learnmore">Learn More</string>
-    <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
-    <string name="ghostery_dialog_button_consent">Accept</string>
-    <string name="ghostery_dialog_button_decline">Decline</string>
-    <string name="ghostery_dialog_button_close">Close</string>
-    <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
-    <string name="ghostery_ric_max_default">3</string>
-    <string name="ghostery_ric_session_max_default">1</string>
-
-    <!-- App Info Text -->
-    <string name="app_name">CompanyName</string>
-    <string name="ghostery_manage_preferences_header">Privacy Preferences</string>
-    <string name="ghostery_app_desc_1">IceCube with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
-    <string name="ghostery_app_desc_2"></string>
-    <string name="ghostery_app_desc_3"></string>
-
-
-
-
-    <!-- List Header Text -->
-    <string name="ghostery_header_company">Tracker Company</string>
-    <string name="ghostery_header_ad_personalization">Choice Status</string>
 
     <!-- Footer Text -->
     <!--<string name="ghostery_footer_understand_these_choices"><u>Understand These Choices</u></string>-->
@@ -65,6 +35,6 @@
 
 
     <string name="ghostery_result_reset_statistics">Your request to opt out is complete for {0} of {1} participating companies.</string>
-    <string name="ghostery_result_reset_warning">If you use your settings to reset this device’s mobile operating system advertising ID, you will also need to reset your opt-out preferences.</string>
+    <string name="ghostery_result_reset_warning">If you use your settings to reset this device\'s mobile operating system advertising ID, you will also need to reset your opt-out preferences.</string>
 
 </resources>

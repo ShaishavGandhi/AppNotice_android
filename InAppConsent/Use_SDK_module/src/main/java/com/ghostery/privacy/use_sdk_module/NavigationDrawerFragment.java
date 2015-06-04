@@ -17,13 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ghostery.privacy.inappconsentsdk.callbacks.InAppNotice_Callback;
-import com.ghostery.privacy.inappconsentsdk.model.InAppNotice;
+import com.ghostery.privacy.inappconsentsdk.model.InAppConsent;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -260,89 +258,20 @@ public class NavigationDrawerFragment extends Fragment {
         Util.setSharedPreference(getActivity(), Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(getActivity(), Util.SP_PUB_NOTICE_ID, pubNoticeIdString);
 
-    if (item.getItemId() == R.id.action_inappconsent_preferences) {
-        InAppNotice inAppNotice = new InAppNotice();
-        inAppNotice.showManagePreferences(this.getActivity());
+        if (item.getItemId() == R.id.action_inappconsent_reset) {
+            InAppConsent inAppConsent = new InAppConsent();
+            inAppConsent.resetSDK();
 
-//              Toast.makeText(getActivity(), "Show Manage Preferences.", Toast.LENGTH_SHORT).show();
-        return true;
+            Toast.makeText(getActivity(), "SDK was reset.", Toast.LENGTH_SHORT).show();
+            return true;
 
-    } else if (item.getItemId() == R.id.action_inappconsent_reset) {
-        InAppNotice inAppNotice = new InAppNotice();
-        inAppNotice.resetSDK();
+        } else if (item.getItemId() == R.id.action_inappconsent_close) {
+            // Close the app
+            getActivity().finish();
+            System.exit(0);
 
-        Toast.makeText(getActivity(), "SDK was reset.", Toast.LENGTH_SHORT).show();
-        return true;
-
-    } else if (item.getItemId() == R.id.action_inappconsent_close) {
-        // Close the app
-        getActivity().finish();
-        System.exit(0);
-
-//                Toast.makeText(getActivity(), "Show Manage Preferences.", Toast.LENGTH_SHORT).show();
-        return true;
-    } else if (companyIdString == null || companyIdString.length() == 0 || pubNoticeIdString == null || pubNoticeIdString.length() == 0) {
-            Toast.makeText(getActivity(), "You must supply a Company ID and Pub-notice ID.", Toast.LENGTH_LONG).show();
-        } else {
-            companyId = Integer.valueOf(companyIdString);
-            pubNoticeId = Integer.valueOf(pubNoticeIdString);
-
-            CheckBox cb = (CheckBox)getActivity().findViewById(R.id.checkBox_useRemoteValues);
-            if (cb != null)
-                useRemoteValues = cb.isChecked();
-
-
-            if (item.getItemId() == R.id.action_inappconsent_implied) {
-                InAppNotice inAppNotice = new InAppNotice();
-                inAppNotice.startImpliedConsent(this.getActivity(), companyId, pubNoticeId, useRemoteValues, new InAppNotice_Callback() {
-
-                    @Override
-                    public void onOptionSelected(boolean isAccepted) {
-                        // Handle your response
-                        if (isAccepted) {
-                            Toast.makeText(getActivity(), "Tracking accepted", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getActivity(), "Tracking declined", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onNoticeSkipped() {
-                        // Handle your response
-                        Toast.makeText(getActivity(), "Implied Notice skipped", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-//            Toast.makeText(getActivity(), "Implied In-App Consent.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            } else if (item.getItemId() == R.id.action_inappconsent_explicit) {
-                InAppNotice inAppNotice = new InAppNotice();
-                inAppNotice.startExplicitConsent(this.getActivity(), companyId, pubNoticeId, useRemoteValues, new InAppNotice_Callback() {
-
-                    @Override
-                    public void onOptionSelected(boolean isAccepted) {
-                        // Handle your response
-                        if (isAccepted) {
-                            Toast.makeText(getActivity(), "Tracking accepted", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(getActivity(), "Tracking declined", Toast.LENGTH_LONG).show();
-
-                            // Close the app
-                            getActivity().finish();
-                            System.exit(0);
-                        }
-                    }
-
-                    @Override
-                    public void onNoticeSkipped() {
-                        // Handle your response
-                        Toast.makeText(getActivity(), "Explicit Notice skipped", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                return true;
-            }
+    //                Toast.makeText(getActivity(), "Show Manage Preferences.", Toast.LENGTH_SHORT).show();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

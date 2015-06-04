@@ -2,7 +2,6 @@ package com.ghostery.privacy.inappconsentsdk.utils;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 
 import com.ghostery.privacy.inappconsentsdk.app.SplashScreen;
 
@@ -18,20 +17,20 @@ public class Util {
         activity.startActivity(intent);
     }
 
-    public static int getContrastColor(int color, int alpha)
-    {
-        int d = 0;
-
-        // Counting the perceptive luminance - human eye favors green color...
-        double a = 1 - ( 0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
-
-        if (a < 0.5)
-            d = 0;          // bright colors - black font
-        else
-            d = 255;        // dark colors - white font
-
-        return Color.argb(alpha, d, d, d);
-    }
+//    public static int getContrastColor(int color, int alpha)
+//    {
+//        int d = 0;
+//
+//        // Counting the perceptive luminance - human eye favors green color...
+//        double a = 1 - ( 0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
+//
+//        if (a < 0.5)
+//            d = 0;          // bright colors - black font
+//        else
+//            d = 255;        // dark colors - white font
+//
+//        return Color.argb(alpha, d, d, d);
+//    }
 
 }
 

@@ -1,0 +1,27 @@
+<resources>
+
+    <!--Dialog text -->
+    <string name="ghostery_dialog_implicit_intro_message">Learn about how to set your tracking options.</string>
+    <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
+    <string name="ghostery_dialog_implicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+    <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+    <string name="ghostery_dialog_button_learnmore">Learn More</string>
+    <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
+    <string name="ghostery_dialog_button_consent">Accept</string>
+    <string name="ghostery_dialog_button_decline">Decline</string>
+    <string name="ghostery_dialog_button_close">Close</string>
+    <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
+    <integer name="ghostery_ric_opacity_default_default">100</integer>
+    <integer name="ghostery_ric_max_default">3</integer>
+    <integer name="ghostery_ric_session_max_default">1</integer>
+
+    <!-- Manage Preferences text -->
+    <!--<string name="app_name">CompanyName</string>-->
+    <string name="ghostery_manage_preferences_header">Preferences</string>
+    <string name="ghostery_app_desc_1">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+
+    <!-- List Header Text -->
+    <string name="ghostery_header_company">Tracker Company</string>
+    <string name="ghostery_header_ad_personalization">Choice Status</string>
+
+</resources>

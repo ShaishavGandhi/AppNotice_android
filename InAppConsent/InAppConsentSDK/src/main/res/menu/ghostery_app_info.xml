@@ -6,6 +6,7 @@
         android:id="@+id/info_icon"
         android:icon="@drawable/ghostery_back_button"
         app:showAsAction="always"
-        android:title="@string/app_name"/>
+        android:title=""
+        />
 
 </menu>

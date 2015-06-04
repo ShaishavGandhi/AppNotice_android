@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/bric_header_text_color"
         android:text="@string/ghostery_dialog_header_text"
         android:id="@+id/textView_title"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:textColor="@android:color/black"
         android:layout_marginTop="8dp" />
 
     <TextView
@@ -25,7 +25,6 @@
         android:text="@string/ghostery_dialog_implicit_message"
         android:id="@+id/textView_message"
         android:layout_weight="1"
-        android:layout_gravity="center"
         android:layout_margin="12dp"
         android:textColor="@android:color/black" />
 
@@ -35,7 +34,7 @@
         android:layout_height="1dip"
         android:layout_marginLeft="4dip"
         android:layout_marginRight="4dip"
-        android:background="#46AAAAAA"
+        android:background="@color/ghostery_divider"
         android:layout_alignParentTop="true"/>
 
     <LinearLayout
@@ -51,9 +50,9 @@
             android:text="@string/ghostery_dialog_button_preferences"
             android:id="@+id/preferences_button"
             android:layout_gravity="center_horizontal"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="@android:color/black"
-            android:layout_weight=".6" />
+            android:textColor="#FFFFFF"
+            android:layout_weight=".6"
+            android:backgroundTint="#333333" />
 
         <View
             android:id="@+id/divider_vertical_view"
@@ -61,7 +60,7 @@
             android:layout_width="1dip"
             android:layout_marginTop="4dip"
             android:layout_marginBottom="4dip"
-            android:background="#46AAAAAA"
+            android:background="@color/ghostery_divider"
             android:layout_alignParentTop="true"/>
 
         <Button
@@ -69,8 +68,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_close"
             android:id="@+id/close_button"
-            style="?android:attr/borderlessButtonStyle"
-            android:textColor="@android:color/black"
+            android:textColor="#FFFFFF"
             android:layout_weight="1" />
 
     </LinearLayout>

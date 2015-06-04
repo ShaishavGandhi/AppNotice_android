@@ -18,17 +18,20 @@ android {
 
     buildTypes {
         debug {
+            debuggable true
             minifyEnabled false
         }
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
+    releaseCompile project(path: ':InAppConsentSDK', configuration: 'release')
+    debugCompile project(path: ':InAppConsentSDK', configuration: 'debug')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
-    compile project(':InAppConsentSDK')
 }
