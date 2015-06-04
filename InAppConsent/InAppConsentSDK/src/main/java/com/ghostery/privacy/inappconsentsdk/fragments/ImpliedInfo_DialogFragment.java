@@ -3,6 +3,7 @@ package com.ghostery.privacy.inappconsentsdk.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -17,8 +18,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.utils.TrackerConfig;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
@@ -138,10 +139,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         if (trackerConfig != null && trackerConfig.isInitialized()) {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
+            String ric_bg = trackerConfig.getRic_bg();
+            String ric_access_button_color = trackerConfig.getBric_access_button_color();
+
+
             // Set background color and opacity
             if (linearLayout_outer != null) {
-                if (trackerConfig.getRic_bg() != null)
-                    linearLayout_outer.setBackgroundColor(Color.parseColor(trackerConfig.getRic_bg()));
+                if (ric_bg != null)
+                    linearLayout_outer.setBackgroundColor(Color.parseColor(ric_bg));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     float opacityFloat = trackerConfig.getRic_opacity();
                     if (opacityFloat < 1F && opacityFloat >= 0) {
@@ -178,8 +183,10 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                     preferences_button.setText(trackerConfig.getRic_click_manage_settings());
                 if (trackerConfig.getBric_access_button_text_color() != null)
                     preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
-                if (trackerConfig.getBric_access_button_color() != null)
-                    preferences_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_access_button_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
+                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+//                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.MULTIPLY);
+//                    preferences_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
             }
 
             // Close button
@@ -188,10 +195,12 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 if (trackerConfig.getClose_button() != null)
                     close_button.setText(trackerConfig.getClose_button());
                 if (trackerConfig.getBric_access_button_text_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
-                if (trackerConfig.getBric_access_button_color() != null)
-                    preferences_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_access_button_color()));
+                    close_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
+                    close_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+//                    close_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
             }
+
         }
     }
 }

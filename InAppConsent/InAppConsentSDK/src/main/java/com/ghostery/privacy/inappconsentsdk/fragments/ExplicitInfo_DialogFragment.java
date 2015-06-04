@@ -3,6 +3,7 @@ package com.ghostery.privacy.inappconsentsdk.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -17,10 +18,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.R;
-import com.ghostery.privacy.inappconsentsdk.utils.TrackerConfig;
+import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.utils.AppData;
+import com.ghostery.privacy.inappconsentsdk.utils.TrackerConfig;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
 public class ExplicitInfo_DialogFragment extends DialogFragment {
@@ -156,23 +157,14 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         if (trackerConfig != null && trackerConfig.isInitialized()) {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
+            String ric_access_button_color = trackerConfig.getBric_access_button_color();
+            String ric_decline_button_color = trackerConfig.getBric_decline_button_color();
+
             // Set background color and opacity
             if (linearLayout_outer != null) {
                 if (trackerConfig.getBric_bg() != null) {
                     int bric_bg = Color.parseColor(trackerConfig.getBric_bg());
                     linearLayout_outer.setBackgroundColor(bric_bg);
-
-                    // If we changed the background color, calculate and set a pleasantly contrasting divider color
-                    int divider_color = Util.getContrastColor(bric_bg, Util.DIVIDER_ALPHA);
-                    View divider_top_view = v.findViewById(R.id.divider_top_view);
-                    if (divider_top_view != null)
-                        divider_top_view.setBackgroundColor(divider_color);
-                    View divider_middle_view = v.findViewById(R.id.divider_middle_view);
-                    if (divider_middle_view != null)
-                        divider_middle_view.setBackgroundColor(divider_color);
-                    View divider_vertical_view = v.findViewById(R.id.divider_vertical_view);
-                    if (divider_vertical_view != null)
-                        divider_vertical_view.setBackgroundColor(divider_color);
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -211,8 +203,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                     preferences_button.setText(trackerConfig.getRic_click_manage_settings());
                 if (trackerConfig.getBric_access_button_text_color() != null)
                     preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
-                if (trackerConfig.getBric_access_button_color() != null)
-                    preferences_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_access_button_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
+                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+//                    preferences_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_access_button_color()));
             }
 
             // Accept button
@@ -221,9 +214,10 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (trackerConfig.getBric_access_button_text() != null)
                     accept_button.setText(trackerConfig.getBric_access_button_text());
                 if (trackerConfig.getBric_access_button_text_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
-                if (trackerConfig.getBric_access_button_color() != null)
-                    preferences_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_access_button_color()));
+                    accept_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
+                    accept_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+//                    accept_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_access_button_color()));
             }
 
             // Decline button
@@ -232,9 +226,10 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (trackerConfig.getBric_decline_button_text() != null)
                     decline_button.setText(trackerConfig.getBric_decline_button_text());
                 if (trackerConfig.getBric_decline_button_text_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_decline_button_text_color()));
-                if (trackerConfig.getBric_decline_button_color() != null)
-                    preferences_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_decline_button_color()));
+                    decline_button.setTextColor(Color.parseColor(trackerConfig.getBric_decline_button_text_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_decline_button_color != null)
+                    decline_button.getBackground().setColorFilter(Color.parseColor(ric_decline_button_color), PorterDuff.Mode.SRC);
+//                    decline_button.setBackgroundColor(Color.parseColor(trackerConfig.getBric_decline_button_color()));
             }
         }
     }
