@@ -1,4 +1,4 @@
-package com.ghostery.privacy.inappconsentsdk.utils;
+package com.ghostery.privacy.inappconsentsdk.model;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -7,12 +7,17 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ghostery.privacy.inappconsentsdk.R;
-import com.ghostery.privacy.inappconsentsdk.callbacks.TrackerConfigGetterCallback;
+import com.ghostery.privacy.inappconsentsdk.callbacks.JSONGetterCallback;
+import com.ghostery.privacy.inappconsentsdk.utils.AppData;
+import com.ghostery.privacy.inappconsentsdk.utils.ServiceHandler;
+import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 
 
 /**
@@ -20,10 +25,10 @@ import java.text.MessageFormat;
  */
 
 // Never instantiate directly. Use getInstance() instead.
-public class TrackerConfig {
-    private static final String TAG = "TrackerConfig";
+public class InAppConsentData {
+    private static final String TAG = "InAppConsentData";
 
-    private static TrackerConfig instance;
+    private static InAppConsentData instance;
     private static Activity _activity;
     private ProgressDialog pDialog;
     private boolean initialized = false;
@@ -33,7 +38,7 @@ public class TrackerConfig {
     private int ric_session_max_default = 1;
     private int ric_opacity_default = 100;
 
-    private final static String TAG_TRACKERCONFIG = "trackerconfig";
+    private final static String TAG_INAPPCONSENTDATA = "inappconsentdata";
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
 
     // 0 = company ID; 1 = pub-notice ID
@@ -87,6 +92,7 @@ public class TrackerConfig {
     private static final String TAG_RIC_SESSION_MAX = "ric_session_max";                                // Maximum number of times the Implied Consent dialog should be displayed in a session.
     private static final String TAG_RIC_TITLE = "ric_title";                                            // Title on Implied Consent dialog
     private static final String TAG_RIC_TITLE_COLOR = "ric_title_color";                                // Title color on Implied Consent dialog
+    private static final String TAG_TRACKERS = "trackers";                                              // Tracker list
 
     // Field values
     private boolean bric = false;
@@ -115,6 +121,8 @@ public class TrackerConfig {
 //    private String ric_session_maxString;
     private String ric_title;
     private String ric_title_color;
+
+    private ArrayList<Tracker> trackerArrayList = new ArrayList<>();
 
 
     // Public getters and setters
@@ -150,19 +158,19 @@ public class TrackerConfig {
 
 
     // Single instance
-    public static synchronized TrackerConfig getInstance(Activity activity)
+    public static synchronized InAppConsentData getInstance(Activity activity)
     {
         _activity = activity;
 
         // Ensure the app only uses one instance of this class.
         if (instance == null)
-            instance = new TrackerConfig();
+            instance = new InAppConsentData();
 
         return instance;
     }
 
     // Constructor
-    public TrackerConfig() {
+    public InAppConsentData() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
         ric_max = ric_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_max_default);
         ric_session_max = ric_session_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
@@ -236,10 +244,10 @@ public class TrackerConfig {
     }
 
     // Init
-    public void initTrackerConfig(TrackerConfigGetterCallback TrackerConfigGetterCallback) {
-        // Start the call to get the TrackerConfig data from the service
-        TrackerConfigGetter trackerConfigGetter = new TrackerConfigGetter(TrackerConfigGetterCallback);
-        trackerConfigGetter.execute();
+    public void inti(JSONGetterCallback mJSONGetterCallback) {
+        // Start the call to get the InAppConsentData data from the service
+        JSONGetter mJSONGetter = new JSONGetter(mJSONGetterCallback);
+        mJSONGetter.execute();
     }
 
     // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
@@ -247,7 +255,7 @@ public class TrackerConfig {
         boolean status = true;     // Assume we need to show the notice
         int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
         long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
-        int ric_session_count = (int)Session.get(Session.SYS_RIC_SESSION_COUNT, 0);
+        int ric_session_count = (int) Session.get(Session.SYS_RIC_SESSION_COUNT, 0);
 
         if (ric_session_count >= ric_session_max) {                 // If displayed enough in this session...
             status = false;                                         //    don't display it now
@@ -294,13 +302,13 @@ public class TrackerConfig {
     // =================================================================================
     // =================================================================================
 
-    // Async task to get TrackerConfig data from a URL
-    private class TrackerConfigGetter extends AsyncTask<Void, Void, Void> {
+    // Async task to get InAppConsentData data from a URL
+    private class JSONGetter extends AsyncTask<Void, Void, Void> {
 
-        private TrackerConfigGetterCallback mTrackerConfigGetterCallback;
+        private JSONGetterCallback mJSONGetterCallback;
 
-        public TrackerConfigGetter(TrackerConfigGetterCallback TrackerConfigGetterCallback) {
-            mTrackerConfigGetterCallback = TrackerConfigGetterCallback;
+        public JSONGetter(JSONGetterCallback mJSONGetterCallback) {
+            this.mJSONGetterCallback = mJSONGetterCallback;
         }
 
         @Override
@@ -316,12 +324,14 @@ public class TrackerConfig {
 
         @Override
         protected Void doInBackground(Void... arg0) {
+            trackerArrayList.clear();       // Start with an empty tracker array
+
             // Creating service handler class instance
             ServiceHandler sh = new ServiceHandler();
 
             try {
-                // Make a request to url for the TrackerConfig info
-                String url = getFormattedTrackerConfigUrl();
+                // Make a request to url for the InAppConsentData info
+                String url = getFormattedJSONUrl();
                 String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
 
                 // Parse the returned JSON string
@@ -361,9 +371,19 @@ public class TrackerConfig {
                         ric_color = jsonObj.isNull(TAG_RIC_COLOR)? null : jsonObj.getString(TAG_RIC_COLOR);
                         ric_max = jsonObj.isNull(TAG_RIC_MAX)? ric_max_default : jsonObj.getInt(TAG_RIC_MAX);
                         ric_opacity = jsonObj.isNull(TAG_RIC_OPACITY)? ric_opacity_default : jsonObj.getInt(TAG_RIC_OPACITY);
-                        ric_session_max = jsonObj.isNull(TAG_RIC_SESSION_MAX)? ric_session_max_default : jsonObj.getInt(TAG_RIC_SESSION_MAX);
+                        ric_session_max = jsonObj.isNull(TAG_RIC_SESSION_MAX) ? ric_session_max_default : jsonObj.getInt(TAG_RIC_SESSION_MAX);
                         ric_title = jsonObj.isNull(TAG_RIC_TITLE)? null : jsonObj.getString(TAG_RIC_TITLE);
                         ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? null : jsonObj.getString(TAG_RIC_TITLE_COLOR);
+
+                        String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
+                        JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
+
+                        int id;
+                        for (int i = 0; i < trackerJSONArray.length(); i++) {
+                            JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
+                            Tracker tracker = new Tracker(trackerJSONObject);
+                            trackerArrayList.add(tracker);
+                        }
 
 //                        // Convert the opacity string (value "0" to "100") to a float (value 0.0 to 1.0)
 //                        if (ric_opacityString != null) {
@@ -413,11 +433,11 @@ public class TrackerConfig {
             super.onPostExecute(result);
 
             // Let the specified callback know it finished...
-            if (mTrackerConfigGetterCallback != null) {
+            if (mJSONGetterCallback != null) {
                 _activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mTrackerConfigGetterCallback.onTaskDone();
+                        mJSONGetterCallback.onTaskDone();
                     }
                 });
             }
@@ -427,7 +447,7 @@ public class TrackerConfig {
                 pDialog.dismiss();
         }
 
-        protected String getFormattedTrackerConfigUrl() {
+        protected String getFormattedJSONUrl() {
             Object[] urlParams = new Object[2];
             urlParams[0] = String.valueOf(company_id);			// 0
             urlParams[1] = String.valueOf(pub_notice_id);		// 1
