@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -155,6 +156,18 @@ public class InAppConsentData {
     public int getRic_session_max() { return ric_session_max; }
     public String getRic_title() { return ric_title; }
     public String getRic_title_color() { return ric_title_color; }
+    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
+    public HashMap<Integer, Boolean> getTrackerHashMap() {
+        HashMap trackerHashMap = new HashMap();
+
+        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        for (Tracker tracker : trackerArrayList) {
+            if (!tracker.getCategory().equalsIgnoreCase("Essential")) {
+                trackerHashMap.put(tracker.getTrackerId(), tracker.isOn());
+            }
+        }
+        return trackerHashMap;
+    }
 
 
     // Single instance

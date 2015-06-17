@@ -3,7 +3,7 @@ package com.ghostery.privacy.inappconsentsdk.utils;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.ghostery.privacy.inappconsentsdk.app.SplashScreen;
+import com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity;
 
 /**
  * Created by Steven.Overson on 2/25/2015.
@@ -11,8 +11,9 @@ import com.ghostery.privacy.inappconsentsdk.app.SplashScreen;
 public class Util {
     public static final int DIVIDER_ALPHA = 46;
 
-    public static void ShowAdPreferences(final Activity activity) {
-        Intent intent = new Intent(activity, SplashScreen.class);
+    public static void showManagePreferences(final Activity activity) {
+//        Intent intent = new Intent(activity, ListActivity.class);
+        Intent intent = new Intent(activity, TrackerListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
     }

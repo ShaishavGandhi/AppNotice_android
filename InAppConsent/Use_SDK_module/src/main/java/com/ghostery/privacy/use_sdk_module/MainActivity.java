@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,8 +22,10 @@ import android.widget.Toast;
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsent;
 
+import java.util.HashMap;
 
-public class MainActivity extends ActionBarActivity
+
+public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -35,6 +37,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private InAppConsent_Callback inAppConsent_Callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +116,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment implements OnClickListener {
+    public static class PlaceholderFragment extends Fragment implements OnClickListener, InAppConsent_Callback {
 
         private Button btn_consent_flow;
         private Button btn_manage_preferences;
@@ -220,38 +223,43 @@ public class MainActivity extends ActionBarActivity
                 if (cb != null)
                     useRemoteValues = cb.isChecked();
 
+                InAppConsent inAppConsent = new InAppConsent();
+
                 if (view == btn_manage_preferences) {
-                    InAppConsent inAppConsent = new InAppConsent();
-                    inAppConsent.showManagePreferences(this.getActivity());
+                    inAppConsent.showManagePreferences(this.getActivity(), companyId, pubNoticeId, useRemoteValues, this);
 
                 } else if (view == btn_consent_flow) {
-                    InAppConsent inAppConsent = new InAppConsent();
-                    inAppConsent.startConsentFlow(this.getActivity(), companyId, pubNoticeId, useRemoteValues, new InAppConsent_Callback() {
-
-                        @Override
-                        public void onOptionSelected(boolean isAccepted) {
-                            // Handle your response
-                            if (isAccepted) {
-                                Toast.makeText(getActivity(), "Tracking accepted", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getActivity(), "Tracking declined", Toast.LENGTH_LONG).show();
-
-                                // Close the app
-                                getActivity().finish();
-                                System.exit(0);
-                            }
-                        }
-
-                        @Override
-                        public void onNoticeSkipped() {
-                            // Handle your response
-                            Toast.makeText(getActivity(), "Dialog skipped: Tracking accepted", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    inAppConsent.startConsentFlow(this.getActivity(), companyId, pubNoticeId, useRemoteValues, this);
 
                 }
             }
         }
+
+        @Override
+        public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
+            // Handle your response
+            if (isAccepted) {
+                Toast.makeText(getActivity(), "Tracking accepted", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Tracking declined", Toast.LENGTH_LONG).show();
+
+                // Close the app
+//                getApplication().finish();
+                System.exit(0);
+            }
+        }
+
+        @Override
+        public void onNoticeSkipped() {
+            // Handle your response
+            Toast.makeText(getActivity(), "Dialog skipped: Tracking accepted", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onTrackerStateChange(HashMap<Integer, Boolean> trackerHashMap) {
+
+        }
+
     }
 
 }

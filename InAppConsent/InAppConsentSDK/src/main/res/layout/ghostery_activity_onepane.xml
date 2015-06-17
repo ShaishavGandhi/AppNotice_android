@@ -11,23 +11,14 @@
     <FrameLayout
         android:id="@+id/item_detail_container"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true" />
-
-    <include
-        android:id="@+id/header"
-        layout="@layout/ghostery_layout_header" />
 
     <fragment
         android:id="@+id/item_list"
         android:name="com.ghostery.privacy.inappconsentsdk.fragments.ListFragment"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_above="@+id/footer"
-        android:layout_below="@+id/header" />
-
-    <include
-        android:id="@+id/footer"
-        layout="@layout/ghostery_layout_footer" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/item_detail_container" />
 
 </RelativeLayout>

@@ -63,14 +63,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Open the In-App Consent preferences activity
-                Util.ShowAdPreferences(getActivity());
+                Util.showManagePreferences(getActivity());
 
                 // Send notice for this event
                 InAppConsentData.sendNotice(InAppConsentData.NoticeType.IMPLICIT_INFO_PREF);
 
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true);
+                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap());
 
                 // Close this dialog
                 dismiss();
@@ -82,7 +82,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             public void onClick(View v) {
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true);
+                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap());
 
                 // Close this dialog
                 dismiss();
@@ -119,7 +119,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
 
         // Let the calling class know the selected option
         if (inAppConsent_callback != null)
-            inAppConsent_callback.onOptionSelected(true);
+            inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap());
     }
 
     public void setInAppConsentData(InAppConsentData inAppConsentData) {

@@ -26,6 +26,7 @@ public class Tracker {
     private String logo_url;
     private String description;
     private String privacy_url;
+    private boolean on = true;      // Not in JSON. Defaults to true and is managed within the SDK
 
     // Public getters and setters
     public String getCategory() { return category; }
@@ -34,6 +35,8 @@ public class Tracker {
     public String getLogo_url() { return logo_url; }
     public String getDescription() { return description; }
     public String getPrivacy_url() { return privacy_url; }
+    public boolean isOn() { return on; }
+    public void setOn(boolean isOn) { on = isOn; };
 
     // Constructor
     public Tracker(JSONObject trackerJSONObject) {
@@ -45,6 +48,7 @@ public class Tracker {
             logo_url = trackerJSONObject.getString(TAG_LOGO_URL);
             description = trackerJSONObject.getString(TAG_DESCRIPTION);
             privacy_url = trackerJSONObject.getString(TAG_PRIVACY_URL);
+            on = true;
         } catch (JSONException e) {
             Log.e(TAG, "JSONException while parsing the Tracker object.", e);
         }

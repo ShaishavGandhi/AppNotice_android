@@ -38,7 +38,8 @@ public class InAppConsent {
      */
     public void startConsentFlow(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
         this.inAppConsent_callback = inAppConsent_callback;
-        init(activity, company_id, pub_notice_id, useRemoteValues);
+
+        init(activity, company_id, pub_notice_id, useRemoteValues, true);
 
         // Send notice for this event
         InAppConsentData.sendNotice(InAppConsentData.NoticeType.APP_LOAD);
@@ -76,15 +77,17 @@ public class InAppConsent {
      * Shows the Manage Preferences screen. Can be called from your when the end user requests access to this screen (e.g., from a menu or button click).
      *   - activity: Usually your current activity
      */
-    public void showManagePreferences(final FragmentActivity activity) {
+    public void showManagePreferences(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
+        init(activity, company_id, pub_notice_id, useRemoteValues, false);
+
         // Open the In-App Consent preferences activity
-        Util.ShowAdPreferences(activity);
+        Util.showManagePreferences(activity);
 
         // Send notice for this event
         InAppConsentData.sendNotice(InAppConsentData.NoticeType.PREF_DIRECT);
     }
 
-    private void init(final FragmentActivity activity, int company_id, int pub_notice_id, final boolean useRemoteValues) {
+    private void init(final FragmentActivity activity, int company_id, int pub_notice_id, final boolean useRemoteValues, final boolean isConsentFlow) {
         if ((company_id <= 0) || (pub_notice_id <= 0)) {
             throw(new IllegalArgumentException("Company ID and Pub-notice ID must both be valid identifiers."));
         }
@@ -98,7 +101,7 @@ public class InAppConsent {
 
         if (inAppConsentData.isInitialized()) {
             // If initialized, use what we have
-            handleInAppConsentDataUpdate(activity, useRemoteValues);
+            startConsentFlow(activity, useRemoteValues);
         } else {
             // If not initialized yet, go get it
             inAppConsentData.inti(new JSONGetterCallback() {
@@ -108,15 +111,17 @@ public class InAppConsent {
                     // Save the tracker config object in the app session
                     Session.set(INAPPCONSENT_DATA, inAppConsentData);
 
-                    // Handle the response
-                    handleInAppConsentDataUpdate(activity, useRemoteValues);
+                    if (isConsentFlow) {
+                        // Handle the response
+                        startConsentFlow(activity, useRemoteValues);
+                    }
                 }
             });
         }
 
     }
 
-    private void handleInAppConsentDataUpdate(FragmentActivity activity, boolean useRemoteValues) {
+    private void startConsentFlow(FragmentActivity activity, boolean useRemoteValues) {
         // inAppConsentData should always be initialized at this point
 
         // Determine if we need to show this Implicit Notice dialog box

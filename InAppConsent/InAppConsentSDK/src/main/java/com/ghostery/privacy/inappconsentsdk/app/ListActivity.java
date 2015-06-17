@@ -1,13 +1,13 @@
 package com.ghostery.privacy.inappconsentsdk.app;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +16,7 @@ import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ghostery.privacy.inappconsentsdk.Identifiers.AdvertisingId;
 import com.ghostery.privacy.inappconsentsdk.Identifiers.DigestUtil;
@@ -37,7 +38,8 @@ import java.lang.reflect.Field;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
-public class ListActivity extends ActionBarActivity implements ListFragment.Callbacks {
+//ActionBarActivity
+public class ListActivity extends AppCompatActivity implements ListFragment.Callbacks {
 
     private static final String TAG = "AppChoices";
 
@@ -82,8 +84,27 @@ public class ListActivity extends ActionBarActivity implements ListFragment.Call
         // Check for app update
         new Version(this);
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.ghostery_action_bar_layout);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        actionBar.setCustomView(R.layout.ghostery_action_bar_layout);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // do something here, such as start an Intent to the parent activity.
+//            }
+//        });
+
+//        findViewById(R.id.start_actionmode).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                enableActionMode();
+//            }
+//        });
 
         // Set the contents
         //getSupportFragmentManager().findFragmentById(R.id.item_list);
@@ -113,6 +134,12 @@ public class ListActivity extends ActionBarActivity implements ListFragment.Call
 //        TextView header_ad_personalization = (TextView) ListActivity.this.findViewById(R.id.header_ad_personalization);
 //        header_ad_personalization.setTypeface(arial_bold);
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Toast.makeText(this, "Activity Stopped", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -182,24 +209,26 @@ public class ListActivity extends ActionBarActivity implements ListFragment.Call
         }
         */
 
-        //check if there are new companies added to optout
-        Button optOut_all = (Button) ListActivity.this.findViewById(R.id.choose_all_companies);
-        optOut_all.setEnabled(false);
-        optOut_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_gray);
-        for (Map.Entry<String, Company.CompanyData> entry : Company.COMPANY_MAP.entrySet()) {
-            Company.CompanyData company = Company.COMPANY_MAP.get(entry.getKey());
-            Optout.OptoutData optout = Optout.OPTOUT_MAP.get(entry.getKey());
-
-            if(!optout.optoutStatus && !company.goToSite) {
-                optOut_all.setEnabled(true);
-                optOut_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_blue);
-                break;
-            }
-        }
+//        //check if there are new companies added to optout
+//        Button optOut_all = (Button) ListActivity.this.findViewById(R.id.choose_all_companies);
+//        optOut_all.setEnabled(false);
+//        optOut_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_gray);
+//        for (Map.Entry<String, Company.CompanyData> entry : Company.COMPANY_MAP.entrySet()) {
+//            Company.CompanyData company = Company.COMPANY_MAP.get(entry.getKey());
+//            Optout.OptoutData optout = Optout.OPTOUT_MAP.get(entry.getKey());
+//
+//            if(!optout.optoutStatus && !company.goToSite) {
+//                optOut_all.setEnabled(true);
+//                optOut_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_blue);
+//                break;
+//            }
+//        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
         // Inflate the menu; this adds items to the action bar.
         getMenuInflater().inflate(R.menu.ghostery_legal_docs, menu);
         getMenuInflater().inflate(R.menu.ghostery_app_info, menu);
@@ -228,7 +257,13 @@ public class ListActivity extends ActionBarActivity implements ListFragment.Call
             arguments.putString("ARG_LEGAL_FILE", getString(R.string.ghostery_file_terms_of_use));
             showInfoIcon = true;
 
+        } else if (item.getItemId() == android.R.id.home) {
+            // do something here, such as start an Intent to the parent activity.
+            Toast.makeText(this, "Actionbar Home", Toast.LENGTH_SHORT).show();
+            this.finish();  // Or onBackPressed();
+            showInfoIcon = false;
         }
+
 
         showInfoIconInActionBar();
 

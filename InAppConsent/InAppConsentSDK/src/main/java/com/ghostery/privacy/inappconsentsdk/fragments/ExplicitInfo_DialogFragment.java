@@ -67,7 +67,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 InAppConsentData.sendNotice(InAppConsentData.NoticeType.EXPLICIT_INFO_PREF);
 
                 // Open the In-App Consent preferences activity
-                Util.ShowAdPreferences(getActivity());
+                Util.showManagePreferences(getActivity());
             }
         });
 
@@ -82,7 +82,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true);
+                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap());
 
                 // Close this dialog
                 dismiss();
@@ -99,7 +99,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(false);
+                    inAppConsent_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
             }
         });
 
@@ -137,7 +137,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
         // Let the calling class know the selected option
         if (inAppConsent_callback != null)
-            inAppConsent_callback.onOptionSelected(false);
+            inAppConsent_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
     }
 
     public void setInAppConsentData(InAppConsentData inAppConsentData) {

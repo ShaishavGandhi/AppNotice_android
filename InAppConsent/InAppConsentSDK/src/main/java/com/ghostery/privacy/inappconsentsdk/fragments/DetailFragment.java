@@ -99,7 +99,7 @@ public class DetailFragment extends Fragment {
         WebView desc = (WebView) rootView.findViewById(R.id.app_desc);
         String text;
         text = "<html><body><p style=\"font-family:Arial\">";
-        text+= getString(R.string.ghostery_app_desc_1);
+        text+= getString(R.string.ghostery_manage_preferences_description);
         text+= "</p></body></html>";
         desc.loadData(text, "text/html", "utf-8");
 

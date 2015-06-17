@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.ghostery.privacy.inappconsentsdk.Identifiers.AdvertisingId;
@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Splash screen seen on launch of application This activity downloads the XML data from web
  */
-public class SplashScreen extends ActionBarActivity {
+public class SplashScreen extends AppCompatActivity {
 
     private static final String TAG = "AppChoices";
 

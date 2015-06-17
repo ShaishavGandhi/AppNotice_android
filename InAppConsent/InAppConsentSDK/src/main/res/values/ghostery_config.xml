@@ -18,7 +18,7 @@
     <!-- Manage Preferences text -->
     <!--<string name="app_name">CompanyName</string>-->
     <string name="ghostery_manage_preferences_header">Preferences</string>
-    <string name="ghostery_app_desc_1">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_manage_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
 
     <!-- List Header Text -->
     <string name="ghostery_header_company">Tracker Company</string>
