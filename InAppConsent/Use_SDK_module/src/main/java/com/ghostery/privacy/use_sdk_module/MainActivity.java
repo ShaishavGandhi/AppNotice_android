@@ -235,11 +235,17 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+        private final static int ADMOB_TRACKERID = 464;
+
         @Override
         public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
             // Handle your response
             if (isAccepted) {
                 Toast.makeText(getActivity(), "Tracking accepted", Toast.LENGTH_LONG).show();
+
+//                if (trackerHashMap.get(ADMOB_TRACKERID))  // Only init AdMob if allowed by user
+//                    AdMob.init();
+
             } else {
                 Toast.makeText(getActivity(), "Tracking declined", Toast.LENGTH_LONG).show();
 

@@ -123,7 +123,7 @@ public class InAppConsentData {
     private String ric_title;
     private String ric_title_color;
 
-    private ArrayList<Tracker> trackerArrayList = new ArrayList<>();
+    public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
 
 
     // Public getters and setters
@@ -156,7 +156,8 @@ public class InAppConsentData {
     public int getRic_session_max() { return ric_session_max; }
     public String getRic_title() { return ric_title; }
     public String getRic_title_color() { return ric_title_color; }
-    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
+//    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
+
     public HashMap<Integer, Boolean> getTrackerHashMap() {
         HashMap trackerHashMap = new HashMap();
 
@@ -167,6 +168,17 @@ public class InAppConsentData {
             }
         }
         return trackerHashMap;
+    }
+
+    // Returns requested tracker. If not found, returns null.
+    public Tracker getTrackerById(int trackerId) {
+        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        for (Tracker tracker : trackerArrayList) {
+            if (tracker.getTrackerId() == trackerId) {
+                return tracker;
+            }
+        }
+        return null;
     }
 
 

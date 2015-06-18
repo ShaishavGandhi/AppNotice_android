@@ -7,34 +7,25 @@
     tools:context=".ListActivity" >
 
     <TextView
-        android:id="@+id/company_name"
+        android:id="@+id/tracker_name"
         style="@style/ghostery_style_custom_list_adapter"
         android:textSize="18sp" />
 
     <ToggleButton
-        android:id="@+id/opt_out_button"
+        android:id="@+id/opt_in_out_button"
         style="@style/ghostery_style_custom_list_adapter"
         android:layout_alignParentRight="true"
         android:focusable="false"
-        android:onClick="onOptoutClick" />
+        android:onClick="onOptoutClick"
+        android:checked="false" />
 
     <ImageView
-        android:id="@+id/company_logo"
+        android:id="@+id/tracker_logo"
         style="@style/ghostery_style_custom_list_adapter"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/opt_out_button"
+        android:layout_toLeftOf="@id/opt_in_out_button"
         android:paddingRight="15dp"
         android:adjustViewBounds="true"
         android:scaleType="fitStart" />
-
-    <TextView
-        android:id="@+id/go_to_site"
-        style="@style/ghostery_style_custom_list_adapter"
-        android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:onClick="onOptoutClick"
-        android:text="@string/ghostery_link_go_to_site"
-        android:textColor="#0000FF"
-        android:visibility="gone" />
 
 </RelativeLayout>

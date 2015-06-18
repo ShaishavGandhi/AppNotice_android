@@ -12,37 +12,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
-import com.ghostery.privacy.inappconsentsdk.model.Company;
-import com.ghostery.privacy.inappconsentsdk.model.Optout;
+import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 
 public class CustomListAdapter extends BaseAdapter {
 
-    private List<Company.CompanyData> mCompany;
+    private ArrayList<Tracker> trackerArrayList;
     private static LayoutInflater mInflater = null;
-    private static final String TAG = "AppChoices";
+    private static final String TAG = "SDK_CustomListAdapter";
     public FragmentActivity context;
 
     public static class ViewHolder {
         public TextView name;
         public ImageView logo;
         public CompoundButton btn;
-        public TextView gts;
+        public Boolean isOn;
+//        public TextView gts;
     }
 
-    public CustomListAdapter(FragmentActivity ctx, List<Company.CompanyData> company) {
-        this.mCompany = company;
+    public CustomListAdapter(FragmentActivity ctx, ArrayList<Tracker> trackerArrayList) {
+        this.trackerArrayList = trackerArrayList;
         this.mInflater = ctx.getLayoutInflater();
         this.context = ctx;
     }
 
     @Override
     public int getCount() {
-        return mCompany.size();
+        return trackerArrayList.size();
     }
 
     @Override
@@ -62,41 +61,41 @@ public class CustomListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.ghostery_custom_list_adapter, parent, false);
 
             holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.company_name);
-            holder.logo = (ImageView) convertView.findViewById(R.id.company_logo);
-            holder.btn = (CompoundButton) convertView.findViewById(R.id.opt_out_button);
-            Company.CompanyData cmp = mCompany.get(position);
-            holder.btn.setTag(cmp.id);
-            Log.v(TAG, "name: " + cmp.name +" id:" + cmp.id);
-            holder.gts = (TextView) convertView.findViewById(R.id.go_to_site);
+            holder.name = (TextView) convertView.findViewById(R.id.tracker_name);
+            holder.logo = (ImageView) convertView.findViewById(R.id.tracker_logo);
+            holder.btn = (CompoundButton) convertView.findViewById(R.id.opt_in_out_button);
+            Tracker tracker = trackerArrayList.get(position);
+            holder.btn.setTag(tracker.getTrackerId());
+            Log.v(TAG, "name: " + tracker.getName() +" id:" + tracker.getTrackerId());
+//            holder.isOn = (TextView) convertView.findViewById(R.id.go_to_site);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        // Opt-out button
-        if (mCompany.get(position).goToSite) {
-            holder.btn.setVisibility(View.GONE);
-            holder.gts.setVisibility(View.VISIBLE);
-            holder.gts.setTag(mCompany.get(position));
-        } else {
-            holder.btn.setVisibility(View.VISIBLE);
-            holder.gts.setVisibility(View.GONE);
-            holder.btn.setTag(mCompany.get(position));
-            holder.btn.setChecked(!Optout.OPTOUT_MAP.get(mCompany.get(position).id.toString()).optoutStatus);
-            holder.btn.setEnabled(!Optout.OPTOUT_MAP.get(mCompany.get(position).id.toString()).optoutStatus);
-        }
+//        // Opt-out button
+//        if (trackerArrayList.get(position).goToSite) {
+//            holder.btn.setVisibility(View.GONE);
+//            holder.gts.setVisibility(View.VISIBLE);
+//            holder.gts.setTag(trackerArrayList.get(position));
+//        } else {
+//            holder.btn.setVisibility(View.VISIBLE);
+//            holder.gts.setVisibility(View.GONE);
+//            holder.btn.setTag(trackerArrayList.get(position));
+//            holder.btn.setChecked(!Optout.OPTOUT_MAP.get(trackerArrayList.get(position).id.toString()).optoutStatus);
+//            holder.btn.setEnabled(!Optout.OPTOUT_MAP.get(trackerArrayList.get(position).id.toString()).optoutStatus);
+//        }
 
 
 
         // Company Logo
         ImageDownloader img = new ImageDownloader();
-        img.download(mCompany.get(position).logo, holder.logo);
+        img.download(trackerArrayList.get(position).getLogo_url(), holder.logo);
 
         // Company Name (if logo not available/displayed)
         if (holder.logo.getDrawable().getIntrinsicHeight() <= 0) {
-            holder.name.setText(mCompany.get(position).name);
+            holder.name.setText(trackerArrayList.get(position).getName());
             holder.name.setVisibility(View.VISIBLE);
             holder.logo.setVisibility(View.GONE);
         } else {
@@ -106,16 +105,16 @@ public class CustomListAdapter extends BaseAdapter {
 
 
         Button disable_all = (Button)this.context.findViewById(R.id.choose_all_companies);
-        if(checkifLastoptout())
-        {
-            disable_all.setEnabled(false);
-            disable_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_gray);
-        }
-        else
-        {
-            disable_all.setEnabled(true);
-            disable_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_blue);
-        }
+//        if(checkifLastoptout())
+//        {
+//            disable_all.setEnabled(false);
+//            disable_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_gray);
+//        }
+//        else
+//        {
+//            disable_all.setEnabled(true);
+//            disable_all.setBackgroundResource(R.drawable.ghostery_rounded_corner_blue);
+//        }
 
         // this was to process saved optouts, not used anymore
         /*
@@ -125,11 +124,11 @@ public class CustomListAdapter extends BaseAdapter {
         if(network)
         {
 
-            if(Optout.OPTOUT_MAP.get(mCompany.get(position).id.toString()).storeOptout || Optout.OPTOUT_MAP.get(mCompany.get(position).id.toString()).storeOptoutAll)
+            if(Optout.OPTOUT_MAP.get(trackerArrayList.get(position).id.toString()).storeOptout || Optout.OPTOUT_MAP.get(trackerArrayList.get(position).id.toString()).storeOptoutAll)
             {
-                if(!Optout.OPTOUT_MAP.get(mCompany.get(position).id.toString()).optoutStatus)
+                if(!Optout.OPTOUT_MAP.get(trackerArrayList.get(position).id.toString()).optoutStatus)
                 {
-                    oom.processOptOutInBackground(mCompany.get(position), "", "", (CompoundButton) holder.btn, false);
+                    oom.processOptOutInBackground(trackerArrayList.get(position), "", "", (CompoundButton) holder.btn, false);
                 }
 
             }
@@ -138,21 +137,21 @@ public class CustomListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private boolean checkifLastoptout ()
-    {
-        boolean isLastOptOut = false;
-        for (Map.Entry<String, Company.CompanyData> entry : Company.COMPANY_MAP.entrySet()) {
-            Company.CompanyData company = Company.COMPANY_MAP.get(entry.getKey());
-            Optout.OptoutData optout = Optout.OPTOUT_MAP.get(entry.getKey());
-
-            //Log.v(TAG, " ======== optout status for "+ company.name + "= "+optout.optoutStatus);
-            isLastOptOut = optout.optoutStatus;
-            if(!optout.optoutStatus && !company.goToSite)
-            {
-                break;
-            }
-
-        }
-        return isLastOptOut;
-    }
+//    private boolean checkifLastoptout ()
+//    {
+//        boolean isLastOptOut = false;
+//        for (Map.Entry<String, ArrayList<Tracker>> entry : Company.COMPANY_MAP.entrySet()) {
+//            ArrayList<Tracker> company = Company.COMPANY_MAP.get(entry.getKey());
+//            Optout.OptoutData optout = Optout.OPTOUT_MAP.get(entry.getKey());
+//
+//            //Log.v(TAG, " ======== optout status for "+ company.name + "= "+optout.optoutStatus);
+//            isLastOptOut = optout.optoutStatus;
+//            if(!optout.optoutStatus && !company.goToSite)
+//            {
+//                break;
+//            }
+//
+//        }
+//        return isLastOptOut;
+//    }
 }

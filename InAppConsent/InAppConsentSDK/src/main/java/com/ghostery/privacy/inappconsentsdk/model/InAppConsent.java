@@ -16,7 +16,6 @@ import com.ghostery.privacy.inappconsentsdk.utils.Util;
  * Created by Steven.Overson on 2/4/2015.
  */
 public class InAppConsent {
-    private static final String INAPPCONSENT_DATA = "inAppConsent_data";
 
     private InAppConsentData inAppConsentData;
 //    private ShowMode showMode;
@@ -78,6 +77,8 @@ public class InAppConsent {
      *   - activity: Usually your current activity
      */
     public void showManagePreferences(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
+        this.inAppConsent_callback = inAppConsent_callback;
+
         init(activity, company_id, pub_notice_id, useRemoteValues, false);
 
         // Open the In-App Consent preferences activity
@@ -93,7 +94,7 @@ public class InAppConsent {
         }
 
         // Get either a new or initialized tracker config object
-        inAppConsentData = (InAppConsentData)Session.get(INAPPCONSENT_DATA, InAppConsentData.getInstance(activity));
+        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(activity));
 
         // Keep track of the company ID and the pub-notice ID
         inAppConsentData.setCompany_id(company_id);
@@ -101,7 +102,8 @@ public class InAppConsent {
 
         if (inAppConsentData.isInitialized()) {
             // If initialized, use what we have
-            startConsentFlow(activity, useRemoteValues);
+            if (isConsentFlow)
+                startConsentFlow(activity, useRemoteValues);
         } else {
             // If not initialized yet, go get it
             inAppConsentData.inti(new JSONGetterCallback() {
@@ -109,7 +111,7 @@ public class InAppConsent {
                 @Override
                 public void onTaskDone() {
                     // Save the tracker config object in the app session
-                    Session.set(INAPPCONSENT_DATA, inAppConsentData);
+                    Session.set(Session.INAPPCONSENT_DATA, inAppConsentData);
 
                     if (isConsentFlow) {
                         // Handle the response

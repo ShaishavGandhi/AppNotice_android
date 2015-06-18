@@ -8,8 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
-
-import com.ghostery.privacy.inappconsentsdk.app.dummy.DummyContent;
+import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
+import com.ghostery.privacy.inappconsentsdk.model.Tracker;
+import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
 /**
  * A fragment representing a single Tracker detail screen.
@@ -18,6 +19,9 @@ import com.ghostery.privacy.inappconsentsdk.app.dummy.DummyContent;
  * on handsets.
  */
 public class TrackerDetailFragment extends Fragment {
+
+    private InAppConsentData inAppConsentData;
+
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -27,7 +31,7 @@ public class TrackerDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private Tracker tracker;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,11 +44,15 @@ public class TrackerDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
+        // Get either a new or initialized tracker config object
+        inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
+
+        if (inAppConsentData.isInitialized()) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            tracker = inAppConsentData.getTrackerById(getArguments().getInt(ARG_ITEM_ID));
+
         }
     }
 
@@ -54,8 +62,8 @@ public class TrackerDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_tracker_detail, container, false);
 
         // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.tracker_detail)).setText(mItem.content);
+        if (tracker != null) {
+            ((TextView) rootView.findViewById(R.id.tracker_detail)).setText(tracker.getName());
         }
 
         return rootView;
