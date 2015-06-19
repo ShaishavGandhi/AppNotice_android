@@ -18,30 +18,31 @@
         android:background="#46AAAAAA"
         android:layout_alignParentTop="true"/>
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/rbGroup_header"
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_gravity="center_vertical|right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
         android:layout_marginRight="16dp">
 
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="All"
-            android:id="@+id/rb_all"
-            android:checked="false"
-            android:layout_gravity="center_vertical" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:id="@+id/rb_all"
+                android:checked="true"
+                android:layout_gravity="center_vertical"
+            android:onClick="onClick" />
 
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="None"
-            android:id="@+id/rb_none"
-            android:checked="false"
-            android:layout_gravity="center_vertical" />
-    </RadioGroup>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="None"
+                android:id="@+id/rb_none"
+                android:checked="false"
+                android:layout_gravity="center_vertical"
+            android:onClick="onClick" />
+    </LinearLayout>
 
     <View
         android:id="@+id/divider_view2"

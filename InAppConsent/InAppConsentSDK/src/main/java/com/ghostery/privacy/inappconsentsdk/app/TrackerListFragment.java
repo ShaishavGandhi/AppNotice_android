@@ -6,7 +6,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.ghostery.privacy.inappconsentsdk.adapter.CustomListAdapter;
+import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
@@ -22,6 +23,7 @@ import com.ghostery.privacy.inappconsentsdk.utils.Session;
 public class TrackerListFragment extends ListFragment {
 
     private InAppConsentData inAppConsentData;
+    private TrackerArrayAdapter trackerArrayAdapter;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -77,7 +79,8 @@ public class TrackerListFragment extends ListFragment {
         inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
 
         // TODO: replace with a real list adapter.
-        setListAdapter(new CustomListAdapter(getActivity(), inAppConsentData.trackerArrayList));
+        trackerArrayAdapter = new TrackerArrayAdapter(getActivity(), R.id.tracker_name, inAppConsentData.trackerArrayList);
+        setListAdapter(trackerArrayAdapter);
     }
 
     @Override
@@ -127,6 +130,17 @@ public class TrackerListFragment extends ListFragment {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
+    }
+
+    public void refresh()
+    {
+        getActivity().runOnUiThread(
+            new Runnable() {
+                @Override
+                public void run() {
+                    trackerArrayAdapter.notifyDataSetChanged();
+                }
+            });
     }
 
     /**

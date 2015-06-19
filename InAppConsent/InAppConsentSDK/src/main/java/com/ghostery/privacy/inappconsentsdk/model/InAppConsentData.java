@@ -158,29 +158,6 @@ public class InAppConsentData {
     public String getRic_title_color() { return ric_title_color; }
 //    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
 
-    public HashMap<Integer, Boolean> getTrackerHashMap() {
-        HashMap trackerHashMap = new HashMap();
-
-        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
-        for (Tracker tracker : trackerArrayList) {
-            if (!tracker.getCategory().equalsIgnoreCase("Essential")) {
-                trackerHashMap.put(tracker.getTrackerId(), tracker.isOn());
-            }
-        }
-        return trackerHashMap;
-    }
-
-    // Returns requested tracker. If not found, returns null.
-    public Tracker getTrackerById(int trackerId) {
-        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
-        for (Tracker tracker : trackerArrayList) {
-            if (tracker.getTrackerId() == trackerId) {
-                return tracker;
-            }
-        }
-        return null;
-    }
-
 
     // Single instance
     public static synchronized InAppConsentData getInstance(Activity activity)
@@ -200,6 +177,65 @@ public class InAppConsentData {
         ric_max = ric_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_max_default);
         ric_session_max = ric_session_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
         ric_opacity = ric_opacity_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
+    }
+
+    public HashMap<Integer, Boolean> getTrackerHashMap() {
+        HashMap trackerHashMap = new HashMap();
+
+        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        for (Tracker tracker : trackerArrayList) {
+            if (!tracker.isEssential()) {
+                trackerHashMap.put(tracker.getTrackerId(), tracker.isOn());
+            }
+        }
+        return trackerHashMap;
+    }
+
+    // Returns requested tracker. If not found, returns null.
+    public Tracker getTrackerById(int trackerId) {
+        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        for (Tracker tracker : trackerArrayList) {
+            if (tracker.getTrackerId() == trackerId) {
+                return tracker;
+            }
+        }
+        return null;
+    }
+
+    // Sets all the specified non-essential tracker on/off state to the specified value.
+    public void setTrackerOnOffState(int trackerId, boolean isOn) {
+        for (Tracker tracker : trackerArrayList) {
+            if (!tracker.isEssential() && tracker.getTrackerId() == trackerId) {
+                tracker.setOnOffState(isOn);
+                // It is possible there will be more than one match, so don't break here.
+            }
+        }
+    }
+
+    // Sets all non-essential tracker on/off states to the specified value.
+    public void setTrackerOnOffState(boolean isOn) {
+        for (Tracker tracker : trackerArrayList) {
+            if (!tracker.isEssential()) {
+                tracker.setOnOffState(isOn);
+            }
+        }
+    }
+
+    // Returns 1 if all on; 0 if some on and aome off; -1 if all off
+    public int getTrackerOnOffStates() {
+        int trackerCount = 0;
+        int trackerOnCount = 0;
+        for (Tracker tracker : trackerArrayList) {
+            if (!tracker.isEssential()) {
+                trackerCount++;
+                if (tracker.isOn()) {
+                    trackerOnCount++;
+                }
+            }
+        }
+
+        int trackerOnOffStates = trackerOnCount == trackerCount ? 1 : trackerOnCount == 0 ? -1 : 0;
+        return trackerOnOffStates;
     }
 
     // Sends a report back through the Site Notice Channel

@@ -10,6 +10,7 @@ import org.json.JSONObject;
  */
 public class Tracker {
     private static final String TAG = "Tracker";
+    private final static String CAT_ESSENTIAL = "Essential";
 
     // Field tags
     private static final String TAG_CATEGORY = "category";
@@ -36,7 +37,7 @@ public class Tracker {
     public String getDescription() { return description; }
     public String getPrivacy_url() { return privacy_url; }
     public boolean isOn() { return on; }
-    public void setOn(boolean isOn) { on = isOn; };
+    public void setOnOffState(boolean isOn) { on = isOn; };
 
     // Constructor
     public Tracker(JSONObject trackerJSONObject) {
@@ -55,4 +56,7 @@ public class Tracker {
 
     }
 
+    public boolean isEssential() {
+        return (category.equalsIgnoreCase(CAT_ESSENTIAL));
+    }
 }

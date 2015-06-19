@@ -20,6 +20,6 @@
         android:background="@drawable/ghostery_rounded_corner_blue"
         android:textColor="#FFFFFF"
         android:fontFamily="arial"
-        android:onClick="optOutAll"/>
+        android:onClick="optOutAll" />
 
 </LinearLayout>

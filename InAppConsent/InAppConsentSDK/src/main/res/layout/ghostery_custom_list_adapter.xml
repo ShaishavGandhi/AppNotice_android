@@ -13,11 +13,11 @@
 
     <ToggleButton
         android:id="@+id/opt_in_out_button"
-        style="@style/ghostery_style_custom_list_adapter"
         android:layout_alignParentRight="true"
         android:focusable="false"
-        android:onClick="onOptoutClick"
-        android:checked="false" />
+        android:onClick="onOptInOutClick"
+        android:checked="false"
+        style="@style/ghostery_style_custom_list_adapter" />
 
     <ImageView
         android:id="@+id/tracker_logo"

@@ -7,11 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.view.ActionMode;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
+import com.ghostery.privacy.inappconsentsdk.model.Tracker;
+import com.ghostery.privacy.inappconsentsdk.utils.Session;
+
+import java.util.ArrayList;
 
 /**
  * An activity representing a list of Trackers. This activity
@@ -31,6 +38,9 @@ import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
  */
 public class TrackerListActivity extends AppCompatActivity implements TrackerListFragment.Callbacks, AppCompatCallback {
 
+    private ArrayList<Tracker> trackerArrayList;
+    private InAppConsentData inAppConsentData;
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -42,6 +52,9 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracker_list);
 
+        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA);
+        trackerArrayList = inAppConsentData.trackerArrayList;
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -50,22 +63,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             actionBar.setHomeButtonEnabled(true);
         }
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.ghostery_tracker_list_toolbar);
-//        toolbar.setTitle(R.string.title_tracker_list);
-////        toolbar.setLogo(R.drawable.ghostery_header_logo);
-//
-//        setSupportActionBar(toolbar);
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle(R.string.title_tracker_detail);
-
-
-//        final ActionBar actionBar = getSupportActionBar();
-//
-////        actionBar.setCustomView(R.layout.ghostery_tracker_list_header);
-//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowHomeEnabled(true);
+        setAllNoneControlState();
 
         TextView manage_preferences_description = (TextView)findViewById(R.id.manage_preferences_description);
         if (manage_preferences_description != null) {
@@ -90,6 +88,12 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
     }
 
     /**
@@ -136,6 +140,47 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 //        getSupportFragmentManager().beginTransaction().replace(R.id.item_detail_container, fragment).commit();
 
         return true;
+    }
+
+    public void onClick(View view) {
+        RadioButton rbAll = (RadioButton) findViewById(R.id.rb_all);
+        RadioButton rbNone = (RadioButton) findViewById(R.id.rb_none);
+
+        if (view.getId() == R.id.rb_all) {
+            inAppConsentData.setTrackerOnOffState(true);
+            rbAll.setChecked(true);
+            rbNone.setChecked(false);
+        } else if (view.getId() == R.id.rb_none) {
+            inAppConsentData.setTrackerOnOffState(false);
+            rbAll.setChecked(false);
+            rbNone.setChecked(true);
+        }
+
+        ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
+    }
+
+    public void onOptInOutClick(View view) {
+        Boolean isOn = ((ToggleButton)view).isChecked();
+        int trackerId = (int)view.getTag();
+        inAppConsentData.setTrackerOnOffState(trackerId, isOn);
+
+        setAllNoneControlState();
+    }
+
+    private void setAllNoneControlState() {
+        int trackerOnOffStates = inAppConsentData.getTrackerOnOffStates();
+        RadioButton rbAll = (RadioButton) findViewById(R.id.rb_all);
+        RadioButton rbNone = (RadioButton) findViewById(R.id.rb_none);
+        if (trackerOnOffStates == 1) {              // All on
+            rbAll.setChecked(true);
+            rbNone.setChecked(false);
+        } else if (trackerOnOffStates == -1) {      // None on
+            rbAll.setChecked(false);
+            rbNone.setChecked(true);
+        } else {                                    // Some on, some off
+            rbAll.setChecked(false);
+            rbNone.setChecked(false);
+        }
     }
 
     @Override

@@ -80,12 +80,6 @@ public class InAppConsent {
         this.inAppConsent_callback = inAppConsent_callback;
 
         init(activity, company_id, pub_notice_id, useRemoteValues, false);
-
-        // Open the In-App Consent preferences activity
-        Util.showManagePreferences(activity);
-
-        // Send notice for this event
-        InAppConsentData.sendNotice(InAppConsentData.NoticeType.PREF_DIRECT);
     }
 
     private void init(final FragmentActivity activity, int company_id, int pub_notice_id, final boolean useRemoteValues, final boolean isConsentFlow) {
@@ -102,8 +96,15 @@ public class InAppConsent {
 
         if (inAppConsentData.isInitialized()) {
             // If initialized, use what we have
-            if (isConsentFlow)
+            if (isConsentFlow) {
                 startConsentFlow(activity, useRemoteValues);
+            } else {
+                // Open the In-App Consent preferences activity
+                Util.showManagePreferences(activity);
+
+                // Send notice for this event
+                InAppConsentData.sendNotice(InAppConsentData.NoticeType.PREF_DIRECT);
+            }
         } else {
             // If not initialized yet, go get it
             inAppConsentData.inti(new JSONGetterCallback() {
@@ -116,6 +117,12 @@ public class InAppConsent {
                     if (isConsentFlow) {
                         // Handle the response
                         startConsentFlow(activity, useRemoteValues);
+                    } else {
+                        // Open the In-App Consent preferences activity
+                        Util.showManagePreferences(activity);
+
+                        // Send notice for this event
+                        InAppConsentData.sendNotice(InAppConsentData.NoticeType.PREF_DIRECT);
                     }
                 }
             });

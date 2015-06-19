@@ -11,7 +11,7 @@
 //import android.widget.TextView;
 //
 //import com.ghostery.privacy.inappconsentsdk.R;
-//import com.ghostery.privacy.inappconsentsdk.adapter.CustomListAdapter;
+//import com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter;
 //import com.ghostery.privacy.inappconsentsdk.app.CustomDialogClass;
 //import com.ghostery.privacy.inappconsentsdk.app.OptOutManager;
 //import com.ghostery.privacy.inappconsentsdk.model.Company;
@@ -26,7 +26,7 @@
 //
 //public class ListFragment extends android.support.v4.app.ListFragment {
 //
-//    public static CustomListAdapter adapter = null;
+//    public static TrackerArrayAdapter adapter = null;
 //    private static final String TAG = "AppChoices";
 //    private ProgressDialog progress;
 //
@@ -71,7 +71,7 @@
 //    public void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        Collections.sort(Company.COMPANY);
-//        adapter = new CustomListAdapter(getActivity(), Company.COMPANY);
+//        adapter = new TrackerArrayAdapter(getActivity(), Company.COMPANY);
 //        progress = new ProgressDialog(getActivity(), R.style.ghostery_loading_dialog_theme);
 //        setListAdapter(adapter);
 //    }
