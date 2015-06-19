@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 
@@ -445,6 +447,32 @@ public class InAppConsentData {
                             Tracker tracker = new Tracker(trackerJSONObject);
                             trackerArrayList.add(tracker);
                         }
+
+                        // Sort by category and then by name within category
+                        Collections.sort(trackerArrayList, new Comparator<Tracker>() {
+                            @Override
+                            public int compare(Tracker tracker1, Tracker tracker2) {
+                                int result = 0;
+
+                                // Sort first by category...keeping "Essential" at the top
+                                if (tracker1.isEssential() && tracker2.isEssential()) {
+                                    result = 0;
+                                } else if (tracker1.isEssential()) {
+                                    result = -1;
+                                } else if (tracker2.isEssential()) {
+                                    result = 1;
+                                } else {
+                                    // Sort by non-essential category
+                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
+                                }
+
+                                // If it's in the same category, then sort by tracker name
+                                if (result == 0)
+                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
+
+                                return result;
+                            }
+                        });
 
 //                        // Convert the opacity string (value "0" to "100") to a float (value 0.0 to 1.0)
 //                        if (ric_opacityString != null) {
