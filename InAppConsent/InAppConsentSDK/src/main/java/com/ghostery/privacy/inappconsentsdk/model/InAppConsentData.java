@@ -474,6 +474,19 @@ public class InAppConsentData {
                             }
                         });
 
+                        // Set header bit for first tracker in each category
+                        String categoryName = "";
+                        for (int i = 0; i < trackerArrayList.size(); i++) {
+                            Tracker tracker = trackerArrayList.get(i);
+
+                            // Flag tracker as having a header if this is the first tracker or if the category name is new
+                            if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
+                                tracker.setHasHeader();
+                            }
+                            categoryName = tracker.getCategory();
+                        }
+
+
 //                        // Convert the opacity string (value "0" to "100") to a float (value 0.0 to 1.0)
 //                        if (ric_opacityString != null) {
 //                            int opacityInt = Integer.parseInt(ric_opacityString);

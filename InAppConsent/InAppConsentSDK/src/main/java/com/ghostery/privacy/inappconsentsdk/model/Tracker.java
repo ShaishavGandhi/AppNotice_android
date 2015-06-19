@@ -27,7 +27,8 @@ public class Tracker {
     private String logo_url;
     private String description;
     private String privacy_url;
-    private boolean on = true;      // Not in JSON. Defaults to true and is managed within the SDK
+    private boolean on = true;                  // Not in JSON. Defaults to true and is managed within the SDK
+    private boolean hasHeader = false;      // Not in JSON. Defaults to false and is set after the tracker list is first loaded
 
     // Public getters and setters
     public String getCategory() { return category; }
@@ -38,6 +39,8 @@ public class Tracker {
     public String getPrivacy_url() { return privacy_url; }
     public boolean isOn() { return on; }
     public void setOnOffState(boolean isOn) { on = isOn; };
+    public boolean hasHeader() { return hasHeader; }
+    public void setHasHeader() { this.hasHeader = true; };
 
     // Constructor
     public Tracker(JSONObject trackerJSONObject) {

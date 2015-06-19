@@ -77,6 +77,15 @@ public class TrackerArrayAdapter extends ArrayAdapter {
                 holder.btn.setChecked(tracker.isOn());
             }
 
+            // Make the header visible and set its text if needed
+            if (tracker.hasHeader()) {
+                TextView tvCategoryHeader = (TextView)itemView.findViewById(R.id.category_header);
+                if (tvCategoryHeader != null) {
+                    tvCategoryHeader.setVisibility(View.VISIBLE);
+                    tvCategoryHeader.setText(tracker.getCategory());
+                }
+            }
+
             Log.v(TAG, "name: " + tracker.getName() +" id:" + tracker.getTrackerId());
 //            holder.isOn = (TextView) convertView.findViewById(R.id.go_to_site);
 
