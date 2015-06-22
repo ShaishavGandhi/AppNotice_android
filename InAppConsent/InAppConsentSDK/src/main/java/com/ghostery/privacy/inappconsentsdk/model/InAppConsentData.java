@@ -181,13 +181,16 @@ public class InAppConsentData {
         ric_opacity = ric_opacity_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
     }
 
-    public HashMap<Integer, Boolean> getTrackerHashMap() {
+    public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
         HashMap trackerHashMap = new HashMap();
 
         // Loop through the tracker list and add non-essential tracker IDs and their on/off state
         for (Tracker tracker : trackerArrayList) {
             if (!tracker.isEssential()) {
-                trackerHashMap.put(tracker.getTrackerId(), tracker.isOn());
+                if (useTrackerIdAsInt)
+                    trackerHashMap.put(tracker.getTrackerId(), tracker.isOn());
+                else
+                    trackerHashMap.put(Integer.toString(tracker.getTrackerId()), tracker.isOn());
             }
         }
         return trackerHashMap;
@@ -357,6 +360,60 @@ public class InAppConsentData {
         if (currentDisplayCount == 0) {             // If this is the first time being displayed in this 30-day period...
             AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime);   //   reset the last display time to now
         }
+    }
+
+    public void saveTrackerStates() {
+        HashMap trackerHashMap = getTrackerHashMap(false);     // Use tracker ID as a string
+        JSONObject trackerStateJSONObject = new JSONObject(trackerHashMap);
+        String trackerStatesString = trackerStateJSONObject.toString();
+        AppData.setString(AppData.APPDATA_TRACKERSTATES, trackerStatesString);
+    }
+
+    public void restoreTrackerStates() {
+        HashMap trackerHashMap = getTrackerPreferences();
+
+        // Look for a non-essential tracker with the same ID. If found, set its state.
+        for (Tracker tracker : trackerArrayList) {
+            if (!tracker.isEssential()) {
+                Boolean trackerState = (Boolean)trackerHashMap.get(tracker.getTrackerId());
+
+                if (trackerState != null)
+                    tracker.setOnOffState(trackerState);
+            }
+        }
+    }
+
+    // Gets the tracker preferences directly from AppData just in case the InAppConsentData object hasn't been inite'ed yet.
+    public static HashMap getTrackerPreferences() {
+        HashMap trackerHashMap = new HashMap();
+
+        String trackerStatesString = AppData.getString(AppData.APPDATA_TRACKERSTATES);
+
+        if (trackerStatesString.length() > 2) {
+            // Strip off the brackets
+            trackerStatesString = trackerStatesString.substring(1, trackerStatesString.length() - 1);
+            String[] trackerStatesArray = trackerStatesString.split(",");
+
+            for (String trackerStatePairString : trackerStatesArray) {
+                String[] trackerStateArray = trackerStatePairString.split(":");
+                String trackerIdString = trackerStateArray[0];
+                String trackerStateString = trackerStateArray[1];
+
+                // Strip off the quote marks
+                trackerIdString = trackerIdString.substring(1, trackerIdString.length() - 1);
+
+                // Get the actual key/value pair
+                int trackerId = Integer.parseInt(trackerIdString);
+                Boolean trackerState = Boolean.parseBoolean(trackerStateString);
+
+                // Add this tracker state to the hashmap
+                trackerHashMap.put(trackerId, trackerState);
+
+                Log.d(TAG, trackerIdString + " : " + trackerStatePairString);
+            }
+        }
+
+        return trackerHashMap;
     }
 
 
@@ -533,6 +590,8 @@ public class InAppConsentData {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+
+            restoreTrackerStates();
 
             // Let the specified callback know it finished...
             if (mJSONGetterCallback != null) {

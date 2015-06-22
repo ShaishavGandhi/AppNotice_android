@@ -12,6 +12,8 @@ import com.ghostery.privacy.inappconsentsdk.utils.AppData;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
+import java.util.HashMap;
+
 /**
  * Created by Steven.Overson on 2/4/2015.
  */
@@ -37,6 +39,7 @@ public class InAppConsent {
      */
     public void startConsentFlow(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
         this.inAppConsent_callback = inAppConsent_callback;
+        Session.set(Session.INAPPCONSENT_CALLBACK, inAppConsent_callback);
 
         init(activity, company_id, pub_notice_id, useRemoteValues, true);
 
@@ -78,6 +81,7 @@ public class InAppConsent {
      */
     public void showManagePreferences(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
         this.inAppConsent_callback = inAppConsent_callback;
+        Session.set(Session.INAPPCONSENT_CALLBACK, inAppConsent_callback);
 
         init(activity, company_id, pub_notice_id, useRemoteValues, false);
     }
@@ -148,15 +152,11 @@ public class InAppConsent {
             // Create and show the dialog.
             if (inAppConsentData.getBric()) {
                 ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-                explicitInfo_DialogFragment.setInAppConsentData(inAppConsentData);
-                explicitInfo_DialogFragment.setInAppConsent_Callback(inAppConsent_callback);
                 explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                 explicitInfo_DialogFragment.show(ft, "dialog_fragment_explicitInfo");
 
             } else {
                 ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
-                impliedInfo_DialogFragment.setInAppConsentData(inAppConsentData);
-                impliedInfo_DialogFragment.setInAppConsent_Callback(inAppConsent_callback);
                 impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                 impliedInfo_DialogFragment.show(ft, "dialog_fragment_implicitIntro");
 
@@ -169,4 +169,9 @@ public class InAppConsent {
             inAppConsent_callback.onNoticeSkipped();
         }
     }
+
+    public HashMap<Integer, Boolean> getTrackerPreferences() {
+        return InAppConsentData.getTrackerPreferences();
+    }
+
 }

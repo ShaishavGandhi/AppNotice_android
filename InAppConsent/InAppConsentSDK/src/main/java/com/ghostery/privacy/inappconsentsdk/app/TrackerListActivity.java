@@ -14,6 +14,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
@@ -124,12 +125,20 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     @Override
+    public void onBackPressed() {
+        saveTrackerStates();
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Bundle arguments = new Bundle();
 
         int i = item.getItemId();
         if (item.getItemId() == android.R.id.home) {
+            saveTrackerStates();
+
             // do something here, such as start an Intent to the parent activity.
             Toast.makeText(this, "Actionbar Home", Toast.LENGTH_SHORT).show();
             this.finish();  // Or onBackPressed();
@@ -141,6 +150,15 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
         return true;
     }
+
+    public void saveTrackerStates() {
+        inAppConsentData.saveTrackerStates();
+
+        // Send an updated tracker state hashmap to the calling app
+        InAppConsent_Callback inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
+        inAppConsent_callback.onTrackerStateChange(inAppConsentData.getTrackerHashMap(true));
+    }
+
 
     public void onClick(View view) {
         RadioButton rbAll = (RadioButton) findViewById(R.id.rb_all);

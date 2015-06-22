@@ -12,6 +12,7 @@ public class Session {
 
     // == Keys ==========================================================================
     public static final String INAPPCONSENT_DATA = "inAppConsent_data";
+    public static final String INAPPCONSENT_CALLBACK = "inAppConsent_callback";
 
     // System Keys
 //    public static final String SYS_SHAREDPREFERENCES = "sys_sharedPreferences"; 		// SharedPreferences object

@@ -22,6 +22,7 @@ import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.utils.AppData;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
+import com.ghostery.privacy.inappconsentsdk.utils.Session;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
 public class ExplicitInfo_DialogFragment extends DialogFragment {
@@ -48,6 +49,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, new InAppConsentData());
+        inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
     }
 
     @Override
@@ -82,7 +86,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap());
+                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
 
                 // Close this dialog
                 dismiss();
@@ -140,16 +144,8 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             inAppConsent_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
     }
 
-    public void setInAppConsentData(InAppConsentData inAppConsentData) {
-        this.inAppConsentData = inAppConsentData;
-    }
-
     public void setUseRemoteValues(boolean useRemoteValues) {
         this.useRemoteValues = useRemoteValues;
-    }
-
-    public void setInAppConsent_Callback(InAppConsent_Callback inAppConsent_callback) {
-        this.inAppConsent_callback = inAppConsent_callback;
     }
 
     private void applyCustomConfig(View v) {

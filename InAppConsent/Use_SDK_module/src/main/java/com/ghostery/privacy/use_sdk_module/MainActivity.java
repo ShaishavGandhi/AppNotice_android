@@ -122,6 +122,7 @@ public class MainActivity extends AppCompatActivity
         private Button btn_manage_preferences;
         private Button btn_reset_sdk;
         private Button btn_close_app;
+        private HashMap<Integer, Boolean> trackerHashMap;
 
         /**
          * The fragment argument representing the section number for this
@@ -225,6 +226,8 @@ public class MainActivity extends AppCompatActivity
 
                 InAppConsent inAppConsent = new InAppConsent();
 
+                this.trackerHashMap = inAppConsent.getTrackerPreferences();
+
                 if (view == btn_manage_preferences) {
                     inAppConsent.showManagePreferences(this.getActivity(), companyId, pubNoticeId, useRemoteValues, this);
 
@@ -263,6 +266,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public void onTrackerStateChange(HashMap<Integer, Boolean> trackerHashMap) {
+            this.trackerHashMap = trackerHashMap;
 
         }
 
