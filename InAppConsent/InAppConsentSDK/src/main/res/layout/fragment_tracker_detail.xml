@@ -1,5 +1,65 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/tracker_detail"
-    style="?android:attr/textAppearanceLarge" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:padding="16dp" android:textIsSelectable="true"
-    tools:context="com.ghostery.privacy.inappconsentsdk.app.TrackerDetailFragment" />
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_detail_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/item_detail"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:textIsSelectable="true"
+        tools:context=".DetailFragment" >
+
+        <ImageView
+            android:id="@+id/imageView_trackerLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp" />
+
+        <TextView
+            android:id="@+id/textView_TrackerName"
+            style="@style/ghostery_style_fragment_detail_header"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            />
+
+        <TextView
+            android:id="@+id/textView_trackerInfo"
+            style="@style/ghostery_style_fragment_detail"
+            android:textStyle="bold"
+            android:text="@string/ghostery_manage_preferences_detail_trackerinfo"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+
+        <TextView
+            android:id="@+id/textView_trackerDescription"
+            style="@style/ghostery_style_fragment_detail"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+
+        <TextView
+            android:id="@+id/textView_learn_more"
+            style="@style/ghostery_style_fragment_detail"
+            android:text="@string/ghostery_manage_preferences_detail_learnmore"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
+
+        <TextView
+            android:id="@+id/textView_learn_more_url"
+            style="@style/ghostery_style_fragment_detail"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:linksClickable="true"
+            android:onClick="onLinkClick" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -28,13 +28,10 @@
     <string name="ghostery_link_privacy_statement">Privacy Policy</string>
     <string name="ghostery_link_terms_of_use">Terms of Use</string>
 
-    <!-- Company Text -->
-    <string name="ghostery_comp_website_title_str">Website:</string>
-    <string name="ghostery_comp_info_title_str">Company Info:</string>
-    <string name="ghostery_comp_to_learn_more_str">To learn more about how we collect and use information for online advertising, please visit:</string>
-
-
     <string name="ghostery_result_reset_statistics">Your request to opt out is complete for {0} of {1} participating companies.</string>
     <string name="ghostery_result_reset_warning">If you use your settings to reset this device\'s mobile operating system advertising ID, you will also need to reset your opt-out preferences.</string>
 
+    <!-- Manage Preferences -->
+    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
+    <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
 </resources>

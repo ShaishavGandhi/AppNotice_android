@@ -120,7 +120,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             // for the selected item ID.
             Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
             detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, trackerId);
-            startActivity(detailIntent);
+            startActivityForResult(detailIntent, 0);
         }
     }
 

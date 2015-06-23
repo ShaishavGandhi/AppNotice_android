@@ -99,8 +99,8 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         }
 
         // Company Logo
-        ImageDownloader img = new ImageDownloader();
-        img.download(trackerArrayList.get(position).getLogo_url(), holder.logo);
+        ImageDownloader imageDownloader = new ImageDownloader();
+        imageDownloader.download(trackerArrayList.get(position).getLogo_url(), holder.logo);
 
         // Company Name (if logo not available/displayed)
         if (holder.logo.getDrawable().getIntrinsicHeight() <= 0) {
