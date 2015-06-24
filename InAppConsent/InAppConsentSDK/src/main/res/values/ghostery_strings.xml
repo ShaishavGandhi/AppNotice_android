@@ -34,4 +34,8 @@
     <!-- Manage Preferences -->
     <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
     <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+    <string name="title_tracker_list">Trackers</string>
+    <string name="title_tracker_detail">Tracker Detail</string>
+    <string name="title_tracker_learnmore">Learn More</string>
+
 </resources>

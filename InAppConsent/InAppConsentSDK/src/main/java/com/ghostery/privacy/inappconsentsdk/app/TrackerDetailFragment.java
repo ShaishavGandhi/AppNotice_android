@@ -31,7 +31,7 @@ public class TrackerDetailFragment extends Fragment {
     public static final String ARG_ITEM_ID = "item_id";
 
     /**
-     * The dummy content this fragment is presenting.
+     * The content this fragment is presenting.
      */
     private Tracker tracker;
 
@@ -53,7 +53,11 @@ public class TrackerDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            tracker = inAppConsentData.getTrackerById(getArguments().getInt(ARG_ITEM_ID));
+            Bundle bundle = getArguments();
+            int itemId = 0;
+            if (bundle != null)
+                itemId = bundle.getInt(ARG_ITEM_ID);
+            tracker = inAppConsentData.getTrackerById(itemId);
 
         }
     }
@@ -62,7 +66,6 @@ public class TrackerDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tracker_detail, container, false);
-
 
         // Show the dummy content as text in a TextView.
         if (tracker != null) {
@@ -83,13 +86,18 @@ public class TrackerDetailFragment extends Fragment {
             }
 
             ((TextView) rootView.findViewById(R.id.textView_trackerDescription)).setText(tracker.getDescription());
-            ((TextView) rootView.findViewById(R.id.textView_learn_more_url)).setText(tracker.getPrivacy_url());
+            TextView textView_learn_more_url = ((TextView) rootView.findViewById(R.id.textView_learn_more_url));
+            textView_learn_more_url.setText(tracker.getPrivacy_url());
         }
 
         return rootView;
     }
 
-    public void onLinkClick() {
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        ((TrackerDetailActivity) getActivity()).setActionBarTitle(R.string.title_tracker_detail);
     }
+
 }

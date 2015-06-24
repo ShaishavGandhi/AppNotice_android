@@ -25,7 +25,8 @@
         <activity
             android:name=".app.TrackerDetailActivity"
             android:label="@string/title_tracker_detail"
-            android:parentActivityName=".app.TrackerListActivity" >
+            android:parentActivityName=".app.TrackerListActivity"
+            android:theme="@style/ghostery_AppTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity" />

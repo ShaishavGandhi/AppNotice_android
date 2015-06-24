@@ -2,11 +2,15 @@ package com.ghostery.privacy.inappconsentsdk.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.fragments.LearnMore_Fragment;
 
 /**
  * An activity representing a single Tracker detail screen. This
@@ -25,7 +29,11 @@ public class TrackerDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tracker_detail);
 
         // Show the Up button in the action bar.
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -41,11 +49,15 @@ public class TrackerDetailActivity extends AppCompatActivity {
             // using a fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putInt(TrackerDetailFragment.ARG_ITEM_ID, getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
-            TrackerDetailFragment fragment = new TrackerDetailFragment();
+
+            final TrackerDetailFragment fragment = new TrackerDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.tracker_detail_container, fragment)
-                    .commit();
+            final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.tracker_detail_container, fragment);
+//            transaction.replace(R.id.tracker_detail_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
         }
     }
 
@@ -60,9 +72,37 @@ public class TrackerDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            NavUtils.navigateUpTo(this, new Intent(this, TrackerListActivity.class));
+            if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+                NavUtils.navigateUpTo(this, new Intent(this, TrackerListActivity.class));
+            } else {
+                getSupportFragmentManager().popBackStack();
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+            this.finish();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    public void onLinkClick(View view) {
+        Bundle arguments = new Bundle();
+        arguments.putInt(LearnMore_Fragment.ARG_ITEM_ID, getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
+        LearnMore_Fragment fragment = new LearnMore_Fragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.tracker_detail_container, fragment)
+                .commit();
+    }
+
+    public void setActionBarTitle(int titleId){
+        getSupportActionBar().setTitle(titleId);
     }
 }
