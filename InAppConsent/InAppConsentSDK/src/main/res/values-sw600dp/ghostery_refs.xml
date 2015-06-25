@@ -7,6 +7,5 @@
     For more on layout aliases, see:
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
     -->
-    <item name="ghostery_activity_layout" type="layout">@layout/ghostery_activity_twopane</item>
 
 </resources>

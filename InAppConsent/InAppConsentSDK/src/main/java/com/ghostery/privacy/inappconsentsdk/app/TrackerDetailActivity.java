@@ -34,7 +34,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracker_detail);
+        setContentView(R.layout.ghostery_activity_tracker_detail);
 
         // Show the Up button in the action bar.
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);

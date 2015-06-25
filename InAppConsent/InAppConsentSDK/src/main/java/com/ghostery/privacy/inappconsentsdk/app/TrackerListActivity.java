@@ -52,7 +52,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracker_list);
+        setContentView(R.layout.ghostery_activity_tracker_list);
 
         inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA);
         trackerArrayList = inAppConsentData.trackerArrayList;

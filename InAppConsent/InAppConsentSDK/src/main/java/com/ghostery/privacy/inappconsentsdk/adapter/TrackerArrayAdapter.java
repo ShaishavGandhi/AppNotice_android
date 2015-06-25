@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,7 +62,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         Tracker tracker = trackerArrayList.get(position);
 
         if (itemView == null) {
-            itemView = mInflater.inflate(R.layout.ghostery_custom_list_adapter, parent, false);
+            itemView = mInflater.inflate(R.layout.ghostery_tracker_list_item, parent, false);
 
             holder = new ViewHolder();
             holder.tracker_name = (TextView) itemView.findViewById(R.id.tracker_name);
@@ -112,8 +111,6 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             holder.logo.setVisibility(View.VISIBLE);
         }
 
-
-        Button disable_all = (Button)this.context.findViewById(R.id.choose_all_companies);
         return itemView;
     }
 }
