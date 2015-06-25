@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
@@ -83,6 +84,14 @@ public class TrackerDetailFragment extends Fragment {
             } else {
                 imageView_trackerLogo.setVisibility(View.VISIBLE);
                 textView_TrackerName.setVisibility(View.GONE);
+            }
+
+            ToggleButton opt_in_out_button = ((ToggleButton) rootView.findViewById(R.id.opt_in_out_button));
+            if (tracker.isEssential()) {
+                opt_in_out_button.setVisibility(View.GONE);
+            } else {
+                opt_in_out_button.setVisibility(View.VISIBLE);
+                opt_in_out_button.setChecked(tracker.isOn());
             }
 
             ((TextView) rootView.findViewById(R.id.textView_trackerDescription)).setText(tracker.getDescription());

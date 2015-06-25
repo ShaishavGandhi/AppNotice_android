@@ -10,5 +10,7 @@
     <!-- App colors -->
     <color name="ghostery_transparent">#00000000</color>
     <color name="ghostery_divider">#46AAAAAA</color>
+    <color name="ghostery_actionbar_text">#FFFFFF</color>
+    <color name="ghostery_actionbar_background">#009688</color>
 
 </resources>

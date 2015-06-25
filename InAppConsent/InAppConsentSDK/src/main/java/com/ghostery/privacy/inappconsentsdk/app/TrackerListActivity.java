@@ -1,6 +1,7 @@
 package com.ghostery.privacy.inappconsentsdk.app;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -58,10 +59,17 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            actionBar.setCustomView(R.layout.ghostery_action_bar_layout);
+//            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//            actionBar.setCustomView(R.layout.ghostery_action_bar_layout);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
+//            actionBar.setHomeButtonEnabled(true);
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_actionbar_background)));
+
+            // If there is header text in the JSON, use it. Else use the default.
+            if (inAppConsentData != null && inAppConsentData.isInitialized())
+                actionBar.setTitle(inAppConsentData.getManage_preferences_header());
+            else
+                actionBar.setTitle(R.string.ghostery_manage_preferences_header);
         }
 
         setAllNoneControlState();
@@ -95,6 +103,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     public void onResume()
     {
         super.onResume();
+        ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
+        setAllNoneControlState();
     }
 
     /**

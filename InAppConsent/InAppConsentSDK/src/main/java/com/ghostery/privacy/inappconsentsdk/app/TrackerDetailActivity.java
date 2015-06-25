@@ -1,16 +1,22 @@
 package com.ghostery.privacy.inappconsentsdk.app;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.fragments.LearnMore_Fragment;
+import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
+import com.ghostery.privacy.inappconsentsdk.model.Tracker;
+import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
 /**
  * An activity representing a single Tracker detail screen. This
@@ -23,6 +29,8 @@ import com.ghostery.privacy.inappconsentsdk.fragments.LearnMore_Fragment;
  */
 public class TrackerDetailActivity extends AppCompatActivity {
 
+    private int trackerId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +41,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_actionbar_background)));
         }
 
         // savedInstanceState is non-null when there is fragment state
@@ -48,7 +57,8 @@ public class TrackerDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(TrackerDetailFragment.ARG_ITEM_ID, getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
+            trackerId = getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0);
+            arguments.putInt(TrackerDetailFragment.ARG_ITEM_ID, trackerId);
 
             final TrackerDetailFragment fragment = new TrackerDetailFragment();
             fragment.setArguments(arguments);
@@ -72,7 +82,8 @@ public class TrackerDetailActivity extends AppCompatActivity {
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.tracker_detail_container);
+            if (currentFragment instanceof TrackerDetailFragment) {
                 NavUtils.navigateUpTo(this, new Intent(this, TrackerListActivity.class));
             } else {
                 getSupportFragmentManager().popBackStack();
@@ -85,7 +96,8 @@ public class TrackerDetailActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() <= 1) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.tracker_detail_container);
+        if (currentFragment instanceof TrackerDetailFragment) {
             this.finish();
         } else {
             getSupportFragmentManager().popBackStack();
@@ -93,13 +105,28 @@ public class TrackerDetailActivity extends AppCompatActivity {
     }
 
     public void onLinkClick(View view) {
-        Bundle arguments = new Bundle();
-        arguments.putInt(LearnMore_Fragment.ARG_ITEM_ID, getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
+        Bundle bundle = new Bundle();
+        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
         LearnMore_Fragment fragment = new LearnMore_Fragment();
-        fragment.setArguments(arguments);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.tracker_detail_container, fragment)
-                .commit();
+
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.tracker_detail_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void onOptInOutClick(View view) {
+        Boolean isOn = ((ToggleButton)view).isChecked();
+        InAppConsentData inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA);
+
+        if (inAppConsentData != null && inAppConsentData.isInitialized()) {
+            Tracker tracker = inAppConsentData.getTrackerById(trackerId);
+
+            if (tracker != null) {
+                tracker.setOnOffState(isOn);
+            }
+        }
     }
 
     public void setActionBarTitle(int titleId){
