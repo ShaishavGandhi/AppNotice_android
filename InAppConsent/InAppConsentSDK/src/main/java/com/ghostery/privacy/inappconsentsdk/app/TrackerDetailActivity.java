@@ -119,6 +119,8 @@ public class TrackerDetailActivity extends AppCompatActivity {
     public void onOptInOutClick(View view) {
         Boolean isOn = ((ToggleButton)view).isChecked();
         InAppConsentData inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA);
+        Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
+        Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
         if (inAppConsentData != null && inAppConsentData.isInitialized()) {
             Tracker tracker = inAppConsentData.getTrackerById(trackerId);

@@ -13,11 +13,7 @@
         android:paddingLeft="12dp"
         android:paddingTop="6dp"
         android:paddingRight="12dp"
-        android:paddingBottom="6dp"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:clickable="true"
-        android:onClick="onClickDescription" />
+        android:paddingBottom="6dp" />
     <View
         android:id="@+id/divider_view1"
         android:layout_width="match_parent"
@@ -73,4 +69,4 @@
         tools:context="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity"
         tools:layout="@android:layout/list_content" />
 
-</LinearLayout>
+</LinearLayout><!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/layout/activity_tracker_list.xml -->

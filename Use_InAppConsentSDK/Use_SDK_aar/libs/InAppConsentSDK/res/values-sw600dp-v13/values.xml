@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values-sw600dp/refs.xml -->
+    <eat-comment/>
+    <item name="activity_tracker_list" type="layout">@layout/activity_tracker_twopane</item>
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values-sw600dp/ghostery_refs.xml -->
     <eat-comment/>
     <item name="ghostery_activity_layout" type="layout">@layout/ghostery_activity_twopane</item>

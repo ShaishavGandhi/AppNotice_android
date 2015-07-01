@@ -5,7 +5,7 @@
     android:versionName="1.0.0" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="15"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,14 +18,11 @@
         android:name="com.ghostery.privacy.inappconsentsdk.app.App"
         android:allowBackup="true" >
         <activity
-            android:name="com.ghostery.privacy.inappconsentsdk.app.SplashScreen"
+            android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity"
             android:launchMode="singleInstance"
             android:multiprocess="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/ghostery_AppTheme" >
             <intent-filter>
-                <data android:scheme="DAA" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -33,13 +30,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ghostery.privacy.inappconsentsdk.app.ListActivity"
-            android:launchMode="singleInstance"
-            android:multiprocess="false"
-            android:screenOrientation="nosensor" >
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
+            android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity"
+            android:label="@string/title_tracker_detail"
+            android:parentActivityName="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity"
+            android:theme="@style/ghostery_AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity" />
         </activity>
     </application>
 

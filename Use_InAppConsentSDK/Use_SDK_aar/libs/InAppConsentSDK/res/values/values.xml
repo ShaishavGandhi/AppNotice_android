@@ -7,6 +7,8 @@
     <color name="bric_decline_button_color">#E5E5E5</color>
     <color name="bric_decline_button_text_color">#000000</color>
     <color name="bric_header_text_color">#000000</color>
+    <color name="ghostery_actionbar_background">#009688</color>
+    <color name="ghostery_actionbar_text">#FFFFFF</color>
     <color name="ghostery_divider">#46AAAAAA</color>
     <color name="ghostery_transparent">#00000000</color>
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_config.xml -->
@@ -17,14 +19,6 @@
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_refs.xml -->
     <eat-comment/>
     <item name="ghostery_activity_layout" type="layout">@layout/ghostery_activity_onepane</item>
-    <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_config.xml -->
-    <eat-comment/>
-    <string name="ghostery_app_desc_1">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
-    <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_strings.xml -->
-    <eat-comment/>
-    <string name="ghostery_comp_info_title_str">Company Info:</string>
-    <string name="ghostery_comp_to_learn_more_str">To learn more about how we collect and use information for online advertising, please visit:</string>
-    <string name="ghostery_comp_website_title_str">Website:</string>
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_config.xml -->
     <eat-comment/>
     <string name="ghostery_dialog_button_close">Close</string>
@@ -55,7 +49,14 @@
     <string name="ghostery_link_terms_of_use">Terms of Use</string>
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_config.xml -->
     <eat-comment/>
-    <string name="ghostery_manage_preferences_header">Privacy Preferences</string>
+    <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_strings.xml -->
+    <eat-comment/>
+    <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
+    <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_config.xml -->
+    <eat-comment/>
+    <string name="ghostery_manage_preferences_header">Manage Preferences</string>
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_strings.xml -->
     <eat-comment/>
     <string name="ghostery_notification_ad_id_reset">Your Advertising Identifier was reset - please also reset your opt outs.</string>
@@ -65,42 +66,17 @@
     <string name="ghostery_notification_optout_success">Successfully opted out.</string>
     <string name="ghostery_notification_update_available">An update is available.</string>
     <string name="ghostery_result_reset_statistics">Your request to opt out is complete for {0} of {1} participating companies.</string>
-    <string name="ghostery_result_reset_warning">If you use your settings to reset this device’s mobile operating system advertising ID, you will also need to reset your opt-out preferences.</string>
+    <string name="ghostery_result_reset_warning">If you use your settings to reset this device\'s mobile operating system advertising ID, you will also need to reset your opt-out preferences.</string>
     <string name="ghostery_url_app_version_check">http://c.betrad.com/mobile/android-appchoices-version</string>
     <string name="ghostery_url_mobile_opt_out_providers">http://info.evidon.com/mobile_opt_out_providers.xml?app=app_choices</string>
     <string name="ghostery_url_truste_status_request">http://partner-mobile.truste.com/mobile/services/v1/daa/preferences/mstatus</string>
+    <string name="title_tracker_detail">Tracker Detail</string>
+    <string name="title_tracker_learnmore">Learn More</string>
+    <string name="title_tracker_list">Trackers</string>
     <!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/values/ghostery_styles.xml -->
     <eat-comment/>
-    <style name="ghostery_AppBaseTheme" parent="@style/Theme.AppCompat.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
-    <style name="ghostery_AppTheme" parent="ghostery_AppBaseTheme">
+    <style name="ghostery_AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
-    <style name="ghostery_CustomAlertDialogStyle">
-        <item name="android:bottomBright">@color/ghostery_transparent</item>
-        <item name="android:bottomDark">@color/ghostery_transparent</item>
-        <item name="android:bottomMedium">@color/ghostery_transparent</item>
-        <item name="android:centerBright">@color/ghostery_transparent</item>
-        <item name="android:centerDark">@color/ghostery_transparent</item>
-        <item name="android:centerMedium">@color/ghostery_transparent</item>
-        <item name="android:fullBright">@color/ghostery_transparent</item>
-        <item name="android:fullDark">@color/ghostery_transparent</item>
-        <item name="android:topBright">@color/ghostery_transparent</item>
-        <item name="android:topDark">@color/ghostery_transparent</item>
-    </style>
-    <style name="ghostery_loading_dialog_theme" parent="Theme.AppCompat.Light">
-        <item name="android:alertDialogStyle">@style/ghostery_CustomAlertDialogStyle</item>
-        <item name="android:windowBackground">@color/ghostery_transparent</item>
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textSize">12sp</item>
     </style>
     <style name="ghostery_style_custom_list_adapter">
         <item name="android:layout_width">wrap_content</item>
@@ -112,17 +88,6 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="ghostery_style_fragment_detail_header" parent="ghostery_style_fragment_detail">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-    <style name="ghostery_style_layout_footer">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-    <style name="ghostery_style_layout_header">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>

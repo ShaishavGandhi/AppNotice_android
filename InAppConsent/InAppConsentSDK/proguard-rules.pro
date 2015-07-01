@@ -3,11 +3,9 @@
 
 #============================================================
 # Keep and don't obfuscate both the InAppConsent entry points and the callback interfaces
+-keepattributes Signature
 -keep public class com.ghostery.privacy.inappconsentsdk.model.InAppConsent {public *;}
--keep public interface com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback {
-    public void onOptionSelected(boolean);
-    public void onNoticeSkipped();
-}
+-keep public interface com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback {public *; }
 
 #============================================================
 -optimizationpasses 5

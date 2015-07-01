@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ghostery_tracker_list_toolbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:minHeight="10dp"
+    android:background="@android:color/background_light"
+    android:title="@string/title_tracker_list"
+    app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    android:navigationIcon="@drawable/ghostery_header_logo"
+    android:subtitle="Subtitle"/>
+<!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/layout/ghostery_tracker_list_toolbar.xml -->

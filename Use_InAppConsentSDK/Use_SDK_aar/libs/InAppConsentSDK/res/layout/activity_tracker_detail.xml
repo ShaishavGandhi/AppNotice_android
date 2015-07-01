@@ -1,0 +1,8 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tracker_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity"
+    tools:ignore="MergeRootFrame" />
+<!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/layout/activity_tracker_detail.xml -->

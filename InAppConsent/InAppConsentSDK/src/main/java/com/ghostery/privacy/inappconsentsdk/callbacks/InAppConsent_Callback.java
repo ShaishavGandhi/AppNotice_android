@@ -8,5 +8,5 @@ import java.util.HashMap;
 public interface InAppConsent_Callback {
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap);
     public void onNoticeSkipped();
-    public void onTrackerStateChange(HashMap<Integer, Boolean> trackerHashMap);
+    public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap);
 }

@@ -1,9 +1,11 @@
 package com.ghostery.privacy.inappconsentsdk.app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.view.ActionMode;
@@ -41,6 +43,7 @@ import java.util.ArrayList;
 public class TrackerListActivity extends AppCompatActivity implements TrackerListFragment.Callbacks, AppCompatCallback {
 
     private ArrayList<Tracker> trackerArrayList;
+    private ArrayList<Tracker> trackerArrayListClone;
     private InAppConsentData inAppConsentData;
 
     /**
@@ -53,9 +56,12 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ghostery_activity_tracker_list);
+        Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);    // "All" not clicked yet
+        Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);   // "None" not clicked yet
 
         inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA);
         trackerArrayList = inAppConsentData.trackerArrayList;
+        trackerArrayListClone = inAppConsentData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -66,10 +72,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_actionbar_background)));
 
             // If there is header text in the JSON, use it. Else use the default.
-            if (inAppConsentData != null && inAppConsentData.isInitialized())
+            if (inAppConsentData != null)
                 actionBar.setTitle(inAppConsentData.getManage_preferences_header());
-            else
-                actionBar.setTitle(R.string.ghostery_manage_preferences_header);
         }
 
         setAllNoneControlState();
@@ -78,8 +82,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         if (manage_preferences_description != null) {
             InAppConsentData inAppConsentData = InAppConsentData.getInstance(this);
             String manage_preferences_description_text = inAppConsentData.getManage_preferences_description();
-            if (manage_preferences_description_text != null && manage_preferences_description_text.length() > 0)
-                manage_preferences_description.setText(manage_preferences_description_text);
+            manage_preferences_description.setText(manage_preferences_description_text);
         }
 
         if (findViewById(R.id.tracker_detail_container) != null) {
@@ -137,6 +140,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     @Override
     public void onBackPressed() {
         saveTrackerStates();
+        sendOptInOutNotices();    // Send opt-in/out ping-back
         super.onBackPressed();
     }
 
@@ -148,6 +152,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         int i = item.getItemId();
         if (item.getItemId() == android.R.id.home) {
             saveTrackerStates();
+            sendOptInOutNotices();    // Send opt-in/out ping-back
 
             // do something here, such as start an Intent to the parent activity.
             Toast.makeText(this, "Actionbar Home", Toast.LENGTH_SHORT).show();
@@ -161,12 +166,39 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         return true;
     }
 
+    private void sendOptInOutNotices() {
+        // Opt-in/out ping-back parameters
+        boolean allBtnSelected = (boolean)Session.get(Session.INAPPCONSENT_ALL_BTN_SELECT, false);
+        boolean noneBtnSelected = (boolean)Session.get(Session.INAPPCONSENT_NONE_BTN_SELECT, false);
+        int pingBackCount = 0;      // Count the ping-backs
+
+        // Send opt-in/out ping-back for each changed non-essential tracker
+        for (int i = 0; i < trackerArrayList.size(); i++) {
+            Tracker tracker = trackerArrayList.get(i);
+            Tracker trackerClone = trackerArrayListClone.get(i);
+
+            // If the tracker is non-essential and is changed...
+            if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
+                boolean optOut = tracker.isOn() == false;
+                boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                boolean firstOptOut = pingBackCount == 0;
+                boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+
+                InAppConsentData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
+                pingBackCount++;
+            }
+        }
+    }
+
     public void saveTrackerStates() {
         inAppConsentData.saveTrackerStates();
 
-        // Send an updated tracker state hashmap to the calling app
-        InAppConsent_Callback inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
-        inAppConsent_callback.onTrackerStateChange(inAppConsentData.getTrackerHashMap(true));
+        // If trackers have been changed, send an updated tracker state hashmap to the calling app
+        int trackerStateChangeCount = inAppConsentData.getTrackerStateChangeCount(trackerArrayListClone);
+        if (trackerStateChangeCount > 0) {
+            InAppConsent_Callback inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
+            inAppConsent_callback.onTrackerStateChanged(inAppConsentData.getTrackerHashMap(true));
+        }
     }
 
 
@@ -178,36 +210,67 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             inAppConsentData.setTrackerOnOffState(true);
             rbAll.setChecked(true);
             rbNone.setChecked(false);
+            Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
+            Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
         } else if (view.getId() == R.id.rb_none) {
             inAppConsentData.setTrackerOnOffState(false);
             rbAll.setChecked(false);
             rbNone.setChecked(true);
+            Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
+            Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they selected "None", remember that "All" wasn't the last set state.
         }
 
         ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
+    }
+
+    public void onClickDescription(View view) {
+        String manage_preferences_description_text = inAppConsentData.getManage_preferences_description();
+
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(inAppConsentData.getManage_preferences_header());
+        alertDialog.setMessage(manage_preferences_description_text);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, inAppConsentData.getClose_button(),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     public void onOptInOutClick(View view) {
         Boolean isOn = ((ToggleButton)view).isChecked();
         int trackerId = (int)view.getTag();
         inAppConsentData.setTrackerOnOffState(trackerId, isOn);
+        Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
+        Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
         setAllNoneControlState();
     }
 
     private void setAllNoneControlState() {
-        int trackerOnOffStates = inAppConsentData.getTrackerOnOffStates();
+        int nonEssentialTrackerCount = inAppConsentData.getNonEssentialTrackerCount();
         RadioButton rbAll = (RadioButton) findViewById(R.id.rb_all);
         RadioButton rbNone = (RadioButton) findViewById(R.id.rb_none);
-        if (trackerOnOffStates == 1) {              // All on
-            rbAll.setChecked(true);
-            rbNone.setChecked(false);
-        } else if (trackerOnOffStates == -1) {      // None on
+
+        if (nonEssentialTrackerCount > 0) {
+            int trackerOnOffStates = inAppConsentData.getTrackerOnOffStates();
+            if (trackerOnOffStates == 1) {              // All on
+                rbAll.setChecked(true);
+                rbNone.setChecked(false);
+            } else if (trackerOnOffStates == -1) {      // None on
+                rbAll.setChecked(false);
+                rbNone.setChecked(true);
+            } else {                                    // Some on, some off
+                rbAll.setChecked(false);
+                rbNone.setChecked(false);
+            }
+        } else {
+            // Set both to unchecked and disabled
             rbAll.setChecked(false);
-            rbNone.setChecked(true);
-        } else {                                    // Some on, some off
-            rbAll.setChecked(false);
             rbNone.setChecked(false);
+            rbAll.setEnabled(false);
+            rbNone.setEnabled(false);
         }
     }
 

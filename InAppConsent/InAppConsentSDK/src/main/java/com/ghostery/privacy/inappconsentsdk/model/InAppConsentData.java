@@ -47,19 +47,20 @@ public class InAppConsentData {
     // 0 = company ID; 1 = pub-notice ID
     private final static String URL_JSON_REQUEST = "https://c.betrad.com/pub/c/{0}/{1}.js";
 
+    // 0 = Publisher ID; 1 = Owner Company ID, 2 = trackerId; 3 = optOut; 4 = uniqueVisit; 5 = firstOptOut; 6 = selectAll
+    private final static String URL_SDK_OPT_IN_OUT = "https://l.betrad.com/oo/p.gif?pid={0}&ocid={1}&c={2}&et={3}&u={4}&i={5}&s={6}&m=4";
+
     // 0 = Publisher ID; 1 = Owner Company ID
-    private final static String URL_NOTICE_APP_LOAD = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4";
-    private final static String URL_NOTICE_IMPLICIT_INTRO_LEARN = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&nt=2&mb=4&d=1";
-    private final static String URL_NOTICE_IMPLICIT_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&nt=4&mb=4&ic=1";
-    private final static String URL_NOTICE_EXPLICIT_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4&nt=3&d=1";
-    private final static String URL_NOTICE_EXPLICIT_INFO_ACCEPT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=1";
-    private final static String URL_NOTICE_EXPLICIT_INFO_DECLINE = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
-    private final static String URL_NOTICE_PREF_DIRECT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
+    private final static String URL_SDK_START_CONSENT_FLOW = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4";
+    private final static String URL_SDK_IMPLIED_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&nt=4&mb=4&ic=1";
+    private final static String URL_SDK_EXPLICIT_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4&nt=3&d=1";
+    private final static String URL_SDK_EXPLICIT_INFO_ACCEPT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=1";
+    private final static String URL_SDK_EXPLICIT_INFO_DECLINE = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
+    private final static String URL_SDK_PREF_DIRECT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
 
     public enum NoticeType {
-        APP_LOAD,
-        IMPLICIT_INTRO_LEARN,
-        IMPLICIT_INFO_PREF,
+        START_CONSENT_FLOW,
+        IMPLIED_INFO_PREF,
         EXPLICIT_INFO_PREF,
         EXPLICIT_INFO_ACCEPT,
         EXPLICIT_INFO_DECLINE,
@@ -146,9 +147,24 @@ public class InAppConsentData {
     public String getBric_decline_button_text_color() { return bric_decline_button_text_color; }
     public String getBric_header_text() { return bric_header_text; }
     public String getBric_header_text_color() { return bric_header_text_color; }
-    public String getClose_button() { return close_button; }
-    public String getManage_preferences_description() { return manage_preferences_description; }
-    public String getManage_preferences_header() { return manage_preferences_header; }
+    public String getClose_button() {
+        if (close_button != null && close_button.length() > 0)
+            return close_button;
+        else
+            return _activity.getResources().getString(R.string.ghostery_dialog_button_close);
+    }
+    public String getManage_preferences_description() {
+        if (manage_preferences_description != null && manage_preferences_description.length() > 0)
+            return manage_preferences_description;
+        else
+            return _activity.getResources().getString(R.string.ghostery_manage_preferences_description);
+    }
+    public String getManage_preferences_header() {
+        if (manage_preferences_header != null && manage_preferences_header.length() > 0)
+            return manage_preferences_header;
+        else
+            return _activity.getResources().getString(R.string.ghostery_manage_preferences_header);
+    }
     public String getRic() { return ric; }
     public String getRic_bg() { return ric_bg; }
     public String getRic_click_manage_settings() { return ric_click_manage_settings; }
@@ -196,6 +212,16 @@ public class InAppConsentData {
         return trackerHashMap;
     }
 
+    public ArrayList<Tracker> getTrackerListClone() {
+        ArrayList<Tracker> trackerArrayListClone = new ArrayList<>();
+
+        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        for (Tracker tracker : trackerArrayList) {
+            trackerArrayListClone.add(new Tracker(tracker));
+        }
+        return trackerArrayListClone;
+    }
+
     // Returns requested tracker. If not found, returns null.
     public Tracker getTrackerById(int trackerId) {
         // Loop through the tracker list and add non-essential tracker IDs and their on/off state
@@ -226,7 +252,7 @@ public class InAppConsentData {
         }
     }
 
-    // Returns 1 if all on; 0 if some on and aome off; -1 if all off
+    // Returns 1 if all on; 0 if some on and some off; -1 if all off
     public int getTrackerOnOffStates() {
         int trackerCount = 0;
         int trackerOnCount = 0;
@@ -243,6 +269,72 @@ public class InAppConsentData {
         return trackerOnOffStates;
     }
 
+    // Returns the number of non-essential trackers
+    public int getNonEssentialTrackerCount() {
+        int nonEssentialTrackerCount = 0;    // Assume no changes
+
+        // Count non-essential trackers
+        for (int i = 0; i < trackerArrayList.size(); i++) {
+            Tracker tracker = trackerArrayList.get(i);
+
+            // If the tracker is non-essential...
+            if (!tracker.isEssential()) {
+                nonEssentialTrackerCount++;
+            }
+        }
+
+        return nonEssentialTrackerCount;
+    }
+
+    // Returns the number of non-essential trackers that have changed on/off state since the original tracker was captured
+    public int getTrackerStateChangeCount(ArrayList<Tracker> originalTrackerArrayList) {
+        int changeCount = 0;    // Assume no changes
+
+        // Send opt-in/out ping-back for each changed non-essential tracker
+        for (int i = 0; i < trackerArrayList.size(); i++) {
+            Tracker tracker = trackerArrayList.get(i);
+            Tracker originalTracker = originalTrackerArrayList.get(i);
+
+            // If the tracker is non-essential and is changed...
+            if (!tracker.isEssential() && (tracker.isOn() != originalTracker.isOn())) {
+                changeCount++;
+            }
+        }
+
+        return changeCount;
+    }
+
+    // Sends an opt-in/out ping back through the opt-in-out chanel
+    public static void sendOptInOutNotice(final int trackerId, final boolean optOut, final boolean uniqueVisit, final boolean firstOptOut, final boolean selectAll) {
+        // Use a non-UI thread
+        new Thread(){
+            public void run(){
+                Object[] urlParams = new Object[7];
+                urlParams[0] = String.valueOf(pub_notice_id);	// 0
+                urlParams[1] = String.valueOf(company_id);		// 1
+                urlParams[2] = String.valueOf(trackerId);		// 2
+                urlParams[3] = optOut ? "1" : "0";  		    // 3
+                urlParams[4] = uniqueVisit ? "1" : "0";	    	// 4
+                urlParams[5] = firstOptOut ? "1" : "0";		    // 5
+                urlParams[6] = selectAll ? "1" : "0";	    	// 6
+
+                String uRL = MessageFormat.format(URL_SDK_OPT_IN_OUT, urlParams);
+
+                if (uRL != null && uRL.length() > 0) {
+                    Log.d(TAG, "Sending notice beacon: (type=OptInOut) " + uRL);
+                    try{
+                        ServiceHandler sh = new ServiceHandler();
+                        String temp = sh.makeServiceCall(uRL, ServiceHandler.POST);
+                    }catch(Exception e){
+                        Log.e(TAG, "Error sending notice beacon: (type=OptInOut) " + uRL, e);
+                    }
+                } else {
+                    Log.e(TAG, "No URL found for Opt-In/Out.");
+                }
+            }
+        }.start();
+    }
+
     // Sends a report back through the Site Notice Channel
     public static void sendNotice(final NoticeType type) {
         // Use a non-UI thread
@@ -255,31 +347,28 @@ public class InAppConsentData {
                 String uRL = "";
 
                 switch (type) {
-                    case APP_LOAD:
-                        uRL = MessageFormat.format(URL_NOTICE_APP_LOAD, urlParams);
+                    case START_CONSENT_FLOW:
+                        uRL = MessageFormat.format(URL_SDK_START_CONSENT_FLOW, urlParams);
                         break;
-                    case IMPLICIT_INTRO_LEARN:
-                        uRL = MessageFormat.format(URL_NOTICE_IMPLICIT_INTRO_LEARN, urlParams);
-                        break;
-                    case IMPLICIT_INFO_PREF:
-                        uRL = MessageFormat.format(URL_NOTICE_IMPLICIT_INFO_PREF, urlParams);
+                    case IMPLIED_INFO_PREF:
+                        uRL = MessageFormat.format(URL_SDK_IMPLIED_INFO_PREF, urlParams);
                         break;
                     case EXPLICIT_INFO_PREF:
-                        uRL = MessageFormat.format(URL_NOTICE_EXPLICIT_INFO_PREF, urlParams);
+                        uRL = MessageFormat.format(URL_SDK_EXPLICIT_INFO_PREF, urlParams);
                         break;
                     case EXPLICIT_INFO_ACCEPT:
-                        uRL = MessageFormat.format(URL_NOTICE_EXPLICIT_INFO_ACCEPT, urlParams);
+                        uRL = MessageFormat.format(URL_SDK_EXPLICIT_INFO_ACCEPT, urlParams);
                         break;
                     case EXPLICIT_INFO_DECLINE:
-                        uRL = MessageFormat.format(URL_NOTICE_EXPLICIT_INFO_DECLINE, urlParams);
+                        uRL = MessageFormat.format(URL_SDK_EXPLICIT_INFO_DECLINE, urlParams);
                         break;
                     case PREF_DIRECT:
-                        uRL = MessageFormat.format(URL_NOTICE_PREF_DIRECT, urlParams);
+                        uRL = MessageFormat.format(URL_SDK_PREF_DIRECT, urlParams);
                         break;
                 }
 
                 if (uRL != null && uRL.length() > 0) {
-                    Log.d(TAG, "Sending notice beacon: (type=" + type + ")" + uRL);
+                    Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
                     try{
 //                        if (Network.isNetworkAvailable(_activity)) {
 //                            // Split the supplied URL into usable parts for the service call

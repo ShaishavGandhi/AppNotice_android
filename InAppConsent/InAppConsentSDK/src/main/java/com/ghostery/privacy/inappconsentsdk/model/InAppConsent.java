@@ -44,7 +44,7 @@ public class InAppConsent {
         init(activity, company_id, pub_notice_id, useRemoteValues, true);
 
         // Send notice for this event
-        InAppConsentData.sendNotice(InAppConsentData.NoticeType.APP_LOAD);
+        InAppConsentData.sendNotice(InAppConsentData.NoticeType.START_CONSENT_FLOW);
     }
 
 //    /**
@@ -62,7 +62,7 @@ public class InAppConsent {
 //        init(activity, company_id, pub_notice_id, ShowMode.SHOW_EXPLICIT_NOTICE, use_remote_values);
 //
 //        // Send notice for this event
-//        InAppConsentData.sendNotice(InAppConsentData.NoticeType.APP_LOAD);
+//        InAppConsentData.sendNotice(InAppConsentData.NoticeType.START_CONSENT_FLOW);
 //    }
 
     /**

@@ -27,7 +27,7 @@ public class Tracker {
     private String logo_url;
     private String description;
     private String privacy_url;
-    private boolean on = true;              // Not in JSON. Defaults to true and is managed within the SDK
+    private boolean isOn = true;              // Not in JSON. Defaults to true and is managed within the SDK
     private boolean hasHeader = false;      // Not in JSON. Defaults to false and is set after the tracker list is first loaded
 
     // Public getters and setters
@@ -37,12 +37,24 @@ public class Tracker {
     public String getLogo_url() { return logo_url; }
     public String getDescription() { return description; }
     public String getPrivacy_url() { return privacy_url; }
-    public boolean isOn() { return on; }
-    public void setOnOffState(boolean isOn) { on = isOn; };
+    public boolean isOn() { return isOn; }
+    public void setOnOffState(boolean isOn) { this.isOn = isOn; };
     public boolean hasHeader() { return hasHeader; }
     public void setHasHeader() { this.hasHeader = true; };
 
-    // Constructor
+    // Constructors
+    public Tracker(Tracker tracker) {
+        category = tracker.category;
+        trackerId = tracker.trackerId;
+        name = tracker.name;
+        logo_url = tracker.logo_url;
+        description = tracker.description;
+        privacy_url = tracker.privacy_url;
+        isOn = tracker.isOn;
+        hasHeader = tracker.hasHeader;
+
+    }
+
     public Tracker(JSONObject trackerJSONObject) {
         try {
 
@@ -52,7 +64,7 @@ public class Tracker {
             logo_url = trackerJSONObject.getString(TAG_LOGO_URL);
             description = trackerJSONObject.getString(TAG_DESCRIPTION);
             privacy_url = trackerJSONObject.getString(TAG_PRIVACY_URL);
-            on = true;
+            isOn = true;
         } catch (JSONException e) {
             Log.e(TAG, "JSONException while parsing the Tracker object.", e);
         }
@@ -62,4 +74,5 @@ public class Tracker {
     public boolean isEssential() {
         return (category.equalsIgnoreCase(CAT_ESSENTIAL));
     }
+
 }

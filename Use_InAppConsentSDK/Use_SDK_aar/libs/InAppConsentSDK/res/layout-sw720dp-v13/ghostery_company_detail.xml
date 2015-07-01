@@ -21,51 +21,51 @@
             android:layout_gravity="center"
             android:paddingBottom="10dp" />
 
-        <TextView
-            android:id="@+id/comp_name"
-            style="@style/ghostery_style_fragment_detail_header"
-            android:layout_gravity="center"
-            android:paddingBottom="10dp" />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_name"-->
+            <!--style="@style/ghostery_style_fragment_detail_header"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:paddingBottom="10dp" />-->
 
-        <TextView
-            android:id="@+id/comp_website_title"
-            style="@style/ghostery_style_fragment_detail"
-            android:textStyle="bold"
-            android:text="@string/ghostery_comp_website_title_str"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_website_title"-->
+            <!--style="@style/ghostery_style_fragment_detail"-->
+            <!--android:textStyle="bold"-->
+            <!--android:text="@string/ghostery_comp_website_title_str"-->
+            <!--/>-->
 
-        <TextView
-            android:id="@+id/comp_website_url"
-            style="@style/ghostery_style_fragment_detail"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_website_url"-->
+            <!--style="@style/ghostery_style_fragment_detail"-->
+            <!--/>-->
 
-        <TextView
-            android:id="@+id/comp_info_title"
-            style="@style/ghostery_style_fragment_detail"
-            android:textStyle="bold"
-            android:text="@string/ghostery_comp_info_title_str"
-            android:layout_marginTop="10dp"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_info_title"-->
+            <!--style="@style/ghostery_style_fragment_detail"-->
+            <!--android:textStyle="bold"-->
+            <!--android:text="@string/ghostery_comp_info_title_str"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--/>-->
 
-        <TextView
-            android:id="@+id/comp_info"
-            style="@style/ghostery_style_fragment_detail"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_info"-->
+            <!--style="@style/ghostery_style_fragment_detail"-->
+            <!--/>-->
 
-        <TextView
-            android:id="@+id/comp_to_learn_more"
-            style="@style/ghostery_style_fragment_detail"
-            android:text="@string/ghostery_comp_to_learn_more_str"
-            android:layout_marginTop="10dp"
-            />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_to_learn_more"-->
+            <!--style="@style/ghostery_style_fragment_detail"-->
+            <!--android:text="@string/ghostery_comp_to_learn_more_str"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--/>-->
 
-        <TextView
-            android:id="@+id/comp_to_learn_more_url"
-            style="@style/ghostery_style_fragment_detail"
-            />
-        <WebView
-            android:id="@+id/legal_doc"
-            style="@style/ghostery_style_fragment_detail" />
+        <!--<TextView-->
+            <!--android:id="@+id/comp_to_learn_more_url"-->
+            <!--style="@style/ghostery_style_fragment_detail"-->
+            <!--/>-->
+        <!--<WebView-->
+            <!--android:id="@+id/legal_doc"-->
+            <!--style="@style/ghostery_style_fragment_detail" />-->
     </LinearLayout>
 
 </ScrollView><!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/layout-sw720dp/ghostery_company_detail.xml -->

@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         }
     }
 
+    // Handle callbacks for the In-App Consent SDK
     @Override
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     }
 
     @Override
-    public void onTrackerStateChange(HashMap<Integer, Boolean> trackerHashMap) {
+    public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap) {
         this.trackerHashMap = trackerHashMap;
 
     }

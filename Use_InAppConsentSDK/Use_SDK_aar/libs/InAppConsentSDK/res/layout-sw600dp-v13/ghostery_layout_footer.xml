@@ -20,6 +20,6 @@
         android:background="@drawable/ghostery_rounded_corner_blue"
         android:textColor="#FFFFFF"
         android:fontFamily="arial"
-        android:onClick="optOutAll"/>
+        android:onClick="optOutAll" />
 
 </LinearLayout><!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/layout-sw600dp/ghostery_layout_footer.xml -->

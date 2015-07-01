@@ -8,16 +8,16 @@
     android:gravity="center_vertical"
     android:padding="8dp" >
 
-    <TextView
-        android:id="@+id/header_company"
-        style="@style/ghostery_style_layout_header"
-        android:gravity="left"
-        android:text="@string/ghostery_header_company" />
+    <!--<TextView-->
+        <!--android:id="@+id/header_company"-->
+        <!--style="@style/ghostery_style_layout_header"-->
+        <!--android:gravity="left"-->
+        <!--android:text="@string/ghostery_header_company" />-->
 
-    <TextView
-        android:id="@+id/header_ad_personalization"
-        style="@style/ghostery_style_layout_header"
-        android:gravity="right"
-        android:text="@string/ghostery_header_ad_personalization" />
+    <!--<TextView-->
+        <!--android:id="@+id/header_ad_personalization"-->
+        <!--style="@style/ghostery_style_layout_header"-->
+        <!--android:gravity="right"-->
+        <!--android:text="@string/ghostery_header_ad_personalization" />-->
 
 </LinearLayout><!-- From: file:/C:/Dev/InAppConsent_android/InAppConsent/InAppConsentSDK/src/main/res/layout/ghostery_layout_header.xml -->

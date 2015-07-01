@@ -70,7 +70,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 Util.showManagePreferences(getActivity());
 
                 // Send notice for this event
-                InAppConsentData.sendNotice(InAppConsentData.NoticeType.IMPLICIT_INFO_PREF);
+                InAppConsentData.sendNotice(InAppConsentData.NoticeType.IMPLIED_INFO_PREF);
 
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
