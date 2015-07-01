@@ -34,7 +34,7 @@ To build and use the AAR and JAR, follow these steps:
 
     *	Expand the Gradle panel in AS
 
-    *	Double-click InAppNotice.InAppNoticeSDK.jarrelease
+    *	Double-click InAppConsent.InAppConsentSDK.jarrelease
 
 
 ####AAR
@@ -70,10 +70,7 @@ To build and use the AAR and JAR, follow these steps:
     *	For AAR WaterDrop app it may look like this:
 ```JavaScript
         <!-- Common strings to customize: -->
-        <string name="app_name">CompanyName</string>
-        <string name="ghostery_app_desc_1">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
-        <string name="ghostery_app_desc_2"/>
-        <string name="ghostery_app_desc_3"/>
+        <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
         <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
         <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
         <string name="ghostery_dialog_implicit_intro_message">Learn about how to set your tracking options.</string>
