@@ -60,7 +60,7 @@ To build and use the AAR and JAR, follow these steps:
 *	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
 
     *	For example:
-    	ghostery_app_desc_1
+    	ghostery_manage_preferences_description
         	From "Our company with help from…"
         	To "(YourCompanyName) with help from…"
     	ghostery_dialog_header_text
@@ -100,16 +100,16 @@ To build and use the AAR and JAR, follow these steps:
 
 *	Copy the inappnotice res folder to the SDK res folder
 
-*	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_strings.xml
+*	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_config.xml
 
 *	For example:
-    	ghostery_app_desc_1
+```    	ghostery_manage_preferences_description
             From "Our company with help from…"
             To "(YourCompanyName) with help from…"
     	ghostery_dialog_header_text
         	From "We Care About Your Privacy"
             To "(YourCompanyName) Cares About Your Privacy"
-
+```
 *	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
 
 *	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
@@ -124,7 +124,6 @@ To build and use the AAR and JAR, follow these steps:
         R$id.class
         R$integer.class
         R$layout.class
-        R$menu.class
         R$raw.class
         R$string.class
         R$style.class
