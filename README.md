@@ -60,15 +60,16 @@ To build and use the AAR and JAR, follow these steps:
 *	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
 
     *	For example:
-    	ghostery_manage_preferences_description
+```
+      ghostery_manage_preferences_description
         	From "Our company with help from…"
         	To "(YourCompanyName) with help from…"
-    	ghostery_dialog_header_text
+      ghostery_dialog_header_text
         	From "We Care About Your Privacy"
         	To "(YourCompanyName) Cares About Your Privacy"
-
+```
     *	For AAR WaterDrop app it may look like this:
-```JavaScript
+```
         <!-- Common strings to customize: -->
         <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
         <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
@@ -79,8 +80,6 @@ To build and use the AAR and JAR, follow these steps:
         <string name="ghostery_ric_max_default">3</string>
         <string name="ghostery_ric_session_max_default">1</string>
 ```
-
-*	Update any graphics or logos in …\InAppConsentSDK\res\...
 
 *	Zip the contents of the unzipped AAR back into a ZIP file
 
@@ -103,15 +102,14 @@ To build and use the AAR and JAR, follow these steps:
 *	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_config.xml
 
 *	For example:
-```    	ghostery_manage_preferences_description
+```
+      ghostery_manage_preferences_description
             From "Our company with help from…"
             To "(YourCompanyName) with help from…"
-    	ghostery_dialog_header_text
+      ghostery_dialog_header_text
         	From "We Care About Your Privacy"
             To "(YourCompanyName) Cares About Your Privacy"
 ```
-*	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
-
 *	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
 
 ```JavaScript
