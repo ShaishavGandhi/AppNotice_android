@@ -12,9 +12,9 @@ import android.support.v7.view.ActionMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
@@ -239,7 +239,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     public void onOptInOutClick(View view) {
-        Boolean isOn = ((ToggleButton)view).isChecked();
+        Boolean isOn = ((Switch)view).isChecked();
         int trackerId = (int)view.getTag();
         inAppConsentData.setTrackerOnOffState(trackerId, isOn);
         Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.

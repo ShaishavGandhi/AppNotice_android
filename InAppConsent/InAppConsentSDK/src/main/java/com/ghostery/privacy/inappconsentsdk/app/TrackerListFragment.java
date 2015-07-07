@@ -92,6 +92,8 @@ public class TrackerListFragment extends ListFragment {
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
+
+        setEmptyText(getResources().getString(R.string.ghostery_manage_preferences_empty_list));
     }
 
     @Override

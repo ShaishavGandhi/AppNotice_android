@@ -6,10 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
@@ -26,9 +25,9 @@ public class TrackerArrayAdapter extends ArrayAdapter {
     public FragmentActivity context;
 
     public static class ViewHolder {
-        public TextView tracker_name;
-        public ImageView logo;
-        public CompoundButton btn;
+        public TextView trackerName;
+        public ImageView trackerLogo;
+        public Switch optInOutSwitch;
         public Boolean isOn;
     }
 
@@ -65,15 +64,15 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             itemView = mInflater.inflate(R.layout.ghostery_tracker_list_item, parent, false);
 
             holder = new ViewHolder();
-            holder.tracker_name = (TextView) itemView.findViewById(R.id.tracker_name);
-            holder.logo = (ImageView) itemView.findViewById(R.id.tracker_logo);
-            holder.btn = (ToggleButton) itemView.findViewById(R.id.opt_in_out_button);
+            holder.trackerName = (TextView) itemView.findViewById(R.id.tracker_name);
+            holder.trackerLogo = (ImageView) itemView.findViewById(R.id.tracker_logo);
+            holder.optInOutSwitch = (Switch) itemView.findViewById(R.id.opt_in_out_switch);
 
             if (tracker.isEssential()) {
-                holder.btn.setVisibility(View.GONE);
+                holder.optInOutSwitch.setVisibility(View.GONE);
             } else {
-                holder.btn.setTag(tracker.getTrackerId());
-                holder.btn.setChecked(tracker.isOn());
+                holder.optInOutSwitch.setTag(tracker.getTrackerId());
+                holder.optInOutSwitch.setChecked(tracker.isOn());
             }
 
             // Make the header visible and set its text if needed
@@ -93,22 +92,22 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             holder = (ViewHolder) itemView.getTag();
 
             if (!tracker.isEssential()) {
-                holder.btn.setChecked(tracker.isOn());
+                holder.optInOutSwitch.setChecked(tracker.isOn());
             }
         }
 
         // Company Logo
         ImageDownloader imageDownloader = new ImageDownloader();
-        imageDownloader.download(trackerArrayList.get(position).getLogo_url(), holder.logo);
+        imageDownloader.download(trackerArrayList.get(position).getLogo_url(), holder.trackerLogo);
 
         // Company Name (if logo not available/displayed)
-        if (holder.logo.getDrawable().getIntrinsicHeight() <= 0) {
-            holder.tracker_name.setText(trackerArrayList.get(position).getName());
-            holder.tracker_name.setVisibility(View.VISIBLE);
-            holder.logo.setVisibility(View.GONE);
+        if (holder.trackerLogo.getDrawable().getIntrinsicHeight() <= 0) {
+            holder.trackerName.setText(trackerArrayList.get(position).getName());
+            holder.trackerName.setVisibility(View.VISIBLE);
+            holder.trackerLogo.setVisibility(View.GONE);
         } else {
-            holder.tracker_name.setVisibility(View.GONE);
-            holder.logo.setVisibility(View.VISIBLE);
+            holder.trackerName.setVisibility(View.GONE);
+            holder.trackerLogo.setVisibility(View.VISIBLE);
         }
 
         return itemView;

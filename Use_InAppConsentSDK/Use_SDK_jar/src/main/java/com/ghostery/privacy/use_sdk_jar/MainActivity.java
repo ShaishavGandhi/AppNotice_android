@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsent;
+import com.ghostery.privacy.use_inappnotice_sdk.R;
 
 import java.util.HashMap;
 

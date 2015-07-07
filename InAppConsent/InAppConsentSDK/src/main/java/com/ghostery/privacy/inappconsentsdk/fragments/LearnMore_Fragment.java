@@ -65,7 +65,7 @@ public class LearnMore_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((TrackerDetailActivity)getActivity()).setActionBarTitle(R.string.title_tracker_learnmore);
+        ((TrackerDetailActivity)getActivity()).setActionBarTitle(R.string.ghostery_tracker_learnmore_title);
     }
 
     public void onButtonPressed(Uri uri) {

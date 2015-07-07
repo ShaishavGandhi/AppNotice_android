@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
@@ -86,17 +86,27 @@ public class TrackerDetailFragment extends Fragment {
                 textView_TrackerName.setVisibility(View.GONE);
             }
 
-            ToggleButton opt_in_out_button = ((ToggleButton) rootView.findViewById(R.id.opt_in_out_button));
+            Switch opt_in_out_switch = ((Switch) rootView.findViewById(R.id.opt_in_out_switch));
             if (tracker.isEssential()) {
-                opt_in_out_button.setVisibility(View.GONE);
+                opt_in_out_switch.setVisibility(View.GONE);
             } else {
-                opt_in_out_button.setVisibility(View.VISIBLE);
-                opt_in_out_button.setChecked(tracker.isOn());
+                opt_in_out_switch.setVisibility(View.VISIBLE);
+                opt_in_out_switch.setChecked(tracker.isOn());
             }
 
             ((TextView) rootView.findViewById(R.id.textView_trackerDescription)).setText(tracker.getDescription());
+
+            TextView textView_learn_more = ((TextView) rootView.findViewById(R.id.textView_learn_more));
             TextView textView_learn_more_url = ((TextView) rootView.findViewById(R.id.textView_learn_more_url));
-            textView_learn_more_url.setText(tracker.getPrivacy_url());
+            String learnMoreUrl = tracker.getPrivacy_url();
+            if (learnMoreUrl != null && learnMoreUrl.length() > 0) {
+                textView_learn_more.setVisibility(View.VISIBLE);
+                textView_learn_more_url.setVisibility(View.VISIBLE);
+                textView_learn_more_url.setText(learnMoreUrl);
+            } else {
+                textView_learn_more.setVisibility(View.GONE);
+                textView_learn_more_url.setVisibility(View.GONE);
+            }
         }
 
         return rootView;
@@ -106,7 +116,7 @@ public class TrackerDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((TrackerDetailActivity) getActivity()).setActionBarTitle(R.string.title_tracker_detail);
+        ((TrackerDetailActivity) getActivity()).setActionBarTitle(R.string.ghostery_tracker_detail_title);
     }
 
 }

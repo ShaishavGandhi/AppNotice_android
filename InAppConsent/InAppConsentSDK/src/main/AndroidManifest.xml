@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".app.TrackerDetailActivity"
-            android:label="@string/title_tracker_detail"
+            android:label="@string/ghostery_tracker_detail_title"
             android:parentActivityName=".app.TrackerListActivity"
             android:theme="@style/ghostery_AppTheme" >
             <meta-data

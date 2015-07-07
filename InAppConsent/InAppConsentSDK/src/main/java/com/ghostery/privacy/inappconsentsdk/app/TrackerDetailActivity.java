@@ -10,7 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ToggleButton;
+import android.widget.Switch;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.fragments.LearnMore_Fragment;
@@ -117,7 +117,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
     }
 
     public void onOptInOutClick(View view) {
-        Boolean isOn = ((ToggleButton)view).isChecked();
+        Boolean isOn = ((Switch)view).isChecked();
         InAppConsentData inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA);
         Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
