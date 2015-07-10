@@ -24,7 +24,7 @@
         android:layout_height="1dip"
         android:layout_marginLeft="4dip"
         android:layout_marginRight="4dip"
-        android:background="#46AAAAAA"
+        android:background="@color/ghostery_divider"
         android:layout_alignParentTop="true"/>
 
     <LinearLayout
@@ -49,7 +49,7 @@
             android:layout_width="1dip"
             android:layout_marginTop="4dip"
             android:layout_marginBottom="4dip"
-            android:background="#46AAAAAA"
+            android:background="@color/ghostery_divider"
             android:layout_alignParentTop="true"/>
 
         <Button

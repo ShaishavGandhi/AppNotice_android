@@ -7,11 +7,12 @@
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_inappnotice_implicit">In-App Consent: Implied</string>
-    <string name="action_inappnotice_explicit">In-App Consent: Explicit</string>
-    <string name="action_inappnotice_preferences">Manage Preferences</string>
-    <string name="action_inappnotice_reset">Reset In-App Consent APK</string>
-    <string name="action_inappnotice_close">Close App</string>
+    <string name="btn_consent_flow">Consent Flow</string>
+    <string name="btn_manage_preferences">Manage Preferences</string>
+    <string name="btn_reset_sdk">Reset SDK</string>
+    <string name="btn_close_app">Close App</string>
+    <string name="action_inappconsent_reset">Reset In-App Consent APK</string>
+    <string name="action_inappconsent_close">Close App</string>
     <string name="hint_companyId">Company ID</string>
     <string name="hint_pubNoticeId">Pub-notice ID</string>
     <string name="checkBox_useRemoteValues">Use remote config values</string>

@@ -100,8 +100,6 @@ public class DetailFragment extends Fragment {
         String text;
         text = "<html><body><p style=\"font-family:Arial\">";
         text+= getString(R.string.ghostery_app_desc_1);
-        text+="<b> "+getString(R.string.ghostery_app_desc_2)+"</b>";
-        text+="<br/><br/>"+getString(R.string.ghostery_app_desc_3);
         text+= "</p></body></html>";
         desc.loadData(text, "text/html", "utf-8");
 

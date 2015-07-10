@@ -3,6 +3,7 @@ package com.ghostery.privacy.inappconsentsdk.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -17,8 +18,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ghostery.privacy.inappconsentsdk.callbacks.InAppNotice_Callback;
 import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.utils.TrackerConfig;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
@@ -26,7 +27,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
     int mNum;
     private TrackerConfig trackerConfig;
     private boolean useRemoteValues = true;
-    private InAppNotice_Callback inAppNotice_callback;
+    private InAppConsent_Callback inAppConsent_callback;
 
     /**
      * Create a new instance of MyDialogFragment, providing "num"
@@ -68,8 +69,8 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 TrackerConfig.sendNotice(TrackerConfig.NoticeType.IMPLICIT_INFO_PREF);
 
                 // Let the calling class know the selected option
-                if (inAppNotice_callback != null)
-                    inAppNotice_callback.onOptionSelected(true);
+                if (inAppConsent_callback != null)
+                    inAppConsent_callback.onOptionSelected(true);
 
                 // Close this dialog
                 dismiss();
@@ -80,8 +81,8 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         close_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Let the calling class know the selected option
-                if (inAppNotice_callback != null)
-                    inAppNotice_callback.onOptionSelected(true);
+                if (inAppConsent_callback != null)
+                    inAppConsent_callback.onOptionSelected(true);
 
                 // Close this dialog
                 dismiss();
@@ -117,8 +118,8 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         // User cancelled the dialog...negating consent
 
         // Let the calling class know the selected option
-        if (inAppNotice_callback != null)
-            inAppNotice_callback.onOptionSelected(true);
+        if (inAppConsent_callback != null)
+            inAppConsent_callback.onOptionSelected(true);
     }
 
     public void setTrackerConfig(TrackerConfig trackerConfig) {
@@ -129,8 +130,8 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         this.useRemoteValues = useRemoteValues;
     }
 
-    public void setInAppNotice_Callback(InAppNotice_Callback inAppNotice_callback) {
-        this.inAppNotice_callback = inAppNotice_callback;
+    public void setInAppConsent_Callback(InAppConsent_Callback inAppConsent_callback) {
+        this.inAppConsent_callback = inAppConsent_callback;
     }
 
     private void applyTrackerConfig(View v) {
@@ -138,10 +139,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         if (trackerConfig != null && trackerConfig.isInitialized()) {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
+            String ric_bg = trackerConfig.getRic_bg();
+            String ric_access_button_color = trackerConfig.getBric_access_button_color();
+
+
             // Set background color and opacity
             if (linearLayout_outer != null) {
-                if (trackerConfig.getRic_bg() != null)
-                    linearLayout_outer.setBackgroundColor(Color.parseColor(trackerConfig.getRic_bg()));
+                if (ric_bg != null)
+                    linearLayout_outer.setBackgroundColor(Color.parseColor(ric_bg));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     float opacityFloat = trackerConfig.getRic_opacity();
                     if (opacityFloat < 1F && opacityFloat >= 0) {
@@ -176,8 +181,12 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             if (preferences_button != null) {
                 if (trackerConfig.getRic_click_manage_settings() != null)
                     preferences_button.setText(trackerConfig.getRic_click_manage_settings());
-                if (trackerConfig.getRic_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(trackerConfig.getRic_color()));
+                if (trackerConfig.getBric_access_button_text_color() != null)
+                    preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
+                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+//                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.MULTIPLY);
+//                    preferences_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
             }
 
             // Close button
@@ -185,9 +194,13 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             if (close_button != null) {
                 if (trackerConfig.getClose_button() != null)
                     close_button.setText(trackerConfig.getClose_button());
-                if (trackerConfig.getRic_color() != null)
-                    close_button.setTextColor(Color.parseColor(trackerConfig.getRic_color()));
+                if (trackerConfig.getBric_access_button_text_color() != null)
+                    close_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
+                    close_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+//                    close_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
             }
+
         }
     }
 }

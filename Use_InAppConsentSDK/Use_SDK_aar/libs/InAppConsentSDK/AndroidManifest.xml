@@ -16,11 +16,9 @@
 
     <application
         android:name="com.ghostery.privacy.inappconsentsdk.app.App"
-        android:allowBackup="true"
-        android:label="@string/app_name" >
+        android:allowBackup="true" >
         <activity
             android:name="com.ghostery.privacy.inappconsentsdk.app.SplashScreen"
-            android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:multiprocess="false"
             android:screenOrientation="portrait"
@@ -36,7 +34,6 @@
         </activity>
         <activity
             android:name="com.ghostery.privacy.inappconsentsdk.app.ListActivity"
-            android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:multiprocess="false"
             android:screenOrientation="nosensor" >

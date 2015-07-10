@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/bar_logo"
@@ -17,6 +18,29 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/ghostery_manage_preferences_header"
         android:id="@+id/textView"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="6dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/rbGroup_header"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All"
+            android:id="@+id/rb_all"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"
+            android:id="@+id/rb_none"
+            android:checked="false" />
+    </RadioGroup>
 
 </LinearLayout>

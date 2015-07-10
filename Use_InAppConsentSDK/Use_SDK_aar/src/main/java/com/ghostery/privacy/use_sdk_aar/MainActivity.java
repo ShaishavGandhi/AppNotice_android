@@ -11,9 +11,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
+import com.ghostery.privacy.inappconsentsdk.model.InAppConsent;
 import com.ghostery.privacy.use_inappnotice_aar.R;
 
 
@@ -45,9 +52,9 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // Start the In-App Consent SDK
-//        InAppNotice inAppNotice = new InAppNotice();
-//        inAppNotice.initImplicitConsent(this);
-////        inAppNotice.initExplicitConsent(this);
+//        InAppConsent inAppConsent = new InAppConsent();
+////        inAppConsent.startConsentFlow(this);
+//        inAppConsent.initExplicitConsent(this);
     }
 
     @Override
@@ -101,18 +108,19 @@ public class MainActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements OnClickListener {
+
+        private Button btn_consent_flow;
+        private Button btn_manage_preferences;
+        private Button btn_reset_sdk;
+        private Button btn_close_app;
+
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -149,6 +157,16 @@ public class MainActivity extends ActionBarActivity
             companyIdEditText.setText(companyIdString);
             pubNoticeIdEditText.setText(pubNoticeIdString);
 
+            btn_consent_flow = (Button) rootView.findViewById(R.id.btn_consent_flow) ;
+            btn_manage_preferences = (Button) rootView.findViewById(R.id.btn_manage_preferences) ;
+            btn_reset_sdk = (Button) rootView.findViewById(R.id.btn_reset_sdk) ;
+            btn_close_app = (Button) rootView.findViewById(R.id.btn_close_app) ;
+
+            btn_consent_flow.setOnClickListener(this);
+            btn_manage_preferences.setOnClickListener(this);
+            btn_reset_sdk.setOnClickListener(this);
+            btn_close_app.setOnClickListener(this);
+
             return rootView;
         }
 
@@ -157,6 +175,83 @@ public class MainActivity extends ActionBarActivity
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            String companyIdString = "";
+            String pubNoticeIdString = "";
+            int companyId = 0;
+            int pubNoticeId = 0;
+            Boolean useRemoteValues = true;
+
+            TextView tv = (TextView)getActivity().findViewById(R.id.editText_companyId);
+            if (tv != null)
+                companyIdString = tv.getText().toString();
+
+            tv = (TextView)getActivity().findViewById(R.id.editText_pubNoticeId);
+            if (tv != null)
+                pubNoticeIdString = tv.getText().toString();
+
+            // Save these values as defaults for next session
+            Util.setSharedPreference(getActivity(), Util.SP_COMPANY_ID, companyIdString);
+            Util.setSharedPreference(getActivity(), Util.SP_PUB_NOTICE_ID, pubNoticeIdString);
+
+            if (view == btn_reset_sdk) {
+                InAppConsent inAppConsent = new InAppConsent();
+                inAppConsent.resetSDK();
+
+                Toast.makeText(getActivity(), "SDK was reset.", Toast.LENGTH_SHORT).show();
+
+            } else if (view == btn_close_app) {
+                // Close the app
+                getActivity().finish();
+                System.exit(0);
+
+            }
+
+            else if (companyIdString.length() == 0 || pubNoticeIdString.length() == 0) {
+                Toast.makeText(getActivity(), "You must supply a Company ID and Pub-notice ID.", Toast.LENGTH_LONG).show();
+            } else {
+                companyId = Integer.valueOf(companyIdString);
+                pubNoticeId = Integer.valueOf(pubNoticeIdString);
+
+                CheckBox cb = (CheckBox)getActivity().findViewById(R.id.checkBox_useRemoteValues);
+                if (cb != null)
+                    useRemoteValues = cb.isChecked();
+
+                if (view == btn_manage_preferences) {
+                    InAppConsent inAppConsent = new InAppConsent();
+                    inAppConsent.showManagePreferences(this.getActivity());
+
+                } else if (view == btn_consent_flow) {
+                    InAppConsent inAppConsent = new InAppConsent();
+                    inAppConsent.startConsentFlow(this.getActivity(), companyId, pubNoticeId, useRemoteValues, new InAppConsent_Callback() {
+
+                        @Override
+                        public void onOptionSelected(boolean isAccepted) {
+                            // Handle your response
+                            if (isAccepted) {
+                                Toast.makeText(getActivity(), "Tracking accepted", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getActivity(), "Tracking declined", Toast.LENGTH_LONG).show();
+
+                                // Close the app
+                                getActivity().finish();
+                                System.exit(0);
+                            }
+                        }
+
+                        @Override
+                        public void onNoticeSkipped() {
+                            // Handle your response
+                            Toast.makeText(getActivity(), "Dialog skipped: Tracking accepted", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
+            }
         }
     }
 
