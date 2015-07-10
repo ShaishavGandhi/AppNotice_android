@@ -60,27 +60,36 @@ To build and use the AAR and JAR, follow these steps:
 *	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
 
     *	For example:
-    	ghostery_app_desc_1
+```
+      ghostery_manage_preferences_description
         	From "Our company with help from…"
         	To "(YourCompanyName) with help from…"
-    	ghostery_dialog_header_text
+      ghostery_dialog_header_text
         	From "We Care About Your Privacy"
         	To "(YourCompanyName) Cares About Your Privacy"
-
-    *	For AAR WaterDrop app it may look like this:
-```JavaScript
-        <!-- Common strings to customize: -->
-        <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
-        <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
-        <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
-        <string name="ghostery_dialog_implicit_intro_message">Learn about how to set your tracking options.</string>
-        <string name="ghostery_dialog_implicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
-        <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
-        <string name="ghostery_ric_max_default">3</string>
-        <string name="ghostery_ric_session_max_default">1</string>
 ```
-
-*	Update any graphics or logos in …\InAppConsentSDK\res\...
+    *	For AAR WaterDrop app it may look like this:
+```
+        <integer name="ghostery_ric_max_default">3</integer>
+        <integer name="ghostery_ric_session_max_default">1</integer>
+        <string name="ghostery_dialog_button_close">Close</string>
+        <string name="ghostery_dialog_button_consent">Accept</string>
+        <string name="ghostery_dialog_button_decline">Decline</string>
+        <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
+        <string name="ghostery_dialog_explicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+        <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
+        <string name="ghostery_dialog_implicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+        <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
+        <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+        <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+        <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
+        <string name="ghostery_manage_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
+        <string name="ghostery_manage_preferences_header">Manage Preferences</string>
+        <string name="ghostery_manage_preferences_optin_header">Opt In</string>
+        <string name="ghostery_manage_preferences_optin_text">To all trackers listed below.</string>
+        <string name="ghostery_tracker_detail_title">Tracker Detail</string>
+        <string name="ghostery_tracker_learnmore_title">Learn More</string>
+```
 
 *	Zip the contents of the unzipped AAR back into a ZIP file
 
@@ -100,18 +109,17 @@ To build and use the AAR and JAR, follow these steps:
 
 *	Copy the inappnotice res folder to the SDK res folder
 
-*	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_strings.xml
+*	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_string.xml
 
 *	For example:
-    	ghostery_app_desc_1
+```
+      ghostery_manage_preferences_description
             From "Our company with help from…"
             To "(YourCompanyName) with help from…"
-    	ghostery_dialog_header_text
+      ghostery_dialog_header_text
         	From "We Care About Your Privacy"
             To "(YourCompanyName) Cares About Your Privacy"
-
-*	Update any graphics or logos in …\YourProject\InAppConsentSDK\src\main\res\...
-
+```
 *	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
 
 ```JavaScript
@@ -124,7 +132,6 @@ To build and use the AAR and JAR, follow these steps:
         R$id.class
         R$integer.class
         R$layout.class
-        R$menu.class
         R$raw.class
         R$string.class
         R$style.class
