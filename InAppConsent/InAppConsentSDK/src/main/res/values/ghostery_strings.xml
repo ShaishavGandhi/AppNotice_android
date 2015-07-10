@@ -1,40 +1,30 @@
 <resources>
 
-    <!-- Footer Text -->
-    <!--<string name="ghostery_footer_understand_these_choices"><u>Understand These Choices</u></string>-->
-    <string name="ghostery_footer_button_choose_all">Choose All Companies</string>
+    <!-- Configuration-->
+    <integer name="ghostery_ric_max_default">3</integer>
+    <integer name="ghostery_ric_session_max_default">1</integer>
 
-    <!-- Urls -->
-    <string name="ghostery_url_mobile_opt_out_providers">http://info.evidon.com/mobile_opt_out_providers.xml?app=app_choices</string>
-    <string name="ghostery_url_app_version_check">http://c.betrad.com/mobile/android-appchoices-version</string>
-    <string name="ghostery_url_truste_status_request">http://partner-mobile.truste.com/mobile/services/v1/daa/preferences/mstatus</string>
+    <!--Dialog text -->
+    <string name="ghostery_dialog_button_close">Close</string>
+    <string name="ghostery_dialog_button_consent">Accept</string>
+    <string name="ghostery_dialog_button_decline">Decline</string>
+    <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
+    <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+    <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
+    <string name="ghostery_dialog_implicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+    <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
 
-    <!-- Files -->
-    <string name="ghostery_file_mobile_opt_out_providers">mobile_oo_providers.xml</string>
-    <string name="ghostery_file_privacy_statement">ghostery_mobile_app_privacy_statement.html</string>
-    <string name="ghostery_file_terms_of_use">ghostery_mobile_app_terms.html</string>
-    <string name="ghostery_file_optout_status">optout_file.dat</string>
+    <!-- Manage Preferences -->
+    <string name="ghostery_manage_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
+    <string name="ghostery_manage_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
+    <string name="ghostery_manage_preferences_header">Manage Preferences</string>
+    <string name="ghostery_manage_preferences_optin_header">Opt In</string>
+    <string name="ghostery_manage_preferences_optin_text">To all trackers listed below.</string>
 
-    <!-- Notifications -->
-    <string name="ghostery_notification_update_available">An update is available.</string>
-    <string name="ghostery_notification_click_to_dl">Click here to download</string>
-    <string name="ghostery_notification_no_network_connection">Data connection required to opt out.</string>
-    <string name="ghostery_notification_optout_success">Successfully opted out.</string>
-    <string name="ghostery_notification_optout_fail">Opt out not successful.</string>
-    <string name="ghostery_notification_ad_id_reset">Your Advertising Identifier was reset - please also reset your opt outs.</string>
-
-    <!-- App Link Text -->
-    <string name="ghostery_link_go_to_site">go to site</string>
-    <string name="ghostery_link_privacy_statement">Privacy Policy</string>
-    <string name="ghostery_link_terms_of_use">Terms of Use</string>
-
-    <!-- Company Text -->
-    <string name="ghostery_comp_website_title_str">Website:</string>
-    <string name="ghostery_comp_info_title_str">Company Info:</string>
-    <string name="ghostery_comp_to_learn_more_str">To learn more about how we collect and use information for online advertising, please visit:</string>
-
-
-    <string name="ghostery_result_reset_statistics">Your request to opt out is complete for {0} of {1} participating companies.</string>
-    <string name="ghostery_result_reset_warning">If you use your settings to reset this device\'s mobile operating system advertising ID, you will also need to reset your opt-out preferences.</string>
+    <!-- Tracker Detail -->
+    <string name="ghostery_tracker_detail_title">Tracker Detail</string>
+    <string name="ghostery_tracker_learnmore_title">Learn More</string>
 
 </resources>

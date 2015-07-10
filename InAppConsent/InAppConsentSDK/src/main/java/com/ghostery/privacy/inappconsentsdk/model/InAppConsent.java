@@ -5,21 +5,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
-import com.ghostery.privacy.inappconsentsdk.callbacks.TrackerConfigGetterCallback;
+import com.ghostery.privacy.inappconsentsdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment;
 import com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment;
 import com.ghostery.privacy.inappconsentsdk.utils.AppData;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
-import com.ghostery.privacy.inappconsentsdk.utils.TrackerConfig;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
+
+import java.util.HashMap;
 
 /**
  * Created by Steven.Overson on 2/4/2015.
  */
 public class InAppConsent {
-    private static final String INAPPNOTIVE_TRACKERCONFIG = "inAppConsent_TrackerConfig";
 
-    private TrackerConfig trackerConfig;
+    private InAppConsentData inAppConsentData;
 //    private ShowMode showMode;
     private InAppConsent_Callback inAppConsent_callback;
 
@@ -39,10 +39,12 @@ public class InAppConsent {
      */
     public void startConsentFlow(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
         this.inAppConsent_callback = inAppConsent_callback;
-        init(activity, company_id, pub_notice_id, useRemoteValues);
+        Session.set(Session.INAPPCONSENT_CALLBACK, inAppConsent_callback);
+
+        init(activity, company_id, pub_notice_id, useRemoteValues, true);
 
         // Send notice for this event
-        TrackerConfig.sendNotice(TrackerConfig.NoticeType.APP_LOAD);
+        InAppConsentData.sendNotice(InAppConsentData.NoticeType.START_CONSENT_FLOW);
     }
 
 //    /**
@@ -60,7 +62,7 @@ public class InAppConsent {
 //        init(activity, company_id, pub_notice_id, ShowMode.SHOW_EXPLICIT_NOTICE, use_remote_values);
 //
 //        // Send notice for this event
-//        TrackerConfig.sendNotice(TrackerConfig.NoticeType.APP_LOAD);
+//        InAppConsentData.sendNotice(InAppConsentData.NoticeType.START_CONSENT_FLOW);
 //    }
 
     /**
@@ -77,55 +79,70 @@ public class InAppConsent {
      * Shows the Manage Preferences screen. Can be called from your when the end user requests access to this screen (e.g., from a menu or button click).
      *   - activity: Usually your current activity
      */
-    public void showManagePreferences(final FragmentActivity activity) {
-        // Open the In-App Consent preferences activity
-        Util.ShowAdPreferences(activity);
+    public void showManagePreferences(final FragmentActivity activity, int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
+        this.inAppConsent_callback = inAppConsent_callback;
+        Session.set(Session.INAPPCONSENT_CALLBACK, inAppConsent_callback);
 
-        // Send notice for this event
-        TrackerConfig.sendNotice(TrackerConfig.NoticeType.PREF_DIRECT);
+        init(activity, company_id, pub_notice_id, useRemoteValues, false);
     }
 
-    private void init(final FragmentActivity activity, int company_id, int pub_notice_id, final boolean useRemoteValues) {
+    private void init(final FragmentActivity activity, int company_id, int pub_notice_id, final boolean useRemoteValues, final boolean isConsentFlow) {
         if ((company_id <= 0) || (pub_notice_id <= 0)) {
             throw(new IllegalArgumentException("Company ID and Pub-notice ID must both be valid identifiers."));
         }
 
         // Get either a new or initialized tracker config object
-        trackerConfig = (TrackerConfig)Session.get(INAPPNOTIVE_TRACKERCONFIG, TrackerConfig.getInstance(activity));
+        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(activity));
 
         // Keep track of the company ID and the pub-notice ID
-        trackerConfig.setCompany_id(company_id);
-        trackerConfig.setPub_notice_id(pub_notice_id);
+        inAppConsentData.setCompany_id(company_id);
+        inAppConsentData.setPub_notice_id(pub_notice_id);
 
-        if (trackerConfig.isInitialized()) {
+        if (inAppConsentData.isInitialized()) {
             // If initialized, use what we have
-            handleTrackerConfigInfoUpdate(activity, useRemoteValues);
+            if (isConsentFlow) {
+                startConsentFlow(activity, useRemoteValues);
+            } else {
+                // Open the In-App Consent preferences activity
+                Util.showManagePreferences(activity);
+
+                // Send notice for this event
+                InAppConsentData.sendNotice(InAppConsentData.NoticeType.PREF_DIRECT);
+            }
         } else {
             // If not initialized yet, go get it
-            trackerConfig.initTrackerConfig(new TrackerConfigGetterCallback() {
+            inAppConsentData.inti(new JSONGetterCallback() {
 
                 @Override
                 public void onTaskDone() {
                     // Save the tracker config object in the app session
-                    Session.set(INAPPNOTIVE_TRACKERCONFIG, trackerConfig);
+                    Session.set(Session.INAPPCONSENT_DATA, inAppConsentData);
 
-                    // Handle the response
-                    handleTrackerConfigInfoUpdate(activity, useRemoteValues);
+                    if (isConsentFlow) {
+                        // Handle the response
+                        startConsentFlow(activity, useRemoteValues);
+                    } else {
+                        // Open the In-App Consent preferences activity
+                        Util.showManagePreferences(activity);
+
+                        // Send notice for this event
+                        InAppConsentData.sendNotice(InAppConsentData.NoticeType.PREF_DIRECT);
+                    }
                 }
             });
         }
 
     }
 
-    private void handleTrackerConfigInfoUpdate(FragmentActivity activity, boolean useRemoteValues) {
-        // trackerConfig should always be initialized at this point
+    private void startConsentFlow(FragmentActivity activity, boolean useRemoteValues) {
+        // inAppConsentData should always be initialized at this point
 
         // Determine if we need to show this Implicit Notice dialog box
         boolean showNotice = true;
-        if (trackerConfig.getBric()) {
-            showNotice = trackerConfig.getExplicitNoticeDisplayStatus();
+        if (inAppConsentData.getBric()) {
+            showNotice = inAppConsentData.getExplicitNoticeDisplayStatus();
         } else {
-            showNotice = trackerConfig.getImplicitNoticeDisplayStatus();
+            showNotice = inAppConsentData.getImplicitNoticeDisplayStatus();
         }
 
         if (showNotice) {
@@ -133,22 +150,18 @@ public class InAppConsent {
             FragmentTransaction ft = fm.beginTransaction();
 
             // Create and show the dialog.
-            if (trackerConfig.getBric()) {
+            if (inAppConsentData.getBric()) {
                 ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-                explicitInfo_DialogFragment.setTrackerConfig(trackerConfig);
-                explicitInfo_DialogFragment.setInAppConsent_Callback(inAppConsent_callback);
                 explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                 explicitInfo_DialogFragment.show(ft, "dialog_fragment_explicitInfo");
 
             } else {
                 ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
-                impliedInfo_DialogFragment.setTrackerConfig(trackerConfig);
-                impliedInfo_DialogFragment.setInAppConsent_Callback(inAppConsent_callback);
                 impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                 impliedInfo_DialogFragment.show(ft, "dialog_fragment_implicitIntro");
 
                 // Remember that this Implicit Notice dialog box was displayed
-                TrackerConfig.incrementImplicitNoticeDisplayCount();
+                InAppConsentData.incrementImplicitNoticeDisplayCount();
 
             }
         } else {
@@ -156,4 +169,9 @@ public class InAppConsent {
             inAppConsent_callback.onNoticeSkipped();
         }
     }
+
+    public HashMap<Integer, Boolean> getTrackerPreferences() {
+        return InAppConsentData.getTrackerPreferences();
+    }
+
 }

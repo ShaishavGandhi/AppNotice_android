@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/bric_header_text_color"
+        android:textColor="@color/ghostery_dialog_header_text_color"
         android:text="@string/ghostery_dialog_header_text"
         android:id="@+id/textView_title"
         android:layout_gravity="center_horizontal"

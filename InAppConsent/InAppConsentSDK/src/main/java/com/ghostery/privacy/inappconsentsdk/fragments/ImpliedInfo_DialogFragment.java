@@ -20,12 +20,13 @@ import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
-import com.ghostery.privacy.inappconsentsdk.utils.TrackerConfig;
+import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
+import com.ghostery.privacy.inappconsentsdk.utils.Session;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
 public class ImpliedInfo_DialogFragment extends DialogFragment {
     int mNum;
-    private TrackerConfig trackerConfig;
+    private InAppConsentData inAppConsentData;
     private boolean useRemoteValues = true;
     private InAppConsent_Callback inAppConsent_callback;
 
@@ -47,6 +48,9 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, new InAppConsentData());
+        inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
     }
 
     @Override
@@ -56,21 +60,21 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
 
         // Apply the tracker config customizations
         if (useRemoteValues)
-            applyTrackerConfig(v);
+            applyCustomConfig(v);
 
         // Watch for button clicks.
         Button preferences_button = (Button)v.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Open the In-App Consent preferences activity
-                Util.ShowAdPreferences(getActivity());
+                Util.showManagePreferences(getActivity());
 
                 // Send notice for this event
-                TrackerConfig.sendNotice(TrackerConfig.NoticeType.IMPLICIT_INFO_PREF);
+                InAppConsentData.sendNotice(InAppConsentData.NoticeType.IMPLIED_INFO_PREF);
 
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true);
+                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
 
                 // Close this dialog
                 dismiss();
@@ -82,7 +86,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             public void onClick(View v) {
                 // Let the calling class know the selected option
                 if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true);
+                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
 
                 // Close this dialog
                 dismiss();
@@ -119,28 +123,20 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
 
         // Let the calling class know the selected option
         if (inAppConsent_callback != null)
-            inAppConsent_callback.onOptionSelected(true);
-    }
-
-    public void setTrackerConfig(TrackerConfig trackerConfig) {
-        this.trackerConfig = trackerConfig;
+            inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
     }
 
     public void setUseRemoteValues(boolean useRemoteValues) {
         this.useRemoteValues = useRemoteValues;
     }
 
-    public void setInAppConsent_Callback(InAppConsent_Callback inAppConsent_callback) {
-        this.inAppConsent_callback = inAppConsent_callback;
-    }
-
-    private void applyTrackerConfig(View v) {
-        // Set custom config values from the trackerConfig object
-        if (trackerConfig != null && trackerConfig.isInitialized()) {
+    private void applyCustomConfig(View v) {
+        // Set custom config values from the inAppConsentData object
+        if (inAppConsentData != null && inAppConsentData.isInitialized()) {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
-            String ric_bg = trackerConfig.getRic_bg();
-            String ric_access_button_color = trackerConfig.getBric_access_button_color();
+            String ric_bg = inAppConsentData.getRic_bg();
+            String ric_access_button_color = inAppConsentData.getBric_access_button_color();
 
 
             // Set background color and opacity
@@ -148,7 +144,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 if (ric_bg != null)
                     linearLayout_outer.setBackgroundColor(Color.parseColor(ric_bg));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    float opacityFloat = trackerConfig.getRic_opacity();
+                    float opacityFloat = inAppConsentData.getRic_opacity();
                     if (opacityFloat < 1F && opacityFloat >= 0) {
                         Drawable d = new ColorDrawable(Color.BLACK);
                         d.setAlpha((int)(255 * opacityFloat));
@@ -161,28 +157,28 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             // Title
             TextView textView_title = (TextView)v.findViewById(R.id.textView_title);
             if (textView_title != null) {
-                if (trackerConfig.getRic_title() != null)
-                    textView_title.setText(trackerConfig.getRic_title());
-                if (trackerConfig.getRic_title_color() != null)
-                    textView_title.setTextColor(Color.parseColor(trackerConfig.getRic_title_color()));
+                if (inAppConsentData.getRic_title() != null)
+                    textView_title.setText(inAppConsentData.getRic_title());
+                if (inAppConsentData.getRic_title_color() != null)
+                    textView_title.setTextColor(Color.parseColor(inAppConsentData.getRic_title_color()));
             }
 
             // Message
             TextView textView_message = (TextView)v.findViewById(R.id.textView_message);
             if (textView_message != null) {
-                if (trackerConfig.getRic() != null)
-                    textView_message.setText(trackerConfig.getRic());
-                if (trackerConfig.getRic_color() != null)
-                    textView_message.setTextColor(Color.parseColor(trackerConfig.getRic_color()));
+                if (inAppConsentData.getRic() != null)
+                    textView_message.setText(inAppConsentData.getRic());
+                if (inAppConsentData.getRic_color() != null)
+                    textView_message.setTextColor(Color.parseColor(inAppConsentData.getRic_color()));
             }
 
             // Preferences button
             Button preferences_button = (Button)v.findViewById(R.id.preferences_button);
             if (preferences_button != null) {
-                if (trackerConfig.getRic_click_manage_settings() != null)
-                    preferences_button.setText(trackerConfig.getRic_click_manage_settings());
-                if (trackerConfig.getBric_access_button_text_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
+                if (inAppConsentData.getRic_click_manage_settings() != null)
+                    preferences_button.setText(inAppConsentData.getRic_click_manage_settings());
+                if (inAppConsentData.getBric_access_button_text_color() != null)
+                    preferences_button.setTextColor(Color.parseColor(inAppConsentData.getBric_access_button_text_color()));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
                     preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
 //                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.MULTIPLY);
@@ -192,10 +188,10 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             // Close button
             Button close_button = (Button)v.findViewById(R.id.close_button);
             if (close_button != null) {
-                if (trackerConfig.getClose_button() != null)
-                    close_button.setText(trackerConfig.getClose_button());
-                if (trackerConfig.getBric_access_button_text_color() != null)
-                    close_button.setTextColor(Color.parseColor(trackerConfig.getBric_access_button_text_color()));
+                if (inAppConsentData.getClose_button() != null)
+                    close_button.setText(inAppConsentData.getClose_button());
+                if (inAppConsentData.getBric_access_button_text_color() != null)
+                    close_button.setTextColor(Color.parseColor(inAppConsentData.getBric_access_button_text_color()));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
                     close_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
 //                    close_button.setBackgroundColor(Color.parseColor(ric_access_button_color));

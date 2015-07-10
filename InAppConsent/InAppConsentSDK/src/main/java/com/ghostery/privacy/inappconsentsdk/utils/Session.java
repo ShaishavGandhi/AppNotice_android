@@ -11,6 +11,10 @@ public class Session {
     private static final String TAG = "Common.Session";
 
     // == Keys ==========================================================================
+    public static final String INAPPCONSENT_DATA = "inAppConsent_data";
+    public static final String INAPPCONSENT_CALLBACK = "inAppConsent_callback";
+    public static final String INAPPCONSENT_ALL_BTN_SELECT = "inAppConsent_selectAll";
+    public static final String INAPPCONSENT_NONE_BTN_SELECT = "inAppConsent_selectNone";
 
     // System Keys
 //    public static final String SYS_SHAREDPREFERENCES = "sys_sharedPreferences"; 		// SharedPreferences object
