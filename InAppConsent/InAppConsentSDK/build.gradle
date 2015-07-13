@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion '22.0.1'
     publishNonDefault true
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0.0"
     }
@@ -16,12 +16,22 @@ android {
         exclude 'desktop.ini'
     }
 
+    signingConfigs {
+        testConfig{
+            storeFile file("C:/Dev/Keystore/ghostery_release.keystore")
+            storePassword "1t9hv8vH673LD6626p19)I_2N0348O!1Uu383,53104w7{5Q2g5F7w5H9f4,67Ty7Y3>AGK37f#39vgkQ0~oE33Sc3138R4}X8x3"
+            keyAlias "evidon"
+            keyPassword "1t9hv8vH673LD6626p19)I_2N0348O!1Uu383,53104w7{5Q2g5F7w5H9f4,67Ty7Y3>AGK37f#39vgkQ0~oE33Sc3138R4}X8x3"
+        }
+    }
+
     buildTypes {
         debug {
             debuggable true
             minifyEnabled false
         }
         release {
+            signingConfig  signingConfigs.testConfig
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -31,7 +41,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:recyclerview-v7:22.2.0'
     compile 'com.android.support:cardview-v7:22.2.0'

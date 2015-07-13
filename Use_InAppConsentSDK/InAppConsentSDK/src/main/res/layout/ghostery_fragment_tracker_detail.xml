@@ -51,10 +51,9 @@
             android:id="@+id/divider_view1"
             android:layout_width="match_parent"
             android:layout_height="1dip"
-            android:layout_marginLeft="4dip"
-            android:layout_marginRight="4dip"
             android:background="#46AAAAAA"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:layout_margin="4dp" />
 
         <TextView
             android:id="@+id/textView_trackerInfo"
