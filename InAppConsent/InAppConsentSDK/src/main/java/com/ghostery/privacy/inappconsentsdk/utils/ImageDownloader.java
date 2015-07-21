@@ -1,11 +1,5 @@
 package com.ghostery.privacy.inappconsentsdk.utils;
 
-import java.io.File;
-import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
+import java.io.File;
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * To Do: Make code cleaner/modular
@@ -26,7 +26,7 @@ public class ImageDownloader {
     }
 
     public void download(String url, ImageView imageView) {
-        if (cancelPotentialDownload(url, imageView)) {
+        if (url != null && url.length() > 0 && cancelPotentialDownload(url, imageView)) {
             Bitmap bitmap = null;
             // Caching
             String filename = String.valueOf(url.hashCode());

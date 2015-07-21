@@ -5,35 +5,29 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".app.App"
         android:allowBackup="true" >
         <activity
-            android:name=".app.SplashScreen"
+            android:name=".app.TrackerListActivity"
             android:launchMode="singleInstance"
             android:multiprocess="false"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/ghostery_AppTheme" >
             <intent-filter>
-                <data android:scheme="DAA" />
-
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.ListActivity"
-            android:launchMode="singleInstance"
-            android:multiprocess="false"
-            android:screenOrientation="nosensor" >
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
+            android:name=".app.TrackerDetailActivity"
+            android:label="@string/ghostery_tracker_detail_title"
+            android:parentActivityName=".app.TrackerListActivity"
+            android:theme="@style/ghostery_AppTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity" />
         </activity>
     </application>
 

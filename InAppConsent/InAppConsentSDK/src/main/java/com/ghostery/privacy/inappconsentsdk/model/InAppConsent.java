@@ -111,7 +111,7 @@ public class InAppConsent {
             }
         } else {
             // If not initialized yet, go get it
-            inAppConsentData.inti(new JSONGetterCallback() {
+            inAppConsentData.init(new JSONGetterCallback() {
 
                 @Override
                 public void onTaskDone() {
