@@ -1,5 +1,6 @@
 package com.ghostery.privacy.inappconsentsdk.app;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -77,7 +78,8 @@ public class TrackerDetailFragment extends Fragment {
             TextView textView_TrackerName = ((TextView) rootView.findViewById(R.id.textView_TrackerName));
 
             // Determine if logo or tracker name should be shown
-            if (imageView_trackerLogo.getDrawable().getIntrinsicHeight() <= 0) {
+            Drawable trackerLogo = imageView_trackerLogo.getDrawable();
+            if (trackerLogo == null || trackerLogo.getIntrinsicHeight() <= 0) {
                 imageView_trackerLogo.setVisibility(View.GONE);
                 textView_TrackerName.setVisibility(View.VISIBLE);
                 textView_TrackerName.setText(tracker.getName());

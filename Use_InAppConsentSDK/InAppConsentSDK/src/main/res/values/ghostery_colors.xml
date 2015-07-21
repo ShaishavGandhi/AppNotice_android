@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Dialog colors -->
-    <color name="ghostery_dialog_header_text_color">#000000</color>
+    <!-- Layout Dialog colors -->
+    <color name="ghostery_layout_dialog_header_text_color">#000000</color>
 
     <!-- App colors -->
     <color name="ghostery_actionbar_background">#009688</color>
