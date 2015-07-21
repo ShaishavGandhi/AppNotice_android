@@ -1,5 +1,6 @@
 package com.ghostery.privacy.inappconsentsdk.adapter;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,6 +72,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             if (tracker.isEssential()) {
                 holder.optInOutSwitch.setVisibility(View.GONE);
             } else {
+                holder.optInOutSwitch.setVisibility(View.VISIBLE);
                 holder.optInOutSwitch.setTag(tracker.getTrackerId());
                 holder.optInOutSwitch.setChecked(tracker.isOn());
             }
@@ -91,7 +93,11 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         } else {
             holder = (ViewHolder) itemView.getTag();
 
-            if (!tracker.isEssential()) {
+            if (tracker.isEssential()) {
+                holder.optInOutSwitch.setVisibility(View.GONE);
+            } else {
+                holder.optInOutSwitch.setVisibility(View.VISIBLE);
+                holder.optInOutSwitch.setTag(tracker.getTrackerId());
                 holder.optInOutSwitch.setChecked(tracker.isOn());
             }
         }
@@ -101,7 +107,8 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         imageDownloader.download(trackerArrayList.get(position).getLogo_url(), holder.trackerLogo);
 
         // Company Name (if logo not available/displayed)
-        if (holder.trackerLogo.getDrawable().getIntrinsicHeight() <= 0) {
+        Drawable trackerLogo = holder.trackerLogo.getDrawable();
+        if (trackerLogo == null || trackerLogo.getIntrinsicHeight() <= 0) {
             holder.trackerName.setText(trackerArrayList.get(position).getName());
             holder.trackerName.setVisibility(View.VISIBLE);
             holder.trackerLogo.setVisibility(View.GONE);

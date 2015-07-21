@@ -77,6 +77,7 @@
         <TextView
             android:id="@+id/textView_learn_more_url"
             style="@style/ghostery_style_fragment_detail"
+            android:clickable="true"
             android:linksClickable="true"
             android:onClick="onLinkClick"
             android:textColor="@color/link_text_material_dark" />

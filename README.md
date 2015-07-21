@@ -23,41 +23,81 @@ Use_SDK_aar: This project includes the InAppConsentSDK project as an AAR and pro
 
 Use_SDK_jar: This project includes the InAppConsentSDK project as a JAR-based module and provides In-App Consent functionality to the resulting WaterDrop app.
 
-###Build AAR and JAR
-To build and use the AAR and JAR, follow these steps:
 
-####Initial Processing
+####Build the AAR and JAR SDKs
 
-*	Clean the InAppConsent workspace. This causes the AAR library files to be rebuilt.
+1.	Update all version names and version numbers for both the SDKs and the test apps.
+    *	…\InAppConsent\InAppConsentSDK\build.gradle
+    *	…\InAppConsent\Use_SDK_module\build.gradle
+    *	…\Use_InAppConsentSDK\InAppConsentSDK\build.gradle
+    *	…\Use_InAppConsentSDK\Use_SDK_aar\build.gradle
+    *	…\Use_InAppConsentSDK\Use_SDK_jar\build.gradle
 
-*	Build the JAR file manually via Gradle
+1.	Clean the InAppConsent workspace. This causes the AAR library files to be rebuilt.
 
-    *	Expand the Gradle panel in AS
-
+1.	Build the JAR file manually via Gradle
+    *	Expand the Gradle panel in Android Studio
     *	Double-click InAppConsent.InAppConsentSDK.jarrelease
 
+1.	Copy "outputs" folder:
+    * From: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\
+    *	To: …\InAppConsent_android\release\
 
-####AAR
+1.  Rename the release AAR file (remove "-release" from filename):
+    * From: …\InAppConsent_android\release\outputs\aar\InAppConsentSDK-release.aar
+    * To: InAppConsentSDK.aar
 
-*	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs
+1.  Delete     
+    * …\InAppConsent_android\release\outputs\aar\InAppConsentSDK-debug.aar
 
-    *	To a new location for archiving the ProGuard mapping.
+1.	Create a new "InAppConsentSDK" folder in the "outputs" folder (this will be the folder for the JAR SDK):
+    *	…\InAppConsent_android\release\outputs\
 
-*	Copy this folder: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\libs
+1.	Copy the "libs" folder into the JAR SDK folder:
+    * From: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\
+    *	To: …\InAppConsent_android\release\outputs\InAppConsentSDK\
 
-    *	To the copy of the "outputs" folder from the previous sub-step
+1.	Copy the "src" folder into the JAR SDK folder:
+    * From: …\InAppConsent_android\InAppConsent\InAppConsentSDK\
+    *	To: …\InAppConsent_android\release\outputs\InAppConsentSDK\
 
-*	Copy this file: …\InAppConsent_android\InAppConsent\InAppConsentSDK\build\outputs\aar\InAppConsentSDK-release.aar
+1.  Delete these output folders:
+    * …\InAppConsent_android\release\outputs\InAppConsentSDK\src\androidTest\
+    * …\InAppConsent_android\release\outputs\InAppConsentSDK\src\main\java\
 
-    *	To this folder: …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\
+1.	Open the InAppConsentSDK.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder (I use 7-Zip for this):
+    * …\InAppConsent_android\Use_InAppConsentSDK\InAppConsentSDK\libs\InAppConsentSDK.jar\com\ghostery\privacy\inappconsentsdk\
 
-*	Rename the copied AAR library:
- 	From InAppConsentSDK-release.aar
-    To InAppConsentSDK.aar
+```
+        R$anim.class
+        R$attr.class
+        R$bool.class
+        R$color.class
+        R$dimen.class
+        R$drawable.class
+        R$id.class
+        R$integer.class
+        R$layout.class
+        R$string.class
+        R$style.class
+        R$styleable.class
+        R.class
+```
 
-*	Unzip InAppConsentSDK.aar to a new folder
 
-*	Edit applicable strings in …\InAppConsentSDK\res\values\values.xml
+####Update the AAR Test App with the latest SDK
+
+1.	Copy the AAR file from the release "outputs" folder to the AAR project's libs folder:
+    * From: …\release\outputs\aar\InAppConsentSDK.aar
+    *	To: this folder: …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\
+
+
+####Customize the SDK for the AAR test app (optional)
+
+1.	Unzip InAppConsentSDK.aar to a new folder
+
+1.	Edit applicable strings in the "ghostery_strings.xml" section of:
+    * …\InAppConsent_android\Use_InAppConsentSDK\Use_SDK_aar\libs\InAppConsentSDK\res\values\values.xml
 
     *	For example:
 ```
@@ -68,76 +108,94 @@ To build and use the AAR and JAR, follow these steps:
         	From "We Care About Your Privacy"
         	To "(YourCompanyName) Cares About Your Privacy"
 ```
-    *	For AAR WaterDrop app it may look like this:
+    *	Customization examples for AAR WaterDrop strings:
 ```
-        <integer name="ghostery_ric_max_default">3</integer>
-        <integer name="ghostery_ric_session_max_default">1</integer>
-        <string name="ghostery_dialog_button_close">Close</string>
-        <string name="ghostery_dialog_button_consent">Accept</string>
-        <string name="ghostery_dialog_button_decline">Decline</string>
-        <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
         <string name="ghostery_dialog_explicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
         <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
         <string name="ghostery_dialog_implicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
-        <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
         <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
-        <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
-        <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
-        <string name="ghostery_manage_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
-        <string name="ghostery_manage_preferences_header">Manage Preferences</string>
-        <string name="ghostery_manage_preferences_optin_header">Opt In</string>
-        <string name="ghostery_manage_preferences_optin_text">To all trackers listed below.</string>
-        <string name="ghostery_tracker_detail_title">Tracker Detail</string>
-        <string name="ghostery_tracker_learnmore_title">Learn More</string>
 ```
 
-*	Zip the contents of the unzipped AAR back into a ZIP file
+1.	Zip the contents of the unzipped AAR back into a ZIP file
 
-*	Copy that ZIP file back to lib folder it came from.
+1.	Copy that ZIP file back to libs folder it came from.
 
-*	Delete the old AAR file and rename the new ZIP file to InAppConsentSDK.aar
-   *	Note: This AAR file (along with documentation) is the product that gets sent to clients who use Android Studio.
-
-*	Clean and rebuild the AAR project.
+1.	Delete the old AAR file and rename the new ZIP file to InAppConsentSDK.aar
 
 
-####JAR
 
-*	Copy the JAR file to the SDK lib folder: …\YourProject\InAppConsentSDK\libs
+####Update the JAR Test App with the latest SDK
 
-*	Delete the SDK res folder: …\YourProject\InAppConsentSDK\src\main\res
+1.	Delete the "libs" and "src" folders from: 
+    * …\InAppConsent_android\Use_InAppConsentSDK\InAppConsentSDK\
 
-*	Copy the inappnotice res folder to the SDK res folder
+1.	Copy the "libs" and "src" folders:
+    * From: …\InAppConsent_android\release\outputs\InAppConsentSDK\
+    * To: …\InAppConsent_android\Use_InAppConsentSDK\InAppConsentSDK\
 
-*	Edit applicable strings in …\YourProject\InAppConsentSDK\src\main\res\values\ghostery_string.xml
 
-*	For example:
+####Customize the SDK for the JAR test app (optional)
+
+1.	Edit applicable strings in:
+    * …\InAppConsent_android\Use_InAppConsentSDK\InAppConsentSDK\src\main\res\values\ghostery_strings.xml
+
+    *	For example:
 ```
       ghostery_manage_preferences_description
-            From "Our company with help from…"
-            To "(YourCompanyName) with help from…"
+        	From "Our company with help from…"
+        	To "(YourCompanyName) with help from…"
       ghostery_dialog_header_text
         	From "We Care About Your Privacy"
-            To "(YourCompanyName) Cares About Your Privacy"
+        	To "(YourCompanyName) Cares About Your Privacy"
 ```
-*	Open the inappnotice.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder: com\ghostery\privacy\InAppConsentSDK\. (Don't delete files from sub folders.):
-
-```JavaScript
-        R$anim.class
-        R$attr.class
-        R$bool.class
-        R$color.class
-        R$dimen.class
-        R$drawable.class
-        R$id.class
-        R$integer.class
-        R$layout.class
-        R$raw.class
-        R$string.class
-        R$style.class
-        R$styleable.class
-        R.class
+    *	Customization examples for JAR IceCube strings:
+```
+		    <string name="ghostery_dialog_explicit_message">The IceCube app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+		    <string name="ghostery_dialog_header_text">IceCube Cares About Your Privacy</string>
+		    <string name="ghostery_dialog_implicit_message">The IceCube app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+		    <string name="ghostery_manage_preferences_description">IceCube with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
 ```
 
-*	Clean and rebuild the JAR project.
 
+####Build the test APKs
+
+1.  Rename the release "outputs" folder:
+    * From: …\release\outputs\
+    * To: …\release\outputs_(version name)-(version number)\
+
+1.	Clean and rebuild the Use_InAppConsentSDK workspace (containing both the AAR and the JAR test projects).
+
+1.  Test both the AAR and the JAR test modules in debug-mode.
+
+1. Build a new AAR APK:
+   1.1 In Android Studio, Click the menu Build > Generate Signed APK...
+   1.1 Select the "Use_SDK_aar" module in the dropdown and click Next.
+   1.1 Enter the applicable keystore path, keystore password, key alias (evidon), and key password. (Get these from LastPass.) Then click Next.
+   1.1 Set the APK Destination folder as: …\InAppConsent_android\release\Use_SDK_aar\
+   1.1 Select the Build Type as "release".
+   1.1 Click Finish.
+   
+1.  Rename the new AAR APK file:
+    * From: …\InAppConsent_android\release\Use_SDK_aar\Use_SDK_aar-release.apk
+    * To: Use_SDK_aar_(version name)-(version number).apk
+
+1.  Delete the new manifest report file:
+    * From: …\InAppConsent_android\release\Use_SDK_aar\manifest-merger-release-report.txt
+
+1. Build a new JAR APK:
+   1.1 In Android Studio, Click the menu Build > Generate Signed APK...
+   1.1 Select the "Use_SDK_jar" module in the dropdown and click Next.
+   1.1 Enter the applicable keystore path, keystore password, key alias (evidon), and key password. (Get these from LastPass.) Then click Next.
+   1.1 Set the APK Destination folder as: …\InAppConsent_android\release\Use_SDK_aar\
+   1.1 Select the Build Type as "release".
+   1.1 Click Finish.
+   
+1.  Rename the new AAR APK file:
+    * From: …\InAppConsent_android\release\Use_SDK_jar\Use_SDK_jar-release.apk
+    * To: Use_SDK_jar_(version name)-(version number).apk
+
+1.  Delete the new manifest report file:
+    * From: …\InAppConsent_android\release\Use_SDK_jar\manifest-merger-release-report.txt
+1.  Test both the AAR and the JAR test APKs by copying to an ANdroid device.
+
+1.  Check the signed APKs and the SDK folders into GitHub.
