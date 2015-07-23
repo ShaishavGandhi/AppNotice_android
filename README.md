@@ -114,10 +114,10 @@ Use_SDK_jar: This project includes the InAppConsentSDK project as a JAR-based mo
 
     *	Customization examples for AAR WaterDrop strings:
 	```xml
-	        <string name="ghostery_dialog_explicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
-	        <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
-	        <string name="ghostery_dialog_implicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
-	        <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_dialog_explicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+    <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
+    <string name="ghostery_dialog_implicit_message">The WaterDrop app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+    <string name="ghostery_manage_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
 	```
 
 1.	Zip the contents of the unzipped AAR back into a ZIP file
@@ -155,10 +155,10 @@ Use_SDK_jar: This project includes the InAppConsentSDK project as a JAR-based mo
 
     *	Customization examples for JAR IceCube strings:
 	```xml
-	        <string name="ghostery_dialog_explicit_message">The IceCube app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
-			    <string name="ghostery_dialog_header_text">IceCube Cares About Your Privacy</string>
-			    <string name="ghostery_dialog_implicit_message">The IceCube app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
-			    <string name="ghostery_manage_preferences_description">IceCube with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_dialog_explicit_message">The IceCube app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+    <string name="ghostery_dialog_header_text">IceCube Cares About Your Privacy</string>
+    <string name="ghostery_dialog_implicit_message">The IceCube app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+    <string name="ghostery_manage_preferences_description">IceCube with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
 	```
 
 
