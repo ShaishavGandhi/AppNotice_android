@@ -115,13 +115,13 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(int trackerId) {
+    public void onItemSelected(int uId) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putInt(TrackerDetailFragment.ARG_ITEM_ID, trackerId);
+            arguments.putInt(TrackerDetailFragment.ARG_ITEM_ID, uId);
             TrackerDetailFragment fragment = new TrackerDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -132,7 +132,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
-            detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, trackerId);
+            detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, uId);
             startActivityForResult(detailIntent, 0);
         }
     }
@@ -240,8 +240,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
     public void onOptInOutClick(View view) {
         Boolean isOn = ((Switch)view).isChecked();
-        int trackerId = (int)view.getTag();
-        inAppConsentData.setTrackerOnOffState(trackerId, isOn);
+        int uId = (int)view.getTag();
+        inAppConsentData.setTrackerOnOffState(uId, isOn);
         Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 

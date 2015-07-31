@@ -51,7 +51,7 @@ public class TrackerListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(int trackerId);
+        public void onItemSelected(int uId);
     }
 
     /**
@@ -60,7 +60,7 @@ public class TrackerListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(int trackerId) {
+        public void onItemSelected(int uId) {
         }
     };
 
@@ -122,7 +122,7 @@ public class TrackerListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(inAppConsentData.trackerArrayList.get(position).getTrackerId());
+        mCallbacks.onItemSelected(inAppConsentData.trackerArrayList.get(position).uId);
     }
 
     @Override

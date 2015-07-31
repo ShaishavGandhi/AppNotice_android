@@ -208,10 +208,10 @@ public class InAppConsentData {
     }
 
     // Returns requested tracker. If not found, returns null.
-    public Tracker getTrackerById(int trackerId) {
+    public Tracker getTrackerById(int uId) {
         // Loop through the tracker list and add non-essential tracker IDs and their on/off state
         for (Tracker tracker : trackerArrayList) {
-            if (tracker.getTrackerId() == trackerId) {
+            if (tracker.uId == uId) {
                 return tracker;
             }
         }
@@ -219,11 +219,11 @@ public class InAppConsentData {
     }
 
     // Sets all the specified non-essential tracker on/off state to the specified value.
-    public void setTrackerOnOffState(int trackerId, boolean isOn) {
+    public void setTrackerOnOffState(int uId, boolean isOn) {
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential() && tracker.getTrackerId() == trackerId) {
+            if (!tracker.isEssential() && tracker.uId == uId) {
                 tracker.setOnOffState(isOn);
-                // It is possible there will be more than one match, so don't break here.
+                break;
             }
         }
     }
@@ -595,13 +595,23 @@ public class InAppConsentData {
                                     result = 1;
                                 } else {
                                     // Sort by non-essential category
-                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
+                                    String tracker1_category = tracker1.getCategory().toUpperCase();
+                                    String tracker2_category = tracker2.getCategory().toUpperCase();
+
+                                    //ascending order
+                                    result = tracker1_category.compareTo(tracker2_category);
+//                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
                                 }
 
                                 // If it's in the same category, then sort by tracker name
-                                if (result == 0)
-                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
+                                if (result == 0) {
+                                    String tracker1_name = tracker1.getName().toUpperCase();
+                                    String tracker2_name = tracker2.getName().toUpperCase();
 
+                                    //ascending order
+                                    result = tracker1_name.compareTo(tracker2_name);
+//                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
+                                }
                                 return result;
                             }
                         });
@@ -610,6 +620,7 @@ public class InAppConsentData {
                         String categoryName = "";
                         for (int i = 0; i < trackerArrayList.size(); i++) {
                             Tracker tracker = trackerArrayList.get(i);
+                            tracker.uId = i;        // Set the tracker's unique ID
 
                             // Flag tracker as having a header if this is the first tracker or if the category name is new
                             if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {

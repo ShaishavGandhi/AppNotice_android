@@ -69,36 +69,32 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             holder.trackerLogo = (ImageView) itemView.findViewById(R.id.tracker_logo);
             holder.optInOutSwitch = (Switch) itemView.findViewById(R.id.opt_in_out_switch);
 
-            if (tracker.isEssential()) {
-                holder.optInOutSwitch.setVisibility(View.GONE);
-            } else {
-                holder.optInOutSwitch.setVisibility(View.VISIBLE);
-                holder.optInOutSwitch.setTag(tracker.getTrackerId());
-                holder.optInOutSwitch.setChecked(tracker.isOn());
-            }
-
-            // Make the header visible and set its text if needed
-            if (tracker.hasHeader()) {
-                TextView tvCategoryHeader = (TextView)itemView.findViewById(R.id.category_header);
-                if (tvCategoryHeader != null) {
-                    tvCategoryHeader.setVisibility(View.VISIBLE);
-                    tvCategoryHeader.setText(tracker.getCategory());
-                }
-            }
-
-            Log.v(TAG, "name: " + tracker.getName() +" id:" + tracker.getTrackerId());
-//            holder.isOn = (TextView) convertView.findViewById(R.id.go_to_site);
+            Log.d(TAG,  "Cat: " + tracker.getCategory() + " Name: " + tracker.getName() +" ID:" + tracker.getTrackerId());
 
             itemView.setTag(holder);
         } else {
             holder = (ViewHolder) itemView.getTag();
 
-            if (tracker.isEssential()) {
-                holder.optInOutSwitch.setVisibility(View.GONE);
+        }
+
+        itemView.setId(tracker.uId);
+
+        if (tracker.isEssential()) {
+            holder.optInOutSwitch.setVisibility(View.GONE);
+        } else {
+            holder.optInOutSwitch.setVisibility(View.VISIBLE);
+            holder.optInOutSwitch.setTag(tracker.uId);
+            holder.optInOutSwitch.setChecked(tracker.isOn());
+        }
+
+        // Make the header visible and set its text if needed
+        TextView tvCategoryHeader = (TextView)itemView.findViewById(R.id.category_header);
+        if (tvCategoryHeader != null) {
+            if (tracker.hasHeader()) {
+                tvCategoryHeader.setVisibility(View.VISIBLE);
+                tvCategoryHeader.setText(tracker.getCategory());
             } else {
-                holder.optInOutSwitch.setVisibility(View.VISIBLE);
-                holder.optInOutSwitch.setTag(tracker.getTrackerId());
-                holder.optInOutSwitch.setChecked(tracker.isOn());
+                tvCategoryHeader.setVisibility(View.GONE);
             }
         }
 

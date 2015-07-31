@@ -21,6 +21,7 @@ public class Tracker {
     private static final String TAG_PRIVACY_URL = "privacy-url";
 
     // Field values
+    public int uId;             // Unique identifier for this tracker (local only)
     private String category;
     private int trackerId;
     private String name;
@@ -56,6 +57,7 @@ public class Tracker {
 
     public Tracker(JSONObject trackerJSONObject) {
         try {
+            this.uId = uId;
             category = trackerJSONObject.isNull(TAG_CATEGORY)? null : trackerJSONObject.getString(TAG_CATEGORY);
             trackerId = trackerJSONObject.isNull(TAG_TRACKERID)? null : trackerJSONObject.getInt(TAG_TRACKERID);
             name = trackerJSONObject.isNull(TAG_NAME)? null : trackerJSONObject.getString(TAG_NAME);
@@ -63,6 +65,7 @@ public class Tracker {
             description = trackerJSONObject.isNull(TAG_DESCRIPTION)? null : trackerJSONObject.getString(TAG_DESCRIPTION);
             privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL)? null : trackerJSONObject.getString(TAG_PRIVACY_URL);
             isOn = true;
+            hasHeader = false;
         } catch (JSONException e) {
             Log.e(TAG, "JSONException while parsing the Tracker object.", e);
         } catch (Exception e) {
