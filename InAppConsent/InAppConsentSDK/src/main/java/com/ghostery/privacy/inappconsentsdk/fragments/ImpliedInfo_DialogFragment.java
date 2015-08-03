@@ -35,14 +35,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
      * as an argument.
      */
     public static ImpliedInfo_DialogFragment newInstance(int num) {
-        ImpliedInfo_DialogFragment f = new ImpliedInfo_DialogFragment();
+        ImpliedInfo_DialogFragment dialogFragment = new ImpliedInfo_DialogFragment();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putInt("num", num);
-        f.setArguments(args);
+        dialogFragment.setArguments(args);
 
-        return f;
+        return dialogFragment;
     }
 
     @Override
@@ -56,14 +56,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.ghostery_impliedinfo_dialogfragment, container, false);
+        View view = inflater.inflate(R.layout.ghostery_impliedinfo_dialogfragment, container, false);
 
         // Apply the tracker config customizations
         if (useRemoteValues)
-            applyCustomConfig(v);
+            applyCustomConfig(view);
 
         // Watch for button clicks.
-        Button preferences_button = (Button)v.findViewById(R.id.preferences_button);
+        Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Open the In-App Consent preferences activity
@@ -81,7 +81,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
         });
 
-        Button close_button = (Button)v.findViewById(R.id.close_button);
+        Button close_button = (Button)view.findViewById(R.id.close_button);
         close_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Let the calling class know the selected option
@@ -93,7 +93,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
         });
 
-        return v;
+        return view;
     }
 
     @Override

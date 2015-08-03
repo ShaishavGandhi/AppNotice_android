@@ -1,6 +1,7 @@
 package com.ghostery.privacy.use_sdk_module;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -133,17 +134,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         // Handle your response
         if (isAccepted) {
             Toast.makeText(this, "Tracking accepted", Toast.LENGTH_LONG).show();
-
-//      if (trackerHashMap.get(ADMOB_TRACKERID))  // Only init AdMob if allowed by user
-//          AdMob.init();
-
         } else {
-            Toast.makeText(this, "Tracking declined", Toast.LENGTH_LONG).show();
-
-            // Close the app
-//          getApplication().finish();
-            System.exit(0);
+            DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
+            dialog.show(this.getSupportFragmentManager(), "DeclineConfirmation_DialogFragment");
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Close the app
+        System.exit(0);
     }
 
     @Override

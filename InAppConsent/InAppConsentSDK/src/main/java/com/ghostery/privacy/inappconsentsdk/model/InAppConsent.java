@@ -147,18 +147,18 @@ public class InAppConsent {
 
         if (showNotice) {
             FragmentManager fm = activity.getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
             // Create and show the dialog.
             if (inAppConsentData.getBric()) {
                 ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
                 explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
-                explicitInfo_DialogFragment.show(ft, "dialog_fragment_explicitInfo");
+                explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
             } else {
                 ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
                 impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
-                impliedInfo_DialogFragment.show(ft, "dialog_fragment_implicitIntro");
+                impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
 
                 // Remember that this Implicit Notice dialog box was displayed
                 InAppConsentData.incrementImplicitNoticeDisplayCount();

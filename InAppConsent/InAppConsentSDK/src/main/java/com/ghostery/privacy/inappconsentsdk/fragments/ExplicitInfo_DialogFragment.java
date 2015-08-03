@@ -20,13 +20,14 @@ import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
-import com.ghostery.privacy.inappconsentsdk.utils.AppData;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
+import com.ghostery.privacy.inappconsentsdk.utils.AppData;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
 public class ExplicitInfo_DialogFragment extends DialogFragment {
-    int mNum;
+    private static final String TAG = "ExplicitInfo_Dialog";
+    private int mNum;
     private InAppConsentData inAppConsentData;
     private boolean useRemoteValues = true;
     private InAppConsent_Callback inAppConsent_callback;
@@ -36,14 +37,14 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
      * as an argument.
      */
     public static ExplicitInfo_DialogFragment newInstance(int num) {
-        ExplicitInfo_DialogFragment f = new ExplicitInfo_DialogFragment();
+        ExplicitInfo_DialogFragment dialogFragment = new ExplicitInfo_DialogFragment();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putInt("num", num);
-        f.setArguments(args);
+        dialogFragment.setArguments(args);
 
-        return f;
+        return dialogFragment;
     }
 
     @Override
@@ -57,14 +58,14 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.ghostery_explicitinfo_dialogfragment, container, false);
+        View view = inflater.inflate(R.layout.ghostery_explicitinfo_dialogfragment, container, false);
 
         // Apply the tracker config customizations
         if (useRemoteValues)
-            applyCustomConfig(v);
+            applyCustomConfig(view);
 
         // Watch for button clicks.
-        Button preferences_button = (Button)v.findViewById(R.id.preferences_button);
+        Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
@@ -75,7 +76,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
         });
 
-        Button accept_button = (Button)v.findViewById(R.id.accept_button);
+        Button accept_button = (Button)view.findViewById(R.id.accept_button);
         accept_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
@@ -85,7 +86,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                 // Let the calling class know the selected option
-                if (inAppConsent_callback != null)
+                if (inAppConsent_callback != null && !getActivity().isFinishing())
                     inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
 
                 // Close this dialog
@@ -93,7 +94,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
         });
 
-        Button decline_button = (Button)v.findViewById(R.id.decline_button);
+        Button decline_button = (Button)view.findViewById(R.id.decline_button);
         decline_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // User cancelled the dialog...negating consent
@@ -102,12 +103,12 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 InAppConsentData.sendNotice(InAppConsentData.NoticeType.EXPLICIT_INFO_DECLINE);
 
                 // Let the calling class know the selected option
-                if (inAppConsent_callback != null)
+                if (inAppConsent_callback != null && !getActivity().isFinishing())
                     inAppConsent_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
             }
         });
 
-        return v;
+        return view;
     }
 
     @Override
@@ -140,7 +141,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
 
         // Let the calling class know the selected option
-        if (inAppConsent_callback != null)
+        if (inAppConsent_callback != null && !getActivity().isFinishing())
             inAppConsent_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
     }
 

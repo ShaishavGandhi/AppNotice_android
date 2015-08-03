@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             // Close the app
             this.finish();
             System.exit(0);
-
         }
 
         else if (companyIdString.length() == 0 || pubNoticeIdString.length() == 0) {
