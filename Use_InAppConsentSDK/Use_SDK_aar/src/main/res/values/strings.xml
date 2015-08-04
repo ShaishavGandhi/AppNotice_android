@@ -17,4 +17,9 @@
     <string name="hint_pubNoticeId">Pub-notice ID</string>
     <string name="checkBox_useRemoteValues">Use remote config values</string>
 
+    <!-- Decline Confirmation dialog -->
+    <string name="declineConfirmDialog_title">Tracking Declined</string>
+    <string name="declineConfirmDialog_message">You must accept the privacy preferences to use this app. Please restart this app if you would like to try again. This app will now close.</string>
+    <string name="declineConfirmDialog_posBtn">OK</string>
+
 </resources>
