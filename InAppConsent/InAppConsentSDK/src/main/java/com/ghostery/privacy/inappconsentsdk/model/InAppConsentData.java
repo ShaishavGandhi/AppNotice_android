@@ -32,7 +32,7 @@ public class InAppConsentData {
     private static final String TAG = "InAppConsentData";
 
     private static InAppConsentData instance;
-    private static Activity _activity;
+    private static Activity activity;
     private ProgressDialog pDialog;
     private boolean initialized = false;
     private static int company_id;
@@ -163,9 +163,9 @@ public class InAppConsentData {
 
 
     // Single instance
-    public static synchronized InAppConsentData getInstance(Activity activity)
+    public static synchronized InAppConsentData getInstance(Activity _activity)
     {
-        _activity = activity;
+        activity = _activity;
 
         // Ensure the app only uses one instance of this class.
         if (instance == null)
@@ -175,11 +175,11 @@ public class InAppConsentData {
     }
 
     // Constructor
-    public InAppConsentData() {
+    private InAppConsentData() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
-        ric_max = ric_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_max_default);
-        ric_session_max = ric_session_max_default = _activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
-        ric_opacity = ric_opacity_default = _activity.getResources().getInteger(R.integer.ghostery_ric_opacity);
+        ric_max = ric_max_default = activity.getResources().getInteger(R.integer.ghostery_ric_max_default);
+        ric_session_max = ric_session_max_default = activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
+        ric_opacity = ric_opacity_default = activity.getResources().getInteger(R.integer.ghostery_ric_opacity);
     }
 
     public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
@@ -355,7 +355,7 @@ public class InAppConsentData {
                 if (uRL != null && uRL.length() > 0) {
                     Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
                     try{
-//                        if (Network.isNetworkAvailable(_activity)) {
+//                        if (Network.isNetworkAvailable(activity)) {
 //                            // Split the supplied URL into usable parts for the service call
 //                            String[] uRlParts = uRL.split("\\?");
 //                            String[] params = uRlParts[1].split("\\&");
@@ -492,7 +492,6 @@ public class InAppConsentData {
 
 
 
-
     // =================================================================================
     // =================================================================================
 
@@ -509,8 +508,8 @@ public class InAppConsentData {
         protected void onPreExecute() {
             super.onPreExecute();
             // Showing progress dialog
-            pDialog = new ProgressDialog(_activity);
-            pDialog.setMessage(_activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
+            pDialog = new ProgressDialog(activity);
+            pDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
             pDialog.setCancelable(false);
             pDialog.show();
 
@@ -543,7 +542,7 @@ public class InAppConsentData {
                         if (jsonStr.endsWith(NON_JSON_POSTFIX))
                             jsonStr = jsonStr.substring(0, jsonStr.length() - NON_JSON_POSTFIX.length());
 
-                        Resources resources = _activity.getResources();
+                        Resources resources = activity.getResources();
                         JSONObject jsonObj = new JSONObject(jsonStr);
 
                         bric = jsonObj.isNull(TAG_BRIC)? resources.getBoolean(R.bool.ghostery_bric) : jsonObj.getBoolean(TAG_BRIC);
@@ -638,7 +637,7 @@ public class InAppConsentData {
 //
 //                        // Convert the ric_max value from either the retrieved JSON parameter or the default value
 //                        if (ric_maxString == null || ric_maxString.length() == 0)
-//                            ric_maxString = _activity.getResources().getString(R.string.ghostery_ric_max_default);
+//                            ric_maxString = activity.getResources().getString(R.string.ghostery_ric_max_default);
 //
 //                        if (ric_maxString != null) {
 //                            Log.d(TAG, "ric_maxString = " + ric_maxString);
@@ -649,7 +648,7 @@ public class InAppConsentData {
 //
 //                        // Convert the ric_session_max value from either the retrieved JSON parameter or the default value
 //                        if (ric_session_maxString == null || ric_session_maxString.length() == 0)
-//                            ric_session_maxString = _activity.getResources().getString(R.string.ghostery_ric_session_max_default);
+//                            ric_session_maxString = activity.getResources().getString(R.string.ghostery_ric_session_max_default);
 //
 //                        if (ric_session_maxString != null) {
 //                            ric_session_max = Integer.parseInt(ric_session_maxString);
@@ -681,7 +680,7 @@ public class InAppConsentData {
 
             // Let the specified callback know it finished...
             if (mJSONGetterCallback != null) {
-                _activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mJSONGetterCallback.onTaskDone();

@@ -1,6 +1,7 @@
 package com.ghostery.privacy.inappconsentsdk.fragments;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -8,7 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +49,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, new InAppConsentData());
+        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
         inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
     }
 

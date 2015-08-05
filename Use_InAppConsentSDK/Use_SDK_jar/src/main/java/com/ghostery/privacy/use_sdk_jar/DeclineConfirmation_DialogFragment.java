@@ -1,10 +1,12 @@
-package com.ghostery.privacy.use_sdk_module;
+package com.ghostery.privacy.use_sdk_jar;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+
+import com.ghostery.privacy.use_inappnotice_sdk.R;
 
 public class DeclineConfirmation_DialogFragment extends DialogFragment
 {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, InAppConsent_Callback {
 
+    private final static String TAG = "MainActivity";
     private InAppConsent_Callback inAppConsent_Callback;
     private Button btn_consent_flow;
     private Button btn_manage_preferences;
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         Util.setSharedPreference(this, Util.SP_PUB_NOTICE_ID, pubNoticeIdString);
 
         if (view == btn_reset_sdk) {
-            InAppConsent inAppConsent = new InAppConsent();
+            InAppConsent inAppConsent = new InAppConsent(this);
             inAppConsent.resetSDK();
 
             Toast.makeText(this, "SDK was reset.", Toast.LENGTH_SHORT).show();
@@ -113,15 +115,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             if (cb != null)
                 useRemoteValues = cb.isChecked();
 
-            InAppConsent inAppConsent = new InAppConsent();
+            InAppConsent inAppConsent = new InAppConsent(this);
 
             this.trackerHashMap = inAppConsent.getTrackerPreferences();
 
             if (view == btn_manage_preferences) {
-                inAppConsent.showManagePreferences(this, companyId, pubNoticeId, useRemoteValues, this);
+                inAppConsent.showManagePreferences(companyId, pubNoticeId, useRemoteValues, this);
 
             } else if (view == btn_consent_flow) {
-                inAppConsent.startConsentFlow(this, companyId, pubNoticeId, useRemoteValues, this);
+                inAppConsent.startConsentFlow(companyId, pubNoticeId, useRemoteValues, this);
 
             }
         }
@@ -134,8 +136,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         if (isAccepted) {
             Toast.makeText(this, "Tracking accepted", Toast.LENGTH_LONG).show();
         } else {
-            DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
-            dialog.show(this.getSupportFragmentManager(), "DeclineConfirmation_DialogFragment");
+            try {
+                DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
+                dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
+            }
         }
     }
 
