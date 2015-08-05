@@ -10,24 +10,20 @@
         android:name=".app.App"
         android:allowBackup="true" >
         <activity
-            android:name=".app.TrackerListActivity"
+            android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity"
             android:launchMode="singleInstance"
-            android:multiprocess="false"
-            android:theme="@style/ghostery_AppTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
+            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
+            android:theme="@style/ghostery_AppTheme"
+            >
         </activity>
         <activity
-            android:name=".app.TrackerDetailActivity"
+            android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
             android:label="@string/ghostery_tracker_detail_title"
             android:parentActivityName=".app.TrackerListActivity"
-            android:theme="@style/ghostery_AppTheme" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity" />
+            android:theme="@style/ghostery_AppTheme"
+            >
         </activity>
     </application>
 
