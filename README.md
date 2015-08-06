@@ -180,27 +180,27 @@ Use_SDK_jar: This project includes the InAppConsentSDK project as a JAR-based mo
    1. Select the Build Type as "release".
    1. Click Finish.
    
-1.  Rename the new AAR APK file:
-    * From: ...\InAppConsent_android\release\Use_SDK_aar\Use_SDK_aar-release.apk
-    * To: Use_SDK_aar_(version name)-(version number).apk
-
-1.  Delete the new manifest report file:
-    * From: ...\InAppConsent_android\release\Use_SDK_aar\manifest-merger-release-report.txt
-
 1. Build a new JAR APK:
    1. In Android Studio, Click the menu Build > Generate Signed APK...
    1. Select the "Use_SDK_jar" module in the dropdown and click Next.
    1. Enter the applicable keystore path, keystore password, key alias (evidon), and key password. (Get these from LastPass.) Then click Next.
-   1. Set the APK Destination folder as: ...\InAppConsent_android\release\Use_SDK_aar\
+   1. Set the APK Destination folder as: ...\InAppConsent_android\release\Use_SDK_jar\
    1. Select the Build Type as "release".
    1. Click Finish.
    
 1.  Rename the new AAR APK file:
+    * From: ...\InAppConsent_android\release\Use_SDK_aar\Use_SDK_aar-release.apk
+    * To: Use_SDK_aar_(version name)-(version number).apk
+
+1.  Delete the new AAR manifest report file:
+    * From: ...\InAppConsent_android\release\Use_SDK_aar\manifest-merger-release-report.txt
+
+1.  Rename the new JAR APK file:
     * From: ...\InAppConsent_android\release\Use_SDK_jar\Use_SDK_jar-release.apk
     * To: Use_SDK_jar_(version name)-(version number).apk
 
-1.  Delete the new manifest report file:
+1.  Delete the new JAR manifest report file:
     * From: ...\InAppConsent_android\release\Use_SDK_jar\manifest-merger-release-report.txt
-1.  Test both the AAR and the JAR test APKs by copying to an ANdroid device.
+1.  Test both the AAR and the JAR test APKs by copying to an Android device.
 
 1.  Check the signed APKs and the SDK folders into GitHub.

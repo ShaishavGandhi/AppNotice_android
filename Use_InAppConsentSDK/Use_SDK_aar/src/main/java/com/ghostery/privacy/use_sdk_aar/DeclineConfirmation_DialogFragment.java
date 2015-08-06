@@ -1,12 +1,12 @@
 package com.ghostery.privacy.use_sdk_aar;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 
-import com.ghostery.privacy.use_inappnotice_aar.R;
+import static com.ghostery.privacy.use_inappnotice_aar.R.string;
 
 public class DeclineConfirmation_DialogFragment extends DialogFragment
 {
@@ -18,9 +18,9 @@ public class DeclineConfirmation_DialogFragment extends DialogFragment
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder =  new AlertDialog.Builder(getActivity());
-        builder.setTitle(getActivity().getString(R.string.declineConfirmDialog_title));
-        builder.setMessage(getActivity().getString(R.string.declineConfirmDialog_message));
-        builder.setPositiveButton(getActivity().getString(R.string.declineConfirmDialog_posBtn), new DialogInterface.OnClickListener() {
+        builder.setTitle(getActivity().getString(string.declineConfirmDialog_title));
+        builder.setMessage(getActivity().getString(string.declineConfirmDialog_message));
+        builder.setPositiveButton(getActivity().getString(string.declineConfirmDialog_posBtn), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

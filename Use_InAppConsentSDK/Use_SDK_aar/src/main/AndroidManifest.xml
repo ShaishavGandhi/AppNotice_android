@@ -9,34 +9,29 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.ghostery.privacy.use_sdk_aar.MainActivity"
-            android:label="@string/app_name" >
+            android:launchMode="standard"
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity"
-            android:launchMode="singleInstance"
-            android:multiprocess="false"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity"
             android:launchMode="singleInstance"
-            android:multiprocess="false"
-            android:screenOrientation="nosensor" >
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-            </intent-filter>
+            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
+            >
         </activity>
+        <activity
+            android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
+            >
+        </activity>
+
     </application>
 
 </manifest>
