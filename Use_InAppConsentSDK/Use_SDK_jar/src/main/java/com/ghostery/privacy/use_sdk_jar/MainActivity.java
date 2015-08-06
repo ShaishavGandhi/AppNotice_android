@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,13 +17,16 @@ import android.widget.Toast;
 
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsent;
-import com.ghostery.privacy.use_inappnotice_sdk.R;
 
 import java.util.HashMap;
+
+import static com.ghostery.privacy.use_inappnotice_sdk.R.id;
+import static com.ghostery.privacy.use_inappnotice_sdk.R.layout;
 
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, InAppConsent_Callback {
 
+    private final static String TAG = "MainActivity";
     private InAppConsent_Callback inAppConsent_Callback;
     private Button btn_consent_flow;
     private Button btn_manage_preferences;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(layout.activity_main);
     }
 
     @Nullable
@@ -54,16 +58,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String pubNoticeIdString = Util.getSharedPreference(this, Util.SP_PUB_NOTICE_ID, "");
 
-        EditText companyIdEditText = (EditText)findViewById(R.id.editText_companyId);
-        EditText pubNoticeIdEditText = (EditText)findViewById(R.id.editText_pubNoticeId);
+        EditText companyIdEditText = (EditText)findViewById(id.editText_companyId);
+        EditText pubNoticeIdEditText = (EditText)findViewById(id.editText_pubNoticeId);
 
         companyIdEditText.setText(companyIdString);
         pubNoticeIdEditText.setText(pubNoticeIdString);
 
-        btn_consent_flow = (Button) findViewById(R.id.btn_consent_flow) ;
-        btn_manage_preferences = (Button) findViewById(R.id.btn_manage_preferences) ;
-        btn_reset_sdk = (Button) findViewById(R.id.btn_reset_sdk) ;
-        btn_close_app = (Button) findViewById(R.id.btn_close_app) ;
+        btn_consent_flow = (Button) findViewById(id.btn_consent_flow) ;
+        btn_manage_preferences = (Button) findViewById(id.btn_manage_preferences) ;
+        btn_reset_sdk = (Button) findViewById(id.btn_reset_sdk) ;
+        btn_close_app = (Button) findViewById(id.btn_close_app) ;
 
         btn_consent_flow.setOnClickListener(this);
         btn_manage_preferences.setOnClickListener(this);
@@ -80,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int pubNoticeId = 0;
         Boolean useRemoteValues = true;
 
-        TextView tv = (TextView)this.findViewById(R.id.editText_companyId);
+        TextView tv = (TextView)this.findViewById(id.editText_companyId);
         if (tv != null)
             companyIdString = tv.getText().toString();
 
-        tv = (TextView)this.findViewById(R.id.editText_pubNoticeId);
+        tv = (TextView)this.findViewById(id.editText_pubNoticeId);
         if (tv != null)
             pubNoticeIdString = tv.getText().toString();
 
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         Util.setSharedPreference(this, Util.SP_PUB_NOTICE_ID, pubNoticeIdString);
 
         if (view == btn_reset_sdk) {
-            InAppConsent inAppConsent = new InAppConsent();
+            InAppConsent inAppConsent = new InAppConsent(this);
             inAppConsent.resetSDK();
 
             Toast.makeText(this, "SDK was reset.", Toast.LENGTH_SHORT).show();
@@ -110,19 +114,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             companyId = Integer.valueOf(companyIdString);
             pubNoticeId = Integer.valueOf(pubNoticeIdString);
 
-            CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+            CheckBox cb = (CheckBox)this.findViewById(id.checkBox_useRemoteValues);
             if (cb != null)
                 useRemoteValues = cb.isChecked();
 
-            InAppConsent inAppConsent = new InAppConsent();
+            InAppConsent inAppConsent = new InAppConsent(this);
 
             this.trackerHashMap = inAppConsent.getTrackerPreferences();
 
             if (view == btn_manage_preferences) {
-                inAppConsent.showManagePreferences(this, companyId, pubNoticeId, useRemoteValues, this);
+                inAppConsent.showManagePreferences(companyId, pubNoticeId, useRemoteValues, this);
 
             } else if (view == btn_consent_flow) {
-                inAppConsent.startConsentFlow(this, companyId, pubNoticeId, useRemoteValues, this);
+                inAppConsent.startConsentFlow(companyId, pubNoticeId, useRemoteValues, this);
 
             }
         }
@@ -135,8 +139,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         if (isAccepted) {
             Toast.makeText(this, "Tracking accepted", Toast.LENGTH_LONG).show();
         } else {
-            DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
-            dialog.show(this.getSupportFragmentManager(), "DeclineConfirmation_DialogFragment");
+            try {
+                DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
+                dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
+            }
         }
     }
 
