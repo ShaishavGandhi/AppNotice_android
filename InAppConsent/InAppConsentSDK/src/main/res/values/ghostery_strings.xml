@@ -44,6 +44,7 @@
     <!-- manage_preferences_description -->
     <string name="ghostery_manage_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
     <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Privacy Policy Not Provided</string>
     <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
     <string name="ghostery_manage_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
     <!-- manage_preferences_header -->
