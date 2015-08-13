@@ -18,32 +18,36 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center_vertical"
-            tools:context=".ListActivity">
-
-            <ImageView
-                android:id="@+id/imageView_trackerLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription=""
-                android:layout_centerVertical="true" />
+            android:padding="8dp"
+            tools:context=".ListActivity" >
 
             <TextView
                 android:id="@+id/textView_TrackerName"
-                style="@style/ghostery_style_fragment_detail_header"
-                android:layout_gravity="center"
-                android:layout_centerVertical="true" />
+                style="@style/ghostery_style_custom_list_adapter"
+                android:textSize="18sp" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ghostery_style_custom_list_adapter"
                 android:text=""
+                style="@style/ghostery_style_custom_list_adapter"
                 android:id="@+id/opt_in_out_switch"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
                 android:onClick="onOptInOutClick"
                 android:focusable="false" />
+
+            <ImageView
+                android:id="@+id/imageView_trackerLogo"
+                style="@style/ghostery_style_custom_list_adapter"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/opt_in_out_switch"
+                android:paddingRight="15dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitStart"
+                android:layout_width="match_parent" />
+
 
         </RelativeLayout>
 

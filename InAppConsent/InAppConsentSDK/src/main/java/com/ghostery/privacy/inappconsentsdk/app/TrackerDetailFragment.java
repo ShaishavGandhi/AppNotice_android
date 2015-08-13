@@ -15,6 +15,7 @@ import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
+import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
 /**
  * A fragment representing a single Tracker detail screen.
@@ -90,7 +91,7 @@ public class TrackerDetailFragment extends Fragment {
 
             Switch opt_in_out_switch = ((Switch) rootView.findViewById(R.id.opt_in_out_switch));
             if (tracker.isEssential()) {
-                opt_in_out_switch.setVisibility(View.GONE);
+                opt_in_out_switch.setVisibility(View.INVISIBLE);
             } else {
                 opt_in_out_switch.setVisibility(View.VISIBLE);
                 opt_in_out_switch.setChecked(tracker.isOn());
@@ -101,12 +102,12 @@ public class TrackerDetailFragment extends Fragment {
             TextView textView_learn_more = ((TextView) rootView.findViewById(R.id.textView_learn_more));
             TextView textView_learn_more_url = ((TextView) rootView.findViewById(R.id.textView_learn_more_url));
             String learnMoreUrl = tracker.getPrivacy_url();
-            if (learnMoreUrl != null && learnMoreUrl.length() > 0) {
-                textView_learn_more.setVisibility(View.VISIBLE);
+            boolean isUrlValid = Util.checkURL(learnMoreUrl);
+            if (isUrlValid) {
                 textView_learn_more_url.setVisibility(View.VISIBLE);
                 textView_learn_more_url.setText(learnMoreUrl);
             } else {
-                textView_learn_more.setVisibility(View.GONE);
+                textView_learn_more.setText(R.string.ghostery_manage_preferences_detail_learnmore_not_provided);
                 textView_learn_more_url.setVisibility(View.GONE);
             }
         }

@@ -2,8 +2,12 @@ package com.ghostery.privacy.inappconsentsdk.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Patterns;
 
 import com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity;
+
+import java.util.regex.Pattern;
 
 /**
  * Created by Steven.Overson on 2/25/2015.
@@ -16,6 +20,17 @@ public class Util {
         Intent intent = new Intent(activity, TrackerListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+    }
+
+    public static boolean checkURL(CharSequence input) {
+        boolean isValid = false;
+        if (TextUtils.isEmpty(input)) {
+            isValid = false;
+        } else {
+            Pattern URL_PATTERN = Patterns.WEB_URL;
+            isValid = URL_PATTERN.matcher(input).matches();
+        }
+        return isValid;
     }
 
 //    public static int getContrastColor(int color, int alpha)
