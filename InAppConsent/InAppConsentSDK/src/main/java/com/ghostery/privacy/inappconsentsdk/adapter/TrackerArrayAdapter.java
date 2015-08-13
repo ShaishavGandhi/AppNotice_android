@@ -80,7 +80,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         itemView.setId(tracker.uId);
 
         if (tracker.isEssential()) {
-            holder.optInOutSwitch.setVisibility(View.GONE);
+            holder.optInOutSwitch.setVisibility(View.INVISIBLE);
         } else {
             holder.optInOutSwitch.setVisibility(View.VISIBLE);
             holder.optInOutSwitch.setTag(tracker.uId);
