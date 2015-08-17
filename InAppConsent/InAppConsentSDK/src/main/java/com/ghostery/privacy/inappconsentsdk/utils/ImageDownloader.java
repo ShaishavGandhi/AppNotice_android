@@ -9,7 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownloadCallback;
+import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback;
 
 import java.io.File;
 import java.lang.ref.SoftReference;
@@ -24,10 +24,10 @@ public class ImageDownloader {
 
     private Activity activity;
     private Map<String, SoftReference<Bitmap>> imageCache;
-    private LogoDownloadCallback logoDownloadCallback;
+    private LogoDownload_Callback logoDownloadCallback;
     private int position;
 
-    public ImageDownloader(Activity activity, int position, LogoDownloadCallback logoDownloadCallback) {
+    public ImageDownloader(Activity activity, int position, LogoDownload_Callback logoDownloadCallback) {
         imageCache = new HashMap<String, SoftReference<Bitmap>>();
         this.activity = activity;
         this.position = position;
