@@ -13,7 +13,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
-import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownloadCallback;
+import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
 
@@ -101,7 +101,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         }
 
         // Company Logo
-        ImageDownloader imageDownloader = new ImageDownloader(listFragment.getActivity(), position, new LogoDownloadCallback() {
+        ImageDownloader imageDownloader = new ImageDownloader(listFragment.getActivity(), position, new LogoDownload_Callback() {
 
             @Override
             public void onDownloaded(int position) {

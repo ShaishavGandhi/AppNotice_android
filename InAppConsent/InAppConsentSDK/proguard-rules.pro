@@ -6,6 +6,7 @@
 -keepattributes Signature
 -keep public class com.ghostery.privacy.inappconsentsdk.model.InAppConsent {public *;}
 -keep public interface com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback {public *; }
+-keep public interface com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback {public *; }
 
 #============================================================
 -optimizationpasses 5

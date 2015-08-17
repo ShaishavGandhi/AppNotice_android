@@ -54,7 +54,8 @@
             android:layout_toLeftOf="@id/opt_in_out_switch"
             android:paddingRight="15dp"
             android:adjustViewBounds="true"
-            android:scaleType="fitStart" />
+            android:scaleType="fitStart"
+            android:layout_width="match_parent" />
 
 
     </RelativeLayout>

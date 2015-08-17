@@ -17,7 +17,7 @@
         android:id="@+id/textView_title"
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:layout_marginTop="8dp" />
+        android:layout_margin="10dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,48 +30,38 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ghostery_dialog_explicit_message"
+            android:layout_height="match_parent"
+            android:text="@string/ghostery_dialog_implicit_message"
             android:id="@+id/textView_message"
             android:layout_weight="1"
-            android:layout_margin="12dp"
             android:textColor="@android:color/black"
             android:ellipsize="end" />
     </ScrollView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ghostery_dialog_button_preferences"
-        android:id="@+id/preferences_button"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/primary_text_default_material_light"
-        />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_weight="1">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ghostery_dialog_button_consent"
-            android:id="@+id/accept_button"
+            android:text="@string/ghostery_dialog_button_preferences"
+            android:id="@+id/preferences_button"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:textColor="@color/primary_text_default_material_light"
-            />
+            android:textColor="#FFFFFF"
+            android:layout_weight=".6"
+            android:backgroundTint="#333333" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ghostery_dialog_button_decline"
-            android:id="@+id/decline_button"
-            android:layout_weight="1"
-            android:textColor="@color/primary_text_default_material_light"
-            />
+            android:text="@string/ghostery_dialog_button_close"
+            android:id="@+id/close_button"
+            android:textColor="#FFFFFF"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
