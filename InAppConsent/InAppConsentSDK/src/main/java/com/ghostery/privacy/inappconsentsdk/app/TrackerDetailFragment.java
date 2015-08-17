@@ -11,10 +11,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownloadCallback;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
-import com.ghostery.privacy.inappconsentsdk.utils.Session;
 import com.ghostery.privacy.inappconsentsdk.utils.Util;
 
 /**
@@ -50,7 +50,7 @@ public class TrackerDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Get either a new or initialized tracker config object
-        inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
+        inAppConsentData = InAppConsentData.getInstance(getActivity());
 
         if (inAppConsentData.isInitialized()) {
             // Load the dummy content specified by the fragment
@@ -66,17 +66,24 @@ public class TrackerDetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.ghostery_fragment_tracker_detail, container, false);
+        final ImageView imageView_trackerLogo = (ImageView) rootView.findViewById(R.id.imageView_trackerLogo);
+        final TextView textView_TrackerName = ((TextView) rootView.findViewById(R.id.textView_TrackerName));
+
 
         // Show the dummy content as text in a TextView.
         if (tracker != null) {
-            ImageDownloader imageDownloader = new ImageDownloader();
-            ImageView imageView_trackerLogo = (ImageView) rootView.findViewById(R.id.imageView_trackerLogo);
-            imageDownloader.download(tracker.getLogo_url(), imageView_trackerLogo);
+            ImageDownloader imageDownloader = new ImageDownloader(getActivity(), tracker.uId, new LogoDownloadCallback() {
 
-            TextView textView_TrackerName = ((TextView) rootView.findViewById(R.id.textView_TrackerName));
+                @Override
+                public void onDownloaded(int position) {
+                    imageView_trackerLogo.setVisibility(View.VISIBLE);
+                    textView_TrackerName.setVisibility(View.GONE);
+                }
+            });
+
+            imageDownloader.download(tracker.getLogo_url(), imageView_trackerLogo);
 
             // Determine if logo or tracker name should be shown
             Drawable trackerLogo = imageView_trackerLogo.getDrawable();

@@ -9,7 +9,6 @@ import android.widget.ListView;
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
-import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
 /**
  * A list fragment representing a list of Trackers. This fragment
@@ -56,7 +55,7 @@ public class TrackerListFragment extends ListFragment {
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
-     * nothing. Used only when this fragment is not attached to an activity.
+     * nothing. Used only when this fragment is not attached to an fragmentActivity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
@@ -76,10 +75,10 @@ public class TrackerListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         // Get either a new or initialized tracker config object
-        inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
+        inAppConsentData = InAppConsentData.getInstance(getActivity());
 
         // TODO: replace with a real list adapter.
-        trackerArrayAdapter = new TrackerArrayAdapter(getActivity(), R.id.tracker_name, inAppConsentData.trackerArrayList);
+        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, inAppConsentData.trackerArrayList);
         setListAdapter(trackerArrayAdapter);
     }
 
@@ -120,7 +119,7 @@ public class TrackerListFragment extends ListFragment {
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
 
-        // Notify the active callbacks interface (the activity, if the
+        // Notify the active callbacks interface (the fragmentActivity, if the
         // fragment is attached to one) that an item has been selected.
         mCallbacks.onItemSelected(inAppConsentData.trackerArrayList.get(position).uId);
     }

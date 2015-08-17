@@ -12,7 +12,6 @@ import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
-import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
 /**
  */
@@ -40,7 +39,7 @@ public class LearnMore_Fragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // Get either a new or initialized tracker config object
-        InAppConsentData inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
+        InAppConsentData inAppConsentData = InAppConsentData.getInstance(getActivity());
 
         if (inAppConsentData.isInitialized()) {
             // Load the dummy content specified by the fragment
@@ -75,12 +74,12 @@ public class LearnMore_Fragment extends Fragment {
     }
 
 //    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
+//    public void onAttach(Activity fragmentActivity) {
+//        super.onAttach(fragmentActivity);
 //        try {
-//            mListener = (OnFragmentInteractionListener) activity;
+//            mListener = (OnFragmentInteractionListener) fragmentActivity;
 //        } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+//            throw new ClassCastException(fragmentActivity.toString() + " must implement OnFragmentInteractionListener");
 //        }
 //    }
 
@@ -93,8 +92,8 @@ public class LearnMore_Fragment extends Fragment {
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
+     * to the fragmentActivity and potentially other fragments contained in that
+     * fragmentActivity.
      * <p/>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"

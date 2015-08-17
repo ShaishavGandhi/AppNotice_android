@@ -25,18 +25,18 @@ import com.ghostery.privacy.inappconsentsdk.utils.Session;
 import java.util.ArrayList;
 
 /**
- * An activity representing a list of Trackers. This activity
+ * An fragmentActivity representing a list of Trackers. This fragmentActivity
  * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
+ * handsets, the fragmentActivity presents a list of items, which when touched,
  * lead to a {@link TrackerDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
+ * item details. On tablets, the fragmentActivity presents the list of items and
  * item details side-by-side using two vertical panes.
  * <p/>
- * The activity makes heavy use of fragments. The list of items is a
+ * The fragmentActivity makes heavy use of fragments. The list of items is a
  * {@link TrackerListFragment} and the item details
  * (if present) is a {@link TrackerDetailFragment}.
  * <p/>
- * This activity also implements the required
+ * This fragmentActivity also implements the required
  * {@link TrackerListFragment.Callbacks} interface
  * to listen for item selections.
  */
@@ -47,7 +47,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     private InAppConsentData inAppConsentData;
 
     /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+     * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
@@ -89,7 +89,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
             // res/values-sw600dp). If this view is present, then the
-            // activity should be in two-pane mode.
+            // fragmentActivity should be in two-pane mode.
             mTwoPane = true;
 
             // In two-pane mode, list items should be given the
@@ -117,7 +117,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     @Override
     public void onItemSelected(int uId) {
         if (mTwoPane) {
-            // In two-pane mode, show the detail view in this activity by
+            // In two-pane mode, show the detail view in this fragmentActivity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
@@ -129,7 +129,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
                     .commit();
 
         } else {
-            // In single-pane mode, simply start the detail activity
+            // In single-pane mode, simply start the detail fragmentActivity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
             detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, uId);
@@ -154,7 +154,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             saveTrackerStates();
             sendOptInOutNotices();    // Send opt-in/out ping-back
 
-            // do something here, such as start an Intent to the parent activity.
+            // do something here, such as start an Intent to the parent fragmentActivity.
             Toast.makeText(this, "Actionbar Home", Toast.LENGTH_SHORT).show();
             this.finish();  // Or onBackPressed();
         }

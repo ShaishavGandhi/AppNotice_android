@@ -51,7 +51,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        inAppConsentData = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
+        inAppConsentData = InAppConsentData.getInstance(getActivity());
         inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
     }
 
@@ -71,7 +71,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 // Send notice for this event
                 InAppConsentData.sendNotice(InAppConsentData.NoticeType.EXPLICIT_INFO_PREF);
 
-                // Open the In-App Consent preferences activity
+                // Open the In-App Consent preferences fragmentActivity
                 Util.showManagePreferences(getActivity());
             }
         });
