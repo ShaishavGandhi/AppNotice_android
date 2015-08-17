@@ -11,7 +11,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
-import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownloadCallback;
+import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback;
 import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
@@ -74,7 +74,7 @@ public class TrackerDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (tracker != null) {
-            ImageDownloader imageDownloader = new ImageDownloader(getActivity(), tracker.uId, new LogoDownloadCallback() {
+            ImageDownloader imageDownloader = new ImageDownloader(getActivity(), tracker.uId, new LogoDownload_Callback() {
 
                 @Override
                 public void onDownloaded(int position) {
