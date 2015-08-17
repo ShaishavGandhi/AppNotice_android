@@ -12,7 +12,7 @@ import android.graphics.Bitmap;
 
 /*
  * Writes data to file in internal storage
- * @param context: application context
+ * @param fragmentActivity: application fragmentActivity
  * @param file: file name
  * @param data: data to be saved
  */

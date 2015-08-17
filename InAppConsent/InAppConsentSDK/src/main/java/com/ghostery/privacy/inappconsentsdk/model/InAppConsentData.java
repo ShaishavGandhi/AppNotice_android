@@ -30,6 +30,7 @@ import java.util.HashMap;
 // Never instantiate directly. Use getInstance() instead.
 public class InAppConsentData {
     private static final String TAG = "InAppConsentData";
+    public boolean useRemoteValues = true;
 
     private static InAppConsentData instance;
     private static Activity activity;
@@ -169,7 +170,7 @@ public class InAppConsentData {
 
         // Ensure the app only uses one instance of this class.
         if (instance == null)
-            instance = new InAppConsentData();
+            instance = (InAppConsentData) Session.get(Session.INAPPCONSENT_DATA, new InAppConsentData());
 
         return instance;
     }
@@ -355,7 +356,7 @@ public class InAppConsentData {
                 if (uRL != null && uRL.length() > 0) {
                     Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
                     try{
-//                        if (Network.isNetworkAvailable(activity)) {
+//                        if (Network.isNetworkAvailable(fragmentActivity)) {
 //                            // Split the supplied URL into usable parts for the service call
 //                            String[] uRlParts = uRL.split("\\?");
 //                            String[] params = uRlParts[1].split("\\&");
@@ -392,25 +393,32 @@ public class InAppConsentData {
 
     // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getImplicitNoticeDisplayStatus() {
-        boolean status = true;     // Assume we need to show the notice
+        boolean showNotice = true;     // Assume we need to show the notice
+        long currentTime = System.currentTimeMillis();
         int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
         long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
         int ric_session_count = (int) Session.get(Session.SYS_RIC_SESSION_COUNT, 0);
 
+        if (implicit_last_display_time == 0L) {     // If this is the first pass...
+            implicit_last_display_time = currentTime;
+            AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
+        }
+
         if (ric_session_count >= ric_session_max) {                 // If displayed enough in this session...
-            status = false;                                         //    don't display it now
+            showNotice = false;                                     //    don't display it now
         } else {
-            long currentTime = System.currentTimeMillis();
             if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) {     // If displayed less than 30 days ago...
                 if (implicit_display_count >= ric_max) {                                  // If displayed enough in last 30 days...
-                    status = false;                                                       //    don't display it now
+                    showNotice = false;                                                   //    don't display it now
                 }
             } else {
-                AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);            // If it's been more than 30 days, reset the display count to 0
+                // If it's been more than 30 days...
+                AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);    // Reset the display count to 0
+                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime);    // And reset the last display time
             }
         }
 
-        return status;
+        return showNotice;
     }
 
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
@@ -526,25 +534,24 @@ public class InAppConsentData {
                 // Make a request to url for the InAppConsentData info
                 String url = getFormattedJSONUrl();
                 String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+                JSONObject jsonObj = null;
+                Resources resources = activity.getResources();
+
+                if (jsonStr != null && jsonStr.length() > 20 && !jsonStr.startsWith(FILE_NOT_FOUND)){
+                    // Strip off the not-JSON outer characters
+                    if (jsonStr.startsWith(NON_JSON_PREFIX))
+                        jsonStr = jsonStr.substring(NON_JSON_PREFIX.length());
+                    if (jsonStr.endsWith(NON_JSON_POSTFIX))
+                        jsonStr = jsonStr.substring(0, jsonStr.length() - NON_JSON_POSTFIX.length());
+
+                    jsonObj = new JSONObject(jsonStr);
+                }
 
                 // Parse the returned JSON string
-                if (jsonStr == null || jsonStr.length() <= 20 || jsonStr.startsWith(FILE_NOT_FOUND)) {
-                    // No string to parse...
-                    Log.e(TAG, "Configuration info could not be retrieved.");
-
-                } else {
+                if (useRemoteValues){
                     Log.d(TAG, "Response: " + jsonStr);
 
                     try {
-                        // Strip off the not-JSON outer characters
-                        if (jsonStr.startsWith(NON_JSON_PREFIX))
-                            jsonStr = jsonStr.substring(NON_JSON_PREFIX.length());
-                        if (jsonStr.endsWith(NON_JSON_POSTFIX))
-                            jsonStr = jsonStr.substring(0, jsonStr.length() - NON_JSON_POSTFIX.length());
-
-                        Resources resources = activity.getResources();
-                        JSONObject jsonObj = new JSONObject(jsonStr);
-
                         bric = jsonObj.isNull(TAG_BRIC)? resources.getBoolean(R.bool.ghostery_bric) : jsonObj.getBoolean(TAG_BRIC);
                         bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? resources.getString(R.string.ghostery_dialog_explicit_access_button_color) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR);
                         bric_access_button_text = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT)? resources.getString(R.string.ghostery_dialog_button_consent) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT);
@@ -569,97 +576,45 @@ public class InAppConsentData {
                         ric_title = jsonObj.isNull(TAG_RIC_TITLE)? resources.getString(R.string.ghostery_dialog_header_text) : jsonObj.getString(TAG_RIC_TITLE);
                         ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? resources.getString(R.string.ghostery_dialog_implied_title_color) : jsonObj.getString(TAG_RIC_TITLE_COLOR);
 
-                        String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
-                        JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
-
-                        int id;
-                        for (int i = 0; i < trackerJSONArray.length(); i++) {
-                            JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
-                            Tracker tracker = new Tracker(trackerJSONObject);
-                            trackerArrayList.add(tracker);
-                        }
-
-                        // Sort by category and then by name within category
-                        Collections.sort(trackerArrayList, new Comparator<Tracker>() {
-                            @Override
-                            public int compare(Tracker tracker1, Tracker tracker2) {
-                                int result = 0;
-
-                                // Sort first by category...keeping "Essential" at the top
-                                if (tracker1.isEssential() && tracker2.isEssential()) {
-                                    result = 0;
-                                } else if (tracker1.isEssential()) {
-                                    result = -1;
-                                } else if (tracker2.isEssential()) {
-                                    result = 1;
-                                } else {
-                                    // Sort by non-essential category
-                                    String tracker1_category = tracker1.getCategory().toUpperCase();
-                                    String tracker2_category = tracker2.getCategory().toUpperCase();
-
-                                    //ascending order
-                                    result = tracker1_category.compareTo(tracker2_category);
-//                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
-                                }
-
-                                // If it's in the same category, then sort by tracker name
-                                if (result == 0) {
-                                    String tracker1_name = tracker1.getName().toUpperCase();
-                                    String tracker2_name = tracker2.getName().toUpperCase();
-
-                                    //ascending order
-                                    result = tracker1_name.compareTo(tracker2_name);
-//                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
-                                }
-                                return result;
-                            }
-                        });
-
-                        // Set header bit for first tracker in each category
-                        String categoryName = "";
-                        for (int i = 0; i < trackerArrayList.size(); i++) {
-                            Tracker tracker = trackerArrayList.get(i);
-                            tracker.uId = i;        // Set the tracker's unique ID
-
-                            // Flag tracker as having a header if this is the first tracker or if the category name is new
-                            if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
-                                tracker.setHasHeader();
-                            }
-                            categoryName = tracker.getCategory();
-                        }
-
-
-//                        // Convert the opacity string (value "0" to "100") to a float (value 0.0 to 1.0)
-//                        if (ric_opacityString != null) {
-//                            int opacityInt = Integer.parseInt(ric_opacityString);
-//                            ric_opacity = ((float)opacityInt) / 100;
-//                        }
-//
-//                        // Convert the ric_max value from either the retrieved JSON parameter or the default value
-//                        if (ric_maxString == null || ric_maxString.length() == 0)
-//                            ric_maxString = activity.getResources().getString(R.string.ghostery_ric_max_default);
-//
-//                        if (ric_maxString != null) {
-//                            Log.d(TAG, "ric_maxString = " + ric_maxString);
-//                            ric_max = Integer.parseInt(ric_maxString);
-//                        } else {
-//                            throw(new MissingResourceException("A default value for ric_max is missing as a string resource.", TAG, "ric_max"));
-//                        }
-//
-//                        // Convert the ric_session_max value from either the retrieved JSON parameter or the default value
-//                        if (ric_session_maxString == null || ric_session_maxString.length() == 0)
-//                            ric_session_maxString = activity.getResources().getString(R.string.ghostery_ric_session_max_default);
-//
-//                        if (ric_session_maxString != null) {
-//                            ric_session_max = Integer.parseInt(ric_session_maxString);
-//                        } else {
-//                            throw(new MissingResourceException("A default value for ric_session_max is missing as a string resource.", TAG, "ric_session_max"));
-//                        }
+                        initTrackerList(jsonObj);
 
                         initialized = true;
                     } catch (JSONException e) {
                         Log.e(TAG, "JSONException while parsing the JSON object.", e);
                     }
+                } else {
+                    if (useRemoteValues)
+                        Log.d(TAG, "Using local values because configuration JSON could not be retrieved.");
+                    else
+                        Log.d(TAG, "Using local values as requested.");
+
+                    bric = resources.getBoolean(R.bool.ghostery_bric);
+                    bric_access_button_color = resources.getString(R.string.ghostery_dialog_explicit_access_button_color);
+                    bric_access_button_text = resources.getString(R.string.ghostery_dialog_button_consent);
+                    bric_access_button_text_color = resources.getString(R.string.ghostery_dialog_explicit_access_button_text_color);
+                    bric_bg = resources.getString(R.string.ghostery_dialog_explicit_bg_color);
+                    bric_content1 = resources.getString(R.string.ghostery_dialog_explicit_message);
+                    bric_decline_button_color = resources.getString(R.string.ghostery_dialog_explicit_decline_button_color);
+                    bric_decline_button_text = resources.getString(R.string.ghostery_dialog_button_decline);
+                    bric_decline_button_text_color = resources.getString(R.string.ghostery_dialog_explicit_decline_button_text_color);
+                    bric_header_text = resources.getString(R.string.ghostery_dialog_header_text);
+                    bric_header_text_color = resources.getString(R.string.ghostery_dialog_explicit_title_color);
+                    close_button = resources.getString(R.string.ghostery_dialog_button_close);
+                    manage_preferences_description = resources.getString(R.string.ghostery_manage_preferences_description);
+                    manage_preferences_header = resources.getString(R.string.ghostery_manage_preferences_header);
+                    ric = resources.getString(R.string.ghostery_dialog_implicit_message);
+                    ric_bg = resources.getString(R.string.ghostery_dialog_implied_bg_color);
+                    ric_click_manage_settings = resources.getString(R.string.ghostery_dialog_button_preferences);
+                    ric_color = resources.getString(R.string.ghostery_dialog_implied_text_color);
+                    ric_max = ric_max_default;
+                    ric_opacity = ric_opacity_default;
+                    ric_session_max = ric_session_max_default;
+                    ric_title = resources.getString(R.string.ghostery_dialog_header_text);
+                    ric_title_color = resources.getString(R.string.ghostery_dialog_implied_title_color);
+
+                    if (jsonObj != null)
+                        initTrackerList(jsonObj);
+
                 }
             } catch (NumberFormatException e) {
                 Log.e(TAG, "Exception while parsing elements of the JSON object", e);
@@ -670,6 +625,73 @@ public class InAppConsentData {
             }
 
             return null;
+        }
+
+        private void initTrackerList(JSONObject jsonObj) {
+            try {
+                String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
+                JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
+
+                int id;
+                for (int i = 0; i < trackerJSONArray.length(); i++) {
+                    JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
+                    Tracker tracker = new Tracker(trackerJSONObject);
+                    trackerArrayList.add(tracker);
+                }
+
+                // Sort by category and then by name within category
+                Collections.sort(trackerArrayList, new Comparator<Tracker>() {
+                    @Override
+                    public int compare(Tracker tracker1, Tracker tracker2) {
+                        int result = 0;
+
+                        // Sort first by category...keeping "Essential" at the top
+                        if (tracker1.isEssential() && tracker2.isEssential()) {
+                            result = 0;
+                        } else if (tracker1.isEssential()) {
+                            result = -1;
+                        } else if (tracker2.isEssential()) {
+                            result = 1;
+                        } else {
+                            // Sort by non-essential category
+                            String tracker1_category = tracker1.getCategory().toUpperCase();
+                            String tracker2_category = tracker2.getCategory().toUpperCase();
+
+                            //ascending order
+                            result = tracker1_category.compareTo(tracker2_category);
+//                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
+                        }
+
+                        // If it's in the same category, then sort by tracker name
+                        if (result == 0) {
+                            String tracker1_name = tracker1.getName().toUpperCase();
+                            String tracker2_name = tracker2.getName().toUpperCase();
+
+                            //ascending order
+                            result = tracker1_name.compareTo(tracker2_name);
+//                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
+                        }
+                        return result;
+                    }
+                });
+
+                // Set header bit for first tracker in each category
+                String categoryName = "";
+                for (int i = 0; i < trackerArrayList.size(); i++) {
+                    Tracker tracker = trackerArrayList.get(i);
+                    tracker.uId = i;        // Set the tracker's unique ID
+
+                    // Flag tracker as having a header if this is the first tracker or if the category name is new
+                    if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
+                        tracker.setHasHeader();
+                    }
+                    categoryName = tracker.getCategory();
+                }
+
+                initialized = true;
+            } catch (JSONException e) {
+                Log.e(TAG, "JSONException while parsing the JSON object.", e);
+            }
         }
 
         @Override

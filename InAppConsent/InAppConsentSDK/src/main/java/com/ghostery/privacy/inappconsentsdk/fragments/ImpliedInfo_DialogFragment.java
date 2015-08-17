@@ -49,7 +49,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(getActivity()));
+        inAppConsentData = InAppConsentData.getInstance(getActivity());
         inAppConsent_callback = (InAppConsent_Callback)Session.get(Session.INAPPCONSENT_CALLBACK);
     }
 
@@ -66,7 +66,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Open the In-App Consent preferences activity
+                // Open the In-App Consent preferences fragmentActivity
                 Util.showManagePreferences(getActivity());
 
                 // Send notice for this event

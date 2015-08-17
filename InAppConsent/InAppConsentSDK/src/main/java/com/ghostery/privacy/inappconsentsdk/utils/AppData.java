@@ -40,7 +40,7 @@ public class AppData {
             sharedPreferences = context.getSharedPreferences(packageName + APPDATA_FILENAME_END, App.MODE_PRIVATE);
             if (!sharedPreferences.contains(APPDATA_VERSION)) {
                 setInteger(APPDATA_VERSION, APPDATA_VERSION_VALUE);		// Write a version number into the prefs file
-                //upgradeFromOldFiles(context);
+                //upgradeFromOldFiles(fragmentActivity);
             }
         }
         return sharedPreferences;
@@ -49,7 +49,7 @@ public class AppData {
     protected static void upgradeFromOldFiles(Context context) {
         Boolean prefsCopied = false;
         // Get the old prefs file
-//        SharedPreferences oldSharedPreferences = context.getSharedPreferences("(old designator: com.appname...)", App.MODE_PRIVATE);
+//        SharedPreferences oldSharedPreferences = fragmentActivity.getSharedPreferences("(old designator: com.appname...)", App.MODE_PRIVATE);
 //        if (some criteria) {
 //            copySharedPreferences(oldSharedPreferences);
 //            prefsCopied = true;

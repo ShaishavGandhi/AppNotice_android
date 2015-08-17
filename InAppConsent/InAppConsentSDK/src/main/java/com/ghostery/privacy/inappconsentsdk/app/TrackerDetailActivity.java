@@ -19,12 +19,12 @@ import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.Session;
 
 /**
- * An activity representing a single Tracker detail screen. This
- * activity is only used on handset devices. On tablet-size devices,
+ * An fragmentActivity representing a single Tracker detail screen. This
+ * fragmentActivity is only used on handset devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link TrackerListActivity}.
  * <p/>
- * This activity is mostly just a 'shell' activity containing nothing
+ * This fragmentActivity is mostly just a 'shell' fragmentActivity containing nothing
  * more than a {@link TrackerDetailFragment}.
  */
 public class TrackerDetailActivity extends AppCompatActivity {
@@ -45,7 +45,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
         }
 
         // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
+        // saved from previous configurations of this fragmentActivity
         // (e.g. when rotating the screen from portrait to landscape).
         // In this case, the fragment will automatically be re-added
         // to its container so we don't need to manually add it.
@@ -54,7 +54,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
+            // Create the detail fragment and add it to the fragmentActivity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
             trackerId = getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0);
@@ -76,7 +76,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. Use NavUtils to allow users
+            // fragmentActivity, the Up button is shown. Use NavUtils to allow users
             // to navigate up one level in the application structure. For
             // more details, see the Navigation pattern on Android Design:
             //

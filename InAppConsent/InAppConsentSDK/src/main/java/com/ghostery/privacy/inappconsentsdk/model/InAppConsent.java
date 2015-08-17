@@ -34,7 +34,7 @@ public class InAppConsent {
 
     /**
      * Starts the In-App Consent flow for implied consent. Must be called before your app begins tracking.
-     *   - activity: Usually your start-up activity
+     *   - fragmentActivity: Usually your start-up fragmentActivity
      *   - company_id: The company ID assigned to you for In-App Consent
      *   - pub_notice_id: The Pub-notice ID of the configuration created for this app
      *   - use_remote_values:
@@ -54,7 +54,7 @@ public class InAppConsent {
 
 //    /**
 //     * Starts the In-App Consent flow for explicit consent. Must be called before your app begins tracking.
-//     *   - activity: Usually your start-up activity
+//     *   - fragmentActivity: Usually your start-up fragmentActivity
 //     *   - company_id: The company ID assigned to you by Ghostery
 //     *   - pub_notice_id: The Pub-notice ID of the configuration created for this app
 //     *   - use_remote_values:
@@ -62,9 +62,9 @@ public class InAppConsent {
 //     *        False = Use local resource values instead of calling the service
 //     *   - inAppConsent_callback: The InAppConsent_Callback method created in your class to handle the In-App Consent response
 //     */
-//    public void startExplicitConsent(final FragmentActivity activity, int company_id, int pub_notice_id, boolean use_remote_values, InAppConsent_Callback inAppConsent_callback) {
+//    public void startExplicitConsent(final FragmentActivity fragmentActivity, int company_id, int pub_notice_id, boolean use_remote_values, InAppConsent_Callback inAppConsent_callback) {
 //        this.inAppConsent_callback = inAppConsent_callback;
-//        init(activity, company_id, pub_notice_id, ShowMode.SHOW_EXPLICIT_NOTICE, use_remote_values);
+//        init(fragmentActivity, company_id, pub_notice_id, ShowMode.SHOW_EXPLICIT_NOTICE, use_remote_values);
 //
 //        // Send notice for this event
 //        InAppConsentData.sendNotice(InAppConsentData.NoticeType.START_CONSENT_FLOW);
@@ -82,7 +82,7 @@ public class InAppConsent {
 
     /**
      * Shows the Manage Preferences screen. Can be called from your when the end user requests access to this screen (e.g., from a menu or button click).
-     *   - activity: Usually your current activity
+     *   - fragmentActivity: Usually your current fragmentActivity
      */
     public void showManagePreferences(int company_id, int pub_notice_id, boolean useRemoteValues, InAppConsent_Callback inAppConsent_callback) {
         this.inAppConsent_callback = inAppConsent_callback;
@@ -97,7 +97,8 @@ public class InAppConsent {
         }
 
         // Get either a new or initialized tracker config object
-        inAppConsentData = (InAppConsentData)Session.get(Session.INAPPCONSENT_DATA, InAppConsentData.getInstance(extActivity));
+        inAppConsentData = InAppConsentData.getInstance(extActivity);
+        inAppConsentData.useRemoteValues = useRemoteValues;
 
         // Keep track of the company ID and the pub-notice ID
         inAppConsentData.setCompany_id(company_id);
@@ -108,7 +109,7 @@ public class InAppConsent {
             if (isConsentFlow) {
                 startConsentFlow(useRemoteValues);
             } else {
-                // Open the In-App Consent preferences activity
+                // Open the In-App Consent preferences fragmentActivity
                 Util.showManagePreferences(extActivity);
 
                 // Send notice for this event
@@ -127,7 +128,7 @@ public class InAppConsent {
                         // Handle the response
                         startConsentFlow(useRemoteValues);
                     } else {
-                        // Open the In-App Consent preferences activity
+                        // Open the In-App Consent preferences fragmentActivity
                         Util.showManagePreferences(extActivity);
 
                         // Send notice for this event

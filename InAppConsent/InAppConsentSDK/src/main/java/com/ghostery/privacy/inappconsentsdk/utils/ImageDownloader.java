@@ -1,5 +1,6 @@
 package com.ghostery.privacy.inappconsentsdk.utils;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -7,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+
+import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownloadCallback;
 
 import java.io.File;
 import java.lang.ref.SoftReference;
@@ -19,10 +22,16 @@ import java.util.Map;
  */
 public class ImageDownloader {
 
-    Map<String, SoftReference<Bitmap>> imageCache;
+    private Activity activity;
+    private Map<String, SoftReference<Bitmap>> imageCache;
+    private LogoDownloadCallback logoDownloadCallback;
+    private int position;
 
-    public ImageDownloader() {
+    public ImageDownloader(Activity activity, int position, LogoDownloadCallback logoDownloadCallback) {
         imageCache = new HashMap<String, SoftReference<Bitmap>>();
+        this.activity = activity;
+        this.position = position;
+        this.logoDownloadCallback = logoDownloadCallback;
     }
 
     public void download(String url, ImageView imageView) {
@@ -122,6 +131,16 @@ public class ImageDownloader {
                     SoftReference<Bitmap> bitmapRef = new SoftReference<Bitmap>(bitmap);
                     imageCache.put(f.getPath(), bitmapRef);
                     FileWriter.writeBitmap(bitmap, f);
+
+                    // Let the specified callback know it finished downloading...
+                    if (logoDownloadCallback != null) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                logoDownloadCallback.onDownloaded(position);
+                            }
+                        });
+                    }
                 }
             }
         }

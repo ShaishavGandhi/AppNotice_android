@@ -1,17 +1,19 @@
 package com.ghostery.privacy.inappconsentsdk.adapter;
 
 import android.graphics.drawable.Drawable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
+import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownloadCallback;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
 
@@ -23,7 +25,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
     private ArrayList<Tracker> trackerArrayList;
     private static LayoutInflater mInflater = null;
     private static final String TAG = "SDK_CustomListAdapter";
-    public FragmentActivity context;
+    public ListFragment listFragment;
 
     public static class ViewHolder {
         public TextView trackerName;
@@ -32,12 +34,12 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         public Boolean isOn;
     }
 
-    public TrackerArrayAdapter(FragmentActivity ctx, int resource, ArrayList<Tracker> trackerArrayList) {
-        super(ctx, resource, trackerArrayList);
+    public TrackerArrayAdapter(ListFragment listFragment, int resource, ArrayList<Tracker> trackerArrayList) {
+        super(listFragment.getActivity(), resource, trackerArrayList);
 
         this.trackerArrayList = trackerArrayList;
-        this.mInflater = ctx.getLayoutInflater();
-        this.context = ctx;
+        this.mInflater = listFragment.getActivity().getLayoutInflater();
+        this.listFragment = listFragment;
         this.notifyDataSetInvalidated();
     }
 
@@ -99,7 +101,21 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         }
 
         // Company Logo
-        ImageDownloader imageDownloader = new ImageDownloader();
+        ImageDownloader imageDownloader = new ImageDownloader(listFragment.getActivity(), position, new LogoDownloadCallback() {
+
+            @Override
+            public void onDownloaded(int position) {
+                // Now that the image is downloaded, find its list item and refresh it
+                ListView listView = listFragment.getListView();
+                int firstPosition = listView.getFirstVisiblePosition();
+                int lastPosition = listView.getLastVisiblePosition();
+                if (position >= firstPosition && position <= lastPosition) {
+                    View view = listView.getChildAt(position - firstPosition);
+                    listView.getAdapter().getView(position, view, listView);
+                }
+            }
+        });
+
         imageDownloader.download(trackerArrayList.get(position).getLogo_url(), holder.trackerLogo);
 
         // Company Name (if logo not available/displayed)

@@ -16,7 +16,7 @@ public class Util {
     public static final int DIVIDER_ALPHA = 46;
 
     public static void showManagePreferences(final Activity activity) {
-//        Intent intent = new Intent(activity, ListActivity.class);
+//        Intent intent = new Intent(fragmentActivity, ListActivity.class);
         Intent intent = new Intent(activity, TrackerListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
