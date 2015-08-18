@@ -137,6 +137,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
         if (isAccepted) {
+            if (trackerHashMap.size() == 0) {
+                Toast.makeText(this, "No privacy preferences returned.", Toast.LENGTH_LONG).show();
+            }
             Toast.makeText(this, "Tracking accepted", Toast.LENGTH_LONG).show();
         } else {
             try {

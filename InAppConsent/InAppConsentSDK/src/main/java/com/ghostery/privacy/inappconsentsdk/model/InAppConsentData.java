@@ -548,7 +548,7 @@ public class InAppConsentData {
                 }
 
                 // Parse the returned JSON string
-                if (useRemoteValues){
+                if (useRemoteValues && jsonObj != null){
                     Log.d(TAG, "Response: " + jsonStr);
 
                     try {
