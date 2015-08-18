@@ -1,6 +1,10 @@
 # For use in debugging the ProGuard config
 ##-dontobfuscate
 
+# Produce useful obfuscated stack traces
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
 #============================================================
 # Keep and don't obfuscate both the InAppConsent entry points and the callback interfaces
 -keepattributes Signature
