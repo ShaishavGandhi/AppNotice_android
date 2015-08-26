@@ -78,8 +78,14 @@ public class TrackerDetailFragment extends Fragment {
 
                 @Override
                 public void onDownloaded(int position) {
-                    imageView_trackerLogo.setVisibility(View.VISIBLE);
-                    textView_TrackerName.setVisibility(View.GONE);
+                    if (imageView_trackerLogo.getHeight() > 0) {            // If the logo is substantial, use it,
+                        imageView_trackerLogo.setVisibility(View.VISIBLE);
+                        textView_TrackerName.setVisibility(View.GONE);
+                    } else {                                                // Else use the name text
+                        imageView_trackerLogo.setVisibility(View.GONE);
+                        textView_TrackerName.setVisibility(View.VISIBLE);
+                        textView_TrackerName.setText(tracker.getName());
+                    }
                 }
             });
 

@@ -106,12 +106,22 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             @Override
             public void onDownloaded(int position) {
                 // Now that the image is downloaded, find its list item and refresh it
-                ListView listView = listFragment.getListView();
-                int firstPosition = listView.getFirstVisiblePosition();
-                int lastPosition = listView.getLastVisiblePosition();
-                if (position >= firstPosition && position <= lastPosition) {
-                    View view = listView.getChildAt(position - firstPosition);
-                    listView.getAdapter().getView(position, view, listView);
+                try {
+                    if (listFragment.getId() > 0) {
+                        ListView listView = listFragment.getListView();
+                        int firstPosition = listView.getFirstVisiblePosition();
+                        int lastPosition = listView.getLastVisiblePosition();
+                        if (position >= firstPosition && position <= lastPosition) {
+                            View view = listView.getChildAt(position - firstPosition);
+                            listView.getAdapter().getView(position, view, listView);
+                        }
+                    } else {
+                        Log.d(TAG, "List Fragment has no content view (out of scope)");
+                    }
+                } catch (IllegalStateException e) {
+                    Log.e(TAG, "Error after getting the tracker logo", e);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error after getting the tracker logo", e);
                 }
             }
         });
