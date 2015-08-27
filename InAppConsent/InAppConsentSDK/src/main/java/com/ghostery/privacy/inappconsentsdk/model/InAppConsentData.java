@@ -446,9 +446,11 @@ public class InAppConsentData {
 
     public void saveTrackerStates() {
         HashMap trackerHashMap = getTrackerHashMap(false);     // Use tracker ID as a string
-        JSONObject trackerStateJSONObject = new JSONObject(trackerHashMap);
-        String trackerStatesString = trackerStateJSONObject.toString();
-        AppData.setString(AppData.APPDATA_TRACKERSTATES, trackerStatesString);
+        if (!trackerHashMap.isEmpty()) {    // Don't override last saved states if we don't have any trackers in the map
+            JSONObject trackerStateJSONObject = new JSONObject(trackerHashMap);
+            String trackerStatesString = trackerStateJSONObject.toString();
+            AppData.setString(AppData.APPDATA_TRACKERSTATES, trackerStatesString);
+        }
     }
 
     public void restoreTrackerStates() {
