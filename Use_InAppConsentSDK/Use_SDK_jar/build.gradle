@@ -8,7 +8,7 @@ android {
         applicationId "com.ghostery.privacy.use_inappnotice_sdk"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 7
+        versionCode 8
         versionName "1.0.0"
     }
     buildTypes {
