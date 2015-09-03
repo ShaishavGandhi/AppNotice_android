@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback;
@@ -154,8 +153,6 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             saveTrackerStates();
             sendOptInOutNotices();    // Send opt-in/out ping-back
 
-            // do something here, such as start an Intent to the parent fragmentActivity.
-            Toast.makeText(this, "Actionbar Home", Toast.LENGTH_SHORT).show();
             this.finish();  // Or onBackPressed();
         }
 

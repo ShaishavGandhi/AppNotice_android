@@ -33,7 +33,9 @@ public class InAppConsent {
     }
 
     /**
-     * Starts the In-App Consent flow for implied consent. Must be called before your app begins tracking.
+     * Starts the In-App Consent flow. Must be called before your app begins tracking. The flow type
+     *     (implied or explicit) is determined by the "bric" parameter in the JSON or the local
+     *     ghostery_bric resource parameter.
      *   - fragmentActivity: Usually your start-up fragmentActivity
      *   - company_id: The company ID assigned to you for In-App Consent
      *   - pub_notice_id: The Pub-notice ID of the configuration created for this app
