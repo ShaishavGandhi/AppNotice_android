@@ -51,16 +51,15 @@
             android:text="@string/ghostery_dialog_button_preferences"
             android:id="@+id/preferences_button"
             android:layout_gravity="center_horizontal"
-            android:textColor="#FFFFFF"
-            android:layout_weight=".6"
-            android:backgroundTint="#333333" />
+            android:textColor="@color/primary_text_default_material_light"
+            android:layout_weight=".6" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_close"
             android:id="@+id/close_button"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/primary_text_default_material_light"
             android:layout_weight="1" />
 
     </LinearLayout>

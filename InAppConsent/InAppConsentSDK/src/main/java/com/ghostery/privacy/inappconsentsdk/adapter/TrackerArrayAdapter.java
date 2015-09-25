@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback;
+import com.ghostery.privacy.inappconsentsdk.model.InAppConsentData;
 import com.ghostery.privacy.inappconsentsdk.model.Tracker;
 import com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 
 public class TrackerArrayAdapter extends ArrayAdapter {
 
+    private InAppConsentData inAppConsentData;
     private ArrayList<Tracker> trackerArrayList;
     private static LayoutInflater mInflater = null;
     private static final String TAG = "SDK_CustomListAdapter";
@@ -34,10 +36,11 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         public Boolean isOn;
     }
 
-    public TrackerArrayAdapter(ListFragment listFragment, int resource, ArrayList<Tracker> trackerArrayList) {
-        super(listFragment.getActivity(), resource, trackerArrayList);
+    public TrackerArrayAdapter(ListFragment listFragment, int resource, InAppConsentData inAppConsentData) {
+        super(listFragment.getActivity(), resource, inAppConsentData.trackerArrayList);
 
-        this.trackerArrayList = trackerArrayList;
+        this.inAppConsentData = inAppConsentData;
+        this.trackerArrayList = inAppConsentData.trackerArrayList;
         this.mInflater = listFragment.getActivity().getLayoutInflater();
         this.listFragment = listFragment;
         this.notifyDataSetInvalidated();
@@ -86,7 +89,15 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         } else {
             holder.optInOutSwitch.setVisibility(View.VISIBLE);
             holder.optInOutSwitch.setTag(tracker.uId);
-            holder.optInOutSwitch.setChecked(tracker.isOn());
+
+            // If this tracker is a duplicate of an essential tracker, disable it
+            if (inAppConsentData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
+                holder.optInOutSwitch.setChecked(true);     // Make sure it is checked
+                holder.optInOutSwitch.setEnabled(false);    // Disable the switch
+            } else {
+                holder.optInOutSwitch.setChecked(tracker.isOn());
+                holder.optInOutSwitch.setEnabled(true);     // Enable the switch
+            }
         }
 
         // Make the header visible and set its text if needed
@@ -106,12 +117,22 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             @Override
             public void onDownloaded(int position) {
                 // Now that the image is downloaded, find its list item and refresh it
-                ListView listView = listFragment.getListView();
-                int firstPosition = listView.getFirstVisiblePosition();
-                int lastPosition = listView.getLastVisiblePosition();
-                if (position >= firstPosition && position <= lastPosition) {
-                    View view = listView.getChildAt(position - firstPosition);
-                    listView.getAdapter().getView(position, view, listView);
+                try {
+                    if (listFragment.getId() > 0) {
+                        ListView listView = listFragment.getListView();
+                        int firstPosition = listView.getFirstVisiblePosition();
+                        int lastPosition = listView.getLastVisiblePosition();
+                        if (position >= firstPosition && position <= lastPosition) {
+                            View view = listView.getChildAt(position - firstPosition);
+                            listView.getAdapter().getView(position, view, listView);
+                        }
+                    } else {
+                        Log.d(TAG, "List Fragment has no content view (out of scope)");
+                    }
+                } catch (IllegalStateException e) {
+                    Log.e(TAG, "Error after getting the tracker logo", e);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error after getting the tracker logo", e);
                 }
             }
         });

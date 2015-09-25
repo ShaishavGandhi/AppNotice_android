@@ -15,13 +15,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/category_header"
         android:textSize="12dp"
-        android:visibility="gone"
         android:background="@color/ghostery_list_background"
         android:textColor="@color/ghostery_header_text_color"
         android:paddingLeft="6dp"
-        android:paddingTop="2dp"
+        android:paddingTop="21dp"
         android:paddingRight="6dp"
-        android:paddingBottom="2dp" />
+        android:paddingBottom="21dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

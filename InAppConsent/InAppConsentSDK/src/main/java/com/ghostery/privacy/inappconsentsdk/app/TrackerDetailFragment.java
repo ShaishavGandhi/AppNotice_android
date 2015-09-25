@@ -78,8 +78,14 @@ public class TrackerDetailFragment extends Fragment {
 
                 @Override
                 public void onDownloaded(int position) {
-                    imageView_trackerLogo.setVisibility(View.VISIBLE);
-                    textView_TrackerName.setVisibility(View.GONE);
+                    if (imageView_trackerLogo.getHeight() > 0) {            // If the logo is substantial, use it,
+                        imageView_trackerLogo.setVisibility(View.VISIBLE);
+                        textView_TrackerName.setVisibility(View.GONE);
+                    } else {                                                // Else use the name text
+                        imageView_trackerLogo.setVisibility(View.GONE);
+                        textView_TrackerName.setVisibility(View.VISIBLE);
+                        textView_TrackerName.setText(tracker.getName());
+                    }
                 }
             });
 
@@ -101,7 +107,15 @@ public class TrackerDetailFragment extends Fragment {
                 opt_in_out_switch.setVisibility(View.INVISIBLE);
             } else {
                 opt_in_out_switch.setVisibility(View.VISIBLE);
-                opt_in_out_switch.setChecked(tracker.isOn());
+
+                // If this tracker is a duplicate of an essential tracker, disable it
+                if (inAppConsentData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
+                    opt_in_out_switch.setChecked(true);     // Make sure it is checked
+                    opt_in_out_switch.setEnabled(false);    // Disable the switch
+                } else {
+                    opt_in_out_switch.setChecked(tracker.isOn());
+                    opt_in_out_switch.setEnabled(true);     // Enable the switch
+                }
             }
 
             ((TextView) rootView.findViewById(R.id.textView_trackerDescription)).setText(tracker.getDescription());

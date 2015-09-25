@@ -1,0 +1,384 @@
+com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter -> com.ghostery.privacy.inappconsentsdk.adapter.a:
+    java.util.ArrayList trackerArrayList -> b
+    android.view.LayoutInflater mInflater -> c
+    android.support.v4.app.ListFragment listFragment -> a
+    48:48:int getCount() -> getCount
+    53:53:java.lang.Object getItem(int) -> getItem
+    58:58:long getItemId(int) -> getItemId
+    64:132:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter$1 -> com.ghostery.privacy.inappconsentsdk.adapter.b:
+    com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter this$0 -> a
+    109:116:void onDownloaded(int) -> onDownloaded
+com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter$ViewHolder -> com.ghostery.privacy.inappconsentsdk.adapter.c:
+    android.widget.TextView trackerName -> a
+    android.widget.ImageView trackerLogo -> b
+    android.widget.Switch optInOutSwitch -> c
+com.ghostery.privacy.inappconsentsdk.app.App -> com.ghostery.privacy.inappconsentsdk.app.App:
+    android.content.Context mContext -> a
+    java.util.HashMap sessionMap -> b
+    19:21:void onCreate() -> onCreate
+    24:24:android.content.Context getContext() -> a
+    28:28:java.util.HashMap getSessionMap() -> b
+com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity -> com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity:
+    int trackerId -> a
+    36:72:void onCreate(android.os.Bundle) -> onCreate
+    76:94:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    99:105:void onBackPressed() -> onBackPressed
+    108:117:void onLinkClick(android.view.View) -> onLinkClick
+    120:132:void onOptInOutClick(android.view.View) -> onOptInOutClick
+    135:136:void setActionBarTitle(int) -> a
+com.ghostery.privacy.inappconsentsdk.app.TrackerDetailFragment -> com.ghostery.privacy.inappconsentsdk.app.a:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData inAppConsentData -> a
+    com.ghostery.privacy.inappconsentsdk.model.Tracker tracker -> b
+    50:66:void onCreate(android.os.Bundle) -> onCreate
+    70:122:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    127:130:void onResume() -> onResume
+com.ghostery.privacy.inappconsentsdk.app.TrackerDetailFragment$1 -> com.ghostery.privacy.inappconsentsdk.app.b:
+    android.widget.ImageView val$imageView_trackerLogo -> a
+    android.widget.TextView val$textView_TrackerName -> b
+    com.ghostery.privacy.inappconsentsdk.app.TrackerDetailFragment this$0 -> c
+    81:83:void onDownloaded(int) -> onDownloaded
+com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity -> com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity:
+    java.util.ArrayList trackerArrayList -> a
+    java.util.ArrayList trackerArrayListClone -> b
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData inAppConsentData -> c
+    boolean mTwoPane -> d
+    57:103:void onCreate(android.os.Bundle) -> onCreate
+    108:111:void onResume() -> onResume
+    119:138:void onItemSelected(int) -> a
+    142:145:void onBackPressed() -> onBackPressed
+    150:166:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    171:191:void sendOptInOutNotices() -> b
+    194:202:void saveTrackerStates() -> a
+    206:224:void onClick(android.view.View) -> onClick
+    227:239:void onClickDescription(android.view.View) -> onClickDescription
+    242:249:void onOptInOutClick(android.view.View) -> onOptInOutClick
+    252:275:void setAllNoneControlState() -> c
+    280:280:void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> onSupportActionModeStarted
+    285:285:void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> onSupportActionModeFinished
+com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity$1 -> com.ghostery.privacy.inappconsentsdk.app.c:
+    com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity this$0 -> a
+    235:236:void onClick(android.content.DialogInterface,int) -> onClick
+com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment -> com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData inAppConsentData -> a
+    com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter trackerArrayAdapter -> b
+    com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment$Callbacks mCallbacks -> c
+    int mActivatedPosition -> d
+    com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment$Callbacks sDummyCallbacks -> e
+    75:83:void onCreate(android.os.Bundle) -> onCreate
+    87:96:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    100:108:void onAttach(android.app.Activity) -> onAttach
+    112:116:void onDetach() -> onDetach
+    120:125:void onListItemClick(android.widget.ListView,android.view.View,int,long) -> onListItemClick
+    129:134:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    138:145:void refresh() -> a
+    154:157:void setActivateOnItemClick(boolean) -> a
+    160:167:void setActivatedPosition(int) -> a
+    22:22:com.ghostery.privacy.inappconsentsdk.adapter.TrackerArrayAdapter access$000(com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment) -> a
+com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment$1 -> com.ghostery.privacy.inappconsentsdk.app.d:
+    63:63:void onItemSelected(int) -> a
+com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment$2 -> com.ghostery.privacy.inappconsentsdk.app.e:
+    com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment this$0 -> a
+    142:143:void run() -> run
+com.ghostery.privacy.inappconsentsdk.app.TrackerListFragment$Callbacks -> com.ghostery.privacy.inappconsentsdk.app.f:
+    void onItemSelected(int) -> a
+com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback -> com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback:
+    void onOptionSelected(boolean,java.util.HashMap) -> onOptionSelected
+    void onNoticeSkipped() -> onNoticeSkipped
+    void onTrackerStateChanged(java.util.HashMap) -> onTrackerStateChanged
+com.ghostery.privacy.inappconsentsdk.callbacks.JSONGetterCallback -> com.ghostery.privacy.inappconsentsdk.callbacks.a:
+    void onTaskDone() -> a
+com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback -> com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback:
+    void onDownloaded(int) -> onDownloaded
+com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment -> com.ghostery.privacy.inappconsentsdk.fragments.a:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData inAppConsentData -> a
+    boolean useRemoteValues -> b
+    com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback inAppConsent_callback -> c
+    40:47:com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment newInstance(int) -> a
+    52:56:void onCreate(android.os.Bundle) -> onCreate
+    61:111:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    116:122:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    127:133:void onResume() -> onResume
+    140:146:void onCancel(android.content.DialogInterface) -> onCancel
+    149:150:void setUseRemoteValues(boolean) -> a
+    154:232:void applyCustomConfig(android.view.View) -> a
+    28:28:com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback access$000(com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment) -> a
+    28:28:com.ghostery.privacy.inappconsentsdk.model.InAppConsentData access$100(com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment) -> b
+com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment$1 -> com.ghostery.privacy.inappconsentsdk.fragments.b:
+    com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment this$0 -> a
+    72:76:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment$2 -> com.ghostery.privacy.inappconsentsdk.fragments.c:
+    com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment this$0 -> a
+    83:94:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment$3 -> com.ghostery.privacy.inappconsentsdk.fragments.d:
+    com.ghostery.privacy.inappconsentsdk.fragments.ExplicitInfo_DialogFragment this$0 -> a
+    103:108:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment -> com.ghostery.privacy.inappconsentsdk.fragments.e:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData inAppConsentData -> a
+    boolean useRemoteValues -> b
+    com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback inAppConsent_callback -> c
+    38:45:com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment newInstance(int) -> a
+    50:54:void onCreate(android.os.Bundle) -> onCreate
+    59:96:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    101:107:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    112:118:void onResume() -> onResume
+    125:127:void onCancel(android.content.DialogInterface) -> onCancel
+    130:131:void setUseRemoteValues(boolean) -> a
+    135:201:void applyCustomConfig(android.view.View) -> a
+    27:27:com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback access$000(com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment) -> a
+    27:27:com.ghostery.privacy.inappconsentsdk.model.InAppConsentData access$100(com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment) -> b
+com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment$1 -> com.ghostery.privacy.inappconsentsdk.fragments.f:
+    com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment this$0 -> a
+    70:81:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment$2 -> com.ghostery.privacy.inappconsentsdk.fragments.g:
+    com.ghostery.privacy.inappconsentsdk.fragments.ImpliedInfo_DialogFragment this$0 -> a
+    88:93:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.inappconsentsdk.fragments.LearnMore_Fragment -> com.ghostery.privacy.inappconsentsdk.fragments.h:
+    com.ghostery.privacy.inappconsentsdk.model.Tracker tracker -> a
+    39:50:void onCreate(android.os.Bundle) -> onCreate
+    55:60:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    65:68:void onResume() -> onResume
+    88:90:void onDetach() -> onDetach
+com.ghostery.privacy.inappconsentsdk.model.InAppConsent -> com.ghostery.privacy.inappconsentsdk.model.InAppConsent:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData inAppConsentData -> a
+    com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback inAppConsent_callback -> b
+    android.app.Activity extActivity -> c
+    46:53:void startConsentFlow(int,int,boolean,com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback) -> startConsentFlow
+    77:81:void resetSDK() -> resetSDK
+    88:92:void showManagePreferences(int,int,boolean,com.ghostery.privacy.inappconsentsdk.callbacks.InAppConsent_Callback) -> showManagePreferences
+    95:141:void init(int,int,boolean,boolean) -> a
+    147:177:void startConsentFlow(boolean) -> a
+    180:180:java.util.HashMap getTrackerPreferences() -> getTrackerPreferences
+    20:20:com.ghostery.privacy.inappconsentsdk.model.InAppConsentData access$000(com.ghostery.privacy.inappconsentsdk.model.InAppConsent) -> a
+    20:20:void access$100(com.ghostery.privacy.inappconsentsdk.model.InAppConsent,boolean) -> a
+    20:20:android.app.Activity access$200(com.ghostery.privacy.inappconsentsdk.model.InAppConsent) -> b
+com.ghostery.privacy.inappconsentsdk.model.InAppConsent$1 -> com.ghostery.privacy.inappconsentsdk.model.a:
+    boolean val$isConsentFlow -> a
+    boolean val$useRemoteValues -> b
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsent this$0 -> c
+    125:137:void onTaskDone() -> a
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData -> com.ghostery.privacy.inappconsentsdk.model.b:
+    boolean useRemoteValues -> a
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData instance -> c
+    android.app.Activity activity -> d
+    android.app.ProgressDialog pDialog -> e
+    boolean initialized -> f
+    int company_id -> g
+    int pub_notice_id -> h
+    int ric_max_default -> i
+    int ric_session_max_default -> j
+    int ric_opacity_default -> k
+    java.lang.Boolean bric -> l
+    java.lang.String bric_access_button_color -> m
+    java.lang.String bric_access_button_text -> n
+    java.lang.String bric_access_button_text_color -> o
+    java.lang.String bric_bg -> p
+    java.lang.String bric_content1 -> q
+    java.lang.String bric_decline_button_color -> r
+    java.lang.String bric_decline_button_text -> s
+    java.lang.String bric_decline_button_text_color -> t
+    java.lang.String bric_header_text -> u
+    java.lang.String bric_header_text_color -> v
+    java.lang.String close_button -> w
+    java.lang.String manage_preferences_description -> x
+    java.lang.String manage_preferences_header -> y
+    java.lang.String ric -> z
+    java.lang.String ric_bg -> A
+    java.lang.String ric_click_manage_settings -> B
+    java.lang.String ric_color -> C
+    int ric_max -> D
+    float ric_opacity -> E
+    int ric_session_max -> F
+    java.lang.String ric_title -> G
+    java.lang.String ric_title_color -> H
+    java.util.ArrayList trackerArrayList -> b
+    134:134:java.lang.Boolean isInitialized() -> a
+    136:136:void setCompany_id(int) -> a
+    138:138:void setPub_notice_id(int) -> b
+    140:140:java.lang.Boolean getBric() -> b
+    141:141:java.lang.String getBric_access_button_color() -> c
+    142:142:java.lang.String getBric_access_button_text() -> d
+    143:143:java.lang.String getBric_access_button_text_color() -> e
+    144:144:java.lang.String getBric_bg() -> f
+    145:145:java.lang.String getBric_content1() -> g
+    146:146:java.lang.String getBric_decline_button_color() -> h
+    147:147:java.lang.String getBric_decline_button_text() -> i
+    148:148:java.lang.String getBric_decline_button_text_color() -> j
+    149:149:java.lang.String getBric_header_text() -> k
+    150:150:java.lang.String getBric_header_text_color() -> l
+    151:151:java.lang.String getClose_button() -> m
+    152:152:java.lang.String getManage_preferences_description() -> n
+    153:153:java.lang.String getManage_preferences_header() -> o
+    154:154:java.lang.String getRic() -> p
+    155:155:java.lang.String getRic_bg() -> q
+    156:156:java.lang.String getRic_click_manage_settings() -> r
+    157:157:java.lang.String getRic_color() -> s
+    159:159:float getRic_opacity() -> t
+    161:161:java.lang.String getRic_title() -> u
+    162:162:java.lang.String getRic_title_color() -> v
+    169:175:com.ghostery.privacy.inappconsentsdk.model.InAppConsentData getInstance(android.app.Activity) -> a
+    187:198:java.util.HashMap getTrackerHashMap(boolean) -> a
+    202:208:java.util.ArrayList getTrackerListClone() -> w
+    214:219:com.ghostery.privacy.inappconsentsdk.model.Tracker getTrackerById(int) -> c
+    224:230:void setTrackerOnOffState(int,boolean) -> a
+    234:239:void setTrackerOnOffState(boolean) -> b
+    243:255:int getTrackerOnOffStates() -> x
+    260:272:int getNonEssentialTrackerCount() -> y
+    277:290:int getTrackerStateChangeCount(java.util.ArrayList) -> a
+    296:322:void sendOptInOutNotice(int,boolean,boolean,boolean,boolean) -> a
+    327:385:void sendNotice(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType) -> a
+    390:392:void init(com.ghostery.privacy.inappconsentsdk.callbacks.JSONGetterCallback) -> a
+    396:421:boolean getImplicitNoticeDisplayStatus() -> z
+    426:427:boolean getExplicitNoticeDisplayStatus() -> A
+    431:445:void incrementImplicitNoticeDisplayCount() -> B
+    448:452:void saveTrackerStates() -> C
+    455:466:void restoreTrackerStates() -> D
+    470:498:java.util.HashMap getTrackerPreferences() -> E
+    31:31:int access$000() -> F
+    31:31:int access$100() -> G
+    31:31:android.app.ProgressDialog access$202(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,android.app.ProgressDialog) -> a
+    31:31:android.app.Activity access$300() -> H
+    31:31:android.app.ProgressDialog access$200(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData) -> a
+    31:31:java.lang.Boolean access$402(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.Boolean) -> a
+    31:31:java.lang.String access$502(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> a
+    31:31:java.lang.String access$602(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> b
+    31:31:java.lang.String access$702(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> c
+    31:31:java.lang.String access$802(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> d
+    31:31:java.lang.String access$902(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> e
+    31:31:java.lang.String access$1002(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> f
+    31:31:java.lang.String access$1102(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> g
+    31:31:java.lang.String access$1202(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> h
+    31:31:java.lang.String access$1302(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> i
+    31:31:java.lang.String access$1402(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> j
+    31:31:java.lang.String access$1502(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> k
+    31:31:java.lang.String access$1602(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> l
+    31:31:java.lang.String access$1702(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> m
+    31:31:java.lang.String access$1802(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> n
+    31:31:java.lang.String access$1902(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> o
+    31:31:java.lang.String access$2002(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> p
+    31:31:java.lang.String access$2102(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> q
+    31:31:int access$2202(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,int) -> a
+    31:31:int access$2300(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData) -> b
+    31:31:float access$2402(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,float) -> a
+    31:31:int access$2500(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData) -> c
+    31:31:int access$2602(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,int) -> b
+    31:31:int access$2700(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData) -> d
+    31:31:java.lang.String access$2802(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> r
+    31:31:java.lang.String access$2902(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,java.lang.String) -> s
+    31:31:boolean access$3002(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData,boolean) -> a
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$1 -> com.ghostery.privacy.inappconsentsdk.model.c:
+    int val$trackerId -> a
+    boolean val$optOut -> b
+    boolean val$uniqueVisit -> c
+    boolean val$firstOptOut -> d
+    boolean val$selectAll -> e
+    298:320:void run() -> run
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$2 -> com.ghostery.privacy.inappconsentsdk.model.d:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType val$type -> a
+    329:383:void run() -> run
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$3 -> com.ghostery.privacy.inappconsentsdk.model.e:
+    int[] $SwitchMap$com$ghostery$privacy$inappconsentsdk$model$InAppConsentData$NoticeType -> a
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$JSONGetter -> com.ghostery.privacy.inappconsentsdk.model.f:
+    com.ghostery.privacy.inappconsentsdk.callbacks.JSONGetterCallback mJSONGetterCallback -> b
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData this$0 -> a
+    517:524:void onPreExecute() -> onPreExecute
+    528:627:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    632:695:void initTrackerList(org.json.JSONObject) -> a
+    699:716:void onPostExecute(java.lang.Void) -> a
+    719:722:java.lang.String getFormattedJSONUrl() -> a
+    507:507:void onPostExecute(java.lang.Object) -> onPostExecute
+    507:507:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    507:507:com.ghostery.privacy.inappconsentsdk.callbacks.JSONGetterCallback access$3100(com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$JSONGetter) -> a
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$JSONGetter$1 -> com.ghostery.privacy.inappconsentsdk.model.g:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$JSONGetter this$1 -> a
+    646:674:int compare(com.ghostery.privacy.inappconsentsdk.model.Tracker,com.ghostery.privacy.inappconsentsdk.model.Tracker) -> a
+    643:643:int compare(java.lang.Object,java.lang.Object) -> compare
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$JSONGetter$2 -> com.ghostery.privacy.inappconsentsdk.model.h:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$JSONGetter this$1 -> a
+    708:709:void run() -> run
+com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType -> com.ghostery.privacy.inappconsentsdk.model.i:
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType START_CONSENT_FLOW -> a
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType IMPLIED_INFO_PREF -> b
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType EXPLICIT_INFO_PREF -> c
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType EXPLICIT_INFO_ACCEPT -> d
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType EXPLICIT_INFO_DECLINE -> e
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType PREF_DIRECT -> f
+    com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType[] $VALUES -> g
+    62:62:com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType[] values() -> values
+    62:62:com.ghostery.privacy.inappconsentsdk.model.InAppConsentData$NoticeType valueOf(java.lang.String) -> valueOf
+com.ghostery.privacy.inappconsentsdk.model.Tracker -> com.ghostery.privacy.inappconsentsdk.model.j:
+    int uId -> a
+    java.lang.String category -> b
+    int trackerId -> c
+    java.lang.String name -> d
+    java.lang.String logo_url -> e
+    java.lang.String description -> f
+    java.lang.String privacy_url -> g
+    boolean isOn -> h
+    boolean hasHeader -> i
+    35:35:java.lang.String getCategory() -> a
+    36:36:int getTrackerId() -> b
+    37:37:java.lang.String getName() -> c
+    38:38:java.lang.String getLogo_url() -> d
+    39:39:java.lang.String getDescription() -> e
+    40:40:java.lang.String getPrivacy_url() -> f
+    41:41:boolean isOn() -> g
+    42:42:void setOnOffState(boolean) -> a
+    43:43:boolean hasHeader() -> h
+    44:44:void setHasHeader() -> i
+    78:78:boolean isEssential() -> j
+com.ghostery.privacy.inappconsentsdk.utils.AppData -> com.ghostery.privacy.inappconsentsdk.utils.a:
+    android.content.SharedPreferences sharedPreferences -> a
+    37:46:android.content.SharedPreferences getSessionInfo() -> a
+    90:93:void setBoolean(java.lang.String,boolean) -> a
+    96:98:boolean getBoolean(java.lang.String,java.lang.Boolean) -> a
+    102:105:void setInteger(java.lang.String,java.lang.Integer) -> a
+    108:108:int getInteger(java.lang.String,java.lang.Integer) -> b
+    112:115:void setLong(java.lang.String,java.lang.Long) -> a
+    118:118:long getLong(java.lang.String,java.lang.Long) -> b
+    122:126:void setString(java.lang.String,java.lang.String) -> a
+    129:130:java.lang.String getString(java.lang.String,java.lang.String) -> b
+    134:134:java.lang.String getString(java.lang.String) -> a
+com.ghostery.privacy.inappconsentsdk.utils.FileDownloader -> com.ghostery.privacy.inappconsentsdk.utils.b:
+    45:62:android.graphics.Bitmap getBitmapFromUrl(java.lang.String) -> a
+com.ghostery.privacy.inappconsentsdk.utils.FileWriter -> com.ghostery.privacy.inappconsentsdk.utils.c:
+    35:42:void writeBitmap(android.graphics.Bitmap,java.io.File) -> a
+com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader -> com.ghostery.privacy.inappconsentsdk.utils.d:
+    android.app.Activity activity -> a
+    java.util.Map imageCache -> b
+    com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback logoDownloadCallback -> c
+    int position -> d
+    38:69:void download(java.lang.String,android.widget.ImageView) -> a
+    73:84:boolean cancelPotentialDownload(java.lang.String,android.widget.ImageView) -> b
+    89:96:com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask getBitmapDownloaderTask(android.widget.ImageView) -> b
+    23:23:com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask access$100(android.widget.ImageView) -> a
+    23:23:java.util.Map access$200(com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader) -> a
+    23:23:com.ghostery.privacy.inappconsentsdk.callbacks.LogoDownload_Callback access$300(com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader) -> b
+    23:23:int access$400(com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader) -> c
+    23:23:android.app.Activity access$500(com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader) -> d
+com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask -> com.ghostery.privacy.inappconsentsdk.utils.e:
+    java.lang.String url -> b
+    java.lang.ref.WeakReference imageViewReference -> c
+    com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader this$0 -> a
+    110:111:android.graphics.Bitmap doInBackground(java.lang.String[]) -> a
+    117:146:void onPostExecute(android.graphics.Bitmap) -> a
+    100:100:void onPostExecute(java.lang.Object) -> onPostExecute
+    100:100:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    100:100:java.lang.String access$000(com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask) -> a
+com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask$1 -> com.ghostery.privacy.inappconsentsdk.utils.f:
+    com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask this$1 -> a
+    140:141:void run() -> run
+com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$DownloadedDrawable -> com.ghostery.privacy.inappconsentsdk.utils.g:
+    java.lang.ref.WeakReference bitmapDownloaderTaskReference -> a
+    159:159:com.ghostery.privacy.inappconsentsdk.utils.ImageDownloader$BitmapDownloaderTask getBitmapDownloaderTask() -> a
+com.ghostery.privacy.inappconsentsdk.utils.ServiceHandler -> com.ghostery.privacy.inappconsentsdk.utils.h:
+    java.lang.String response -> a
+    38:38:java.lang.String makeServiceCall(java.lang.String,int) -> a
+    50:89:java.lang.String makeServiceCall(java.lang.String,int,java.util.List) -> a
+com.ghostery.privacy.inappconsentsdk.utils.Session -> com.ghostery.privacy.inappconsentsdk.utils.i:
+    26:27:void set(java.lang.String,java.lang.Object) -> a
+    30:30:java.lang.Object get(java.lang.String) -> a
+    35:39:java.lang.Object get(java.lang.String,java.lang.Object) -> b
+com.ghostery.privacy.inappconsentsdk.utils.Util -> com.ghostery.privacy.inappconsentsdk.utils.j:
+    20:23:void showManagePreferences(android.app.Activity) -> a
+    26:33:boolean checkURL(java.lang.CharSequence) -> a

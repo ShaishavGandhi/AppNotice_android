@@ -53,11 +53,11 @@ public class InAppConsentData {
 
     // 0 = Publisher ID; 1 = Owner Company ID
     private final static String URL_SDK_START_CONSENT_FLOW = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4";
-    private final static String URL_SDK_IMPLIED_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&nt=4&mb=4&ic=1";
+    private final static String URL_SDK_IMPLIED_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&nt=4&d=1&mb=4&ic=1";
     private final static String URL_SDK_EXPLICIT_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4&nt=3&d=1";
     private final static String URL_SDK_EXPLICIT_INFO_ACCEPT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=1";
     private final static String URL_SDK_EXPLICIT_INFO_DECLINE = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
-    private final static String URL_SDK_PREF_DIRECT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
+    private final static String URL_SDK_PREF_DIRECT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&aa=0&d=0";
 
     public enum NoticeType {
         START_CONSENT_FLOW,
@@ -222,7 +222,7 @@ public class InAppConsentData {
     // Sets all the specified non-essential tracker on/off state to the specified value.
     public void setTrackerOnOffState(int uId, boolean isOn) {
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential() && tracker.uId == uId) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId()) && tracker.uId == uId) {
                 tracker.setOnOffState(isOn);
                 break;
             }
@@ -232,7 +232,7 @@ public class InAppConsentData {
     // Sets all non-essential tracker on/off states to the specified value.
     public void setTrackerOnOffState(boolean isOn) {
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 tracker.setOnOffState(isOn);
             }
         }
@@ -243,7 +243,7 @@ public class InAppConsentData {
         int trackerCount = 0;
         int trackerOnCount = 0;
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 trackerCount++;
                 if (tracker.isOn()) {
                     trackerOnCount++;
@@ -264,12 +264,36 @@ public class InAppConsentData {
             Tracker tracker = trackerArrayList.get(i);
 
             // If the tracker is non-essential...
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 nonEssentialTrackerCount++;
             }
         }
 
         return nonEssentialTrackerCount;
+    }
+
+    // Returns the number of non-essential trackers
+    public boolean isTrackerDuplicateOfEssentialTracker(int trackerId) {
+        boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
+
+        // Look for duplicate essential trackers
+        for (int i = 0; i < trackerArrayList.size(); i++) {
+            Tracker tracker = trackerArrayList.get(i);
+
+            // If the tracker is essential...
+            if (tracker.isEssential()) {
+                // If the tracker is a duplicate...
+                if (tracker.getTrackerId() == trackerId) {
+                    isTrackerDuplicateOfEssentialTracker = true;
+                    break;
+                }
+            } else {
+                // All essential trackers should be listed first, so when we get to a non-essential tracker, we can stop looking
+                break;
+            }
+        }
+
+        return isTrackerDuplicateOfEssentialTracker;
     }
 
     // Returns the number of non-essential trackers that have changed on/off state since the original tracker was captured
@@ -446,9 +470,11 @@ public class InAppConsentData {
 
     public void saveTrackerStates() {
         HashMap trackerHashMap = getTrackerHashMap(false);     // Use tracker ID as a string
-        JSONObject trackerStateJSONObject = new JSONObject(trackerHashMap);
-        String trackerStatesString = trackerStateJSONObject.toString();
-        AppData.setString(AppData.APPDATA_TRACKERSTATES, trackerStatesString);
+        if (!trackerHashMap.isEmpty()) {    // Don't override last saved states if we don't have any trackers in the map
+            JSONObject trackerStateJSONObject = new JSONObject(trackerHashMap);
+            String trackerStatesString = trackerStateJSONObject.toString();
+            AppData.setString(AppData.APPDATA_TRACKERSTATES, trackerStatesString);
+        }
     }
 
     public void restoreTrackerStates() {
