@@ -78,7 +78,7 @@ public class TrackerListFragment extends ListFragment {
         inAppConsentData = InAppConsentData.getInstance(getActivity());
 
         // TODO: replace with a real list adapter.
-        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, inAppConsentData.trackerArrayList);
+        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, inAppConsentData);
         setListAdapter(trackerArrayAdapter);
     }
 

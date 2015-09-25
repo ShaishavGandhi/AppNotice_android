@@ -222,7 +222,7 @@ public class InAppConsentData {
     // Sets all the specified non-essential tracker on/off state to the specified value.
     public void setTrackerOnOffState(int uId, boolean isOn) {
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential() && tracker.uId == uId) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId()) && tracker.uId == uId) {
                 tracker.setOnOffState(isOn);
                 break;
             }
@@ -232,7 +232,7 @@ public class InAppConsentData {
     // Sets all non-essential tracker on/off states to the specified value.
     public void setTrackerOnOffState(boolean isOn) {
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 tracker.setOnOffState(isOn);
             }
         }
@@ -243,7 +243,7 @@ public class InAppConsentData {
         int trackerCount = 0;
         int trackerOnCount = 0;
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 trackerCount++;
                 if (tracker.isOn()) {
                     trackerOnCount++;
@@ -264,12 +264,36 @@ public class InAppConsentData {
             Tracker tracker = trackerArrayList.get(i);
 
             // If the tracker is non-essential...
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 nonEssentialTrackerCount++;
             }
         }
 
         return nonEssentialTrackerCount;
+    }
+
+    // Returns the number of non-essential trackers
+    public boolean isTrackerDuplicateOfEssentialTracker(int trackerId) {
+        boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
+
+        // Look for duplicate essential trackers
+        for (int i = 0; i < trackerArrayList.size(); i++) {
+            Tracker tracker = trackerArrayList.get(i);
+
+            // If the tracker is essential...
+            if (tracker.isEssential()) {
+                // If the tracker is a duplicate...
+                if (tracker.getTrackerId() == trackerId) {
+                    isTrackerDuplicateOfEssentialTracker = true;
+                    break;
+                }
+            } else {
+                // All essential trackers should be listed first, so when we get to a non-essential tracker, we can stop looking
+                break;
+            }
+        }
+
+        return isTrackerDuplicateOfEssentialTracker;
     }
 
     // Returns the number of non-essential trackers that have changed on/off state since the original tracker was captured
