@@ -242,6 +242,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         Session.set(Session.INAPPCONSENT_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.INAPPCONSENT_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
+        ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
         setAllNoneControlState();
     }
 

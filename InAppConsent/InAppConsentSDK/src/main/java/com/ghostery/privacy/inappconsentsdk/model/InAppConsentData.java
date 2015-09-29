@@ -219,12 +219,15 @@ public class InAppConsentData {
         return null;
     }
 
-    // Sets all the specified non-essential tracker on/off state to the specified value.
+    // Sets all the specified non-essential tracker (and all duplicate non-essential trackers) on/off state to the specified value.
     public void setTrackerOnOffState(int uId, boolean isOn) {
-        for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId()) && tracker.uId == uId) {
-                tracker.setOnOffState(isOn);
-                break;
+        Tracker selectedTracker = getTrackerById(uId);  // Get the tracker object for the specified tracker
+        if (!selectedTracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(selectedTracker.getTrackerId())) {
+            int selectedTrackerId = selectedTracker.getTrackerId();
+            for (Tracker tracker : trackerArrayList) {
+                if (tracker.getTrackerId() == selectedTrackerId) {
+                    tracker.setOnOffState(isOn);
+                }
             }
         }
     }
