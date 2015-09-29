@@ -11,6 +11,8 @@
         android:allowBackup="true" >
         <activity
             android:name="com.ghostery.privacy.inappconsentsdk.app.TrackerListActivity"
+            android:label=""
+            android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
             android:theme="@style/ghostery_AppTheme"

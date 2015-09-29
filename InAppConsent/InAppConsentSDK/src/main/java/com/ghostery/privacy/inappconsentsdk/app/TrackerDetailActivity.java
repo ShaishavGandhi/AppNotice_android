@@ -126,7 +126,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
             Tracker tracker = inAppConsentData.getTrackerById(trackerId);
 
             if (tracker != null) {
-                tracker.setOnOffState(isOn);
+                inAppConsentData.setTrackerOnOffState(tracker.uId, isOn);
             }
         }
     }
