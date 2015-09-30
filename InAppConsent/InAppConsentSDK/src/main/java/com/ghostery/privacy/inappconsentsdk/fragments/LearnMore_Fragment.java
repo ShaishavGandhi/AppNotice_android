@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.ghostery.privacy.inappconsentsdk.R;
 import com.ghostery.privacy.inappconsentsdk.app.TrackerDetailActivity;
@@ -55,6 +56,14 @@ public class LearnMore_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.ghostery_fragment_learn_more, container, false);
 
         WebView learnmore_webview = (WebView) view.findViewById(R.id.learnmore_webview);
+        learnmore_webview.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url){
+                // Used to load the end-result of a redirected URL into the web view
+                view.loadUrl(url);
+                return false; // Allow this webview to handle loading the specified URL
+            }
+        });
         learnmore_webview.loadUrl(tracker.getPrivacy_url());
 
         return view;
