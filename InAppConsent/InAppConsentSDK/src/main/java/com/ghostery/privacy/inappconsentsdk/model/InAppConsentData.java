@@ -659,62 +659,64 @@ public class InAppConsentData {
         private void initTrackerList(JSONObject jsonObj) {
             try {
                 String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
-                JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
+                if (trackerJSONString != null) {
+                    JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
 
-                int id;
-                for (int i = 0; i < trackerJSONArray.length(); i++) {
-                    JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
-                    Tracker tracker = new Tracker(trackerJSONObject);
-                    trackerArrayList.add(tracker);
-                }
+                    int id;
+                    for (int i = 0; i < trackerJSONArray.length(); i++) {
+                        JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
+                        Tracker tracker = new Tracker(trackerJSONObject);
+                        trackerArrayList.add(tracker);
+                    }
 
-                // Sort by category and then by name within category
-                Collections.sort(trackerArrayList, new Comparator<Tracker>() {
-                    @Override
-                    public int compare(Tracker tracker1, Tracker tracker2) {
-                        int result = 0;
+                    // Sort by category and then by name within category
+                    Collections.sort(trackerArrayList, new Comparator<Tracker>() {
+                        @Override
+                        public int compare(Tracker tracker1, Tracker tracker2) {
+                            int result = 0;
 
-                        // Sort first by category...keeping "Essential" at the top
-                        if (tracker1.isEssential() && tracker2.isEssential()) {
-                            result = 0;
-                        } else if (tracker1.isEssential()) {
-                            result = -1;
-                        } else if (tracker2.isEssential()) {
-                            result = 1;
-                        } else {
-                            // Sort by non-essential category
-                            String tracker1_category = tracker1.getCategory().toUpperCase();
-                            String tracker2_category = tracker2.getCategory().toUpperCase();
+                            // Sort first by category...keeping "Essential" at the top
+                            if (tracker1.isEssential() && tracker2.isEssential()) {
+                                result = 0;
+                            } else if (tracker1.isEssential()) {
+                                result = -1;
+                            } else if (tracker2.isEssential()) {
+                                result = 1;
+                            } else {
+                                // Sort by non-essential category
+                                String tracker1_category = tracker1.getCategory().toUpperCase();
+                                String tracker2_category = tracker2.getCategory().toUpperCase();
 
-                            //ascending order
-                            result = tracker1_category.compareTo(tracker2_category);
+                                //ascending order
+                                result = tracker1_category.compareTo(tracker2_category);
 //                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
-                        }
+                            }
 
-                        // If it's in the same category, then sort by tracker name
-                        if (result == 0) {
-                            String tracker1_name = tracker1.getName().toUpperCase();
-                            String tracker2_name = tracker2.getName().toUpperCase();
+                            // If it's in the same category, then sort by tracker name
+                            if (result == 0) {
+                                String tracker1_name = tracker1.getName().toUpperCase();
+                                String tracker2_name = tracker2.getName().toUpperCase();
 
-                            //ascending order
-                            result = tracker1_name.compareTo(tracker2_name);
+                                //ascending order
+                                result = tracker1_name.compareTo(tracker2_name);
 //                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
+                            }
+                            return result;
                         }
-                        return result;
-                    }
-                });
+                    });
 
-                // Set header bit for first tracker in each category
-                String categoryName = "";
-                for (int i = 0; i < trackerArrayList.size(); i++) {
-                    Tracker tracker = trackerArrayList.get(i);
-                    tracker.uId = i;        // Set the tracker's unique ID
+                    // Set header bit for first tracker in each category
+                    String categoryName = "";
+                    for (int i = 0; i < trackerArrayList.size(); i++) {
+                        Tracker tracker = trackerArrayList.get(i);
+                        tracker.uId = i;        // Set the tracker's unique ID
 
-                    // Flag tracker as having a header if this is the first tracker or if the category name is new
-                    if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
-                        tracker.setHasHeader();
+                        // Flag tracker as having a header if this is the first tracker or if the category name is new
+                        if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
+                            tracker.setHasHeader();
+                        }
+                        categoryName = tracker.getCategory();
                     }
-                    categoryName = tracker.getCategory();
                 }
 
                 initialized = true;
