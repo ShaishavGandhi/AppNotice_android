@@ -68,6 +68,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Remember that the tracker preferences screen was opened from a consent flow dialog
+                Session.set(Session.INAPPCONSENT_PREF_OPENED_FROM_DIALOG, true);
+
                 // Send notice for this event
                 InAppConsentData.sendNotice(InAppConsentData.NoticeType.EXPLICIT_INFO_PREF);
 
@@ -124,6 +127,12 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
     @Override
     public void onResume() {
+        Boolean prefOpenedFromDialog = (Boolean)Session.get(Session.INAPPCONSENT_PREF_OPENED_FROM_DIALOG, false);
+        if (prefOpenedFromDialog) {
+            // Now that we're back, remove this session var
+            Session.remove(Session.INAPPCONSENT_PREF_OPENED_FROM_DIALOG);
+        }
+
         ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         //params.height = WindowManager.LayoutParams.MATCH_PARENT;

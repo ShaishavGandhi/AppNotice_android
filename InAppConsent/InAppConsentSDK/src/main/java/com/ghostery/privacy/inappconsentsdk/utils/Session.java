@@ -15,6 +15,7 @@ public class Session {
     public static final String INAPPCONSENT_CALLBACK = "inAppConsent_callback";
     public static final String INAPPCONSENT_ALL_BTN_SELECT = "inAppConsent_selectAll";
     public static final String INAPPCONSENT_NONE_BTN_SELECT = "inAppConsent_selectNone";
+    public static final String INAPPCONSENT_PREF_OPENED_FROM_DIALOG = "inAppConsent_prefOpenedFromDialog";  // Boolean
 
     // System Keys
 //    public static final String SYS_SHAREDPREFERENCES = "sys_sharedPreferences"; 		// SharedPreferences object

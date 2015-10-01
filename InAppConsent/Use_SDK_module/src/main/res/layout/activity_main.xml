@@ -71,8 +71,22 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/btn_get_preferences"
+            android:id="@+id/btn_get_preferences"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/btn_reset_sdk"
             android:id="@+id/btn_reset_sdk"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_reset_app"
+            android:id="@+id/btn_reset_app"
             android:layout_gravity="center_horizontal" />
 
         <Button

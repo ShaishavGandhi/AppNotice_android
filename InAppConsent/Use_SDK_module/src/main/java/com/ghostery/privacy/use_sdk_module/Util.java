@@ -1,6 +1,7 @@
 package com.ghostery.privacy.use_sdk_module;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -39,6 +40,13 @@ public class Util {
     public static boolean getSharedPreference_boolean(Activity activity, String key, boolean defValue){
         SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(activity);
         return s.getBoolean(key, defValue);
+    }
+
+    public static void clearSharedPreferences(Activity activity, String prefName) {
+        SharedPreferences s = activity.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = s.edit();
+        editor.clear();
+        editor.commit();
     }
 
 }
