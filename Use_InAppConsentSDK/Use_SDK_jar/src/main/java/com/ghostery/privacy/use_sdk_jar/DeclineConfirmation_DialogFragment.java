@@ -18,9 +18,9 @@ public class DeclineConfirmation_DialogFragment extends DialogFragment
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder =  new AlertDialog.Builder(getActivity());
-        builder.setTitle(getActivity().getString(string.declineConfirmDialog_title));
-        builder.setMessage(getActivity().getString(string.declineConfirmDialog_message));
-        builder.setPositiveButton(getActivity().getString(string.declineConfirmDialog_posBtn), new DialogInterface.OnClickListener() {
+        builder.setTitle(getActivity().getString(R.string.declineConfirmDialog_title));
+        builder.setMessage(getActivity().getString(R.string.declineConfirmDialog_message));
+        builder.setPositiveButton(getActivity().getString(R.string.declineConfirmDialog_posBtn), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

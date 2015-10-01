@@ -66,18 +66,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Remember that the tracker preferences screen was opened from a consent flow dialog
+                Session.set(Session.INAPPCONSENT_PREF_OPENED_FROM_DIALOG, true);
+
                 // Open the In-App Consent preferences fragmentActivity
                 Util.showManagePreferences(getActivity());
 
                 // Send notice for this event
                 InAppConsentData.sendNotice(InAppConsentData.NoticeType.IMPLIED_INFO_PREF);
-
-                // Let the calling class know the selected option
-                if (inAppConsent_callback != null)
-                    inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
-
-                // Close this dialog
-                dismiss();
             }
         });
 
@@ -102,25 +98,35 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
 
         // request a window without the title
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//        dialog.getWindow().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
 
         return dialog;
     }
 
     @Override
     public void onResume() {
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //params.height = WindowManager.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((WindowManager.LayoutParams) params);
+        Boolean prefOpenedFromDialog = (Boolean)Session.get(Session.INAPPCONSENT_PREF_OPENED_FROM_DIALOG, false);
+        if (prefOpenedFromDialog) {
+            // Now that we're back, remove this session var
+            Session.remove(Session.INAPPCONSENT_PREF_OPENED_FROM_DIALOG);
+
+            // Let the calling class know the selected option
+            if (inAppConsent_callback != null)
+                inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));
+
+            // Close this dialog
+            dismiss();
+        } else {
+            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;
+            //params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            getDialog().getWindow().setAttributes((WindowManager.LayoutParams) params);
+        }
 
         super.onResume();
     }
 
     @Override
     public void onCancel (DialogInterface dialog) {
-        // User cancelled the dialog...negating consent
-
         // Let the calling class know the selected option
         if (inAppConsent_callback != null)
             inAppConsent_callback.onOptionSelected(true, inAppConsentData.getTrackerHashMap(true));

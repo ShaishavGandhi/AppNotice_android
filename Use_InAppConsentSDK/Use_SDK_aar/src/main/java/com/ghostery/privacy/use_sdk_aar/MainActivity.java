@@ -1,9 +1,11 @@
 package com.ghostery.privacy.use_sdk_aar;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -28,11 +30,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     private final static String TAG = "MainActivity";
     private InAppConsent_Callback inAppConsent_Callback;
+    private InAppConsent inAppConsent;
     private Button btn_consent_flow;
     private Button btn_manage_preferences;
+    private Button btn_get_preferences;
     private Button btn_reset_sdk;
+    private Button btn_reset_app;
     private Button btn_close_app;
-    private HashMap<Integer, Boolean> trackerHashMap;
 
     // Tracker ID tags
     private final static int ADMOB_TRACKERID = 464;
@@ -41,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout.activity_main);
+        setContentView(R.layout.activity_main);
+        inAppConsent = new InAppConsent(this);
     }
 
     @Nullable
@@ -58,20 +63,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String pubNoticeIdString = Util.getSharedPreference(this, Util.SP_PUB_NOTICE_ID, "");
 
-        EditText companyIdEditText = (EditText)findViewById(id.editText_companyId);
-        EditText pubNoticeIdEditText = (EditText)findViewById(id.editText_pubNoticeId);
+        EditText companyIdEditText = (EditText)findViewById(R.id.editText_companyId);
+        EditText pubNoticeIdEditText = (EditText)findViewById(R.id.editText_pubNoticeId);
 
         companyIdEditText.setText(companyIdString);
         pubNoticeIdEditText.setText(pubNoticeIdString);
 
-        btn_consent_flow = (Button) findViewById(id.btn_consent_flow) ;
-        btn_manage_preferences = (Button) findViewById(id.btn_manage_preferences) ;
-        btn_reset_sdk = (Button) findViewById(id.btn_reset_sdk) ;
-        btn_close_app = (Button) findViewById(id.btn_close_app) ;
+        btn_consent_flow = (Button) findViewById(R.id.btn_consent_flow) ;
+        btn_manage_preferences = (Button) findViewById(R.id.btn_manage_preferences) ;
+        btn_get_preferences = (Button) findViewById(R.id.btn_get_preferences) ;
+        btn_reset_sdk = (Button) findViewById(R.id.btn_reset_sdk) ;
+        btn_reset_app = (Button) findViewById(R.id.btn_reset_app) ;
+        btn_close_app = (Button) findViewById(R.id.btn_close_app) ;
 
         btn_consent_flow.setOnClickListener(this);
         btn_manage_preferences.setOnClickListener(this);
+        btn_get_preferences.setOnClickListener(this);
         btn_reset_sdk.setOnClickListener(this);
+        btn_reset_app.setOnClickListener(this);
         btn_close_app.setOnClickListener(this);
     }
 
@@ -84,11 +93,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int pubNoticeId = 0;
         Boolean useRemoteValues = true;
 
-        TextView tv = (TextView)this.findViewById(id.editText_companyId);
+        TextView tv = (TextView)this.findViewById(R.id.editText_companyId);
         if (tv != null)
             companyIdString = tv.getText().toString();
 
-        tv = (TextView)this.findViewById(id.editText_pubNoticeId);
+        tv = (TextView)this.findViewById(R.id.editText_pubNoticeId);
         if (tv != null)
             pubNoticeIdString = tv.getText().toString();
 
@@ -97,10 +106,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         Util.setSharedPreference(this, Util.SP_PUB_NOTICE_ID, pubNoticeIdString);
 
         if (view == btn_reset_sdk) {
-            InAppConsent inAppConsent = new InAppConsent(this);
             inAppConsent.resetSDK();
 
             Toast.makeText(this, "SDK was reset.", Toast.LENGTH_SHORT).show();
+
+        } else if (view == btn_reset_app) {
+            // Reset the app
+            Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module");
+            //Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module_preferences");
+
+            // Close the app
+            this.finish();
+            System.exit(0);
 
         } else if (view == btn_close_app) {
             // Close the app
@@ -114,16 +131,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             companyId = Integer.valueOf(companyIdString);
             pubNoticeId = Integer.valueOf(pubNoticeIdString);
 
-            CheckBox cb = (CheckBox)this.findViewById(id.checkBox_useRemoteValues);
+            CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
             if (cb != null)
                 useRemoteValues = cb.isChecked();
 
             InAppConsent inAppConsent = new InAppConsent(this);
 
-            this.trackerHashMap = inAppConsent.getTrackerPreferences();
-
             if (view == btn_manage_preferences) {
                 inAppConsent.showManagePreferences(companyId, pubNoticeId, useRemoteValues, this);
+
+            } else if (view == btn_get_preferences) {
+                HashMap<Integer, Boolean> trackerHashMap = inAppConsent.getTrackerPreferences();
+                showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
 
             } else if (view == btn_consent_flow) {
                 inAppConsent.startConsentFlow(companyId, pubNoticeId, useRemoteValues, this);
@@ -137,10 +156,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
         if (isAccepted) {
-            if (trackerHashMap.size() == 0) {
-                Toast.makeText(this, "No privacy preferences returned.", Toast.LENGTH_LONG).show();
-            }
-            Toast.makeText(this, "Tracking accepted", Toast.LENGTH_LONG).show();
+
+            showTrackerPreferenceResults(trackerHashMap, "Option Selected"); // Show preference results in a dialog
         } else {
             try {
                 DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
@@ -162,13 +179,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onNoticeSkipped() {
         // Handle your response
-        Toast.makeText(this, "Dialog skipped: Tracking accepted", Toast.LENGTH_LONG).show();
+        HashMap<Integer, Boolean> trackerHashMap = inAppConsent.getTrackerPreferences();
+        showTrackerPreferenceResults(trackerHashMap, "Dialog skipped: Tracking Accepted"); // Show preference results in a dialog
     }
 
     @Override
     public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap) {
-        this.trackerHashMap = trackerHashMap;
+        showTrackerPreferenceResults(trackerHashMap, "Tracker State Changed"); // Show preference results in a dialog
 
     }
 
+    private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
+        String prefResults = "";
+        if (trackerHashMap.size() == 0) {
+            Toast.makeText(this, "No privacy preferences returned.", Toast.LENGTH_LONG).show();
+        } else {
+            for (Map.Entry<Integer, Boolean> entry : trackerHashMap.entrySet()) {
+                int key = entry.getKey();
+                Boolean value = entry.getValue();
+                prefResults += Integer.toString(key) + ": " + Boolean.toString(value) + "\n";
+            }
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(prefResults);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

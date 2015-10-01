@@ -188,7 +188,7 @@ public class InAppConsentData {
 
         // Loop through the tracker list and add non-essential tracker IDs and their on/off state
         for (Tracker tracker : trackerArrayList) {
-            if (!tracker.isEssential()) {
+            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 if (useTrackerIdAsInt)
                     trackerHashMap.put(tracker.getTrackerId(), tracker.isOn());
                 else
@@ -740,6 +740,9 @@ public class InAppConsentData {
                     }
                 });
             }
+
+            // Save the tracker states
+            saveTrackerStates();
 
             // Dismiss the progress dialog
             if (pDialog.isShowing())
