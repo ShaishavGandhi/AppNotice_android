@@ -1,1 +1,0 @@
-include ':InAppConsentSDK', ':Use_SDK_aar', ':Use_SDK_jar'
