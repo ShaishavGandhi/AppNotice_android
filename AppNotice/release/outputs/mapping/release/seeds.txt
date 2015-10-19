@@ -1,0 +1,21 @@
+com.ghostery.privacy.appnoticesdk.app.App
+com.ghostery.privacy.appnoticesdk.app.App: App()
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity: TrackerDetailActivity()
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity: void onLinkClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity: void onOptInOutClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity: TrackerListActivity()
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity: void onClickDescription(android.view.View)
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity: void onOptInOutClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity$1: void onClick(android.content.DialogInterface,int)
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment: TrackerListFragment()
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$1: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$2: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$3: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$1: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$2: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType: com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType[] values()
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType: com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType valueOf(java.lang.String)
