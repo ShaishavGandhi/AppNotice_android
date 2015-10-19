@@ -7,7 +7,7 @@ This workspace is where the In-App Consent APK is built. It includes these two p
 
 AppNoticeSDK project: This is the SDK project. It can be built and used directly as a module, exported as an AAR and exported as a JAR.
 
-Use_SDK_module project: This project uses the AppNoticeSDK project as a dependent module. It is used to rapidly develop and test the AppNoticeSDK without having to export it as a library.
+FireBall_module project: This project uses the AppNoticeSDK project as a dependent module. It is used to rapidly develop and test the AppNoticeSDK without having to export it as a library.
 
 ####FireBall_module
 This workspace is used to develop test apps that include AppNoticeSDK as an AAR or as a JAR. It includes these three projects:
@@ -20,21 +20,21 @@ AppNoticeSDK: This project is a duplicate of the AppNoticeSDK project from the _
 
 1. The test project has been removed.
 
-This project is included in the Use_SDK_jar project as a module and provides In-App Consent functionality to the resulting IceCube app.
+This project is included in the IceCube_jar project as a module and provides In-App Consent functionality to the resulting IceCube app.
 
-Use_SDK_aar: This project includes the AppNoticeSDK project as an AAR and provides In-App Consent functionality to the resulting WaterDrop app. The WaterDrop app excersises the AAR version of the SDK.
+WaterDrop_aar: This project includes the AppNoticeSDK project as an AAR and provides In-App Consent functionality to the resulting WaterDrop app. The WaterDrop app excersises the AAR version of the SDK.
 
-Use_SDK_jar: This project includes the AppNoticeSDK project as a JAR-based module and provides In-App Consent functionality to the resulting IceCube app. The IceCube app excersises the AAR version of the SDK.
+IceCube_jar: This project includes the AppNoticeSDK project as a JAR-based module and provides In-App Consent functionality to the resulting IceCube app. The IceCube app excersises the AAR version of the SDK.
 
 
 ####Build the AAR and JAR SDKs
 
 1.	Update all version names and version numbers for both the SDKs and the test apps.
     *	...\AppNoticeSDK\AppNoticeSDK\build.gradle
-    *	...\AppNoticeSDK\Use_SDK_module\build.gradle
+    *	...\AppNoticeSDK\FireBall_module\build.gradle
     *	...\FireBall_module\AppNoticeSDK\build.gradle
-    *	...\FireBall_module\Use_SDK_aar\build.gradle
-    *	...\FireBall_module\Use_SDK_jar\build.gradle
+    *	...\FireBall_module\WaterDrop_aar\build.gradle
+    *	...\FireBall_module\IceCube_jar\build.gradle
 
 1.	Clean the AppNoticeSDK workspace. This causes the AAR library files to be rebuilt.
 
@@ -92,7 +92,7 @@ Use_SDK_jar: This project includes the AppNoticeSDK project as a JAR-based modul
 
 1.	Copy the AAR file from the release "outputs" folder to the AAR project's libs folder:
     * From: ...\release\outputs\aar\AppNoticeSDK.aar
-    *	To: this folder: ...\AppNotice_android\FireBall_module\Use_SDK_aar\libs\
+    *	To: this folder: ...\AppNotice_android\FireBall_module\WaterDrop_aar\libs\
 
 
 ####Customize the SDK for the AAR test app (optional)
@@ -100,7 +100,7 @@ Use_SDK_jar: This project includes the AppNoticeSDK project as a JAR-based modul
 1.	Unzip AppNoticeSDK.aar to a new folder
 
 1.	Edit applicable strings in the "ghostery_strings.xml" section of:
-    * ...\AppNotice_android\FireBall_module\Use_SDK_aar\libs\AppNoticeSDK\res\values\values.xml
+    * ...\AppNotice_android\FireBall_module\WaterDrop_aar\libs\AppNoticeSDK\res\values\values.xml
 
     *	For example:
 	```
@@ -174,33 +174,33 @@ Use_SDK_jar: This project includes the AppNoticeSDK project as a JAR-based modul
 
 1. Build a new AAR APK:
    1. In Android Studio, Click the menu Build > Generate Signed APK...
-   1. Select the "Use_SDK_aar" module in the dropdown and click Next.
+   1. Select the "WaterDrop_aar" module in the dropdown and click Next.
    1. Enter the applicable keystore path, keystore password, key alias (evidon), and key password. (Get these from LastPass.) Then click Next.
-   1. Set the APK Destination folder as: ...\AppNotice_android\release\Use_SDK_aar\
+   1. Set the APK Destination folder as: ...\AppNotice_android\release\WaterDrop_aar\
    1. Select the Build Type as "release".
    1. Click Finish.
    
 1. Build a new JAR APK:
    1. In Android Studio, Click the menu Build > Generate Signed APK...
-   1. Select the "Use_SDK_jar" module in the dropdown and click Next.
+   1. Select the "IceCube_jar" module in the dropdown and click Next.
    1. Enter the applicable keystore path, keystore password, key alias (evidon), and key password. (Get these from LastPass.) Then click Next.
-   1. Set the APK Destination folder as: ...\AppNotice_android\release\Use_SDK_jar\
+   1. Set the APK Destination folder as: ...\AppNotice_android\release\IceCube_jar\
    1. Select the Build Type as "release".
    1. Click Finish.
    
 1.  Rename the new AAR APK file:
-    * From: ...\AppNotice_android\release\Use_SDK_aar\Use_SDK_aar-release.apk
-    * To: Use_SDK_aar_(version name)-(version number).apk
+    * From: ...\AppNotice_android\release\WaterDrop_aar\WaterDrop_aar-release.apk
+    * To: WaterDrop_aar_(version name)-(version number).apk
 
 1.  Delete the new AAR manifest report file:
-    * From: ...\AppNotice_android\release\Use_SDK_aar\manifest-merger-release-report.txt
+    * From: ...\AppNotice_android\release\WaterDrop_aar\manifest-merger-release-report.txt
 
 1.  Rename the new JAR APK file:
-    * From: ...\AppNotice_android\release\Use_SDK_jar\Use_SDK_jar-release.apk
-    * To: Use_SDK_jar_(version name)-(version number).apk
+    * From: ...\AppNotice_android\release\IceCube_jar\IceCube_jar-release.apk
+    * To: IceCube_jar_(version name)-(version number).apk
 
 1.  Delete the new JAR manifest report file:
-    * From: ...\AppNotice_android\release\Use_SDK_jar\manifest-merger-release-report.txt
+    * From: ...\AppNotice_android\release\IceCube_jar\manifest-merger-release-report.txt
 1.  Test both the AAR and the JAR test APKs by copying to an Android device.
 
 1.  Check the signed APKs and the SDK folders into GitHub.

@@ -1,0 +1,236 @@
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter -> com.ghostery.privacy.appnoticesdk.adapter.a:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> b
+    java.util.ArrayList trackerArrayList -> c
+    android.view.LayoutInflater mInflater -> d
+    android.support.v4.app.ListFragment listFragment -> a
+    void <init>(android.support.v4.app.ListFragment,int,com.ghostery.privacy.appnoticesdk.model.AppNoticeData) -> <init>
+    int getCount() -> getCount
+    java.lang.Object getItem(int) -> getItem
+    long getItemId(int) -> getItemId
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter$1 -> com.ghostery.privacy.appnoticesdk.adapter.b:
+    com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter this$0 -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter) -> <init>
+    void onDownloaded(int) -> a
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter$ViewHolder -> com.ghostery.privacy.appnoticesdk.adapter.c:
+    android.widget.TextView trackerName -> a
+    android.widget.ImageView trackerLogo -> b
+    android.widget.Switch optInOutSwitch -> c
+    void <init>() -> <init>
+com.ghostery.privacy.appnoticesdk.app.App -> com.ghostery.privacy.appnoticesdk.app.App:
+    android.content.Context mContext -> a
+    java.util.HashMap sessionMap -> b
+    void <init>() -> <init>
+    void onCreate() -> onCreate
+    android.content.Context getContext() -> a
+    java.util.HashMap getSessionMap() -> b
+    void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity -> com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity:
+    int trackerId -> a
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void onBackPressed() -> onBackPressed
+    void onLinkClick(android.view.View) -> onLinkClick
+    void onOptInOutClick(android.view.View) -> onOptInOutClick
+    void setActionBarTitle(int) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment -> com.ghostery.privacy.appnoticesdk.app.a:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    com.ghostery.privacy.appnoticesdk.model.Tracker tracker -> b
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    void onResume() -> onResume
+    com.ghostery.privacy.appnoticesdk.model.Tracker access$000(com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment$1 -> com.ghostery.privacy.appnoticesdk.app.b:
+    android.widget.ImageView val$imageView_trackerLogo -> a
+    android.widget.TextView val$textView_TrackerName -> b
+    com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment this$0 -> c
+    void <init>(com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment,android.widget.ImageView,android.widget.TextView) -> <init>
+    void onDownloaded(int) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity -> com.ghostery.privacy.appnoticesdk.app.TrackerListActivity:
+    java.util.ArrayList trackerArrayList -> a
+    java.util.ArrayList trackerArrayListClone -> b
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> c
+    boolean mTwoPane -> d
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+    void onResume() -> onResume
+    void onItemSelected(int) -> a
+    void onBackPressed() -> onBackPressed
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void sendOptInOutNotices() -> b
+    void saveTrackerStates() -> a
+    void onClick(android.view.View) -> onClick
+    void onClickDescription(android.view.View) -> onClickDescription
+    void onOptInOutClick(android.view.View) -> onOptInOutClick
+    void setAllNoneControlState() -> c
+    void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> onSupportActionModeStarted
+    void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> onSupportActionModeFinished
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity$1 -> com.ghostery.privacy.appnoticesdk.app.c:
+    com.ghostery.privacy.appnoticesdk.app.TrackerListActivity this$0 -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.app.TrackerListActivity) -> <init>
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment -> com.ghostery.privacy.appnoticesdk.app.TrackerListFragment:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter trackerArrayAdapter -> b
+    com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$Callbacks mCallbacks -> c
+    int mActivatedPosition -> d
+    com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$Callbacks sDummyCallbacks -> e
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+    void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    void onAttach(android.app.Activity) -> onAttach
+    void onDetach() -> onDetach
+    void onListItemClick(android.widget.ListView,android.view.View,int,long) -> onListItemClick
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void refresh() -> a
+    void setActivateOnItemClick(boolean) -> a
+    void setActivatedPosition(int) -> a
+    com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter access$000(com.ghostery.privacy.appnoticesdk.app.TrackerListFragment) -> a
+    void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$1 -> com.ghostery.privacy.appnoticesdk.app.d:
+    void <init>() -> <init>
+    void onItemSelected(int) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$2 -> com.ghostery.privacy.appnoticesdk.app.e:
+    com.ghostery.privacy.appnoticesdk.app.TrackerListFragment this$0 -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.app.TrackerListFragment) -> <init>
+    void run() -> run
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$Callbacks -> com.ghostery.privacy.appnoticesdk.app.f:
+    void onItemSelected(int) -> a
+com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback -> com.ghostery.privacy.appnoticesdk.callbacks.a:
+    void onTrackerStateChanged(java.util.HashMap) -> a
+com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback -> com.ghostery.privacy.appnoticesdk.callbacks.b:
+    void onDownloaded(int) -> a
+com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment -> com.ghostery.privacy.appnoticesdk.fragments.a:
+    com.ghostery.privacy.appnoticesdk.model.Tracker tracker -> a
+    void <init>() -> <init>
+    void onCreate(android.os.Bundle) -> onCreate
+    android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    void onResume() -> onResume
+    void onDetach() -> onDetach
+com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment$1 -> com.ghostery.privacy.appnoticesdk.fragments.b:
+    com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment this$0 -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment) -> <init>
+    boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData -> com.ghostery.privacy.appnoticesdk.model.a:
+    boolean useRemoteValues -> a
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData instance -> c
+    android.app.Activity activity -> d
+    boolean initialized -> e
+    int company_id -> f
+    int pub_notice_id -> g
+    int ric_max_default -> h
+    int ric_session_max_default -> i
+    int ric_opacity_default -> j
+    java.lang.Boolean bric -> k
+    java.lang.String close_button -> l
+    java.lang.String manage_preferences_description -> m
+    java.lang.String manage_preferences_header -> n
+    int ric_max -> o
+    float ric_opacity -> p
+    int ric_session_max -> q
+    java.util.ArrayList trackerArrayList -> b
+    java.lang.Boolean isInitialized() -> a
+    java.lang.String getClose_button() -> b
+    java.lang.String getManage_preferences_description() -> c
+    java.lang.String getManage_preferences_header() -> d
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData getInstance(android.app.Activity) -> a
+    void <init>() -> <init>
+    java.util.HashMap getTrackerHashMap(boolean) -> a
+    java.util.ArrayList getTrackerListClone() -> e
+    com.ghostery.privacy.appnoticesdk.model.Tracker getTrackerById(int) -> a
+    void setTrackerOnOffState(int,boolean) -> a
+    void setTrackerOnOffState(boolean) -> b
+    int getTrackerOnOffStates() -> f
+    int getNonEssentialTrackerCount() -> g
+    boolean isTrackerDuplicateOfEssentialTracker(int) -> b
+    int getTrackerStateChangeCount(java.util.ArrayList) -> a
+    void sendOptInOutNotice(int,boolean,boolean,boolean,boolean) -> a
+    void saveTrackerStates() -> h
+    int access$000() -> i
+    int access$100() -> j
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$1 -> com.ghostery.privacy.appnoticesdk.model.b:
+    int val$trackerId -> a
+    boolean val$optOut -> b
+    boolean val$uniqueVisit -> c
+    boolean val$firstOptOut -> d
+    boolean val$selectAll -> e
+    void <init>(int,boolean,boolean,boolean,boolean) -> <init>
+    void run() -> run
+com.ghostery.privacy.appnoticesdk.model.Tracker -> com.ghostery.privacy.appnoticesdk.model.c:
+    int uId -> a
+    java.lang.String category -> b
+    int trackerId -> c
+    java.lang.String name -> d
+    java.lang.String logo_url -> e
+    java.lang.String description -> f
+    java.lang.String privacy_url -> g
+    boolean isOn -> h
+    boolean hasHeader -> i
+    java.lang.String getCategory() -> a
+    int getTrackerId() -> b
+    java.lang.String getName() -> c
+    java.lang.String getLogo_url() -> d
+    java.lang.String getDescription() -> e
+    java.lang.String getPrivacy_url() -> f
+    boolean isOn() -> g
+    void setOnOffState(boolean) -> a
+    boolean hasHeader() -> h
+    void <init>(com.ghostery.privacy.appnoticesdk.model.Tracker) -> <init>
+    boolean isEssential() -> i
+com.ghostery.privacy.appnoticesdk.utils.AppData -> com.ghostery.privacy.appnoticesdk.utils.a:
+    android.content.SharedPreferences sharedPreferences -> a
+    android.content.SharedPreferences getSessionInfo() -> a
+    void setInteger(java.lang.String,java.lang.Integer) -> a
+    void setString(java.lang.String,java.lang.String) -> a
+    void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.utils.FileDownloader -> com.ghostery.privacy.appnoticesdk.utils.b:
+    android.graphics.Bitmap getBitmapFromUrl(java.lang.String) -> a
+com.ghostery.privacy.appnoticesdk.utils.FileWriter -> com.ghostery.privacy.appnoticesdk.utils.c:
+    void writeBitmap(android.graphics.Bitmap,java.io.File) -> a
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader -> com.ghostery.privacy.appnoticesdk.utils.d:
+    android.app.Activity activity -> a
+    java.util.Map imageCache -> b
+    com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback logoDownloadCallback -> c
+    int position -> d
+    void <init>(android.app.Activity,int,com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback) -> <init>
+    void download(java.lang.String,android.widget.ImageView) -> a
+    boolean cancelPotentialDownload(java.lang.String,android.widget.ImageView) -> b
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask getBitmapDownloaderTask(android.widget.ImageView) -> b
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask access$100(android.widget.ImageView) -> a
+    java.util.Map access$200(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> a
+    com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback access$300(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> b
+    int access$400(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> c
+    android.app.Activity access$500(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> d
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask -> com.ghostery.privacy.appnoticesdk.utils.e:
+    java.lang.String url -> b
+    java.lang.ref.WeakReference imageViewReference -> c
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader this$0 -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader,android.widget.ImageView) -> <init>
+    android.graphics.Bitmap doInBackground(java.lang.String[]) -> a
+    void onPostExecute(android.graphics.Bitmap) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    java.lang.String access$000(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask) -> a
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask$1 -> com.ghostery.privacy.appnoticesdk.utils.f:
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask this$1 -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask) -> <init>
+    void run() -> run
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$DownloadedDrawable -> com.ghostery.privacy.appnoticesdk.utils.g:
+    java.lang.ref.WeakReference bitmapDownloaderTaskReference -> a
+    void <init>(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask) -> <init>
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask getBitmapDownloaderTask() -> a
+com.ghostery.privacy.appnoticesdk.utils.ServiceHandler -> com.ghostery.privacy.appnoticesdk.utils.h:
+    java.lang.String response -> a
+    void <init>() -> <init>
+    java.lang.String makeServiceCall(java.lang.String,int) -> a
+    java.lang.String makeServiceCall(java.lang.String,int,java.util.List) -> a
+    void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.utils.Session -> com.ghostery.privacy.appnoticesdk.utils.i:
+    void set(java.lang.String,java.lang.Object) -> a
+    java.lang.Object get(java.lang.String) -> a
+    java.lang.Object get(java.lang.String,java.lang.Object) -> b
+com.ghostery.privacy.appnoticesdk.utils.Util -> com.ghostery.privacy.appnoticesdk.utils.j:
+    boolean checkURL(java.lang.CharSequence) -> a
