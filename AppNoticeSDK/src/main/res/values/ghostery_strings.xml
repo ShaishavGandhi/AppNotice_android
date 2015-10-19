@@ -1,0 +1,59 @@
+<resources>
+
+    <!-- Configuration-->
+
+    <!-- Explicit Dialog colors -->
+    <string name="ghostery_dialog_explicit_access_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_access_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_explicit_decline_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_decline_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_title_color">#000000</string>
+
+    <!-- Implied Dialog colors -->
+    <string name="ghostery_dialog_implied_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_implied_text_color">#000000</string>
+    <string name="ghostery_dialog_implied_title_color">#000000</string>
+
+    <!-- bric: true = Explicit, false = Implied -->
+    <bool name="ghostery_bric">true</bool>
+    <!-- ric_max -->
+    <integer name="ghostery_ric_max_default">3</integer>
+    <!-- ric_session_max -->
+    <integer name="ghostery_ric_session_max_default">1</integer>
+    <integer name="ghostery_ric_opacity">100</integer>
+
+    <!--Dialog text -->
+    <!-- close_button -->
+    <string name="ghostery_dialog_button_close">Close</string>
+    <!-- bric_access_button_text -->
+    <string name="ghostery_dialog_button_consent">Accept</string>
+    <!-- bric_decline_button_text -->
+    <string name="ghostery_dialog_button_decline">Decline</string>
+    <!-- ric_click_manage_settings -->
+    <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
+    <!-- bric_content1 -->
+    <string name="ghostery_dialog_explicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+    <!-- bric_header_text and ric_title -->
+    <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
+    <!-- ric -->
+    <string name="ghostery_dialog_implicit_message">Our application uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+    <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
+
+    <!-- Manage Preferences -->
+    <!-- manage_preferences_description -->
+    <string name="ghostery_manage_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Privacy Policy Not Provided</string>
+    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
+    <string name="ghostery_manage_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
+    <!-- manage_preferences_header -->
+    <string name="ghostery_manage_preferences_header">Manage Preferences</string>
+    <string name="ghostery_manage_preferences_optin_header">Opt In</string>
+    <string name="ghostery_manage_preferences_optin_text">To all trackers listed below.</string>
+
+    <!-- Tracker Detail -->
+    <string name="ghostery_tracker_detail_title">Tracker Detail</string>
+    <string name="ghostery_tracker_learnmore_title">Learn More</string>
+
+</resources>
