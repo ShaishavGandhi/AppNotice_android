@@ -6,7 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import com.ghostery.privacy.fireball_module.R.string;
+import com.ghostery.privacy.appnotice_android.R;
 
 public class DeclineConfirmation_DialogFragment extends DialogFragment
 {
