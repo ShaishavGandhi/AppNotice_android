@@ -12,10 +12,22 @@ com.ghostery.privacy.appnoticesdk.app.TrackerListActivity: void onOptInOutClick(
 com.ghostery.privacy.appnoticesdk.app.TrackerListActivity$1: void onClick(android.content.DialogInterface,int)
 com.ghostery.privacy.appnoticesdk.app.TrackerListFragment
 com.ghostery.privacy.appnoticesdk.app.TrackerListFragment: TrackerListFragment()
+com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback
+com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback: void onOptionSelected(boolean,java.util.HashMap)
+com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback: void onNoticeSkipped()
+com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback: void onTrackerStateChanged(java.util.HashMap)
+com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback
+com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback: void onDownloaded(int)
 com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$1: void onClick(android.view.View)
 com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$2: void onClick(android.view.View)
 com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$3: void onClick(android.view.View)
 com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$1: void onClick(android.view.View)
 com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$2: void onClick(android.view.View)
+com.ghostery.privacy.appnoticesdk.model.AppNotice
+com.ghostery.privacy.appnoticesdk.model.AppNotice: AppNotice(android.app.Activity)
+com.ghostery.privacy.appnoticesdk.model.AppNotice: void startConsentFlow(int,int,boolean,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
+com.ghostery.privacy.appnoticesdk.model.AppNotice: void resetSDK()
+com.ghostery.privacy.appnoticesdk.model.AppNotice: void showManagePreferences(int,int,boolean,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
+com.ghostery.privacy.appnoticesdk.model.AppNotice: java.util.HashMap getTrackerPreferences()
 com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType: com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType[] values()
 com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType: com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType valueOf(java.lang.String)

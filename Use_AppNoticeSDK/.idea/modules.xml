@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Use_AppNoticeSDK.iml" filepath="$PROJECT_DIR$/Use_AppNoticeSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WaterDrop_aar/WaterDrop_aar.iml" filepath="$PROJECT_DIR$/WaterDrop_aar/WaterDrop_aar.iml" />
+    </modules>
+  </component>
+</project>
