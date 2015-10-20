@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">.AAR: Use In-App Consent as AAR</string>
+    <string name="app_name">.SDK as AAR: WaterDrop</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
@@ -9,10 +9,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="btn_consent_flow">Consent Flow</string>
     <string name="btn_manage_preferences">Manage Preferences</string>
+    <string name="btn_get_preferences">Get Preferences</string>
     <string name="btn_reset_sdk">Reset SDK</string>
+    <string name="btn_reset_app">Reset App</string>
     <string name="btn_close_app">Close App</string>
-    <string name="action_inappconsent_reset">Reset In-App Consent APK</string>
-    <string name="action_inappconsent_close">Close App</string>
     <string name="hint_companyId">Company ID</string>
     <string name="hint_pubNoticeId">Pub-notice ID</string>
     <string name="checkBox_useRemoteValues">Use remote config values</string>
