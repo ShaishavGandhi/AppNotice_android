@@ -46,27 +46,29 @@ IceCube_jar: This project includes the AppNoticeSDK project as a JAR-based modul
     * From: ...\AppNotice_android\AppNoticeSDK\AppNoticeSDK\build\
     *	To: ...\AppNotice_android\release\
 
-1.  Rename the release AAR file (remove "-release" from filename):
-    * From: ...\AppNotice_android\release\outputs\aar\AppNoticeSDK-release.aar
-    * To: AppNoticeSDK.aar
+1.	Rename the copied "outputs\aar" folder to "outputs\AppNoticeSDK_aar"
 
 1.  Delete     
-    * ...\AppNotice_android\release\outputs\aar\AppNoticeSDK-debug.aar
+    * ...\AppNotice_android\release\outputs\AppNoticeSDK_aar\AppNoticeSDK-debug.aar
 
-1.	Create a new "AppNoticeSDK" folder in the "outputs" folder (this will be the folder for the JAR SDK):
-    *	...\AppNotice_android\release\outputs\
+1.  Rename the release AAR file (remove "-release" from filename):
+    * From: ...\AppNotice_android\release\outputs\AppNoticeSDK_aar\AppNoticeSDK-release.aar
+    * To: AppNoticeSDK.aar
+
+1.	Create a new "AppNoticeSDK_jar" folder in the copied "outputs" folder (this will be the folder for the JAR SDK):
+    *	...\AppNotice_android\release\outputs\AppNoticeSDK_jar\
 
 1.	Copy the "libs" folder into the JAR SDK folder:
-    * From: ...\AppNotice_android\AppNoticeSDK\AppNoticeSDK\build\
-    *	To: ...\AppNotice_android\release\outputs\AppNoticeSDK\
+    * From: ...\AppNotice_android\AppNotice\AppNoticeSDK\build\
+    *	To: ...\AppNotice_android\release\outputs\AppNoticeSDK_jar\
 
 1.	Copy the "src" folder into the JAR SDK folder:
-    * From: ...\AppNotice_android\AppNoticeSDK\AppNoticeSDK\
-    *	To: ...\AppNotice_android\release\outputs\AppNoticeSDK\
+    * From: ...\AppNotice_android\AppNotice\AppNoticeSDK\
+    *	To: ...\AppNotice_android\release\outputs\AppNoticeSDK_jar\
 
 1.  Delete these output folders:
-    * ...\AppNotice_android\release\outputs\AppNoticeSDK\src\androidTest\
-    * ...\AppNotice_android\release\outputs\AppNoticeSDK\src\main\java\
+    * ...\AppNotice_android\release\outputs\AppNoticeSDK_jar\src\androidTest\
+    * ...\AppNotice_android\release\outputs\AppNoticeSDK_jar\src\main\java\
 
 1.	Open the AppNoticeSDK.jar zip container (or unzip and rezip after edit) and remove all .class files in this folder (I use 7-Zip for this):
     * ...\AppNotice_android\FireBall_module\AppNoticeSDK\libs\AppNoticeSDK.jar\com\ghostery\privacy\AppNoticeSDK\
@@ -92,7 +94,7 @@ IceCube_jar: This project includes the AppNoticeSDK project as a JAR-based modul
 
 1.	Copy the AAR file from the release "outputs" folder to the AAR project's libs folder:
     * From: ...\release\outputs\aar\AppNoticeSDK.aar
-    *	To: this folder: ...\AppNotice_android\FireBall_module\WaterDrop_aar\libs\
+    *	To: this folder: ...\AppNotice_android\Use_AppNoticeSDK\WaterDrop_aar\libs\
 
 
 ####Customize the SDK for the AAR test app (optional)
@@ -134,7 +136,7 @@ IceCube_jar: This project includes the AppNoticeSDK project as a JAR-based modul
     * ...\AppNotice_android\FireBall_module\AppNoticeSDK\
 
 1.	Copy the "libs" and "src" folders:
-    * From: ...\AppNotice_android\release\outputs\AppNoticeSDK\
+    * From: ...\AppNotice_android\release\outputs\AppNoticeSDK_jar\
     * To: ...\AppNotice_android\FireBall_module\AppNoticeSDK\
 
 
