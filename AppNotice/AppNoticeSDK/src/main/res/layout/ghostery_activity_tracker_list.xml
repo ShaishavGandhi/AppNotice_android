@@ -34,7 +34,7 @@
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="10">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,26 +62,28 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_marginRight="16dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical">
-
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="None"
-                    android:id="@+id/rb_none"
-                    android:checked="false"
-                    android:layout_gravity="center_vertical"
-                android:onClick="onClick" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1">
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All"
+                android:text="@string/ghostery_manage_preferences_select_none"
+                android:id="@+id/rb_none"
+                android:checked="false"
+                android:layout_gravity="center_vertical"
+                android:onClick="onClick"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ghostery_manage_preferences_select_all"
                 android:id="@+id/rb_all"
                 android:checked="true"
                 android:layout_gravity="center_vertical"
-                android:onClick="onClick" />
+                android:onClick="onClick"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
