@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appNotice = new AppNotice(this);
     }
 
     @Nullable
@@ -59,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         // If there are saved IDs, use them
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
-        String pubNoticeIdString = Util.getSharedPreference(this, Util.SP_PUB_NOTICE_ID, "");
+        String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
 
         EditText companyIdEditText = (EditText)findViewById(R.id.editText_companyId);
-        EditText pubNoticeIdEditText = (EditText)findViewById(R.id.editText_pubNoticeId);
+        EditText noticeIdEditText = (EditText)findViewById(R.id.editText_noticeId);
 
         companyIdEditText.setText(companyIdString);
-        pubNoticeIdEditText.setText(pubNoticeIdString);
+        noticeIdEditText.setText(noticeIdString);
 
         btn_consent_flow = (Button) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (Button) findViewById(R.id.btn_manage_preferences) ;
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onClick(View view) {
 
         String companyIdString = "";
-        String pubNoticeIdString = "";
+        String noticeIdString = "";
         int companyId = 0;
         int pubNoticeId = 0;
         Boolean useRemoteValues = true;
@@ -95,58 +94,57 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         if (tv != null)
             companyIdString = tv.getText().toString();
 
-        tv = (TextView)this.findViewById(R.id.editText_pubNoticeId);
+        tv = (TextView)this.findViewById(R.id.editText_noticeId);
         if (tv != null)
-            pubNoticeIdString = tv.getText().toString();
+            noticeIdString = tv.getText().toString();
+
+        CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+        if (cb != null)
+            useRemoteValues = cb.isChecked();
 
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
-        Util.setSharedPreference(this, Util.SP_PUB_NOTICE_ID, pubNoticeIdString);
+        Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
 
-        if (view == btn_reset_sdk) {
-            appNotice.resetSDK();
+		if (companyIdString.length() == 0 || noticeIdString.length() == 0) {
+			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
+		} else {
+			companyId = Integer.valueOf(companyIdString);
+			pubNoticeId = Integer.valueOf(noticeIdString);
 
-            Toast.makeText(this, "SDK was reset.", Toast.LENGTH_SHORT).show();
+			appNotice = new AppNotice(this, companyId, pubNoticeId, useRemoteValues);
 
-        } else if (view == btn_reset_app) {
-            // Reset the app
-            Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module");
-            //Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module_preferences");
+			if (view == btn_reset_sdk) {
+				appNotice.resetSDK();
 
-            // Close the app
-            this.finish();
-            System.exit(0);
+				Toast.makeText(this, "SDK was reset.", Toast.LENGTH_SHORT).show();
 
-        } else if (view == btn_close_app) {
-            // Close the app
-            this.finish();
-            System.exit(0);
-        }
+			} else if (view == btn_reset_app) {
+				// Reset the app
+				Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module");
+				//Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module_preferences");
 
-        else if (companyIdString.length() == 0 || pubNoticeIdString.length() == 0) {
-            Toast.makeText(this, "You must supply a Company ID and Pub-notice ID.", Toast.LENGTH_LONG).show();
-        } else {
-            companyId = Integer.valueOf(companyIdString);
-            pubNoticeId = Integer.valueOf(pubNoticeIdString);
+				// Close the app
+				this.finish();
+				System.exit(0);
 
-            CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
-            if (cb != null)
-                useRemoteValues = cb.isChecked();
+			} else if (view == btn_close_app) {
+				// Close the app
+				this.finish();
+				System.exit(0);
 
-            AppNotice appNotice = new AppNotice(this);
+			} else if (view == btn_manage_preferences) {
+				appNotice.showManagePreferences(this);
 
-            if (view == btn_manage_preferences) {
-                appNotice.showManagePreferences(companyId, pubNoticeId, useRemoteValues, this);
+			} else if (view == btn_get_preferences) {
+				HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
+				showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
 
-            } else if (view == btn_get_preferences) {
-                HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
-                showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
+			} else if (view == btn_consent_flow) {
+				appNotice.startConsentFlow(this);
 
-            } else if (view == btn_consent_flow) {
-                appNotice.startConsentFlow(companyId, pubNoticeId, useRemoteValues, this);
-
-            }
-        }
+			}
+		}
     }
 
     // Handle callbacks for the In-App Consent SDK

@@ -36,8 +36,8 @@ public class AppNoticeData {
     private static Activity activity;
     private ProgressDialog pDialog;
     private boolean initialized = false;
-    private static int company_id;
-    private static int pub_notice_id;
+    private static int companyId;
+    private static int configId;
     private int ric_max_default = 3;
     private int ric_session_max_default = 1;
     private int ric_opacity_default = 100;
@@ -132,10 +132,10 @@ public class AppNoticeData {
 
     // Public getters and setters
     public Boolean isInitialized() { return initialized; }
-    public int getCompany_id() { return company_id; }
-    public void setCompany_id(int company_id) { this.company_id = company_id; }
-    public int getPub_notice_id() { return pub_notice_id; }
-    public void setPub_notice_id(int pub_notice_id) { this.pub_notice_id = pub_notice_id; }
+    public int getCompanyId() { return companyId; }
+    public void setCompanyId(int companyId) { this.companyId = companyId; }
+    public int getConfigId() { return configId; }
+    public void setConfigId(int configId) { this.configId = configId; }
 
     public Boolean getBric() { return bric != null ? bric : true; }
     public String getBric_access_button_color() { return bric_access_button_color; }
@@ -323,8 +323,8 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[7];
-                urlParams[0] = String.valueOf(pub_notice_id);	// 0
-                urlParams[1] = String.valueOf(company_id);		// 1
+                urlParams[0] = String.valueOf(configId);	// 0
+                urlParams[1] = String.valueOf(companyId);		// 1
                 urlParams[2] = String.valueOf(trackerId);		// 2
                 urlParams[3] = optOut ? "1" : "0";  		    // 3
                 urlParams[4] = uniqueVisit ? "1" : "0";	    	// 4
@@ -354,8 +354,8 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[2];
-                urlParams[0] = String.valueOf(pub_notice_id);	// 0
-                urlParams[1] = String.valueOf(company_id);		// 1
+                urlParams[0] = String.valueOf(configId);	// 0
+                urlParams[1] = String.valueOf(companyId);		// 1
 
                 String uRL = "";
 
@@ -751,8 +751,8 @@ public class AppNoticeData {
 
         protected String getFormattedJSONUrl() {
             Object[] urlParams = new Object[2];
-            urlParams[0] = String.valueOf(company_id);			// 0
-            urlParams[1] = String.valueOf(pub_notice_id);		// 1
+            urlParams[0] = String.valueOf(companyId);			// 0
+            urlParams[1] = String.valueOf(configId);		// 1
             return MessageFormat.format(URL_JSON_REQUEST, urlParams);
         }
 

@@ -22,12 +22,6 @@ public class AppData {
 
     // App data keys
     public static final String APPDATA_VERSION = "AppDataVersion";
-    public static final String APPDATA_ADVERTISING_ID_HASH = "ADVERTISING_ID_HASH";
-    public static final String APPDATA_OCID = "ocid";
-    public static final String APPDATA_ADVERTISING_ID = "ADVERTISING_ID";
-    public static final String APPDATA_NOTICE_ID = "noticeId";
-    public static final String APPDATA_FIRSTRUN = "firstRun";       // Boolean value
-    public static final String APPDATA_APPIDS = "appids";
     public static final String APPDATA_IMPLICIT_LAST_DISPLAY_TIME = "implicit_last_display_time";   // long int, timestamp in millis
     public static final String APPDATA_IMPLICIT_DISPLAY_COUNT = "implicit_display_count";           // int
     public static final String APPDATA_EXPLICIT_ACCEPTED = "explicit_accepted";                     // Boolean
