@@ -14,7 +14,7 @@
     <string name="btn_reset_app">Reset App</string>
     <string name="btn_close_app">Close App</string>
     <string name="hint_companyId">Company ID</string>
-    <string name="hint_pubNoticeId">Notice ID</string>
+    <string name="hint_configId">Config ID</string>
     <string name="checkBox_useRemoteValues">Use remote config values</string>
 
     <!-- Decline Confirmation dialog -->

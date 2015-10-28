@@ -33,11 +33,15 @@ public class AppNotice {
 	 *        True = Try to use the In-App Consent dialog configuration parameters from the service;
 	 *        False = Use local resource values instead of calling the service
 	 */
-    public AppNotice(Activity activity, int companyId, int configId, boolean useRemoteValues) {
+    public AppNotice(Activity activity, int companyId, int configId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
         extActivity = activity;
 		if ((companyId <= 0) || (configId <= 0)) {
 			throw(new IllegalArgumentException("Company ID and Config ID must both be valid identifiers."));
 		}
+
+		// Remember the provided callback
+		this.appNotice_callback = appNotice_callback;
+		Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
 
 		// Get either a new or initialized tracker config object
 		appNoticeData = AppNoticeData.getInstance(extActivity);
@@ -54,10 +58,7 @@ public class AppNotice {
      *     ghostery_bric resource parameter.
      *   - appNotice_callback: The AppNotice_Callback method created in your class to handle the In-App Consent response
      */
-    public void startConsentFlow(AppNotice_Callback appNotice_callback) {
-        this.appNotice_callback = appNotice_callback;
-        Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
-
+    public void startConsentFlow() {
         init(true);
 
         // Send notice for this event
@@ -78,10 +79,7 @@ public class AppNotice {
      * Shows the Manage Preferences screen. Can be called from your when the end user requests access to this screen (e.g., from a menu or button click).
      *   - fragmentActivity: Usually your current fragmentActivity
      */
-    public void showManagePreferences(AppNotice_Callback appNotice_callback) {
-        this.appNotice_callback = appNotice_callback;
-        Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
-
+    public void showManagePreferences() {
         init(false);
     }
 

@@ -1,3 +1,9 @@
+com.ghostery.privacy.appnoticesdk.AppNotice
+com.ghostery.privacy.appnoticesdk.AppNotice: AppNotice(android.app.Activity,int,int,boolean,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
+com.ghostery.privacy.appnoticesdk.AppNotice: void startConsentFlow()
+com.ghostery.privacy.appnoticesdk.AppNotice: void resetSDK()
+com.ghostery.privacy.appnoticesdk.AppNotice: void showManagePreferences()
+com.ghostery.privacy.appnoticesdk.AppNotice: java.util.HashMap getTrackerPreferences()
 com.ghostery.privacy.appnoticesdk.app.App
 com.ghostery.privacy.appnoticesdk.app.App: App()
 com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity
@@ -23,11 +29,5 @@ com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$2: void 
 com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$3: void onClick(android.view.View)
 com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$1: void onClick(android.view.View)
 com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$2: void onClick(android.view.View)
-com.ghostery.privacy.appnoticesdk.model.AppNotice
-com.ghostery.privacy.appnoticesdk.model.AppNotice: AppNotice(android.app.Activity,int,int,boolean)
-com.ghostery.privacy.appnoticesdk.model.AppNotice: void startConsentFlow(com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
-com.ghostery.privacy.appnoticesdk.model.AppNotice: void resetSDK()
-com.ghostery.privacy.appnoticesdk.model.AppNotice: void showManagePreferences(com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
-com.ghostery.privacy.appnoticesdk.model.AppNotice: java.util.HashMap getTrackerPreferences()
 com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType: com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType[] values()
 com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType: com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType valueOf(java.lang.String)

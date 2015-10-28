@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 			companyId = Integer.valueOf(companyIdString);
 			configId = Integer.valueOf(configIdString);
 
-			appNotice = new AppNotice(this, companyId, configId, useRemoteValues);
+			appNotice = new AppNotice(this, companyId, configId, useRemoteValues, this);
 
 			if (view == btn_reset_sdk) {
 				appNotice.resetSDK();
@@ -135,14 +135,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 				System.exit(0);
 
 			} else if (view == btn_manage_preferences) {
-				appNotice.showManagePreferences(this);
+				appNotice.showManagePreferences();
 
 			} else if (view == btn_get_preferences) {
 				HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
 				showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
 
 			} else if (view == btn_consent_flow) {
-				appNotice.startConsentFlow(this);
+				appNotice.startConsentFlow();
 
 			}
 		}

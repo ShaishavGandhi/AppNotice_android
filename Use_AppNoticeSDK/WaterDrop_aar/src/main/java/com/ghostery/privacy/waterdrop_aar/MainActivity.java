@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
-import com.ghostery.privacy.appnoticesdk.model.AppNotice;
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,13 +58,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         // If there are saved IDs, use them
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
-        String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
+        String configIdString = Util.getSharedPreference(this, Util.SP_CONFIG_ID, "");
 
         EditText companyIdEditText = (EditText)findViewById(R.id.editText_companyId);
-        EditText noticeIdEditText = (EditText)findViewById(R.id.editText_noticeId);
+        EditText configIdEditText = (EditText)findViewById(R.id.editText_configId);
 
         companyIdEditText.setText(companyIdString);
-        noticeIdEditText.setText(noticeIdString);
+        configIdEditText.setText(configIdString);
 
         btn_consent_flow = (Button) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (Button) findViewById(R.id.btn_manage_preferences) ;
@@ -85,18 +85,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onClick(View view) {
 
         String companyIdString = "";
-        String noticeIdString = "";
+        String configIdString = "";
         int companyId = 0;
-        int pubNoticeId = 0;
+        int configId = 0;
         Boolean useRemoteValues = true;
 
         TextView tv = (TextView)this.findViewById(R.id.editText_companyId);
         if (tv != null)
             companyIdString = tv.getText().toString();
 
-        tv = (TextView)this.findViewById(R.id.editText_noticeId);
+        tv = (TextView)this.findViewById(R.id.editText_configId);
         if (tv != null)
-            noticeIdString = tv.getText().toString();
+            configIdString = tv.getText().toString();
 
         CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
         if (cb != null)
@@ -104,15 +104,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
-        Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
+        Util.setSharedPreference(this, Util.SP_CONFIG_ID, configIdString);
 
-		if (companyIdString.length() == 0 || noticeIdString.length() == 0) {
+		if (companyIdString.length() == 0 || configIdString.length() == 0) {
 			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
 		} else {
 			companyId = Integer.valueOf(companyIdString);
-			pubNoticeId = Integer.valueOf(noticeIdString);
+			configId = Integer.valueOf(configIdString);
 
-			appNotice = new AppNotice(this, companyId, pubNoticeId, useRemoteValues);
+			appNotice = new AppNotice(this, companyId, configId, useRemoteValues, this);
 
 			if (view == btn_reset_sdk) {
 				appNotice.resetSDK();
@@ -134,14 +134,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 				System.exit(0);
 
 			} else if (view == btn_manage_preferences) {
-				appNotice.showManagePreferences(this);
+				appNotice.showManagePreferences();
 
 			} else if (view == btn_get_preferences) {
 				HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
 				showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
 
 			} else if (view == btn_consent_flow) {
-				appNotice.startConsentFlow(this);
+				appNotice.startConsentFlow();
 
 			}
 		}

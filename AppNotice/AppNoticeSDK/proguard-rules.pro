@@ -8,7 +8,7 @@
 #============================================================
 # Keep and don't obfuscate both the AppNotice entry points and the callback interfaces
 -keepattributes Signature
--keep public class com.ghostery.privacy.appnoticesdk.model.AppNotice {public *;}
+-keep public class com.ghostery.privacy.appnoticesdk.AppNotice {public *;}
 -keep public interface com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback {public *; }
 -keep public interface com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback {public *; }
 
