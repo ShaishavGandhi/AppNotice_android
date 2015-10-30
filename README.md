@@ -5,14 +5,14 @@ This repository is comprised of two workspaces: __AppNotice__ and __Use_AppNotic
 ####AppNotice
 This workspace is where the App Notice SDK is built. It includes these two projects:
 
-AppNoticeSDK project: This is the SDK project. It can be built and used directly as a module, exported as an AAR and exported as a JAR.
+__AppNoticeSDK project:__ This is the SDK project. It can be built and used directly as a module, exported as an AAR and exported as a JAR.
 
-FireBall_module project: This project uses the AppNoticeSDK project as a dependent module. It is used to rapidly develop and test the AppNoticeSDK without having to export it as a library.
+__FireBall_module__ project: This project uses the AppNoticeSDK project as a dependent module. It is used to rapidly develop and test the AppNoticeSDK without having to export it as a library.
 
 ####Use_AppNoticeSDK
 This workspace is used to develop test apps that include AppNoticeSDK as an AAR and as a JAR. It includes these three projects:
 
-AppNoticeSDK: This project is a duplicate of the AppNoticeSDK project from the __AppNotice__ workspace with these changes:
+__AppNoticeSDK:__ This project is a duplicate of the AppNoticeSDK project from the __AppNotice__ workspace with these changes:
 
 1. The java source code has been removed.
 
@@ -22,9 +22,9 @@ AppNoticeSDK: This project is a duplicate of the AppNoticeSDK project from the _
 
 This project is included in the IceCube_jar project as a module and provides App Notice functionality to the resulting IceCube app.
 
-WaterDrop_aar: This project includes the AppNoticeSDK project as an AAR and provides App Notice functionality to the resulting WaterDrop app. The WaterDrop app excersises the AAR version of the SDK.
+__WaterDrop_aar:__ This project includes the AppNoticeSDK project as an AAR and provides App Notice functionality to the resulting WaterDrop app. The WaterDrop app excersises the AAR version of the SDK.
 
-IceCube_jar: This project includes the AppNoticeSDK project as a JAR-based module and provides App Notice functionality to the resulting IceCube app. The IceCube app excersises the JAR version of the SDK.
+__IceCube_jar:__ This project includes the AppNoticeSDK project as a JAR-based module and provides App Notice functionality to the resulting IceCube app. The IceCube app excersises the JAR version of the SDK.
 
 
 ####Build the AAR and JAR SDKs
@@ -32,7 +32,7 @@ IceCube_jar: This project includes the AppNoticeSDK project as a JAR-based modul
 1.	Update all version names and version numbers for both the SDKs and the test apps.
     *	...\AppNotice\AppNoticeSDK\build.gradle
     *	...\AppNotice\FireBall_module\build.gradle
-    *	...\Use_AppNoticeSDK\\WaterDrop_aar\build.gradle
+    *	...\Use_AppNoticeSDK\AppNoticeSDK\build.gradle
     *	...\Use_AppNoticeSDK\WaterDrop_aar\build.gradle
     *	...\Use_AppNoticeSDK\IceCube_jar\build.gradle
 
