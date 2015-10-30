@@ -51,8 +51,8 @@
     <string name="ghostery_manage_preferences_header">Voreinstellungen verwalten</string>
     <string name="ghostery_manage_preferences_optin_header">Opt-In</string>
     <string name="ghostery_manage_preferences_optin_text">Zu allen unten aufgelisteten Trackers.</string>
-    <string name="ghostery_manage_preferences_select_all">All</string>
-    <string name="ghostery_manage_preferences_select_none">None</string>
+    <string name="ghostery_manage_preferences_select_all">Alle</string>
+    <string name="ghostery_manage_preferences_select_none">Keine</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Tracker-Detail</string>

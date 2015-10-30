@@ -51,8 +51,8 @@
     <string name="ghostery_manage_preferences_header">Gestisci preferenze</string>
     <string name="ghostery_manage_preferences_optin_header">Consenti</string>
     <string name="ghostery_manage_preferences_optin_text">Tutti i tracker elencati di seguito.</string>
-    <string name="ghostery_manage_preferences_select_all">All</string>
-    <string name="ghostery_manage_preferences_select_none">None</string>
+    <string name="ghostery_manage_preferences_select_all">Tutti</string>
+    <string name="ghostery_manage_preferences_select_none">Nessuno</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Dettaglio del tracker</string>

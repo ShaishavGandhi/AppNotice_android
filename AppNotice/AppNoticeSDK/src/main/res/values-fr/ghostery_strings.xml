@@ -51,8 +51,8 @@
     <string name="ghostery_manage_preferences_header">Gérer Préférences</string>
     <string name="ghostery_manage_preferences_optin_header">Opt-in</string>
     <string name="ghostery_manage_preferences_optin_text">Pour tous les mouchards indiqués ci-dessous.</string>
-    <string name="ghostery_manage_preferences_select_all">All</string>
-    <string name="ghostery_manage_preferences_select_none">None</string>
+    <string name="ghostery_manage_preferences_select_all">Tous</string>
+    <string name="ghostery_manage_preferences_select_none">Aucun</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Détails des mouchards</string>
