@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 public class Util {
     public static final String SP_COMPANY_ID = "sp_companyId";
     public static final String SP_CONFIG_ID = "sp_configId";
+    public static final String SP_USE_REMOTEVALUES = "sp_useRemoteValues";
 
     /**
      * Per the design guidelines, you should show the drawer on launch until the user manually

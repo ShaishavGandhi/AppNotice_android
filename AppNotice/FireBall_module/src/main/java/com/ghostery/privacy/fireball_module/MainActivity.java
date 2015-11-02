@@ -60,12 +60,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         // If there are saved IDs, use them
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String configIdString = Util.getSharedPreference(this, Util.SP_CONFIG_ID, "");
+        String useRemoteValuesString = Util.getSharedPreference(this, Util.SP_USE_REMOTEVALUES, "");
 
         EditText companyIdEditText = (EditText)findViewById(R.id.editText_companyId);
-        EditText configIdEditText = (EditText)findViewById(R.id.editText_configId);
-
         companyIdEditText.setText(companyIdString);
+
+        EditText configIdEditText = (EditText)findViewById(R.id.editText_configId);
         configIdEditText.setText(configIdString);
+
+        CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+        if (useRemoteValuesString != null && useRemoteValuesString.equals("1"))
+            cb.setChecked(true);
+        else
+            cb.setChecked(false);
 
         btn_consent_flow = (Button) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (Button) findViewById(R.id.btn_manage_preferences) ;
@@ -106,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_CONFIG_ID, configIdString);
+        Util.setSharedPreference(this, Util.SP_USE_REMOTEVALUES, useRemoteValues? "1" : "0");
 
 		if (companyIdString.length() == 0 || configIdString.length() == 0) {
 			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
