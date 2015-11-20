@@ -59,7 +59,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.ghostery_impliedinfo_dialogfragment, container, false);
 
         // Apply the tracker config customizations
-        if (useRemoteValues)
+        //if (useRemoteValues)
             applyCustomConfig(view);
 
         // Watch for button clicks.
@@ -141,14 +141,13 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         if (appNoticeData != null && appNoticeData.isInitialized()) {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
-            String ric_bg = appNoticeData.getRic_bg();
-            String ric_access_button_color = appNoticeData.getBric_access_button_color();
+            int ric_bg = appNoticeData.getRic_bg();
+            int ric_access_button_color = appNoticeData.getBric_access_button_color();
 
 
             // Set background color and opacity
             if (linearLayout_outer != null) {
-                if (ric_bg != null)
-                    linearLayout_outer.setBackgroundColor(Color.parseColor(ric_bg));
+                linearLayout_outer.setBackgroundColor(ric_bg);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     float opacityFloat = appNoticeData.getRic_opacity();
                     if (opacityFloat < 1F && opacityFloat >= 0) {
@@ -165,8 +164,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             if (textView_title != null) {
                 if (appNoticeData.getRic_title() != null)
                     textView_title.setText(appNoticeData.getRic_title());
-                if (appNoticeData.getRic_title_color() != null)
-                    textView_title.setTextColor(Color.parseColor(appNoticeData.getRic_title_color()));
+                textView_title.setTextColor(appNoticeData.getRic_title_color());
             }
 
             // Message
@@ -174,8 +172,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             if (textView_message != null) {
                 if (appNoticeData.getRic() != null)
                     textView_message.setText(appNoticeData.getRic());
-                if (appNoticeData.getRic_color() != null)
-                    textView_message.setTextColor(Color.parseColor(appNoticeData.getRic_color()));
+                textView_message.setTextColor(appNoticeData.getRic_color());
             }
 
             // Preferences button
@@ -183,12 +180,14 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             if (preferences_button != null) {
                 if (appNoticeData.getRic_click_manage_settings() != null)
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
-                if (appNoticeData.getBric_access_button_text_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(appNoticeData.getBric_access_button_text_color()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
-                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+                preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
 //                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.MULTIPLY);
 //                    preferences_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
+                } else {
+                    preferences_button.setBackgroundColor(ric_access_button_color);
+                }
             }
 
             // Close button
@@ -196,11 +195,13 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             if (close_button != null) {
                 if (appNoticeData.getClose_button() != null)
                     close_button.setText(appNoticeData.getClose_button());
-                if (appNoticeData.getBric_access_button_text_color() != null)
-                    close_button.setTextColor(Color.parseColor(appNoticeData.getBric_access_button_text_color()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
-                    close_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
+                close_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    close_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
 //                    close_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
+                } else {
+                    close_button.setBackgroundColor(ric_access_button_color);
+                }
             }
 
         }

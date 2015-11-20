@@ -41,7 +41,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_actionbar_background)));
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
         }
 
         // savedInstanceState is non-null when there is fragment state

@@ -61,23 +61,23 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.ghostery_explicitinfo_dialogfragment, container, false);
 
         // Apply the tracker config customizations
-        if (useRemoteValues)
+        //if (useRemoteValues)
             applyCustomConfig(view);
 
         // Watch for button clicks.
         Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Remember that the tracker preferences screen was opened from a consent flow dialog
-                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
+			public void onClick(View v) {
+				// Remember that the tracker preferences screen was opened from a consent flow dialog
+				Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
 
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+				// Send notice for this event
+				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
 
-                // Open the In-App Consent preferences fragmentActivity
-                Util.showManagePreferences(getActivity());
-            }
-        });
+				// Open the In-App Consent preferences fragmentActivity
+				Util.showManagePreferences(getActivity());
+			}
+		});
 
         Button accept_button = (Button)view.findViewById(R.id.accept_button);
         accept_button.setOnClickListener(new View.OnClickListener() {
@@ -99,17 +99,17 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
         Button decline_button = (Button)view.findViewById(R.id.decline_button);
         decline_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // User cancelled the dialog...negating consent
+			public void onClick(View v) {
+				// User cancelled the dialog...negating consent
 
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
+				// Send notice for this event
+				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
 
-                // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing())
-                    appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
-            }
-        });
+				// Let the calling class know the selected option
+				if (appNotice_callback != null && !getActivity().isFinishing())
+					appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
+			}
+		});
 
         return view;
     }
@@ -163,15 +163,13 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         if (appNoticeData != null && appNoticeData.isInitialized()) {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
-            String ric_access_button_color = appNoticeData.getBric_access_button_color();
-            String ric_decline_button_color = appNoticeData.getBric_decline_button_color();
+            int ric_access_button_color = appNoticeData.getBric_access_button_color();
+            int ric_decline_button_color = appNoticeData.getBric_decline_button_color();
 
             // Set background color and opacity
             if (linearLayout_outer != null) {
-                if (appNoticeData.getBric_bg() != null) {
-                    int bric_bg = Color.parseColor(appNoticeData.getBric_bg());
-                    linearLayout_outer.setBackgroundColor(bric_bg);
-                }
+                int bric_bg = appNoticeData.getBric_bg();
+                linearLayout_outer.setBackgroundColor(bric_bg);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     float opacityFloat = appNoticeData.getRic_opacity();
@@ -187,10 +185,8 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             // Title
             TextView textView_title = (TextView)v.findViewById(R.id.textView_title);
             if (textView_title != null) {
-                if (appNoticeData.getBric_header_text() != null)
-                    textView_title.setText(appNoticeData.getBric_header_text());
-                if (appNoticeData.getBric_header_text_color() != null)
-                    textView_title.setTextColor(Color.parseColor(appNoticeData.getBric_header_text_color()));
+                textView_title.setText(appNoticeData.getBric_header_text());
+                textView_title.setTextColor(appNoticeData.getBric_header_text_color());
             }
 
             // Message
@@ -198,8 +194,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             if (textView_message != null) {
                 if (appNoticeData.getBric_content1() != null)
                     textView_message.setText(appNoticeData.getBric_content1());
-                if (appNoticeData.getRic_color() != null)
-                    textView_message.setTextColor(Color.parseColor(appNoticeData.getRic_color()));
+                textView_message.setTextColor(appNoticeData.getRic_color());
             }
 
             // Preferences button
@@ -207,11 +202,13 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             if (preferences_button != null) {
                 if (appNoticeData.getRic_click_manage_settings() != null)
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
-                if (appNoticeData.getBric_access_button_text_color() != null)
-                    preferences_button.setTextColor(Color.parseColor(appNoticeData.getBric_access_button_text_color()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
-                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
-//                    preferences_button.setBackgroundColor(Color.parseColor(appNoticeData.getBric_access_button_color()));
+                preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.MULTIPLY);
+//                } else {
+//					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
+//                }
+				preferences_button.invalidate();
             }
 
             // Accept button
@@ -219,11 +216,13 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             if (accept_button != null) {
                 if (appNoticeData.getBric_access_button_text() != null)
                     accept_button.setText(appNoticeData.getBric_access_button_text());
-                if (appNoticeData.getBric_access_button_text_color() != null)
-                    accept_button.setTextColor(Color.parseColor(appNoticeData.getBric_access_button_text_color()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_access_button_color != null)
-                    accept_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.SRC);
-//                    accept_button.setBackgroundColor(Color.parseColor(appNoticeData.getBric_access_button_color()));
+                accept_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
+//				} else {
+//					accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
+//				}
+				accept_button.invalidate();
             }
 
             // Decline button
@@ -231,12 +230,15 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             if (decline_button != null) {
                 if (appNoticeData.getBric_decline_button_text() != null)
                     decline_button.setText(appNoticeData.getBric_decline_button_text());
-                if (appNoticeData.getBric_decline_button_text_color() != null)
-                    decline_button.setTextColor(Color.parseColor(appNoticeData.getBric_decline_button_text_color()));
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && ric_decline_button_color != null)
-                    decline_button.getBackground().setColorFilter(Color.parseColor(ric_decline_button_color), PorterDuff.Mode.SRC);
-//                    decline_button.setBackgroundColor(Color.parseColor(appNoticeData.getBric_decline_button_color()));
+                decline_button.setTextColor(appNoticeData.getBric_decline_button_text_color());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    decline_button.getBackground().setColorFilter(ric_decline_button_color, PorterDuff.Mode.SRC_ATOP);
+//				} else {
+//					decline_button.getBackground().setColorFilter(ric_decline_button_color, PorterDuff.Mode.SRC_ATOP);
+//				}
+				decline_button.invalidate();
             }
         }
     }
+
 }

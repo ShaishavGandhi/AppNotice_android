@@ -68,7 +68,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 //            actionBar.setCustomView(R.layout.ghostery_action_bar_layout);
             actionBar.setDisplayHomeAsUpEnabled(true);
 //            actionBar.setHomeButtonEnabled(true);
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_actionbar_background)));
+            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
 
             // If there is header text in the JSON, use it. Else use the default.
             if (appNoticeData != null)

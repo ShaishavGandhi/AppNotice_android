@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Dev/AppNotice_android/AppNotice/AppNoticeSDK/src/main/res/values-it/ghostery_strings.xml -->
+    <eat-comment/>
+    <bool name="ghostery_bric">true</bool>
+    <integer name="ghostery_ric_max_default">3</integer>
+    <integer name="ghostery_ric_opacity">100</integer>
+    <integer name="ghostery_ric_session_max_default">1</integer>
+    <string name="ghostery_dialog_button_close">Chiudi</string>
+    <string name="ghostery_dialog_button_consent">Accetta</string>
+    <string name="ghostery_dialog_button_decline">Rifiuta</string>
+    <string name="ghostery_dialog_button_preferences">Gestisci preferenze</string>
+    <string name="ghostery_dialog_explicit_access_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_access_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_explicit_decline_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_decline_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci in modo chiaro se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \"Gestisci preferenze\". Per fornirci il consenso, fai clic sul pulsante \"Accetta\".</string>
+    <string name="ghostery_dialog_explicit_title_color">#000000</string>
+    <string name="ghostery_dialog_header_text">Per noi la tua privacy è importante</string>
+    <string name="ghostery_dialog_implicit_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \"Gestisci preferenze\". L\'ulteriore utilizzo dell\'app varrà come consenso.</string>
+    <string name="ghostery_dialog_implied_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_implied_text_color">#000000</string>
+    <string name="ghostery_dialog_implied_title_color">#000000</string>
+    <string name="ghostery_dialog_pleaseWait">Attendere...</string>
+    <string name="ghostery_manage_preferences_description">La nostra azienda, con l\'aiuto dei nostri partner, raccoglie i dati relativi al tuo utilizzo di questa app. Rispettiamo la tua privacy e se desideri limitare la raccolta dei dati da parte nostra, utilizza il seguente pannello di controllo. Per saperne di più sul nostro utilizzo dei dati, visita la pagina della nostra politica sulla privacy.</string>
+    <string name="ghostery_manage_preferences_detail_learnmore">Per maggiori informazioni sul modo in cui raccogliamo e utilizziamo le informazioni per le app per dispositivi mobili, visita:</string>
+    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Politica sulla privacy non fornita</string>
+    <string name="ghostery_manage_preferences_detail_trackerinfo">Informazioni sul tracker</string>
+    <string name="ghostery_manage_preferences_empty_list">Impossibile caricare l\'elenco di tracker. Verificare l\'accesso a Internet e riprovare più tardi.</string>
+    <string name="ghostery_manage_preferences_header">Gestisci preferenze</string>
+    <string name="ghostery_manage_preferences_optin_header">Consenti</string>
+    <string name="ghostery_manage_preferences_optin_text">Tutti i tracker elencati di seguito.</string>
+    <string name="ghostery_manage_preferences_select_all">Tutti</string>
+    <string name="ghostery_manage_preferences_select_none">Nessuno</string>
+    <string name="ghostery_tracker_detail_title">Dettaglio del tracker</string>
+    <string name="ghostery_tracker_learnmore_title"> Scopri di più</string>
+</resources>
