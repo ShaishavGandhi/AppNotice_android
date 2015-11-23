@@ -32,7 +32,8 @@
         <TextView
             android:id="@+id/tracker_name"
             style="@style/ghostery_style_custom_list_adapter"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
         <Switch
             android:layout_width="wrap_content"
@@ -45,17 +46,6 @@
             android:layout_alignParentEnd="true"
             android:onClick="onOptInOutClick"
             android:focusable="false" />
-
-        <ImageView
-            android:id="@+id/tracker_logo"
-            style="@style/ghostery_style_custom_list_adapter"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/opt_in_out_switch"
-            android:paddingRight="15dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitStart"
-            android:layout_width="match_parent" />
-
 
     </RelativeLayout>
 </LinearLayout>
