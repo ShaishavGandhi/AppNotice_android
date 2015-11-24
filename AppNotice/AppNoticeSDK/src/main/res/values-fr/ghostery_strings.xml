@@ -43,7 +43,7 @@
     <!-- Manage Preferences -->
     <!-- manage_preferences_description -->
     <string name="ghostery_manage_preferences_description">Notre entreprise, avec l\'aide de nos partenaires, recueille des données sur la manière dont vous utilisez cette application. Nous respectons votre vie privée et, si vous souhaitez limiter les données que nous recueillons, veuillez utiliser le panneau de commande ci-dessous. Pour en apprendre plus sur la manière dont nous utilisons les données, veuillez consulter notre politique de confidentialité.</string>
-    <string name="ghostery_manage_preferences_detail_learnmore">Pour en savoir plus sur la manière dont nous recueillons et utilisons des informations pour les applications mobiles, veuillez consulter :</string>
+    <string name="ghostery_manage_preferences_detail_learnmore">Pour en savoir plus sur la manière dont nous recueillons et utilisons des informations pour les applications mobiles, veuillez consulter:</string>
     <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Politique de confidentialité non fournie</string>
     <string name="ghostery_manage_preferences_detail_trackerinfo">Info des mouchards</string>
     <string name="ghostery_manage_preferences_empty_list">Impossible de charger la liste des mouchards. Assurez-vous d\'avoir un accès Internet et réessayez à une date ultérieure.</string>
