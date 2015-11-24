@@ -56,6 +56,6 @@
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Détails des mouchards</string>
-    <string name="ghostery_tracker_learnmore_title"> En savoir plus</string>
+    <string name="ghostery_tracker_learnmore_title">En savoir plus</string>
 
 </resources>

@@ -56,6 +56,6 @@
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Dettaglio del tracker</string>
-    <string name="ghostery_tracker_learnmore_title"> Scopri di più</string>
+    <string name="ghostery_tracker_learnmore_title">Scopri di più</string>
 
 </resources>
