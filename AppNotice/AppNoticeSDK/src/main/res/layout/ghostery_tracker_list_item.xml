@@ -10,30 +10,48 @@
     android:layout_marginBottom="41dp"
     android:background="@color/ghostery_list_background">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/category_header_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/category_header"
-        android:textSize="12dp"
-        android:background="@color/ghostery_list_background"
-        android:textColor="@color/ghostery_header_text_color"
-        android:paddingLeft="6dp"
-        android:paddingTop="21dp"
-        android:paddingRight="6dp"
-        android:paddingBottom="21dp" />
+        android:layout_height="32dp"
+        >
+
+        <View
+            android:id="@+id/divider_view2"
+            android:layout_width="match_parent"
+            android:layout_height="@integer/ghostery_list_category_divider_height"
+            android:background="@color/ghostery_list_category_divider_color" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/category_header_text"
+            android:text="Essential"
+            android:textSize="12sp"
+            android:background="@color/ghostery_list_background"
+            android:textColor="@color/ghostery_list_category_text_color"
+            android:padding="6dp"
+            android:gravity="center_vertical"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="37dp"
         android:gravity="center_vertical"
-        android:padding="8dp"
-        tools:context=".ListActivity" >
+        tools:context=".ListActivity"
+        android:paddingLeft="11dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/tracker_name"
+            android:text="Google"
             style="@style/ghostery_style_custom_list_adapter"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textColor="@color/ghostery_list_vendorname_text_color"
+            android:textSize="16sp"
+            />
 
         <Switch
             android:layout_width="wrap_content"

@@ -42,17 +42,17 @@
 
     <!-- Manage Preferences -->
     <!-- manage_preferences_description -->
-    <string name="ghostery_manage_preferences_description">Nuestra empresa, con la ayuda de nuestros colaboradores, recoge datos sobre el uso que hace usted de esta app. Respetamos su privacidad y si desea limitar los datos que recogemos, por favor use el panel de control que aparece más abajo. Por favor visite nuestra política de privacidad para ver más información sobre cómo usamos los datos.</string>
-    <string name="ghostery_manage_preferences_detail_learnmore">Para más información sobre cómo recogemos y usamos la información para apps móviles por favor visite:</string>
-    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Política de privacidad no provista</string>
-    <string name="ghostery_manage_preferences_detail_trackerinfo">Información de rastreador</string>
-    <string name="ghostery_manage_preferences_empty_list">No se pudo cargar la lista de rastreadores. Por favor asegúrese de que tiene acceso a Internet e inténtelo de nuevo más tarde.</string>
+    <string name="ghostery_preferences_description">Nuestra empresa, con la ayuda de nuestros colaboradores, recoge datos sobre el uso que hace usted de esta app. Respetamos su privacidad y si desea limitar los datos que recogemos, por favor use el panel de control que aparece más abajo. Por favor visite nuestra política de privacidad para ver más información sobre cómo usamos los datos.</string>
+    <string name="ghostery_preferences_detail_learnmore">Para más información sobre cómo recogemos y usamos la información para apps móviles por favor visite:</string>
+    <string name="ghostery_preferences_detail_learnmore_not_provided">Política de privacidad no provista</string>
+    <string name="ghostery_preferences_detail_trackerinfo">Información de rastreador</string>
+    <string name="ghostery_preferences_empty_list">No se pudo cargar la lista de rastreadores. Por favor asegúrese de que tiene acceso a Internet e inténtelo de nuevo más tarde.</string>
     <!-- manage_preferences_header -->
-    <string name="ghostery_manage_preferences_header">Gestionar preferencias</string>
-    <string name="ghostery_manage_preferences_optin_header">Optar por inclusión</string>
-    <string name="ghostery_manage_preferences_optin_text">Para todos los rastreadores listados a continuación.</string>
-    <string name="ghostery_manage_preferences_select_all">Todos</string>
-    <string name="ghostery_manage_preferences_select_none">Ninguno</string>
+    <string name="ghostery_preferences_header">Gestionar preferencias</string>
+    <string name="ghostery_preferences_optin_text">Optar por inclusión</string>
+    <string name="ghostery_preferences_optin_subtext">Para todos los rastreadores listados a continuación.</string>
+    <string name="ghostery_preferences_select_all">Todos</string>
+    <string name="ghostery_preferences_select_none">Ninguno</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Información de rastreador</string>

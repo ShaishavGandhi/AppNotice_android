@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/ghostery_preferences_optin_background_color">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ghostery_manage_preferences_description"
+        android:text="@string/ghostery_preferences_description"
         android:id="@+id/manage_preferences_description"
         android:paddingLeft="12dp"
         android:paddingTop="6dp"
@@ -17,7 +18,8 @@
         android:ellipsize="end"
         android:clickable="true"
         android:onClick="onClickDescription"
-        android:textColor="@color/ghostery_header_text_color" />
+        android:textColor="@color/ghostery_preferences_message_text_color"
+        android:textSize="13sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,20 +43,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/ghostery_manage_preferences_optin_header"
+                android:text="@string/ghostery_preferences_optin_text"
                 android:id="@+id/textView_optIn_header"
                 android:textSize="16sp"
-                android:textColor="@color/ghostery_header_text_color"
+                android:textColor="@color/ghostery_preferences_optin_text_color"
                 android:lines="1"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/ghostery_manage_preferences_optin_text"
+                android:text="@string/ghostery_preferences_optin_subtext"
                 android:id="@+id/textView_optIn_text"
-                android:textSize="12sp"
-                android:textColor="@color/ghostery_header_text_color"
+                android:textSize="11sp"
+                android:textColor="@color/ghostery_preferences_optin_subtext_color"
                 />
 
         </LinearLayout>
@@ -70,22 +71,24 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ghostery_manage_preferences_select_none"
+                android:text="@string/ghostery_preferences_select_none"
                 android:id="@+id/rb_none"
                 android:checked="false"
                 android:layout_gravity="center_vertical"
                 android:onClick="onClick"
-                android:lines="1"/>
+                android:lines="1"
+                android:textColor="@color/ghostery_preferences_optin_text_color"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ghostery_manage_preferences_select_all"
+                android:text="@string/ghostery_preferences_select_all"
                 android:id="@+id/rb_all"
                 android:checked="true"
                 android:layout_gravity="center_vertical"
                 android:onClick="onClick"
-                android:lines="1"/>
+                android:lines="1"
+                android:textColor="@color/ghostery_preferences_optin_text_color"/>
 
         </LinearLayout>
 

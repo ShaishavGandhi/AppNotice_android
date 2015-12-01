@@ -129,7 +129,7 @@ public class TrackerDetailFragment extends Fragment {
                 textView_learn_more_url.setVisibility(View.VISIBLE);
                 textView_learn_more_url.setText(learnMoreUrl);
             } else {
-                textView_learn_more.setText(R.string.ghostery_manage_preferences_detail_learnmore_not_provided);
+                textView_learn_more.setText(R.string.ghostery_preferences_detail_learnmore_not_provided);
                 textView_learn_more_url.setVisibility(View.GONE);
             }
         }

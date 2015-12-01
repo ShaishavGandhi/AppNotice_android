@@ -42,17 +42,17 @@
 
     <!-- Manage Preferences -->
     <!-- manage_preferences_description -->
-    <string name="ghostery_manage_preferences_description">Unsere Firma, mit Unterstützung von unseren Partnern, sammelt Daten über die Art und Weise, wie Sie diese App nutzen. Wir respektieren Ihre Privatsphäre, und wenn Sie die Erfassung der Daten einschränken möchten, verwenden Sie bitte das Bedienfeld unten. Für weitere Informationen darüber, wie wir Ihre Daten nutzen, lesen Sie bitte unsere Datenschutzrichtlinien.</string>
-    <string name="ghostery_manage_preferences_detail_learnmore">Um mehr zu erfahren, wie wir Informationen für mobile Apps sammeln und verwenden, besuchen Sie bitte:</string>
-    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Datenschutzrichtlinien nicht angegeben</string>
-    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker-Info</string>
-    <string name="ghostery_manage_preferences_empty_list">Die Liste der Tracker konnte nicht geladen werden. Stellen Sie bitte sicher, dass Sie Internetzugang haben, und versuchen Sie es später erneut.</string>
+    <string name="ghostery_preferences_description">Unsere Firma, mit Unterstützung von unseren Partnern, sammelt Daten über die Art und Weise, wie Sie diese App nutzen. Wir respektieren Ihre Privatsphäre, und wenn Sie die Erfassung der Daten einschränken möchten, verwenden Sie bitte das Bedienfeld unten. Für weitere Informationen darüber, wie wir Ihre Daten nutzen, lesen Sie bitte unsere Datenschutzrichtlinien.</string>
+    <string name="ghostery_preferences_detail_learnmore">Um mehr zu erfahren, wie wir Informationen für mobile Apps sammeln und verwenden, besuchen Sie bitte:</string>
+    <string name="ghostery_preferences_detail_learnmore_not_provided">Datenschutzrichtlinien nicht angegeben</string>
+    <string name="ghostery_preferences_detail_trackerinfo">Tracker-Info</string>
+    <string name="ghostery_preferences_empty_list">Die Liste der Tracker konnte nicht geladen werden. Stellen Sie bitte sicher, dass Sie Internetzugang haben, und versuchen Sie es später erneut.</string>
     <!-- manage_preferences_header -->
-    <string name="ghostery_manage_preferences_header">Voreinstellungen verwalten</string>
-    <string name="ghostery_manage_preferences_optin_header">Opt-In</string>
-    <string name="ghostery_manage_preferences_optin_text">Zu allen unten aufgelisteten Trackers.</string>
-    <string name="ghostery_manage_preferences_select_all">Alle</string>
-    <string name="ghostery_manage_preferences_select_none">Keine</string>
+    <string name="ghostery_preferences_header">Voreinstellungen verwalten</string>
+    <string name="ghostery_preferences_optin_text">Opt-In</string>
+    <string name="ghostery_preferences_optin_subtext">Zu allen unten aufgelisteten Trackers.</string>
+    <string name="ghostery_preferences_select_all">Alle</string>
+    <string name="ghostery_preferences_select_none">Keine</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Tracker-Detail</string>

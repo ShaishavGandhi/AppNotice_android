@@ -1,6 +1,7 @@
 package com.ghostery.privacy.appnoticesdk.app;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -92,7 +93,12 @@ public class TrackerListFragment extends ListFragment {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
 
-        setEmptyText(getResources().getString(R.string.ghostery_manage_preferences_empty_list));
+        setEmptyText(getResources().getString(R.string.ghostery_preferences_empty_list));
+
+        // Set the intrinsic list item divider color (if same as list background, only dividers
+        // between categories will be displayed)
+        getListView().setDivider(new ColorDrawable(getResources().getColor(R.color.ghostery_list_divider_color)));
+        getListView().setDividerHeight(getResources().getInteger(R.integer.ghostery_list_divider_height));
     }
 
     @Override

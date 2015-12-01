@@ -1,6 +1,8 @@
 <resources>
 
     <!-- Configuration-->
+    <integer name="ghostery_list_category_divider_height">1</integer>
+    <integer name="ghostery_list_divider_height">0</integer>
 
     <!-- bric: true = Explicit, false = Implied -->
     <bool name="ghostery_bric">true</bool>
@@ -30,17 +32,17 @@
 
     <!-- Manage Preferences -->
     <!-- manage_preferences_description -->
-    <string name="ghostery_manage_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
-    <string name="ghostery_manage_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
-    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Privacy Policy Not Provided</string>
-    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker Info</string>
-    <string name="ghostery_manage_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
+    <string name="ghostery_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
+    <string name="ghostery_preferences_detail_learnmore_not_provided">Privacy Policy Not Provided</string>
+    <string name="ghostery_preferences_detail_trackerinfo">Tracker Info</string>
+    <string name="ghostery_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
     <!-- manage_preferences_header -->
-    <string name="ghostery_manage_preferences_header">Manage Preferences</string>
-    <string name="ghostery_manage_preferences_optin_header">Opt In</string>
-    <string name="ghostery_manage_preferences_optin_text">To all trackers listed below.</string>
-    <string name="ghostery_manage_preferences_select_all">All</string>
-    <string name="ghostery_manage_preferences_select_none">None</string>
+    <string name="ghostery_preferences_header">Manage Preferences</string>
+    <string name="ghostery_preferences_optin_text">Opt In</string>
+    <string name="ghostery_preferences_optin_subtext">To all trackers listed below.</string>
+    <string name="ghostery_preferences_select_all">All</string>
+    <string name="ghostery_preferences_select_none">None</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Tracker Detail</string>

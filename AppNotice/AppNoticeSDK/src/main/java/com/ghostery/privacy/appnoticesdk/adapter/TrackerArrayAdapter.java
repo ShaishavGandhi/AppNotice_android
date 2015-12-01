@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -94,13 +95,14 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         }
 
         // Make the header visible and set its text if needed
-        TextView tvCategoryHeader = (TextView)itemView.findViewById(R.id.category_header);
-        if (tvCategoryHeader != null) {
+        LinearLayout categoryHeader_linearLayout = (LinearLayout)itemView.findViewById(R.id.category_header_layout);
+        TextView categoryHeader_textView = (TextView)itemView.findViewById(R.id.category_header_text);
+        if (categoryHeader_linearLayout != null && categoryHeader_textView != null) {
             if (tracker.hasHeader()) {
-                tvCategoryHeader.setVisibility(View.VISIBLE);
-                tvCategoryHeader.setText(tracker.getCategory());
+                categoryHeader_linearLayout.setVisibility(View.VISIBLE);
+                categoryHeader_textView.setText(tracker.getCategory());
             } else {
-                tvCategoryHeader.setVisibility(View.GONE);
+                categoryHeader_linearLayout.setVisibility(View.GONE);
             }
         }
 

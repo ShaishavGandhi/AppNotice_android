@@ -594,8 +594,8 @@ public class AppNoticeData {
                         bric_header_text = jsonObj.isNull(TAG_BRIC_HEADER_TEXT)? resources.getString(R.string.ghostery_dialog_header_text) : jsonObj.getString(TAG_BRIC_HEADER_TEXT);
                         bric_header_text_color = jsonObj.isNull(TAG_BRIC_HEADER_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_header_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_HEADER_TEXT_COLOR));
                         close_button = jsonObj.isNull(TAG_CLOSE_BUTTON)? resources.getString(R.string.ghostery_dialog_button_close) : jsonObj.getString(TAG_CLOSE_BUTTON);
-                        manage_preferences_description = jsonObj.isNull(TAG_MANAGE_PREFERENCES_DESCRIPTION)? resources.getString(R.string.ghostery_manage_preferences_description) : jsonObj.getString(TAG_MANAGE_PREFERENCES_DESCRIPTION);
-                        manage_preferences_header = jsonObj.isNull(TAG_MANAGE_PREFERENCES_HEADER)? resources.getString(R.string.ghostery_manage_preferences_header) : jsonObj.getString(TAG_MANAGE_PREFERENCES_HEADER);
+                        manage_preferences_description = jsonObj.isNull(TAG_MANAGE_PREFERENCES_DESCRIPTION)? resources.getString(R.string.ghostery_preferences_description) : jsonObj.getString(TAG_MANAGE_PREFERENCES_DESCRIPTION);
+                        manage_preferences_header = jsonObj.isNull(TAG_MANAGE_PREFERENCES_HEADER)? resources.getString(R.string.ghostery_preferences_header) : jsonObj.getString(TAG_MANAGE_PREFERENCES_HEADER);
                         ric = jsonObj.isNull(TAG_RIC)? resources.getString(R.string.ghostery_dialog_implicit_message) : jsonObj.getString(TAG_RIC);
                         ric_bg = jsonObj.isNull(TAG_RIC_BG)? resources.getColor(R.color.ghostery_dialog_background_color) : Color.parseColor(jsonObj.getString(TAG_RIC_BG));
                         ric_click_manage_settings = jsonObj.isNull(TAG_RIC_CLICK_MANAGE_SETTINGS)? resources.getString(R.string.ghostery_dialog_button_preferences) : jsonObj.getString(TAG_RIC_CLICK_MANAGE_SETTINGS);
@@ -630,8 +630,8 @@ public class AppNoticeData {
                     bric_header_text = resources.getString(R.string.ghostery_dialog_header_text);
                     bric_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
                     close_button = resources.getString(R.string.ghostery_dialog_button_close);
-                    manage_preferences_description = resources.getString(R.string.ghostery_manage_preferences_description);
-                    manage_preferences_header = resources.getString(R.string.ghostery_manage_preferences_header);
+                    manage_preferences_description = resources.getString(R.string.ghostery_preferences_description);
+                    manage_preferences_header = resources.getString(R.string.ghostery_preferences_header);
                     ric = resources.getString(R.string.ghostery_dialog_implicit_message);
                     ric_bg = resources.getColor(R.color.ghostery_dialog_background_color);
                     ric_click_manage_settings = resources.getString(R.string.ghostery_dialog_button_preferences);

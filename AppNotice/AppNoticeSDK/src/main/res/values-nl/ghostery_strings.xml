@@ -42,17 +42,17 @@
 
     <!-- Manage Preferences -->
     <!-- manage_preferences_description -->
-    <string name="ghostery_manage_preferences_description">Ons bedrijf verzamelt met hulp van onze partners, gegevens over uw gebruik van deze app. We respecteren uw privacy en als u de gegevens die we over u verzamelen, wilt beperken, gebruik dan het onderstaande bedieningspaneel. Meer informatie over hoe wij gegevens gebruiken, vindt u ons privacybeleid.</string>
-    <string name="ghostery_manage_preferences_detail_learnmore">Meer informatie over hoe we informatie voor mobiele apps verzamelen en gebruiken, vindt u hier:</string>
-    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">privacybeleid niet geleverd</string>
-    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker informatie</string>
-    <string name="ghostery_manage_preferences_empty_list">De lijst met trackers kon niet geladen worden. Controleer of u toegang hebt tot het internet en probeer het nogmaals.</string>
+    <string name="ghostery_preferences_description">Ons bedrijf verzamelt met hulp van onze partners, gegevens over uw gebruik van deze app. We respecteren uw privacy en als u de gegevens die we over u verzamelen, wilt beperken, gebruik dan het onderstaande bedieningspaneel. Meer informatie over hoe wij gegevens gebruiken, vindt u ons privacybeleid.</string>
+    <string name="ghostery_preferences_detail_learnmore">Meer informatie over hoe we informatie voor mobiele apps verzamelen en gebruiken, vindt u hier:</string>
+    <string name="ghostery_preferences_detail_learnmore_not_provided">privacybeleid niet geleverd</string>
+    <string name="ghostery_preferences_detail_trackerinfo">Tracker informatie</string>
+    <string name="ghostery_preferences_empty_list">De lijst met trackers kon niet geladen worden. Controleer of u toegang hebt tot het internet en probeer het nogmaals.</string>
     <!-- manage_preferences_header -->
-    <string name="ghostery_manage_preferences_header">Voorkeuren beheren</string>
-    <string name="ghostery_manage_preferences_optin_header">Opt-in</string>
-    <string name="ghostery_manage_preferences_optin_text">Aan alle onderstaande trackers.</string>
-    <string name="ghostery_manage_preferences_select_all">Alle</string>
-    <string name="ghostery_manage_preferences_select_none">Geen</string>
+    <string name="ghostery_preferences_header">Voorkeuren beheren</string>
+    <string name="ghostery_preferences_optin_text">Opt-in</string>
+    <string name="ghostery_preferences_optin_subtext">Aan alle onderstaande trackers.</string>
+    <string name="ghostery_preferences_select_all">Alle</string>
+    <string name="ghostery_preferences_select_none">Geen</string>
 
     <!-- Tracker Detail -->
     <string name="ghostery_tracker_detail_title">Tracker details</string>
