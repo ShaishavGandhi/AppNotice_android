@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Dev/AppNotice_android/AppNotice/AppNoticeSDK/src/main/res/values-es/ghostery_strings.xml -->
+    <eat-comment/>
+    <bool name="ghostery_bric">true</bool>
+    <integer name="ghostery_ric_max_default">3</integer>
+    <integer name="ghostery_ric_opacity">100</integer>
+    <integer name="ghostery_ric_session_max_default">1</integer>
+    <string name="ghostery_dialog_button_close">Cerrar</string>
+    <string name="ghostery_dialog_button_consent">Aceptar</string>
+    <string name="ghostery_dialog_button_decline">Declinar</string>
+    <string name="ghostery_dialog_button_preferences">Gestionar preferencias</string>
+    <string name="ghostery_dialog_explicit_access_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_access_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_explicit_decline_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_decline_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_message">El aplicación de Triangle usa tecnologías para que nosotros y nuestros colaboradores, podamos recordarle y comprender cómo usa usted nuestra app. Para ver una lista completa de estas tecnologías y para decirnos explícitamente si pueden ser utilizadas en su dispositivo, pulse el botón  \"Gestionar preferencias\" que aparece más abajo. Para darnos su consentimiento pulse el botón \"Aceptar\".</string>
+    <string name="ghostery_dialog_explicit_title_color">#000000</string>
+    <string name="ghostery_dialog_header_text">A Triangle le interesa su privacidad</string>
+    <string name="ghostery_dialog_implicit_message">El aplicación de Triangle usa tecnologías para que nosotros, y nuestros colaboradores, podamos recordarle y comprender cómo usa usted nuestra app. Para ver una lista completa de estas tecnologías y para decirnos si pueden ser utilizadas en su dispositivo, pulse el botón  \"Gestionar preferencias\" que aparece más abajo. Si sigue utlizado esta app se considerará que ha dado su consentimiento.</string>
+    <string name="ghostery_dialog_implied_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_implied_text_color">#000000</string>
+    <string name="ghostery_dialog_implied_title_color">#000000</string>
+    <string name="ghostery_dialog_pleaseWait">Por favor espere...</string>
+    <string name="ghostery_preferences_description">Triangle, con la ayuda de nuestros colaboradores, recoge datos sobre el uso que hace usted de esta app. Respetamos su privacidad y si desea limitar los datos que recogemos, por favor use el panel de control que aparece más abajo. Por favor visite nuestra política de privacidad para ver más información sobre cómo usamos los datos.</string>
+    <string name="ghostery_preferences_detail_learnmore">Para más información sobre cómo recogemos y usamos la información para apps móviles por favor visite:</string>
+    <string name="ghostery_preferences_detail_learnmore_not_provided">Política de privacidad no provista</string>
+    <string name="ghostery_preferences_detail_trackerinfo">Información de rastreador</string>
+    <string name="ghostery_preferences_empty_list">No se pudo cargar la lista de rastreadores. Por favor asegúrese de que tiene acceso a Internet e inténtelo de nuevo más tarde.</string>
+    <string name="ghostery_preferences_header">Gestionar preferencias</string>
+    <string name="ghostery_preferences_optin_subtext">Para todos los rastreadores listados a continuación.</string>
+    <string name="ghostery_preferences_optin_text">Optar por inclusión</string>
+    <string name="ghostery_preferences_select_all">Todos</string>
+    <string name="ghostery_preferences_select_none">Ninguno</string>
+    <string name="ghostery_tracker_detail_title">Información de rastreador</string>
+    <string name="ghostery_tracker_learnmore_title">Más información</string>
+</resources>

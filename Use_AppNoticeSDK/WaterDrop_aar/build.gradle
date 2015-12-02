@@ -9,13 +9,13 @@ repositories {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '23.0.2'
 
     defaultConfig {
         applicationId "com.ghostery.privacy.waterdrop_aar"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 15
+        versionCode 16
         versionName "1.1.0"
     }
     buildTypes {
