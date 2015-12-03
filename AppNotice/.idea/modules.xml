@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AppNotice.iml" filepath="$PROJECT_DIR$/AppNotice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AppNoticeSDK/AppNoticeSDK.iml" filepath="$PROJECT_DIR$/AppNoticeSDK/AppNoticeSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FireBall_module/FireBall_module.iml" filepath="$PROJECT_DIR$/FireBall_module/FireBall_module.iml" />
+    </modules>
+  </component>
+</project>
