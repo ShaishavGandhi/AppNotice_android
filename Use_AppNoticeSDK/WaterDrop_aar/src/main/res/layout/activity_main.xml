@@ -42,8 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:id="@+id/editText_pubNoticeId"
-            android:hint="@string/hint_pubNoticeId"
+            android:id="@+id/editText_configId"
+            android:hint="@string/hint_configId"
             android:gravity="center_horizontal" />
 
         <CheckBox

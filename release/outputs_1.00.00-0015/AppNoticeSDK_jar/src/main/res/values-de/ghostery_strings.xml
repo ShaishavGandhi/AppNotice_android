@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- Configuration-->
+
+    <!-- Explicit Dialog colors -->
+    <string name="ghostery_dialog_explicit_access_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_access_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_explicit_decline_button_text_color">#FFFFFF</string>
+    <string name="ghostery_dialog_explicit_decline_button_color">#333333</string>
+    <string name="ghostery_dialog_explicit_title_color">#000000</string>
+
+    <!-- Implied Dialog colors -->
+    <string name="ghostery_dialog_implied_bg_color">#E5E5E5</string>
+    <string name="ghostery_dialog_implied_text_color">#000000</string>
+    <string name="ghostery_dialog_implied_title_color">#000000</string>
+
+    <!-- bric: true = Explicit, false = Implied -->
+    <bool name="ghostery_bric">true</bool>
+    <!-- ric_max -->
+    <integer name="ghostery_ric_max_default">3</integer>
+    <!-- ric_session_max -->
+    <integer name="ghostery_ric_session_max_default">1</integer>
+    <integer name="ghostery_ric_opacity">100</integer>
+
+    <!--Dialog text -->
+    <!-- close_button -->
+    <string name="ghostery_dialog_button_close">Schließen</string>
+    <!-- bric_access_button_text -->
+    <string name="ghostery_dialog_button_consent">Akzeptieren</string>
+    <!-- bric_decline_button_text -->
+    <string name="ghostery_dialog_button_decline">Ablehnen</string>
+    <!-- ric_click_manage_settings -->
+    <string name="ghostery_dialog_button_preferences">Voreinstellungen verwalten</string>
+    <!-- bric_content1 -->
+    <string name="ghostery_dialog_explicit_message">Unsere Anwendung verwendet Technologien, damit wir und unsere Partner Sie wiedererkennen und verstehen können, wie Sie unsere App nutzen. Um eine vollständige Liste dieser Technologien zu sehen und uns mitzuteilen, ob diese auf Ihrem Gerät verwendet werden können, klicken Sie auf die Schaltfläche \&quot;Voreinstellungen verwalten\&quot; unten. Um uns Ihre Zustimmung zu geben, klicken Sie auf die Schaltfläche \&quot;Akzeptieren\&quot;.</string>
+    <!-- bric_header_text and ric_title -->
+    <string name="ghostery_dialog_header_text">Der Schutz Ihrer Daten ist uns wichtig</string>
+    <!-- ric -->
+    <string name="ghostery_dialog_implicit_message">Unsere Anwendung verwendet Technologien, damit wir und unsere Partner Sie wiedererkennen und verstehen können, wie Sie unsere App nutzen. Um eine vollständige Liste dieser Technologien zu sehen und uns mitzuteilen, ob diese auf Ihrem Gerät verwendet werden können, klicken Sie auf die Schaltfläche \&quot;Voreinstellungen verwalten\&quot; unten. Die weitere Nutzung dieser App wird als Zustimmung betrachtet.</string>
+    <string name="ghostery_dialog_pleaseWait">Bitte warten...</string>
+
+    <!-- Manage Preferences -->
+    <!-- manage_preferences_description -->
+    <string name="ghostery_manage_preferences_description">Unsere Firma, mit Unterstützung von unseren Partnern, sammelt Daten über die Art und Weise, wie Sie diese App nutzen. Wir respektieren Ihre Privatsphäre, und wenn Sie die Erfassung der Daten einschränken möchten, verwenden Sie bitte das Bedienfeld unten. Für weitere Informationen darüber, wie wir Ihre Daten nutzen, lesen Sie bitte unsere Datenschutzrichtlinien.</string>
+    <string name="ghostery_manage_preferences_detail_learnmore">Um mehr zu erfahren, wie wir Informationen für mobile Apps sammeln und verwenden, besuchen Sie bitte:</string>
+    <string name="ghostery_manage_preferences_detail_learnmore_not_provided">Datenschutzrichtlinien nicht angegeben</string>
+    <string name="ghostery_manage_preferences_detail_trackerinfo">Tracker-Info</string>
+    <string name="ghostery_manage_preferences_empty_list">Die Liste der Tracker konnte nicht geladen werden. Stellen Sie bitte sicher, dass Sie Internetzugang haben, und versuchen Sie es später erneut.</string>
+    <!-- manage_preferences_header -->
+    <string name="ghostery_manage_preferences_header">Voreinstellungen verwalten</string>
+    <string name="ghostery_manage_preferences_optin_header">Opt-In</string>
+    <string name="ghostery_manage_preferences_optin_text">Zu allen unten aufgelisteten Trackers.</string>
+    <string name="ghostery_manage_preferences_select_all">Alle</string>
+    <string name="ghostery_manage_preferences_select_none">Keine</string>
+
+    <!-- Tracker Detail -->
+    <string name="ghostery_tracker_detail_title">Tracker-Detail</string>
+    <string name="ghostery_tracker_learnmore_title">Weitere Informationen</string>
+
+</resources>

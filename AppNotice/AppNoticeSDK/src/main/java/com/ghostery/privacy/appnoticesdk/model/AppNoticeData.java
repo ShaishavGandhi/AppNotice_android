@@ -3,6 +3,7 @@ package com.ghostery.privacy.appnoticesdk.model;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -36,8 +37,8 @@ public class AppNoticeData {
     private static Activity activity;
     private ProgressDialog pDialog;
     private boolean initialized = false;
-    private static int company_id;
-    private static int pub_notice_id;
+    private static int companyId;
+    private static int configId;
     private int ric_max_default = 3;
     private int ric_session_max_default = 1;
     private int ric_opacity_default = 100;
@@ -101,23 +102,23 @@ public class AppNoticeData {
 
     // Field values
     private Boolean bric = false;
-    private String bric_access_button_color;
+    private int bric_access_button_color;
     private String bric_access_button_text;
-    private String bric_access_button_text_color;
-    private String bric_bg;
+    private int bric_access_button_text_color;
+    private int bric_bg;
     private String bric_content1;
-    private String bric_decline_button_color;
+    private int bric_decline_button_color;
     private String bric_decline_button_text;
-    private String bric_decline_button_text_color;
+    private int bric_decline_button_text_color;
     private String bric_header_text;
-    private String bric_header_text_color;
+    private int bric_header_text_color;
     private String close_button;
     private String manage_preferences_description;
     private String manage_preferences_header;
     private String ric;
-    private String ric_bg;
+    private int ric_bg;
     private String ric_click_manage_settings;
-    private String ric_color;
+    private int ric_color;
     private int ric_max;
 //    private String ric_maxString;
     private float ric_opacity = 1F;
@@ -125,41 +126,41 @@ public class AppNoticeData {
     private int ric_session_max;
 //    private String ric_session_maxString;
     private String ric_title;
-    private String ric_title_color;
+    private int ric_title_color;
 
     public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
 
 
     // Public getters and setters
     public Boolean isInitialized() { return initialized; }
-    public int getCompany_id() { return company_id; }
-    public void setCompany_id(int company_id) { this.company_id = company_id; }
-    public int getPub_notice_id() { return pub_notice_id; }
-    public void setPub_notice_id(int pub_notice_id) { this.pub_notice_id = pub_notice_id; }
+    public int getCompanyId() { return companyId; }
+    public void setCompanyId(int companyId) { this.companyId = companyId; }
+    public int getConfigId() { return configId; }
+    public void setConfigId(int configId) { this.configId = configId; }
 
     public Boolean getBric() { return bric != null ? bric : true; }
-    public String getBric_access_button_color() { return bric_access_button_color; }
+    public int getBric_access_button_color() { return bric_access_button_color; }
     public String getBric_access_button_text() { return bric_access_button_text; }
-    public String getBric_access_button_text_color() { return bric_access_button_text_color; }
-    public String getBric_bg() { return bric_bg; }
+    public int getBric_access_button_text_color() { return bric_access_button_text_color; }
+    public int getBric_bg() { return bric_bg; }
     public String getBric_content1() { return bric_content1; }
-    public String getBric_decline_button_color() { return bric_decline_button_color; }
+    public int getBric_decline_button_color() { return bric_decline_button_color; }
     public String getBric_decline_button_text() { return bric_decline_button_text; }
-    public String getBric_decline_button_text_color() { return bric_decline_button_text_color; }
+    public int getBric_decline_button_text_color() { return bric_decline_button_text_color; }
     public String getBric_header_text() { return bric_header_text; }
-    public String getBric_header_text_color() { return bric_header_text_color; }
+    public int getBric_header_text_color() { return bric_header_text_color; }
     public String getClose_button() { return close_button; }
     public String getManage_preferences_description() { return manage_preferences_description; }
     public String getManage_preferences_header() { return manage_preferences_header; }
     public String getRic() { return ric; }
-    public String getRic_bg() { return ric_bg; }
+    public int getRic_bg() { return ric_bg; }
     public String getRic_click_manage_settings() { return ric_click_manage_settings; }
-    public String getRic_color() { return ric_color; }
+    public int getRic_color() { return ric_color; }
     public int getRic_max() { return ric_max; }
-    public float getRic_opacity() { return ric_opacity; }
+    public float getRic_opacity() { return ric_opacity / 100; }
     public int getRic_session_max() { return ric_session_max; }
     public String getRic_title() { return ric_title; }
-    public String getRic_title_color() { return ric_title_color; }
+    public int getRic_title_color() { return ric_title_color; }
 //    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
 
 
@@ -323,8 +324,8 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[7];
-                urlParams[0] = String.valueOf(pub_notice_id);	// 0
-                urlParams[1] = String.valueOf(company_id);		// 1
+                urlParams[0] = String.valueOf(configId);	// 0
+                urlParams[1] = String.valueOf(companyId);		// 1
                 urlParams[2] = String.valueOf(trackerId);		// 2
                 urlParams[3] = optOut ? "1" : "0";  		    // 3
                 urlParams[4] = uniqueVisit ? "1" : "0";	    	// 4
@@ -354,8 +355,8 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[2];
-                urlParams[0] = String.valueOf(pub_notice_id);	// 0
-                urlParams[1] = String.valueOf(company_id);		// 1
+                urlParams[0] = String.valueOf(configId);	// 0
+                urlParams[1] = String.valueOf(companyId);		// 1
 
                 String uRL = "";
 
@@ -582,28 +583,28 @@ public class AppNoticeData {
 
                     try {
                         bric = jsonObj.isNull(TAG_BRIC)? resources.getBoolean(R.bool.ghostery_bric) : jsonObj.getBoolean(TAG_BRIC);
-                        bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? resources.getString(R.string.ghostery_dialog_explicit_access_button_color) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR);
+                        bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? resources.getColor(R.color.ghostery_dialog_button_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR));
                         bric_access_button_text = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT)? resources.getString(R.string.ghostery_dialog_button_consent) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT);
-                        bric_access_button_text_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR)? resources.getString(R.string.ghostery_dialog_explicit_access_button_text_color) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR);
-                        bric_bg = jsonObj.isNull(TAG_BRIC_BG)? resources.getString(R.string.ghostery_dialog_explicit_bg_color) : jsonObj.getString(TAG_BRIC_BG);
+                        bric_access_button_text_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR));
+                        bric_bg = jsonObj.isNull(TAG_BRIC_BG)? resources.getColor(R.color.ghostery_dialog_background_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_BG));
                         bric_content1 = jsonObj.isNull(TAG_BRIC_CONTENT1)? resources.getString(R.string.ghostery_dialog_explicit_message) : jsonObj.getString(TAG_BRIC_CONTENT1);
-                        bric_decline_button_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_COLOR)? resources.getString(R.string.ghostery_dialog_explicit_decline_button_color) : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_COLOR);
+                        bric_decline_button_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_COLOR));
                         bric_decline_button_text = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT)? resources.getString(R.string.ghostery_dialog_button_decline) : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT);
-                        bric_decline_button_text_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR)? resources.getString(R.string.ghostery_dialog_explicit_decline_button_text_color) : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR);
+                        bric_decline_button_text_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR));
                         bric_header_text = jsonObj.isNull(TAG_BRIC_HEADER_TEXT)? resources.getString(R.string.ghostery_dialog_header_text) : jsonObj.getString(TAG_BRIC_HEADER_TEXT);
-                        bric_header_text_color = jsonObj.isNull(TAG_BRIC_HEADER_TEXT_COLOR)? resources.getString(R.string.ghostery_dialog_explicit_title_color) : jsonObj.getString(TAG_BRIC_HEADER_TEXT_COLOR);
+                        bric_header_text_color = jsonObj.isNull(TAG_BRIC_HEADER_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_header_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_HEADER_TEXT_COLOR));
                         close_button = jsonObj.isNull(TAG_CLOSE_BUTTON)? resources.getString(R.string.ghostery_dialog_button_close) : jsonObj.getString(TAG_CLOSE_BUTTON);
-                        manage_preferences_description = jsonObj.isNull(TAG_MANAGE_PREFERENCES_DESCRIPTION)? resources.getString(R.string.ghostery_manage_preferences_description) : jsonObj.getString(TAG_MANAGE_PREFERENCES_DESCRIPTION);
-                        manage_preferences_header = jsonObj.isNull(TAG_MANAGE_PREFERENCES_HEADER)? resources.getString(R.string.ghostery_manage_preferences_header) : jsonObj.getString(TAG_MANAGE_PREFERENCES_HEADER);
+                        manage_preferences_description = jsonObj.isNull(TAG_MANAGE_PREFERENCES_DESCRIPTION)? resources.getString(R.string.ghostery_preferences_description) : jsonObj.getString(TAG_MANAGE_PREFERENCES_DESCRIPTION);
+                        manage_preferences_header = jsonObj.isNull(TAG_MANAGE_PREFERENCES_HEADER)? resources.getString(R.string.ghostery_preferences_header) : jsonObj.getString(TAG_MANAGE_PREFERENCES_HEADER);
                         ric = jsonObj.isNull(TAG_RIC)? resources.getString(R.string.ghostery_dialog_implicit_message) : jsonObj.getString(TAG_RIC);
-                        ric_bg = jsonObj.isNull(TAG_RIC_BG)? resources.getString(R.string.ghostery_dialog_implied_bg_color) : jsonObj.getString(TAG_RIC_BG);
+                        ric_bg = jsonObj.isNull(TAG_RIC_BG)? resources.getColor(R.color.ghostery_dialog_background_color) : Color.parseColor(jsonObj.getString(TAG_RIC_BG));
                         ric_click_manage_settings = jsonObj.isNull(TAG_RIC_CLICK_MANAGE_SETTINGS)? resources.getString(R.string.ghostery_dialog_button_preferences) : jsonObj.getString(TAG_RIC_CLICK_MANAGE_SETTINGS);
-                        ric_color = jsonObj.isNull(TAG_RIC_COLOR)? resources.getString(R.string.ghostery_dialog_implied_text_color) : jsonObj.getString(TAG_RIC_COLOR);
+                        ric_color = jsonObj.isNull(TAG_RIC_COLOR)? resources.getColor(R.color.ghostery_dialog_message_text_color) : Color.parseColor(jsonObj.getString(TAG_RIC_COLOR));
                         ric_max = jsonObj.isNull(TAG_RIC_MAX)? ric_max_default : jsonObj.getInt(TAG_RIC_MAX);
                         ric_opacity = jsonObj.isNull(TAG_RIC_OPACITY)? ric_opacity_default : jsonObj.getInt(TAG_RIC_OPACITY);
                         ric_session_max = jsonObj.isNull(TAG_RIC_SESSION_MAX) ? ric_session_max_default : jsonObj.getInt(TAG_RIC_SESSION_MAX);
                         ric_title = jsonObj.isNull(TAG_RIC_TITLE)? resources.getString(R.string.ghostery_dialog_header_text) : jsonObj.getString(TAG_RIC_TITLE);
-                        ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? resources.getString(R.string.ghostery_dialog_implied_title_color) : jsonObj.getString(TAG_RIC_TITLE_COLOR);
+                        ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? resources.getColor(R.color.ghostery_dialog_header_text_color) : Color.parseColor(jsonObj.getString(TAG_RIC_TITLE_COLOR));
 
                         initTrackerList(jsonObj);
 
@@ -618,28 +619,28 @@ public class AppNoticeData {
                         Log.d(TAG, "Using local values as requested.");
 
                     bric = resources.getBoolean(R.bool.ghostery_bric);
-                    bric_access_button_color = resources.getString(R.string.ghostery_dialog_explicit_access_button_color);
+                    bric_access_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
                     bric_access_button_text = resources.getString(R.string.ghostery_dialog_button_consent);
-                    bric_access_button_text_color = resources.getString(R.string.ghostery_dialog_explicit_access_button_text_color);
-                    bric_bg = resources.getString(R.string.ghostery_dialog_explicit_bg_color);
+                    bric_access_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
+                    bric_bg = resources.getColor(R.color.ghostery_dialog_background_color);
                     bric_content1 = resources.getString(R.string.ghostery_dialog_explicit_message);
-                    bric_decline_button_color = resources.getString(R.string.ghostery_dialog_explicit_decline_button_color);
+                    bric_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
                     bric_decline_button_text = resources.getString(R.string.ghostery_dialog_button_decline);
-                    bric_decline_button_text_color = resources.getString(R.string.ghostery_dialog_explicit_decline_button_text_color);
+                    bric_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
                     bric_header_text = resources.getString(R.string.ghostery_dialog_header_text);
-                    bric_header_text_color = resources.getString(R.string.ghostery_dialog_explicit_title_color);
+                    bric_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
                     close_button = resources.getString(R.string.ghostery_dialog_button_close);
-                    manage_preferences_description = resources.getString(R.string.ghostery_manage_preferences_description);
-                    manage_preferences_header = resources.getString(R.string.ghostery_manage_preferences_header);
+                    manage_preferences_description = resources.getString(R.string.ghostery_preferences_description);
+                    manage_preferences_header = resources.getString(R.string.ghostery_preferences_header);
                     ric = resources.getString(R.string.ghostery_dialog_implicit_message);
-                    ric_bg = resources.getString(R.string.ghostery_dialog_implied_bg_color);
+                    ric_bg = resources.getColor(R.color.ghostery_dialog_background_color);
                     ric_click_manage_settings = resources.getString(R.string.ghostery_dialog_button_preferences);
-                    ric_color = resources.getString(R.string.ghostery_dialog_implied_text_color);
+                    ric_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
                     ric_max = ric_max_default;
                     ric_opacity = ric_opacity_default;
                     ric_session_max = ric_session_max_default;
                     ric_title = resources.getString(R.string.ghostery_dialog_header_text);
-                    ric_title_color = resources.getString(R.string.ghostery_dialog_implied_title_color);
+                    ric_title_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
 
                     if (jsonObj != null)
                         initTrackerList(jsonObj);
@@ -751,8 +752,8 @@ public class AppNoticeData {
 
         protected String getFormattedJSONUrl() {
             Object[] urlParams = new Object[2];
-            urlParams[0] = String.valueOf(company_id);			// 0
-            urlParams[1] = String.valueOf(pub_notice_id);		// 1
+            urlParams[0] = String.valueOf(companyId);			// 0
+            urlParams[1] = String.valueOf(configId);		// 1
             return MessageFormat.format(URL_JSON_REQUEST, urlParams);
         }
 

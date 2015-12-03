@@ -78,13 +78,14 @@ public class TrackerDetailFragment extends Fragment {
 
                 @Override
                 public void onDownloaded(int position) {
-                    if (imageView_trackerLogo.getHeight() > 0) {            // If the logo is substantial, use it,
-                        imageView_trackerLogo.setVisibility(View.VISIBLE);
-                        textView_TrackerName.setVisibility(View.GONE);
+                    Drawable logoDrawable = imageView_trackerLogo.getDrawable();
+					if (logoDrawable == null || logoDrawable.getIntrinsicHeight() <= 0) {
+						imageView_trackerLogo.setVisibility(View.GONE);
+						textView_TrackerName.setVisibility(View.VISIBLE);
+						textView_TrackerName.setText(tracker.getName());
                     } else {                                                // Else use the name text
-                        imageView_trackerLogo.setVisibility(View.GONE);
-                        textView_TrackerName.setVisibility(View.VISIBLE);
-                        textView_TrackerName.setText(tracker.getName());
+						imageView_trackerLogo.setVisibility(View.VISIBLE);
+						textView_TrackerName.setVisibility(View.GONE);
                     }
                 }
             });
@@ -92,8 +93,8 @@ public class TrackerDetailFragment extends Fragment {
             imageDownloader.download(tracker.getLogo_url(), imageView_trackerLogo);
 
             // Determine if logo or tracker name should be shown
-            Drawable trackerLogo = imageView_trackerLogo.getDrawable();
-            if (trackerLogo == null || trackerLogo.getIntrinsicHeight() <= 0) {
+            Drawable logoDrawable = imageView_trackerLogo.getDrawable();
+            if (logoDrawable == null || logoDrawable.getIntrinsicHeight() <= 0) {
                 imageView_trackerLogo.setVisibility(View.GONE);
                 textView_TrackerName.setVisibility(View.VISIBLE);
                 textView_TrackerName.setText(tracker.getName());
@@ -128,7 +129,7 @@ public class TrackerDetailFragment extends Fragment {
                 textView_learn_more_url.setVisibility(View.VISIBLE);
                 textView_learn_more_url.setText(learnMoreUrl);
             } else {
-                textView_learn_more.setText(R.string.ghostery_manage_preferences_detail_learnmore_not_provided);
+                textView_learn_more.setText(R.string.ghostery_preferences_detail_learnmore_not_provided);
                 textView_learn_more_url.setVisibility(View.GONE);
             }
         }
