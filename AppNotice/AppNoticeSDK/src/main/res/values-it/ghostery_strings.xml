@@ -1,28 +1,5 @@
 <resources>
 
-    <!-- Configuration-->
-
-    <!-- Explicit Dialog colors -->
-    <string name="ghostery_dialog_explicit_access_button_color">#333333</string>
-    <string name="ghostery_dialog_explicit_access_button_text_color">#FFFFFF</string>
-    <string name="ghostery_dialog_explicit_bg_color">#E5E5E5</string>
-    <string name="ghostery_dialog_explicit_decline_button_text_color">#FFFFFF</string>
-    <string name="ghostery_dialog_explicit_decline_button_color">#333333</string>
-    <string name="ghostery_dialog_explicit_title_color">#000000</string>
-
-    <!-- Implied Dialog colors -->
-    <string name="ghostery_dialog_implied_bg_color">#E5E5E5</string>
-    <string name="ghostery_dialog_implied_text_color">#000000</string>
-    <string name="ghostery_dialog_implied_title_color">#000000</string>
-
-    <!-- bric: true = Explicit, false = Implied -->
-    <bool name="ghostery_bric">true</bool>
-    <!-- ric_max -->
-    <integer name="ghostery_ric_max_default">3</integer>
-    <!-- ric_session_max -->
-    <integer name="ghostery_ric_session_max_default">1</integer>
-    <integer name="ghostery_ric_opacity">100</integer>
-
     <!--Dialog text -->
     <!-- close_button -->
     <string name="ghostery_dialog_button_close">Chiudi</string>
