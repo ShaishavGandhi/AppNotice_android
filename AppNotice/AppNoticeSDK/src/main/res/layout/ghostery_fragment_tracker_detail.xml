@@ -22,12 +22,12 @@
             android:padding="8dp"
             tools:context=".ListActivity" >
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textView_TrackerName"
                 style="@style/ghostery_style_custom_list_adapter"
                 android:textSize="18sp" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
@@ -60,7 +60,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="4dp" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerInfo"
             style="@style/ghostery_style_custom_list_adapter"
             android:text="@string/ghostery_preferences_detail_trackerinfo"
@@ -70,13 +70,13 @@
             android:textColor="@color/ghostery_list_vendorname_text_color"
             android:textSize="16sp"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerDescription"
             style="@style/ghostery_style_fragment_detail"
             android:textColor="@color/ghostery_preferences_message_text_color"
             android:textSize="13sp"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_learn_more"
             style="@style/ghostery_style_fragment_detail"
             android:text="@string/ghostery_preferences_detail_learnmore"
@@ -85,7 +85,7 @@
             android:textColor="@color/ghostery_preferences_message_text_color"
             android:textSize="13sp"/>
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_learn_more_url"
             style="@style/ghostery_style_fragment_detail"
             android:clickable="true"

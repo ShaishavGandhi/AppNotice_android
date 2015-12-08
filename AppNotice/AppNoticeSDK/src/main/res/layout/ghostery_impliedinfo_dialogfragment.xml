@@ -8,7 +8,7 @@
     android:background="@color/ghostery_dialog_background_color"
     android:orientation="vertical">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
@@ -28,7 +28,7 @@
         android:fadeScrollbars="false"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/ghostery_dialog_implicit_message"
@@ -45,7 +45,7 @@
         android:gravity="center_horizontal"
         android:layout_weight="1">
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_preferences"
@@ -54,7 +54,7 @@
             android:textColor="@color/primary_text_default_material_light"
             android:layout_weight=".6" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_close"

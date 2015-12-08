@@ -1,14 +1,14 @@
 package com.ghostery.privacy.appnoticesdk.adapter;
 
 import android.support.v4.app.ListFragment;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -26,8 +26,8 @@ public class TrackerArrayAdapter extends ArrayAdapter {
     public ListFragment listFragment;
 
     public static class ViewHolder {
-        public TextView trackerName;
-        public Switch optInOutSwitch;
+        public AppCompatTextView trackerName;
+        public SwitchCompat optInOutSwitch;
         public Boolean isOn;
     }
 
@@ -65,8 +65,8 @@ public class TrackerArrayAdapter extends ArrayAdapter {
             itemView = mInflater.inflate(R.layout.ghostery_tracker_list_item, parent, false);
 
             holder = new ViewHolder();
-            holder.trackerName = (TextView) itemView.findViewById(R.id.tracker_name);
-            holder.optInOutSwitch = (Switch) itemView.findViewById(R.id.opt_in_out_switch);
+            holder.trackerName = (AppCompatTextView) itemView.findViewById(R.id.tracker_name);
+            holder.optInOutSwitch = (SwitchCompat) itemView.findViewById(R.id.opt_in_out_switch);
 
             Log.d(TAG,  "Cat: " + tracker.getCategory() + " Name: " + tracker.getName() +" ID:" + tracker.getTrackerId());
 
@@ -96,7 +96,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
 
         // Make the header visible and set its text if needed
         LinearLayout categoryHeader_linearLayout = (LinearLayout)itemView.findViewById(R.id.category_header_layout);
-        TextView categoryHeader_textView = (TextView)itemView.findViewById(R.id.category_header_text);
+        AppCompatTextView categoryHeader_textView = (AppCompatTextView)itemView.findViewById(R.id.category_header_text);
         if (categoryHeader_linearLayout != null && categoryHeader_textView != null) {
             if (tracker.hasHeader()) {
                 categoryHeader_linearLayout.setVisibility(View.VISIBLE);

@@ -35,7 +35,7 @@ public class AppNoticeData {
 
     private static AppNoticeData instance;
     private static Activity activity;
-    private ProgressDialog pDialog;
+    private ProgressDialog progressDialog;
     private boolean initialized = false;
     private static int companyId;
     private static int configId;
@@ -179,9 +179,9 @@ public class AppNoticeData {
     // Constructor
     private AppNoticeData() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
-        ric_max = ric_max_default = activity.getResources().getInteger(R.integer.ghostery_ric_max_default);
-        ric_session_max = ric_session_max_default = activity.getResources().getInteger(R.integer.ghostery_ric_session_max_default);
-        ric_opacity = ric_opacity_default = activity.getResources().getInteger(R.integer.ghostery_ric_opacity);
+        ric_max = ric_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_30day_display_max);
+        ric_session_max = ric_session_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
+        ric_opacity = ric_opacity_default = activity.getResources().getInteger(R.integer.ghostery_consent_flow_dialog_opacity);
     }
 
     public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
@@ -545,12 +545,14 @@ public class AppNoticeData {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(activity);
-            pDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
-            pDialog.setCancelable(false);
-            pDialog.show();
-
+            if(!activity.isFinishing())
+            {
+                // Showing progress dialog
+                progressDialog = new ProgressDialog(activity);
+                progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+            }
         }
 
         @Override
@@ -582,7 +584,7 @@ public class AppNoticeData {
                     Log.d(TAG, "Response: " + jsonStr);
 
                     try {
-                        bric = jsonObj.isNull(TAG_BRIC)? resources.getBoolean(R.bool.ghostery_bric) : jsonObj.getBoolean(TAG_BRIC);
+                        bric = jsonObj.isNull(TAG_BRIC)? resources.getBoolean(R.bool.ghostery_consent_flow_type) : jsonObj.getBoolean(TAG_BRIC);
                         bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? resources.getColor(R.color.ghostery_dialog_button_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR));
                         bric_access_button_text = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT)? resources.getString(R.string.ghostery_dialog_button_consent) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT);
                         bric_access_button_text_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR));
@@ -618,7 +620,7 @@ public class AppNoticeData {
                     else
                         Log.d(TAG, "Using local values as requested.");
 
-                    bric = resources.getBoolean(R.bool.ghostery_bric);
+                    bric = resources.getBoolean(R.bool.ghostery_consent_flow_type);
                     bric_access_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
                     bric_access_button_text = resources.getString(R.string.ghostery_dialog_button_consent);
                     bric_access_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
@@ -746,8 +748,8 @@ public class AppNoticeData {
             saveTrackerStates();
 
             // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
+            if (progressDialog.isShowing())
+                progressDialog.dismiss();
         }
 
         protected String getFormattedJSONUrl() {

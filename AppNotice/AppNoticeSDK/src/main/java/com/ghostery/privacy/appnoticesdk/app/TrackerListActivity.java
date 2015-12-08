@@ -9,11 +9,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatCallback;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
@@ -68,7 +69,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 //            actionBar.setCustomView(R.layout.ghostery_action_bar_layout);
             actionBar.setDisplayHomeAsUpEnabled(true);
 //            actionBar.setHomeButtonEnabled(true);
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
+             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
 
             // If there is header text in the JSON, use it. Else use the default.
             if (appNoticeData != null)
@@ -77,7 +78,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
         setAllNoneControlState();
 
-        TextView manage_preferences_description = (TextView)findViewById(R.id.manage_preferences_description);
+		AppCompatTextView manage_preferences_description = (AppCompatTextView)findViewById(R.id.manage_preferences_description);
         if (manage_preferences_description != null) {
             AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
             String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
@@ -200,8 +201,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
 
     public void onClick(View view) {
-        RadioButton rbAll = (RadioButton) findViewById(R.id.rb_all);
-        RadioButton rbNone = (RadioButton) findViewById(R.id.rb_none);
+        RadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
+        RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
 
         if (view.getId() == R.id.rb_all) {
             appNoticeData.setTrackerOnOffState(true);
@@ -236,7 +237,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     public void onOptInOutClick(View view) {
-        Boolean isOn = ((Switch)view).isChecked();
+        Boolean isOn = ((SwitchCompat)view).isChecked();
         int uId = (int)view.getTag();
         appNoticeData.setTrackerOnOffState(uId, isOn);
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
@@ -248,8 +249,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
     private void setAllNoneControlState() {
         int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
-        RadioButton rbAll = (RadioButton) findViewById(R.id.rb_all);
-        RadioButton rbNone = (RadioButton) findViewById(R.id.rb_none);
+        RadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
+        RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
 
         if (nonEssentialTrackerCount > 0) {
             int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();

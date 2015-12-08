@@ -1,5 +1,17 @@
 <resources>
 
+    <!-- Configuration-->
+    <integer name="ghostery_list_category_divider_height">1</integer>
+    <integer name="ghostery_list_divider_height">0</integer>
+
+    <!-- bric: true = Explicit, false = Implied -->
+    <bool name="ghostery_bric">false</bool>
+    <!-- ric_max -->
+    <integer name="ghostery_ric_max_default">3</integer>
+    <!-- ric_session_max -->
+    <integer name="ghostery_ric_session_max_default">1</integer>
+    <integer name="ghostery_ric_opacity">100</integer>
+
     <!--Dialog text -->
     <!-- close_button -->
     <string name="ghostery_dialog_button_close">Close</string>
@@ -10,17 +22,17 @@
     <!-- ric_click_manage_settings -->
     <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
     <!-- bric_content1 -->
-    <string name="ghostery_dialog_explicit_message">Our app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
+    <string name="ghostery_dialog_explicit_message">The WaterDrop app uses technologies so that we can remember you and understand how you use our app. To see a complete list of these technologies and to explicitly tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. To give us your consent, click on the \"Accept\" button.</string>
 
     <!-- bric_header_text and ric_title -->
-    <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
+    <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
     <!-- ric -->
-    <string name="ghostery_dialog_implicit_message">Our app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
+    <string name="ghostery_dialog_implicit_message">The WaterDrop app uses technologies so that we can remember you and understand how you use our app. To see a complete list of these technologies and to tell us whether they can be used on your device, click on the \"Manage Preferences\" button below. Further use of this app will be considered consent.</string>
     <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
 
     <!-- Manage Preferences -->
     <!-- manage_preferences_description -->
-    <string name="ghostery_preferences_description">Our company with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_preferences_description">WaterDrop with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
     <string name="ghostery_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
     <string name="ghostery_preferences_detail_learnmore_not_provided">Privacy Policy Not Provided</string>
     <string name="ghostery_preferences_detail_trackerinfo">Tracker Info</string>

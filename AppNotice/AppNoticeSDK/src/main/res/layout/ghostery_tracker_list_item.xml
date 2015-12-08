@@ -23,7 +23,7 @@
             android:layout_height="@integer/ghostery_list_category_divider_height"
             android:background="@color/ghostery_list_category_divider_color" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:id="@+id/category_header_text"
@@ -45,7 +45,7 @@
         android:paddingRight="8dp"
         android:paddingBottom="8dp">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tracker_name"
             android:text="Google"
             style="@style/ghostery_style_custom_list_adapter"
@@ -53,7 +53,7 @@
             android:textSize="16sp"
             />
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""

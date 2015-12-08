@@ -3,12 +3,12 @@ package com.ghostery.privacy.appnoticesdk.app;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
@@ -69,7 +69,7 @@ public class TrackerDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.ghostery_fragment_tracker_detail, container, false);
         final ImageView imageView_trackerLogo = (ImageView) rootView.findViewById(R.id.imageView_trackerLogo);
-        final TextView textView_TrackerName = ((TextView) rootView.findViewById(R.id.textView_TrackerName));
+        final AppCompatTextView textView_TrackerName = (AppCompatTextView) rootView.findViewById(R.id.textView_TrackerName);
 
 
         // Show the dummy content as text in a TextView.
@@ -103,7 +103,7 @@ public class TrackerDetailFragment extends Fragment {
                 textView_TrackerName.setVisibility(View.GONE);
             }
 
-            Switch opt_in_out_switch = ((Switch) rootView.findViewById(R.id.opt_in_out_switch));
+            SwitchCompat opt_in_out_switch = ((SwitchCompat) rootView.findViewById(R.id.opt_in_out_switch));
             if (tracker.isEssential()) {
                 opt_in_out_switch.setVisibility(View.INVISIBLE);
             } else {
@@ -119,10 +119,10 @@ public class TrackerDetailFragment extends Fragment {
                 }
             }
 
-            ((TextView) rootView.findViewById(R.id.textView_trackerDescription)).setText(tracker.getDescription());
+            ((AppCompatTextView) rootView.findViewById(R.id.textView_trackerDescription)).setText(tracker.getDescription());
 
-            TextView textView_learn_more = ((TextView) rootView.findViewById(R.id.textView_learn_more));
-            TextView textView_learn_more_url = ((TextView) rootView.findViewById(R.id.textView_learn_more_url));
+            AppCompatTextView textView_learn_more = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more));
+            AppCompatTextView textView_learn_more_url = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more_url));
             String learnMoreUrl = tracker.getPrivacy_url();
             boolean isUrlValid = Util.checkURL(learnMoreUrl);
             if (isUrlValid) {
