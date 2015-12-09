@@ -1,17 +1,5 @@
 <resources>
 
-    <!-- Configuration-->
-    <integer name="ghostery_list_category_divider_height">1</integer>
-    <integer name="ghostery_list_divider_height">0</integer>
-
-    <!-- bric: true = Explicit, false = Implied -->
-    <bool name="ghostery_bric">false</bool>
-    <!-- ric_max -->
-    <integer name="ghostery_ric_max_default">3</integer>
-    <!-- ric_session_max -->
-    <integer name="ghostery_ric_session_max_default">1</integer>
-    <integer name="ghostery_ric_opacity">100</integer>
-
     <!--Dialog text -->
     <!-- close_button -->
     <string name="ghostery_dialog_button_close">Close</string>
