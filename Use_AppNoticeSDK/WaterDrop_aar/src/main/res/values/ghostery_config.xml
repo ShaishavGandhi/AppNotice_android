@@ -15,4 +15,8 @@
     <!-- Consent flow dialog opacity (Only used on Android Honeycomb and higher. Must be an integer from 0 to 100. For a value < 100, the dialog will be full screen width.) -->
     <integer name="ghostery_consent_flow_dialog_opacity">100</integer>
 
+    <!-- System -->
+    <!-- HTTP request timeout in millis -->
+    <integer name="ghostery_http_request_timeout">15000</integer>
+
 </resources>
