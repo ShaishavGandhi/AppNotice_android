@@ -337,8 +337,8 @@ public class AppNoticeData {
                 if (uRL != null && uRL.length() > 0) {
                     Log.d(TAG, "Sending notice beacon: (type=OptInOut) " + uRL);
                     try{
-                        ServiceHandler sh = new ServiceHandler();
-                        String temp = sh.makeServiceCall(uRL, ServiceHandler.POST);
+                        ServiceHandler serviceHandler = new ServiceHandler();
+                        String temp = serviceHandler.getRequest(uRL);
                     }catch(Exception e){
                         Log.e(TAG, "Error sending notice beacon: (type=OptInOut) " + uRL, e);
                     }
@@ -400,8 +400,8 @@ public class AppNoticeData {
 //                        } else {
 //                            Log.e(TAG, "No network connection for sending notice beacon: (type=" + type + ")" + uRL);
 //                        }
-                        ServiceHandler sh = new ServiceHandler();
-                        String temp = sh.makeServiceCall(uRL, ServiceHandler.POST);
+                        ServiceHandler serviceHandler = new ServiceHandler();
+                        String temp = serviceHandler.getRequest(uRL);
                     }catch(Exception e){
                         Log.e(TAG, "Error sending notice beacon: (type=" + type + ")" + uRL, e);
                     }
@@ -560,12 +560,12 @@ public class AppNoticeData {
             trackerArrayList.clear();       // Start with an empty tracker array
 
             // Creating service handler class instance
-            ServiceHandler sh = new ServiceHandler();
+            ServiceHandler serviceHandler = new ServiceHandler();
 
             try {
                 // Make a request to url for the AppNoticeData info
                 String url = getFormattedJSONUrl();
-                String jsonStr = sh.makeServiceCall(url, ServiceHandler.GET);
+                String jsonStr = serviceHandler.getRequest(url);
                 JSONObject jsonObj = null;
                 Resources resources = activity.getResources();
 
