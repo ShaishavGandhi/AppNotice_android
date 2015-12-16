@@ -4,11 +4,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
@@ -103,7 +103,7 @@ public class TrackerDetailFragment extends Fragment {
                 textView_TrackerName.setVisibility(View.GONE);
             }
 
-            SwitchCompat opt_in_out_switch = ((SwitchCompat) rootView.findViewById(R.id.opt_in_out_switch));
+            Switch opt_in_out_switch = ((Switch) rootView.findViewById(R.id.opt_in_out_switch));
             if (tracker.isEssential()) {
                 opt_in_out_switch.setVisibility(View.INVISIBLE);
             } else {

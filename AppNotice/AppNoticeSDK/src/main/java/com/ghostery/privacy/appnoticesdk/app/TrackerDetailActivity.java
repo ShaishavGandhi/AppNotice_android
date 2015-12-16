@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
@@ -117,7 +117,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
     }
 
     public void onOptInOutClick(View view) {
-        Boolean isOn = ((SwitchCompat)view).isChecked();
+        Boolean isOn = ((Switch)view).isChecked();
         AppNoticeData appNoticeData = (AppNoticeData) Session.get(Session.APPNOTICE_DATA);
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.

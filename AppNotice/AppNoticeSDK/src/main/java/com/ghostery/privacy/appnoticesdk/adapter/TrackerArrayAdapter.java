@@ -2,13 +2,13 @@ package com.ghostery.privacy.appnoticesdk.adapter;
 
 import android.support.v4.app.ListFragment;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -27,7 +27,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
 
     public static class ViewHolder {
         public AppCompatTextView trackerName;
-        public SwitchCompat optInOutSwitch;
+        public Switch optInOutSwitch;
         public Boolean isOn;
     }
 
@@ -66,7 +66,7 @@ public class TrackerArrayAdapter extends ArrayAdapter {
 
             holder = new ViewHolder();
             holder.trackerName = (AppCompatTextView) itemView.findViewById(R.id.tracker_name);
-            holder.optInOutSwitch = (SwitchCompat) itemView.findViewById(R.id.opt_in_out_switch);
+            holder.optInOutSwitch = (Switch) itemView.findViewById(R.id.opt_in_out_switch);
 
             Log.d(TAG,  "Cat: " + tracker.getCategory() + " Name: " + tracker.getName() +" ID:" + tracker.getTrackerId());
 

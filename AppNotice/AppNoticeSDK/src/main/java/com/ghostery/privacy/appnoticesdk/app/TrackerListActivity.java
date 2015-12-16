@@ -11,10 +11,10 @@ import android.support.v7.app.AppCompatCallback;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
@@ -237,7 +237,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     public void onOptInOutClick(View view) {
-        Boolean isOn = ((SwitchCompat)view).isChecked();
+        Boolean isOn = ((Switch)view).isChecked();
         int uId = (int)view.getTag();
         appNoticeData.setTrackerOnOffState(uId, isOn);
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
