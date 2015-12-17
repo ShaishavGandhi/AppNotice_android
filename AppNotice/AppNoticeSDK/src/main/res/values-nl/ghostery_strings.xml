@@ -15,7 +15,7 @@
     <string name="ghostery_dialog_header_text">Uw privacy is belangrijk voor ons</string>
     <!-- Text of the message in the Implied Consent flow dialog. JSON: ric -->
     <string name="ghostery_dialog_implicit_message">Onze applicatie maakt gebruik van technologieën om ons en onze partners in staat te stellen u te herinneren, en om te begrijpen op welke manier u onze website gebruikt.  Klik op de knop \&quot;Voorkeuren beheren\&quot; hieronder voor een volledige lijst van deze technologieën en om ons te laten weten of deze al dan niet gebruikt mogen worden op uw apparaat. Bij verder gebruik van deze app wordt ervan uitgegaan dat u toestemming hebt gegeven.</string>
-    <!-- Text of the Please-wait message that is displayed whild downloading the app-notice preferences -->
+    <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
     <string name="ghostery_dialog_pleaseWait">Een ogenblik geduld a.u.b.</string>
 
     <!-- Manage Preferences -->
