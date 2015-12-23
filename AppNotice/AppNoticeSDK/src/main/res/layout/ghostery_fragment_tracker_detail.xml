@@ -92,7 +92,7 @@
             android:linksClickable="true"
             android:onClick="onLinkClick"
             android:textSize="13sp"
-            android:textColor="@color/link_text_material_dark" />
+            android:textColor="@color/accent_material_dark" />
 
     </LinearLayout>
 
