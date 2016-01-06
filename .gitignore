@@ -1,11 +1,40 @@
+# Built application files
+*.apk
+*.ap_
+
+# Files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Eclipse project files
+.classpath
+.project
+
+# Android Studio
+.idea/
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/*/local.properties
+/*/out
+/*/*/build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
+
+# Misc
 .DS_Store
-/build
-/captures
 Use_AppNoticeSDK/WaterDrop_aar/libs/AppNoticeSDK.old/
-AppNotice/.idea/workspace.xml
-AppNotice/local.properties
-AppNotice/build/intermediates/
+AppNotice/FireBall_module/build.gradle
+AppNotice/AppNoticeSDK/build.gradle
+AppNotice/build/

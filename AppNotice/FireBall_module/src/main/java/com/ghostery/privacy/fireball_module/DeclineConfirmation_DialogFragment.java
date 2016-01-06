@@ -6,8 +6,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import com.ghostery.privacy.appnotice_android.R;
-
 public class DeclineConfirmation_DialogFragment extends DialogFragment
 {
     public DeclineConfirmation_DialogFragment()
@@ -23,9 +21,6 @@ public class DeclineConfirmation_DialogFragment extends DialogFragment
         builder.setPositiveButton(getActivity().getString(R.string.declineConfirmDialog_posBtn), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-                // Close the app
-                System.exit(0);
             }
         });
 
@@ -36,9 +31,6 @@ public class DeclineConfirmation_DialogFragment extends DialogFragment
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-
-        // Close the app
-        System.exit(0);
     }
 
 }

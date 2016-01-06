@@ -11,7 +11,6 @@
     <string name="ghostery_dialog_button_preferences">Gerencie Prefer&#xea;ncias</string>
     <!-- bric_content1 -->
     <string name="ghostery_dialog_explicit_message">Nosso aplicativo usa tecnologias de modo que n&#xf3;s e os nossos parceiros, podemos lembrar de voc&#xea; e entender como voc&#xea; usa o nosso app. Para ver uma lista completa dessas tecnologias e para nos dizer explicitamente se eles podem ser usados ??no seu dispositivo, clique no bot&#xe3;o \ "Gerenciar Preferences \" bot&#xe3;o abaixo. Para nos dar o seu consentimento, clique no \ "Aceitar \" bot&#xe3;o.</string>
-
     <!-- bric_header_text and ric_title -->
     <string name="ghostery_dialog_header_text">Nos preocupamos com sua privacidade</string>
     <!-- ric -->

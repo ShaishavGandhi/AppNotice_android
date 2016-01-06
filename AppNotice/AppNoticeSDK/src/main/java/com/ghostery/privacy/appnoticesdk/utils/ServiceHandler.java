@@ -4,89 +4,96 @@ package com.ghostery.privacy.appnoticesdk.utils;
  * Created by Steven.Overson on 2/26/2015.
  */
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import android.content.res.Resources;
+import android.util.Log;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
+import com.ghostery.privacy.appnoticesdk.R;
+import com.ghostery.privacy.appnoticesdk.app.App;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ServiceHandler {
 
-    static String response = null;
-    public final static int GET = 1;
-    public final static int POST = 2;
+	private static final String TAG = "SDK_ServiceHandler";
+	private static int httpRequestTimeout;	// In millis
+	private static final int httpRequestTimeoutDefault = 15000;	// In millis
 
     public ServiceHandler() {
+		try {
+			httpRequestTimeout = App.getContext().getResources().getInteger(R.integer.ghostery_http_request_timeout);
+		} catch (Resources.NotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-    }
-
-    /**
-     * Making service call
-     * @url - url to make request
-     * @method - http request method
-     * */
-    public String makeServiceCall(String url, int method) {
-        return this.makeServiceCall(url, method, null);
-    }
-
-    /**
-     * Making service call
-     * @url - url to make request
-     * @method - http request method
-     * @params - http request params
-     * */
-    public String makeServiceCall(String url, int method, List<NameValuePair> params) {
+    public static String getRequest(String urlVal) {
+        String Content = null;
+        BufferedReader bufferedReader = null;
         try {
-            // http client
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpEntity httpEntity = null;
-            HttpResponse httpResponse = null;
+            URL url = new URL(urlVal);
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+            httpURLConnection.setConnectTimeout(httpRequestTimeout);
+            bufferedReader = new BufferedReader(new InputStreamReader(
+                    httpURLConnection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line = null;
 
-            // Checking http request method type
-            if (method == POST) {
-                HttpPost httpPost = new HttpPost(url);
-
-                // Adding post params
-                if (params != null) {
-                    httpPost.setEntity(new UrlEncodedFormEntity(params));
-                }
-
-                httpResponse = httpClient.execute(httpPost);
-
-            } else if (method == GET) {
-                // Appending params to url
-                if (params != null) {
-                    String paramString = URLEncodedUtils
-                            .format(params, "utf-8");
-                    url += "?" + paramString;
-                }
-                HttpGet httpGet = new HttpGet(url);
-
-                httpResponse = httpClient.execute(httpGet);
-
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
             }
-            httpEntity = httpResponse.getEntity();
-            if (httpEntity != null)
-                response = EntityUtils.toString(httpEntity);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Content = stringBuilder.toString();
+        } catch (Exception e) {
+			Log.e(TAG, "Error in http get request", e);
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (Exception ex) {
+            }
         }
-
-        return response;
-
+        return Content;
     }
+
+    public static String postRequest(String urlStr, String inputJson) {
+
+        String result = null;
+        try{
+            URL url = new URL(urlStr);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestProperty("Accept", "application/json");
+            httpURLConnection.setRequestProperty("Content-type", "application/json");
+            httpURLConnection.setDoInput(true);
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.connect();
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(
+                    new OutputStreamWriter(outputStream, "UTF-8"));
+            bufferedWriter.write(inputJson);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            outputStream.close();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+                    httpURLConnection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line = null;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            result = stringBuilder.toString();
+        }catch(Exception e){
+			Log.e(TAG, "Error in http post request", e);
+        }
+        return result;
+    }
+
 }

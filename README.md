@@ -55,6 +55,10 @@ __IceCube_jar:__ This project includes the AppNoticeSDK project as a JAR-based m
     * From: ...\release\outputs\AppNoticeSDK_aar\AppNoticeSDK-release.aar
     * To: AppNoticeSDK.aar
 
+1.	Copy the "res" folder into the AAR SDK folder:
+    * From: ...\AppNotice\AppNoticeSDK\src\main\
+    *	To: ...\release\outputs\AppNoticeSDK_aar\
+
 1.	Create a new "AppNoticeSDK_jar" folder in the copied "outputs" folder (this will be the folder for the JAR SDK):
     *	...\release\outputs\AppNoticeSDK_jar\
 

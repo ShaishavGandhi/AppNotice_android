@@ -138,11 +138,13 @@ public class AppNotice {
             // Create and show the dialog.
             if (appNoticeData.getBric()) {
                 ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
+//                explicitInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
                 explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                 explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
             } else {
                 ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
+//                impliedInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
                 impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                 impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
 

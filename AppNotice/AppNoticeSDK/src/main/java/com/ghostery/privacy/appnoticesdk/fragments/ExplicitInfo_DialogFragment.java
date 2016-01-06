@@ -9,14 +9,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
@@ -65,7 +65,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             applyCustomConfig(view);
 
         // Watch for button clicks.
-        Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
+        AppCompatButton preferences_button = (AppCompatButton)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// Remember that the tracker preferences screen was opened from a consent flow dialog
@@ -79,7 +79,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 			}
 		});
 
-        Button accept_button = (Button)view.findViewById(R.id.accept_button);
+        AppCompatButton accept_button = (AppCompatButton)view.findViewById(R.id.accept_button);
         accept_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
@@ -97,7 +97,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
         });
 
-        Button decline_button = (Button)view.findViewById(R.id.decline_button);
+        AppCompatButton decline_button = (AppCompatButton)view.findViewById(R.id.decline_button);
         decline_button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// User cancelled the dialog...negating consent
@@ -108,7 +108,10 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 				// Let the calling class know the selected option
 				if (appNotice_callback != null && !getActivity().isFinishing())
 					appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
-			}
+
+                // Close this dialog
+                dismiss();
+            }
 		});
 
         return view;
@@ -152,6 +155,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         // Let the calling class know the selected option
         if (appNotice_callback != null && !getActivity().isFinishing())
             appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
+
+        // Close this dialog
+        dismiss();
     }
 
     public void setUseRemoteValues(boolean useRemoteValues) {
@@ -183,14 +189,14 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
 
             // Title
-            TextView textView_title = (TextView)v.findViewById(R.id.textView_title);
+            AppCompatTextView textView_title = (AppCompatTextView)v.findViewById(R.id.textView_title);
             if (textView_title != null) {
                 textView_title.setText(appNoticeData.getBric_header_text());
                 textView_title.setTextColor(appNoticeData.getBric_header_text_color());
             }
 
             // Message
-            TextView textView_message = (TextView)v.findViewById(R.id.textView_message);
+            AppCompatTextView textView_message = (AppCompatTextView)v.findViewById(R.id.textView_message);
             if (textView_message != null) {
                 if (appNoticeData.getBric_content1() != null)
                     textView_message.setText(appNoticeData.getBric_content1());
@@ -198,7 +204,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
 
             // Preferences button
-            Button preferences_button = (Button)v.findViewById(R.id.preferences_button);
+            AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
             if (preferences_button != null) {
                 if (appNoticeData.getRic_click_manage_settings() != null)
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
@@ -212,7 +218,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
 
             // Accept button
-            Button accept_button = (Button)v.findViewById(R.id.accept_button);
+            AppCompatButton accept_button = (AppCompatButton)v.findViewById(R.id.accept_button);
             if (accept_button != null) {
                 if (appNoticeData.getBric_access_button_text() != null)
                     accept_button.setText(appNoticeData.getBric_access_button_text());
@@ -226,7 +232,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             }
 
             // Decline button
-            Button decline_button = (Button)v.findViewById(R.id.decline_button);
+            AppCompatButton decline_button = (AppCompatButton)v.findViewById(R.id.decline_button);
             if (decline_button != null) {
                 if (appNoticeData.getBric_decline_button_text() != null)
                     decline_button.setText(appNoticeData.getBric_decline_button_text());

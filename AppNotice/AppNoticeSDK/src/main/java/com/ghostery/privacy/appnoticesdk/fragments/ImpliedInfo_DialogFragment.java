@@ -9,14 +9,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
@@ -63,7 +63,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             applyCustomConfig(view);
 
         // Watch for button clicks.
-        Button preferences_button = (Button)view.findViewById(R.id.preferences_button);
+        AppCompatButton preferences_button = (AppCompatButton)view.findViewById(R.id.preferences_button);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Remember that the tracker preferences screen was opened from a consent flow dialog
@@ -77,7 +77,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
         });
 
-        Button close_button = (Button)view.findViewById(R.id.close_button);
+        AppCompatButton close_button = (AppCompatButton)view.findViewById(R.id.close_button);
         close_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Let the calling class know the selected option
@@ -160,7 +160,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
 
             // Title
-            TextView textView_title = (TextView)v.findViewById(R.id.textView_title);
+            AppCompatTextView textView_title = (AppCompatTextView)v.findViewById(R.id.textView_title);
             if (textView_title != null) {
                 if (appNoticeData.getRic_title() != null)
                     textView_title.setText(appNoticeData.getRic_title());
@@ -168,7 +168,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
 
             // Message
-            TextView textView_message = (TextView)v.findViewById(R.id.textView_message);
+            AppCompatTextView textView_message = (AppCompatTextView)v.findViewById(R.id.textView_message);
             if (textView_message != null) {
                 if (appNoticeData.getRic() != null)
                     textView_message.setText(appNoticeData.getRic());
@@ -176,7 +176,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
 
             // Preferences button
-            Button preferences_button = (Button)v.findViewById(R.id.preferences_button);
+            AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
             if (preferences_button != null) {
                 if (appNoticeData.getRic_click_manage_settings() != null)
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
@@ -191,7 +191,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             }
 
             // Close button
-            Button close_button = (Button)v.findViewById(R.id.close_button);
+            AppCompatButton close_button = (AppCompatButton)v.findViewById(R.id.close_button);
             if (close_button != null) {
                 if (appNoticeData.getClose_button() != null)
                     close_button.setText(appNoticeData.getClose_button());
