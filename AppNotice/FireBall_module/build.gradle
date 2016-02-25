@@ -14,10 +14,10 @@ android {
 
     defaultConfig {
         applicationId "com.ghostery.privacy.fireball_module"
-        minSdkVersion 15
-        targetSdkVersion 22
-        versionCode 18
-        versionName "1.1.1"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 19
+        versionName "1.1.2"
     }
 
     packagingOptions{
