@@ -23,13 +23,15 @@
             android:contentDescription="@string/app_name"
             android:layout_gravity="center" />
 
-        <TextView android:id="@+id/section_label" android:layout_width="wrap_content"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/section_label"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:layout_gravity="center"
             android:paddingBottom="32dp" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -38,7 +40,7 @@
             android:hint="@string/hint_companyId"
             android:gravity="center_horizontal" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -46,7 +48,7 @@
             android:hint="@string/hint_configId"
             android:gravity="center_horizontal" />
 
-        <CheckBox
+        <android.support.v7.widget.AppCompatCheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkBox_useRemoteValues"
@@ -54,42 +56,42 @@
             android:layout_gravity="center_horizontal"
             android:checked="true" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_consent_flow"
             android:id="@+id/btn_consent_flow"
             android:layout_gravity="center_horizontal" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_manage_preferences"
             android:id="@+id/btn_manage_preferences"
             android:layout_gravity="center_horizontal" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_get_preferences"
             android:id="@+id/btn_get_preferences"
             android:layout_gravity="center_horizontal" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_reset_sdk"
             android:id="@+id/btn_reset_sdk"
             android:layout_gravity="center_horizontal" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_reset_app"
             android:id="@+id/btn_reset_app"
             android:layout_gravity="center_horizontal" />
 
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_close_app"

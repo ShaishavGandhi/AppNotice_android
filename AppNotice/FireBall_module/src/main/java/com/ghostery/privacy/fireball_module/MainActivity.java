@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Context context = App.getContext();
     }
 
     @Nullable
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}
     }
 
-    // Handle callbacks for the In-App Consent SDK
+    // Handle callbacks for the App Notice Consent SDK
     @Override
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response

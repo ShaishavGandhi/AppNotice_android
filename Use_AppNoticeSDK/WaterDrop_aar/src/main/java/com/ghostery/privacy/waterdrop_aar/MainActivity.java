@@ -7,18 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.AppNotice;
+import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Context context = App.getContext();
     }
 
     @Nullable
@@ -61,24 +62,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String configIdString = Util.getSharedPreference(this, Util.SP_CONFIG_ID, "");
         String useRemoteValuesString = Util.getSharedPreference(this, Util.SP_USE_REMOTEVALUES, "");
 
-        EditText companyIdEditText = (EditText)findViewById(R.id.editText_companyId);
+        AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
         companyIdEditText.setText(companyIdString);
 
-        EditText configIdEditText = (EditText)findViewById(R.id.editText_configId);
+        AppCompatEditText configIdEditText = (AppCompatEditText)findViewById(R.id.editText_configId);
         configIdEditText.setText(configIdString);
 
-        CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+        AppCompatCheckBox cb = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
         if (useRemoteValuesString != null && useRemoteValuesString.equals("1"))
             cb.setChecked(true);
         else
             cb.setChecked(false);
 
-        btn_consent_flow = (Button) findViewById(R.id.btn_consent_flow) ;
-        btn_manage_preferences = (Button) findViewById(R.id.btn_manage_preferences) ;
-        btn_get_preferences = (Button) findViewById(R.id.btn_get_preferences) ;
-        btn_reset_sdk = (Button) findViewById(R.id.btn_reset_sdk) ;
-        btn_reset_app = (Button) findViewById(R.id.btn_reset_app) ;
-        btn_close_app = (Button) findViewById(R.id.btn_close_app) ;
+        btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
+        btn_manage_preferences = (AppCompatButton) findViewById(R.id.btn_manage_preferences) ;
+        btn_get_preferences = (AppCompatButton) findViewById(R.id.btn_get_preferences) ;
+        btn_reset_sdk = (AppCompatButton) findViewById(R.id.btn_reset_sdk) ;
+        btn_reset_app = (AppCompatButton) findViewById(R.id.btn_reset_app) ;
+        btn_close_app = (AppCompatButton) findViewById(R.id.btn_close_app) ;
 
         btn_consent_flow.setOnClickListener(this);
         btn_manage_preferences.setOnClickListener(this);
@@ -97,15 +98,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int configId = 0;
         Boolean useRemoteValues = true;
 
-        TextView tv = (TextView)this.findViewById(R.id.editText_companyId);
+        AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
         if (tv != null)
             companyIdString = tv.getText().toString();
 
-        tv = (TextView)this.findViewById(R.id.editText_configId);
+        tv = (AppCompatEditText)this.findViewById(R.id.editText_configId);
         if (tv != null)
             configIdString = tv.getText().toString();
 
-        CheckBox cb = (CheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+        AppCompatCheckBox cb = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
         if (cb != null)
             useRemoteValues = cb.isChecked();
 
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}
     }
 
-    // Handle callbacks for the In-App Consent SDK
+    // Handle callbacks for the App Notice Consent SDK
     @Override
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response

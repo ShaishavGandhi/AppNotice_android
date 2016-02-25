@@ -1,6 +1,9 @@
 #============================================================
 -optimizationpasses 5
 
+# To keep line numbers in stack trace outputs
+-keepattributes SourceFile,LineNumberTable
+
 # When not preverifing in a case-insensitive filing system, such as Windows. Because this tool unpacks your processed jars, you should then use:
 -dontusemixedcaseclassnames
 

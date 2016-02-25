@@ -74,7 +74,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 				// Send notice for this event
 				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
 
-				// Open the In-App Consent preferences fragmentActivity
+				// Open the App Notice Consent preferences fragmentActivity
 				Util.showManagePreferences(getActivity());
 			}
 		});

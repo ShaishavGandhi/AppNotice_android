@@ -7,8 +7,8 @@ package com.ghostery.privacy.appnoticesdk.utils;
 import android.content.res.Resources;
 import android.util.Log;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.app.App;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,9 +26,9 @@ public class ServiceHandler {
 
     public ServiceHandler() {
 		try {
-			httpRequestTimeout = App.getContext().getResources().getInteger(R.integer.ghostery_http_request_timeout);
+			httpRequestTimeout = AppNotice.getAppContext().getResources().getInteger(R.integer.ghostery_http_request_timeout);
 		} catch (Resources.NotFoundException e) {
-			e.printStackTrace();
+            Log.e(TAG, "Getting req timeout", e);
 		}
 	}
 
@@ -54,7 +54,8 @@ public class ServiceHandler {
         } finally {
             try {
                 bufferedReader.close();
-            } catch (Exception ex) {
+            } catch (Exception e) {
+                Log.e(TAG, "Closing reader", e);
             }
         }
         return Content;
