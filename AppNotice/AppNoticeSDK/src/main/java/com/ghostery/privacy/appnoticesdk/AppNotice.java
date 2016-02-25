@@ -3,6 +3,7 @@ package com.ghostery.privacy.appnoticesdk;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
@@ -23,17 +24,20 @@ public class AppNotice {
     private AppNoticeData appNoticeData;
     private AppNotice_Callback appNotice_callback;
     private Activity extActivity = null;
+    private static Context appContext;
+    private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
 
 	/**
 	 * AppNotice constructor
 	 * @param activity: Usually your start-up activity
-	 * @param companyId: The company ID assigned to you for In-App Consent
+	 * @param companyId: The company ID assigned to you for App Notice consent
 	 * @param configId: The Configuration ID of the configuration created for this app
 	 * @param useRemoteValues:
-	 *        True = Try to use the In-App Consent dialog configuration parameters from the service;
+	 *        True = Try to use the App Notice consent dialog configuration parameters from the service;
 	 *        False = Use local resource values instead of calling the service
 	 */
     public AppNotice(Activity activity, int companyId, int configId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
+        appContext = activity.getApplicationContext();
         extActivity = activity;
 		if ((companyId <= 0) || (configId <= 0)) {
 			throw(new IllegalArgumentException("Company ID and Config ID must both be valid identifiers."));
@@ -53,10 +57,10 @@ public class AppNotice {
 	}
 
     /**
-     * Starts the In-App Consent flow. Must be called before your app begins tracking. The flow type
+     * Starts the App Notice Consent flow. Must be called before your app begins tracking. The flow type
      *     (implied or explicit) is determined by the "bric" parameter in the JSON or the local
      *     ghostery_bric resource parameter.
-     *   - appNotice_callback: The AppNotice_Callback method created in your class to handle the In-App Consent response
+     *   - appNotice_callback: The AppNotice_Callback method created in your class to handle the App Notice Consent response
      */
     public void startConsentFlow() {
         init(true);
@@ -89,7 +93,7 @@ public class AppNotice {
             if (isConsentFlow) {
                 startConsentFlow(appNoticeData.useRemoteValues);
             } else {
-                // Open the In-App Consent preferences fragmentActivity
+                // Open the App Notice Consent preferences fragmentActivity
                 Util.showManagePreferences(extActivity);
 
                 // Send notice for this event
@@ -108,7 +112,7 @@ public class AppNotice {
                         // Handle the response
                         startConsentFlow(appNoticeData.useRemoteValues);
                     } else {
-                        // Open the In-App Consent preferences fragmentActivity
+                        // Open the App Notice Consent preferences fragmentActivity
                         Util.showManagePreferences(extActivity);
 
                         // Send notice for this event
@@ -162,4 +166,12 @@ public class AppNotice {
         return AppNoticeData.getTrackerPreferences();
     }
 
+    public static HashMap<String, Object> getSessionMap() {
+        return sessionMap;
+    }
+
+    public static Context getAppContext()
+    {
+        return appContext;
+    }
 }

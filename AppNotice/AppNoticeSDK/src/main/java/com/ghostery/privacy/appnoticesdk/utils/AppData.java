@@ -7,7 +7,7 @@ package com.ghostery.privacy.appnoticesdk.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ghostery.privacy.appnoticesdk.app.App;
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class AppData {
     public static final String APPDATA_FILENAME_END = "";
     private static SharedPreferences sharedPreferences = null;
 
-    // App data keys
+    // Application data keys
     public static final String APPDATA_VERSION = "AppDataVersion";
     public static final String APPDATA_IMPLICIT_LAST_DISPLAY_TIME = "implicit_last_display_time";   // long int, timestamp in millis
     public static final String APPDATA_IMPLICIT_DISPLAY_COUNT = "implicit_display_count";           // int
@@ -29,9 +29,9 @@ public class AppData {
 
     public static SharedPreferences getSessionInfo(){
         if( sharedPreferences == null ) {
-            Context context = App.getContext();
-            String packageName = context.getPackageName();
-            sharedPreferences = context.getSharedPreferences(packageName + APPDATA_FILENAME_END, App.MODE_PRIVATE);
+            Context appContext = AppNotice.getAppContext();
+            String packageName = appContext.getPackageName();
+            sharedPreferences = appContext.getSharedPreferences(packageName + APPDATA_FILENAME_END, appContext.MODE_PRIVATE);
             if (!sharedPreferences.contains(APPDATA_VERSION)) {
                 setInteger(APPDATA_VERSION, APPDATA_VERSION_VALUE);		// Write a version number into the prefs file
                 //upgradeFromOldFiles(fragmentActivity);
@@ -43,7 +43,7 @@ public class AppData {
     protected static void upgradeFromOldFiles(Context context) {
         Boolean prefsCopied = false;
         // Get the old prefs file
-//        SharedPreferences oldSharedPreferences = fragmentActivity.getSharedPreferences("(old designator: com.appname...)", App.MODE_PRIVATE);
+//        SharedPreferences oldSharedPreferences = fragmentActivity.getSharedPreferences("(old designator: com.appname...)", appContext.MODE_PRIVATE);
 //        if (some criteria) {
 //            copySharedPreferences(oldSharedPreferences);
 //            prefsCopied = true;

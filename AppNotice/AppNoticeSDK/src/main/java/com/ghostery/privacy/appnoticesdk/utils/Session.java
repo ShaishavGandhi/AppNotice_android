@@ -1,6 +1,6 @@
 package com.ghostery.privacy.appnoticesdk.utils;
 
-import com.ghostery.privacy.appnoticesdk.app.App;
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 
 /*
  * Created by Steven.Overson on 2/6/2015.
@@ -24,16 +24,16 @@ public class Session {
 
     // == Getters and setters ===========================================================
     public static void set(String key, Object value) {
-        App.getSessionMap().put(key, value);
+        AppNotice.getSessionMap().put(key, value);
     }
 
     public static Object get(String key) {
-        return App.getSessionMap().get(key);
+        return AppNotice.getSessionMap().get(key);
     }
 
     // Get...with default value
     public static Object get(String key, Object defaultVal) {
-        Object val = App.getSessionMap().get(key);
+        Object val = AppNotice.getSessionMap().get(key);
         if (val == null)
             val =  defaultVal;
 
@@ -41,16 +41,16 @@ public class Session {
     }
 
     public static void remove(String key) {
-        if( App.getSessionMap().containsKey(key) ) {
-            App.getSessionMap().remove(key);
+        if( AppNotice.getSessionMap().containsKey(key) ) {
+            AppNotice.getSessionMap().remove(key);
         }
     }
 
     public static void reset() {
-        App.getSessionMap().clear();
+        AppNotice.getSessionMap().clear();
     }
 
     public static boolean isSet(String key) {
-        return App.getSessionMap().containsKey(key);
+        return AppNotice.getSessionMap().containsKey(key);
     }
 }
