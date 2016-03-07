@@ -28,13 +28,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     private final static String TAG = "MainActivity";
     private AppNotice_Callback appNotice_Callback;
-    private AppNotice appNotice;
+    private static AppNotice appNotice;
     private Button btn_consent_flow;
     private Button btn_manage_preferences;
     private Button btn_get_preferences;
     private Button btn_reset_sdk;
     private Button btn_reset_app;
     private Button btn_close_app;
+    private Boolean isHybridApp;
 
     // Tracker ID tags
     private final static int ADMOB_TRACKERID = 464;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String configIdString = Util.getSharedPreference(this, Util.SP_CONFIG_ID, "");
         String useRemoteValuesString = Util.getSharedPreference(this, Util.SP_USE_REMOTEVALUES, "");
+        String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
 
         AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
         companyIdEditText.setText(companyIdString);
@@ -68,11 +70,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         AppCompatEditText configIdEditText = (AppCompatEditText)findViewById(R.id.editText_configId);
         configIdEditText.setText(configIdString);
 
-        AppCompatCheckBox cb = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
-        if (useRemoteValuesString != null && useRemoteValuesString.equals("1"))
-            cb.setChecked(true);
-        else
-            cb.setChecked(false);
+        AppCompatCheckBox checkBox_useRemoteValues = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+        if (useRemoteValuesString != null && useRemoteValuesString.equals("1")) {
+            checkBox_useRemoteValues.setChecked(true);
+        } else {
+            checkBox_useRemoteValues.setChecked(false);
+        }
+
+        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
+        if (isHybridAppString != null && isHybridAppString.equals("1")) {
+            checkBox_hybridApp.setChecked(true);
+        } else {
+            checkBox_hybridApp.setChecked(false);
+        }
 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (AppCompatButton) findViewById(R.id.btn_manage_preferences) ;
@@ -97,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int companyId = 0;
         int configId = 0;
         Boolean useRemoteValues = true;
+        isHybridApp = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
         if (tv != null)
@@ -106,14 +117,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         if (tv != null)
             configIdString = tv.getText().toString();
 
-        AppCompatCheckBox cb = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
-        if (cb != null)
-            useRemoteValues = cb.isChecked();
+        AppCompatCheckBox checkBox_useRemoteValues = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
+        if (checkBox_useRemoteValues != null) {
+            useRemoteValues = checkBox_useRemoteValues.isChecked();
+        }
+
+        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
+        if (checkBox_hybridApp != null) {
+            isHybridApp = checkBox_hybridApp.isChecked();
+        }
 
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_CONFIG_ID, configIdString);
-        Util.setSharedPreference(this, Util.SP_USE_REMOTEVALUES, useRemoteValues? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_USE_REMOTEVALUES, useRemoteValues ? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
 
 		if (companyIdString.length() == 0 || configIdString.length() == 0) {
 			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
@@ -143,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 				System.exit(0);
 
 			} else if (view == btn_manage_preferences) {
-				appNotice.showManagePreferences();
+                appNotice.showManagePreferences();
 
 			} else if (view == btn_get_preferences) {
 				HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
@@ -194,6 +212,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     }
 
+    @Override
+    public boolean onManagePreferencesClicked() {
+        boolean wasHandled = false;
+        if (isHybridApp) {
+            // Open local preferences screen
+            Intent i = new Intent(getBaseContext(), HybridPrivacySettings.class);
+            startActivity(i);
+            wasHandled = true;  // Handled
+
+        } else {
+            wasHandled = false; // Not handled
+        }
+        return wasHandled;
+    }
+
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
         String prefResults = "";
         if (trackerHashMap.size() == 0) {
@@ -217,5 +250,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public static AppNotice getAppNotice() {
+        return appNotice;
     }
 }
