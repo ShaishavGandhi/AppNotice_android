@@ -69,8 +69,19 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 // Remember that the tracker preferences screen was opened from a consent flow dialog
                 Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
 
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+
+                // Let the calling class know the the manage preferences button was clicked
+                boolean wasHandled = false;
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
+                    wasHandled = appNotice_callback.onManagePreferencesClicked();
+                }
+
                 // Open the App Notice Consent preferences fragmentActivity
-                Util.showManagePreferences(getActivity());
+                if (!wasHandled) {
+                    Util.showManagePreferences(getActivity());
+                }
 
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);

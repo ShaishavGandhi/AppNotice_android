@@ -74,8 +74,16 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 				// Send notice for this event
 				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
 
+                // Let the calling class know the the manage preferences button was clicked
+                boolean wasHandled = false;
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
+                    wasHandled = appNotice_callback.onManagePreferencesClicked();
+                }
+
 				// Open the App Notice Consent preferences fragmentActivity
-				Util.showManagePreferences(getActivity());
+                if (!wasHandled) {
+                    Util.showManagePreferences(getActivity());
+                }
 			}
 		});
 
@@ -89,8 +97,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                 // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing())
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
                     appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                }
 
                 // Close this dialog
                 dismiss();

@@ -16,10 +16,18 @@
     <string name="hint_companyId">Company ID</string>
     <string name="hint_configId">Config ID</string>
     <string name="checkBox_useRemoteValues">Use remote config values</string>
+    <string name="checkBox_hybridApp">Hybrid App</string>
 
     <!-- Decline Confirmation dialog -->
     <string name="declineConfirmDialog_title">Declined Consent</string>
     <string name="declineConfirmDialog_message">To enjoy the full functionality of this app, you must either upgrade to the paid version or accept the privacy preferences in this version. Please restart this app if you would like to accept. This app will now continue with limited functionality.</string>
     <string name="declineConfirmDialog_posBtn">OK</string>
+
+    <!-- Strings related to Settings -->
+    <string name="title_activity_hybrid_privacy_settings">Legal and Privacy</string>
+    <string name="pref_terms_of_use">Terms of Use</string>
+    <string name="pref_privacy_policy">Privacy Policy</string>
+    <string name="pref_web_based_privacy">Web-based Privacy</string>
+    <string name="pref_in_app_privacy">In-app Privacy</string>
 
 </resources>
