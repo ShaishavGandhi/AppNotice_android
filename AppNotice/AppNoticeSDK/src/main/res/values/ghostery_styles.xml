@@ -6,6 +6,7 @@
         <item name="android:actionBarStyle">@style/ghostery_ActionBar</item>
 
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
