@@ -219,7 +219,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
                 preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.MULTIPLY);
+					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
 //                } else {
 //					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
 //                }
@@ -233,7 +233,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                     accept_button.setText(appNoticeData.getBric_access_button_text());
                 accept_button.setTextColor(appNoticeData.getBric_access_button_text_color());
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
+                    accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
 //				} else {
 //					accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
 //				}
