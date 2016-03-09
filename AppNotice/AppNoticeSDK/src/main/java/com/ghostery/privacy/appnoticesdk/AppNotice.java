@@ -23,7 +23,7 @@ public class AppNotice {
 
     private AppNoticeData appNoticeData;
     private AppNotice_Callback appNotice_callback;
-    private Activity extActivity = null;
+    private static Activity extActivity = null;
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
 
@@ -173,5 +173,10 @@ public class AppNotice {
     public static Context getAppContext()
     {
         return appContext;
+    }
+
+    public static Activity getParentActivity()
+    {
+        return extActivity;
     }
 }

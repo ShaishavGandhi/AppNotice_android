@@ -40,7 +40,7 @@
 
     <!-- Explicit Dialog colors -->
     <!-- Dialog button text color for all but Explicit Decline -->
-    <color name="ghostery_dialog_explicit_accept_button_text_color">#FFFFFF</color>
+    <color name="ghostery_dialog_explicit_accept_button_text_color">#000000</color>
     <!-- Dialog button text color for Explicit Decline -->
     <color name="ghostery_dialog_explicit_decline_button_text_color">#FFFFFF</color>
     <!-- Dialog button color for Explicit Decline -->

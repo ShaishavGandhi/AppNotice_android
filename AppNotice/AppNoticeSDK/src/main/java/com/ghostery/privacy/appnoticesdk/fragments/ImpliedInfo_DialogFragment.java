@@ -3,12 +3,14 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -194,10 +197,9 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
-//                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.MULTIPLY);
-//                    preferences_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
                 } else {
-                    preferences_button.setBackgroundColor(ric_access_button_color);
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
+                    preferences_button.setSupportBackgroundTintList(colorStateList);
                 }
             }
 
@@ -209,9 +211,9 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 close_button.setTextColor(appNoticeData.getBric_access_button_text_color());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     close_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
-//                    close_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
                 } else {
-                    close_button.setBackgroundColor(ric_access_button_color);
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
+                    close_button.setSupportBackgroundTintList(colorStateList);
                 }
             }
 
