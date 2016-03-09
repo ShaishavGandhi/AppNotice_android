@@ -3,12 +3,14 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -69,8 +72,19 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 // Remember that the tracker preferences screen was opened from a consent flow dialog
                 Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
 
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+
+                // Let the calling class know the the manage preferences button was clicked
+                boolean wasHandled = false;
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
+                    wasHandled = appNotice_callback.onManagePreferencesClicked();
+                }
+
                 // Open the App Notice Consent preferences fragmentActivity
-                Util.showManagePreferences(getActivity());
+                if (!wasHandled) {
+                    Util.showManagePreferences(getActivity());
+                }
 
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
@@ -182,11 +196,10 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
                 preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
-//                    preferences_button.getBackground().setColorFilter(Color.parseColor(ric_access_button_color), PorterDuff.Mode.MULTIPLY);
-//                    preferences_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
+                    preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
                 } else {
-                    preferences_button.setBackgroundColor(ric_access_button_color);
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
+                    preferences_button.setSupportBackgroundTintList(colorStateList);
                 }
             }
 
@@ -197,10 +210,10 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                     close_button.setText(appNoticeData.getClose_button());
                 close_button.setTextColor(appNoticeData.getBric_access_button_text_color());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    close_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
-//                    close_button.setBackgroundColor(Color.parseColor(ric_access_button_color));
+                    close_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
                 } else {
-                    close_button.setBackgroundColor(ric_access_button_color);
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
+                    close_button.setSupportBackgroundTintList(colorStateList);
                 }
             }
 

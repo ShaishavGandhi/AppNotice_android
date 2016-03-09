@@ -3,12 +3,14 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -74,8 +77,16 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 				// Send notice for this event
 				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
 
+                // Let the calling class know the the manage preferences button was clicked
+                boolean wasHandled = false;
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
+                    wasHandled = appNotice_callback.onManagePreferencesClicked();
+                }
+
 				// Open the App Notice Consent preferences fragmentActivity
-				Util.showManagePreferences(getActivity());
+                if (!wasHandled) {
+                    Util.showManagePreferences(getActivity());
+                }
 			}
 		});
 
@@ -89,8 +100,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                 // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing())
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
                     appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                }
 
                 // Close this dialog
                 dismiss();
@@ -209,11 +221,12 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (appNoticeData.getRic_click_manage_settings() != null)
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
                 preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.MULTIPLY);
-//                } else {
-//					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
-//                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
+                } else {
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
+                    preferences_button.setSupportBackgroundTintList(colorStateList);
+                }
 				preferences_button.invalidate();
             }
 
@@ -223,11 +236,12 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (appNoticeData.getBric_access_button_text() != null)
                     accept_button.setText(appNoticeData.getBric_access_button_text());
                 accept_button.setTextColor(appNoticeData.getBric_access_button_text_color());
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC);
-//				} else {
-//					accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
-//				}
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
+				} else {
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
+                    accept_button.setSupportBackgroundTintList(colorStateList);
+				}
 				accept_button.invalidate();
             }
 
@@ -237,11 +251,12 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (appNoticeData.getBric_decline_button_text() != null)
                     decline_button.setText(appNoticeData.getBric_decline_button_text());
                 decline_button.setTextColor(appNoticeData.getBric_decline_button_text_color());
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     decline_button.getBackground().setColorFilter(ric_decline_button_color, PorterDuff.Mode.SRC_ATOP);
-//				} else {
-//					decline_button.getBackground().setColorFilter(ric_decline_button_color, PorterDuff.Mode.SRC_ATOP);
-//				}
+				} else {
+                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_explicit_decline_button_color);
+                    decline_button.setSupportBackgroundTintList(colorStateList);
+				}
 				decline_button.invalidate();
             }
         }

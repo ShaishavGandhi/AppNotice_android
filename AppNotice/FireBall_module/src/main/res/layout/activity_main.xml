@@ -56,6 +56,14 @@
             android:layout_gravity="center_horizontal"
             android:checked="true" />
 
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkBox_hybridApp"
+            android:id="@+id/checkBox_hybridApp"
+            android:layout_gravity="center_horizontal"
+            android:checked="false" />
+
         <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
