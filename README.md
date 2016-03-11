@@ -210,3 +210,25 @@ __IceCube_jar:__ This project includes the AppNoticeSDK project as a JAR-based m
 1.  Test both the AAR and the JAR test APKs by copying to an Android device.
 
 1.  Commit and merge the signed APKs and the SDK folders into GitHub.
+
+####Decoding Obfuscated Stack Traces
+
+Current instructions can be found here: http://developer.android.com/tools/help/proguard.html#decoding
+
+When your obfuscated code outputs a stack trace, the method names are obfuscated, which makes debugging hard, if not impossible. Fortunately, whenever ProGuard runs, it outputs a mapping.txt file, which shows you the original class, method, and field names mapped to their obfuscated names.
+
+The retrace.bat script on Windows or the retrace.sh script on Linux or Mac OS X can convert an obfuscated stack trace to a readable one. It is located in the \<sdk_root\>/tools/proguard/ directory. The syntax for executing the retrace tool is:
+
+```
+	retrace.bat|retrace.sh [-verbose] mapping.txt [<stacktrace_file>]
+```
+
+For example:
+
+```
+	retrace.bat -verbose mapping.txt obfuscated_trace.txt
+```
+
+If you do not specify a value for \<stacktrace_file\>, the retrace tool reads from standard input.
+
+The mapping.txt file for the applicable release can be found in the .../release/outputs_*/mapping/release folder in this project.
