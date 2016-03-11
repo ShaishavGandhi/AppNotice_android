@@ -2,10 +2,10 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -215,17 +215,20 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 textView_message.setTextColor(appNoticeData.getRic_color());
             }
 
+            Context context = this.getActivity();
+            Resources resources = context.getResources();
+
             // Preferences button
             AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
             if (preferences_button != null) {
-                if (appNoticeData.getRic_click_manage_settings() != null)
+                if (appNoticeData.getRic_click_manage_settings() != null) {
                     preferences_button.setText(appNoticeData.getRic_click_manage_settings());
+                }
                 preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					preferences_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
-                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
-                    preferences_button.setSupportBackgroundTintList(colorStateList);
+                    preferences_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color));
                 }
 				preferences_button.invalidate();
             }
@@ -233,30 +236,30 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             // Accept button
             AppCompatButton accept_button = (AppCompatButton)v.findViewById(R.id.accept_button);
             if (accept_button != null) {
-                if (appNoticeData.getBric_access_button_text() != null)
+                if (appNoticeData.getBric_access_button_text() != null) {
                     accept_button.setText(appNoticeData.getBric_access_button_text());
+                }
                 accept_button.setTextColor(appNoticeData.getBric_access_button_text_color());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    accept_button.getBackground().setColorFilter(ric_access_button_color, PorterDuff.Mode.SRC_ATOP);
-				} else {
-                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color);
-                    accept_button.setSupportBackgroundTintList(colorStateList);
-				}
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    accept_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
+                } else {
+                    accept_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color));
+                }
 				accept_button.invalidate();
             }
 
             // Decline button
             AppCompatButton decline_button = (AppCompatButton)v.findViewById(R.id.decline_button);
             if (decline_button != null) {
-                if (appNoticeData.getBric_decline_button_text() != null)
+                if (appNoticeData.getBric_decline_button_text() != null) {
                     decline_button.setText(appNoticeData.getBric_decline_button_text());
+                }
                 decline_button.setTextColor(appNoticeData.getBric_decline_button_text_color());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    decline_button.getBackground().setColorFilter(ric_decline_button_color, PorterDuff.Mode.SRC_ATOP);
-				} else {
-                    ColorStateList colorStateList = ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_explicit_decline_button_color);
-                    decline_button.setSupportBackgroundTintList(colorStateList);
-				}
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    decline_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_explicit_decline_button_color, context.getTheme()));
+                } else {
+                    decline_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_explicit_decline_button_color));
+                }
 				decline_button.invalidate();
             }
         }
