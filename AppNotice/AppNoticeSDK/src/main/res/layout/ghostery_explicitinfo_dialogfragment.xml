@@ -54,9 +54,8 @@
         <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ghostery_dialog_button_consent"
-            android:id="@+id/accept_button"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/ghostery_dialog_button_decline"
+            android:id="@+id/decline_button"
             android:layout_weight="1"
             android:textColor="@color/primary_text_default_material_light"
             />
@@ -64,8 +63,9 @@
         <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ghostery_dialog_button_decline"
-            android:id="@+id/decline_button"
+            android:text="@string/ghostery_dialog_button_consent"
+            android:id="@+id/accept_button"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:textColor="@color/primary_text_default_material_light"
             />
