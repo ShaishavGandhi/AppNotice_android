@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -228,7 +226,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
-                    preferences_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color));
+                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
                 }
 				preferences_button.invalidate();
             }
@@ -243,7 +241,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     accept_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
-                    accept_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color));
+                    accept_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
                 }
 				accept_button.invalidate();
             }
@@ -258,7 +256,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     decline_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_explicit_decline_button_color, context.getTheme()));
                 } else {
-                    decline_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_explicit_decline_button_color));
+                    decline_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_explicit_decline_button_color));
                 }
 				decline_button.invalidate();
             }

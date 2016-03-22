@@ -88,6 +88,10 @@
     public static <fields>;
 }
 
+# Ghostery App Notice SDK
+-dontwarn android.content.res.**
+
+
 ###### ADDITIONAL OPTIONS NOT USED NORMALLY
 
 #To keep callback calls. Uncomment if using any

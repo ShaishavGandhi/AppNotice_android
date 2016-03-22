@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -20,7 +19,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -150,6 +148,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         this.useRemoteValues = useRemoteValues;
     }
 
+    @SuppressWarnings("deprecation")    // This is for pre-Android-M getColorStateList which is deprecated in M (level 23)
     private void applyCustomConfig(View v) {
         // Set custom config values from the appNoticeData object
         if (appNoticeData != null && appNoticeData.isInitialized()) {
@@ -202,7 +201,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
-                    preferences_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color));
+                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
                 }
             }
 
@@ -216,7 +215,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
-                    close_button.setSupportBackgroundTintList(ContextCompat.getColorStateList(AppNotice.getAppContext(), R.color.ghostery_dialog_button_color));
+                    close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
                 }
             }
 
