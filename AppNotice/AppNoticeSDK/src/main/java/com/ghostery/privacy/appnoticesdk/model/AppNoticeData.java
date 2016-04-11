@@ -202,7 +202,7 @@ public class AppNoticeData {
     public ArrayList<Tracker> getTrackerListClone() {
         ArrayList<Tracker> trackerArrayListClone = new ArrayList<>();
 
-        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        // Loop through the tracker list and add all tracker IDs and their on/off state
         for (Tracker tracker : trackerArrayList) {
             trackerArrayListClone.add(new Tracker(tracker));
         }

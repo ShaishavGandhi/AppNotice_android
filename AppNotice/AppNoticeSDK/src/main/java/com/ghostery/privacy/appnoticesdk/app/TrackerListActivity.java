@@ -171,19 +171,21 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         int pingBackCount = 0;      // Count the ping-backs
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        for (int i = 0; i < trackerArrayList.size(); i++) {
-            Tracker tracker = trackerArrayList.get(i);
-            Tracker trackerClone = trackerArrayListClone.get(i);
+        if (trackerArrayList.size() == trackerArrayListClone.size()) {
+            for (int i = 0; i < trackerArrayList.size(); i++) {
+                Tracker tracker = trackerArrayList.get(i);
+                Tracker trackerClone = trackerArrayListClone.get(i);
 
-            // If the tracker is non-essential and is changed...
-            if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
-                boolean optOut = tracker.isOn() == false;
-                boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
-                boolean firstOptOut = pingBackCount == 0;
-                boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+                // If the tracker is non-essential and is changed...
+                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
+                    boolean optOut = tracker.isOn() == false;
+                    boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                    boolean firstOptOut = pingBackCount == 0;
+                    boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
 
-                AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
-                pingBackCount++;
+                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
+                    pingBackCount++;
+                }
             }
         }
     }
