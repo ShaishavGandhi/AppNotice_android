@@ -60,43 +60,45 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
 
         appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
-        trackerArrayList = appNoticeData.trackerArrayList;
-        trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
+        if (appNoticeData != null && appNoticeData.isInitialized()) {
+            trackerArrayList = appNoticeData.trackerArrayList;
+            trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
 //            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 //            actionBar.setCustomView(R.layout.ghostery_action_bar_layout);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayHomeAsUpEnabled(true);
 //            actionBar.setHomeButtonEnabled(true);
-             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
+                actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
 
-            // If there is header text in the JSON, use it. Else use the default.
-            if (appNoticeData != null)
-                actionBar.setTitle(appNoticeData.getManage_preferences_header());
-        }
+                // If there is header text in the JSON, use it. Else use the default.
+                if (appNoticeData != null)
+                    actionBar.setTitle(appNoticeData.getManage_preferences_header());
+            }
 
-        setAllNoneControlState();
+            setAllNoneControlState();
 
-		AppCompatTextView manage_preferences_description = (AppCompatTextView)findViewById(R.id.manage_preferences_description);
-        if (manage_preferences_description != null) {
-            AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
-            String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
-            manage_preferences_description.setText(manage_preferences_description_text);
-        }
+            AppCompatTextView manage_preferences_description = (AppCompatTextView)findViewById(R.id.manage_preferences_description);
+            if (manage_preferences_description != null) {
+                AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
+                String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
+                manage_preferences_description.setText(manage_preferences_description_text);
+            }
 
-        if (findViewById(R.id.tracker_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // fragmentActivity should be in two-pane mode.
-            mTwoPane = true;
+            if (findViewById(R.id.tracker_detail_container) != null) {
+                // The detail container view will be present only in the
+                // large-screen layouts (res/values-large and
+                // res/values-sw600dp). If this view is present, then the
+                // fragmentActivity should be in two-pane mode.
+                mTwoPane = true;
 
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            ((TrackerListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.tracker_list))
-                    .setActivateOnItemClick(true);
+                // In two-pane mode, list items should be given the
+                // 'activated' state when touched.
+                ((TrackerListFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.tracker_list))
+                        .setActivateOnItemClick(true);
+            }
         }
 
         // TODO: If exposing deep links into your app, handle intents here.
@@ -171,19 +173,21 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         int pingBackCount = 0;      // Count the ping-backs
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        for (int i = 0; i < trackerArrayList.size(); i++) {
-            Tracker tracker = trackerArrayList.get(i);
-            Tracker trackerClone = trackerArrayListClone.get(i);
+        if (trackerArrayList.size() == trackerArrayListClone.size()) {
+            for (int i = 0; i < trackerArrayList.size(); i++) {
+                Tracker tracker = trackerArrayList.get(i);
+                Tracker trackerClone = trackerArrayListClone.get(i);
 
-            // If the tracker is non-essential and is changed...
-            if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
-                boolean optOut = tracker.isOn() == false;
-                boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
-                boolean firstOptOut = pingBackCount == 0;
-                boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+                // If the tracker is non-essential and is changed...
+                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
+                    boolean optOut = tracker.isOn() == false;
+                    boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                    boolean firstOptOut = pingBackCount == 0;
+                    boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
 
-                AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
-                pingBackCount++;
+                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
+                    pingBackCount++;
+                }
             }
         }
     }

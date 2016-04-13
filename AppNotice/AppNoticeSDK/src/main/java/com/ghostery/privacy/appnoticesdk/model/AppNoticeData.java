@@ -202,7 +202,7 @@ public class AppNoticeData {
     public ArrayList<Tracker> getTrackerListClone() {
         ArrayList<Tracker> trackerArrayListClone = new ArrayList<>();
 
-        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        // Loop through the tracker list and add all tracker IDs and their on/off state
         for (Tracker tracker : trackerArrayList) {
             trackerArrayListClone.add(new Tracker(tracker));
         }
@@ -305,13 +305,15 @@ public class AppNoticeData {
         int changeCount = 0;    // Assume no changes
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        for (int i = 0; i < trackerArrayList.size(); i++) {
-            Tracker tracker = trackerArrayList.get(i);
-            Tracker originalTracker = originalTrackerArrayList.get(i);
+        if (trackerArrayList.size() == originalTrackerArrayList.size()) {
+            for (int i = 0; i < trackerArrayList.size(); i++) {
+                Tracker tracker = trackerArrayList.get(i);
+                Tracker originalTracker = originalTrackerArrayList.get(i);
 
-            // If the tracker is non-essential and is changed...
-            if (!tracker.isEssential() && (tracker.isOn() != originalTracker.isOn())) {
-                changeCount++;
+                // If the tracker is non-essential and is changed...
+                if (!tracker.isEssential() && (tracker.isOn() != originalTracker.isOn())) {
+                    changeCount++;
+                }
             }
         }
 
@@ -748,8 +750,11 @@ public class AppNoticeData {
             saveTrackerStates();
 
             // Dismiss the progress dialog
-            if (progressDialog.isShowing())
-                progressDialog.dismiss();
+            if((progressDialog != null) && progressDialog.isShowing() ){
+                try {
+                    progressDialog.dismiss();
+                } catch (Exception e) {}
+            }
         }
 
         protected String getFormattedJSONUrl() {

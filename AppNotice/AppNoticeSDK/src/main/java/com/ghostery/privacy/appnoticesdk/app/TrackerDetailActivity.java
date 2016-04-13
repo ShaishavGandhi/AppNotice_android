@@ -132,6 +132,9 @@ public class TrackerDetailActivity extends AppCompatActivity {
     }
 
     public void setActionBarTitle(int titleId){
-        getSupportActionBar().setTitle(titleId);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(titleId);
+        }
     }
 }

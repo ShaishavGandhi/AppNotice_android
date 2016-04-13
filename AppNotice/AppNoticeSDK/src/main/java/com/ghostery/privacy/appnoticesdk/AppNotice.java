@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
@@ -21,6 +23,7 @@ import java.util.HashMap;
  */
 public class AppNotice {
 
+    private static final String TAG = "AppNotice";
     private AppNoticeData appNoticeData;
     private AppNotice_Callback appNotice_callback;
     private static Activity extActivity = null;
@@ -127,38 +130,46 @@ public class AppNotice {
     private void startConsentFlow(boolean useRemoteValues) {
         // appNoticeData should always be initialized at this point
 
-        // Determine if we need to show this Implicit Notice dialog box
-        boolean showNotice = true;
-        if (appNoticeData.getBric()) {
-            showNotice = appNoticeData.getExplicitNoticeDisplayStatus();
+        if (appNoticeData == null || !appNoticeData.isInitialized()) {
+            // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
+            // This forces the app to restart in a way that the SDK gets properly initialized.
+            // TODO: Should this be a callback to the host app?
+            Log.d(TAG, "Force restart the host app to correctly init the SDK.");
+            Util.forceAppRestart(extActivity);
         } else {
-            showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
-        }
-
-        if (showNotice) {
-            FragmentManager fm = extActivity.getFragmentManager();
-            FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-            // Create and show the dialog.
+            // Determine if we need to show this Implicit Notice dialog box
+            boolean showNotice = true;
             if (appNoticeData.getBric()) {
-                ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-//                explicitInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
-                explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
-                explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
-
+                showNotice = appNoticeData.getExplicitNoticeDisplayStatus();
             } else {
-                ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
-//                impliedInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
-                impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
-                impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
-
-                // Remember that this Implicit Notice dialog box was displayed
-                AppNoticeData.incrementImplicitNoticeDisplayCount();
-
+                showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
             }
-        } else {
-            // If not showing a notice, return a true status to the
-            appNotice_callback.onNoticeSkipped();
+
+            if (showNotice) {
+                FragmentManager fm = extActivity.getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                // Create and show the dialog.
+                if (appNoticeData.getBric()) {
+                    ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
+//                explicitInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
+                    explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
+                    explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
+
+                } else {
+                    ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
+//                impliedInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
+                    impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
+                    impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
+
+                    // Remember that this Implicit Notice dialog box was displayed
+                    AppNoticeData.incrementImplicitNoticeDisplayCount();
+
+                }
+            } else {
+                // If not showing a notice, return a true status to the
+                appNotice_callback.onNoticeSkipped();
+            }
         }
     }
 
