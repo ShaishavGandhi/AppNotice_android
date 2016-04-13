@@ -74,7 +74,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
 
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
                 // Let the calling class know the the manage preferences button was clicked
                 boolean wasHandled = false;
@@ -86,9 +86,6 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 if (!wasHandled) {
                     Util.showManagePreferences(getActivity());
                 }
-
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
             }
         });
 
