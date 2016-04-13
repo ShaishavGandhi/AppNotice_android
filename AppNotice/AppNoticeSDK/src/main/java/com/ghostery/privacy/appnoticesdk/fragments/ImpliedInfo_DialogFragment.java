@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 public class ImpliedInfo_DialogFragment extends DialogFragment {
+    private static final String TAG = "ImpliedInfo_Dialog";
     int mNum;
     private AppNoticeData appNoticeData;
     private boolean useRemoteValues = true;
@@ -151,7 +154,13 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
     @SuppressWarnings("deprecation")    // This is for pre-Android-M getColorStateList which is deprecated in M (level 23)
     private void applyCustomConfig(View v) {
         // Set custom config values from the appNoticeData object
-        if (appNoticeData != null && appNoticeData.isInitialized()) {
+        if (appNoticeData == null || !appNoticeData.isInitialized()) {
+            // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
+            // This forces the app to restart in a way that the SDK gets properly initialized.
+            // TODO: Should this be a callback to the host app?
+            Log.d(TAG, "Force restart the host app to correctly init the SDK.");
+            Util.forceAppRestart(getActivity());
+        } else {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
             int ric_bg = appNoticeData.getRic_bg();

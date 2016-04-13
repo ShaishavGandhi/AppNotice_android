@@ -33,6 +33,17 @@ public class Util {
         return isValid;
     }
 
+    public static void forceAppRestart(Activity activity) {
+        // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
+        // This forces the app to restart in a way that the SDK gets properly initialized.
+        // TODO: Should this be a callback to the host app?
+        Intent i = activity.getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.finish();
+        activity.startActivity(i);
+    }
+
 //    public static int getContrastColor(int color, int alpha)
 //    {
 //        int d = 0;
