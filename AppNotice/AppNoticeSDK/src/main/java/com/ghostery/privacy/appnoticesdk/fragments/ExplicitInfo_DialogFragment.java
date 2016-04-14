@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -111,20 +110,20 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
         AppCompatButton decline_button = (AppCompatButton)view.findViewById(R.id.decline_button);
         decline_button.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// User cancelled the dialog...negating consent
+            public void onClick(View v) {
+                // User cancelled the dialog...negating consent
 
-				// Send notice for this event
-				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
 
-				// Let the calling class know the selected option
-				if (appNotice_callback != null && !getActivity().isFinishing())
-					appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
+                // Let the calling class know the selected option
+                if (appNotice_callback != null && !getActivity().isFinishing())
+                    appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
 
                 // Close this dialog
                 dismiss();
             }
-		});
+        });
 
         return view;
     }
@@ -172,10 +171,6 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         dismiss();
     }
 
-    public void setUseRemoteValues(boolean useRemoteValues) {
-        this.useRemoteValues = useRemoteValues;
-    }
-
     private void applyCustomConfig(View v) {
         // Set custom config values from the appNoticeData object
         if (appNoticeData == null || !appNoticeData.isInitialized()) {
@@ -187,16 +182,16 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
         } else {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
-            int ric_access_button_color = appNoticeData.getBric_access_button_color();
-            int ric_decline_button_color = appNoticeData.getBric_decline_button_color();
+            int ric_access_button_color = appNoticeData.getDialogButtonColor();
+            int ric_decline_button_color = appNoticeData.getDialogExplicitDeclineButtonColor();
 
             // Set background color and opacity
             if (linearLayout_outer != null) {
-                int bric_bg = appNoticeData.getBric_bg();
+                int bric_bg = appNoticeData.getDialogBackgroundColor();
                 linearLayout_outer.setBackgroundColor(bric_bg);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    float opacityFloat = appNoticeData.getRic_opacity();
+                    float opacityFloat = appNoticeData.getConsentFlowDialogOpacity();
                     if (opacityFloat < 1F && opacityFloat >= 0) {
                         Drawable d = new ColorDrawable(Color.BLACK);
                         d.setAlpha((int)(255 * opacityFloat));
@@ -209,16 +204,16 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             // Title
             AppCompatTextView textView_title = (AppCompatTextView)v.findViewById(R.id.textView_title);
             if (textView_title != null) {
-                textView_title.setText(appNoticeData.getBric_header_text());
-                textView_title.setTextColor(appNoticeData.getBric_header_text_color());
+                textView_title.setText(appNoticeData.getDialogHeaderText());
+                textView_title.setTextColor(appNoticeData.getDialogHeaderTextColor());
             }
 
             // Message
             AppCompatTextView textView_message = (AppCompatTextView)v.findViewById(R.id.textView_message);
             if (textView_message != null) {
-                if (appNoticeData.getBric_content1() != null)
-                    textView_message.setText(appNoticeData.getBric_content1());
-                textView_message.setTextColor(appNoticeData.getRic_color());
+                if (appNoticeData.getDialogExplicitMessage() != null)
+                    textView_message.setText(appNoticeData.getDialogExplicitMessage());
+                textView_message.setTextColor(appNoticeData.getDialogMessageTextColor());
             }
 
             Context context = this.getActivity();
@@ -227,10 +222,10 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             // Preferences button
             AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
             if (preferences_button != null) {
-                if (appNoticeData.getRic_click_manage_settings() != null) {
-                    preferences_button.setText(appNoticeData.getRic_click_manage_settings());
+                if (appNoticeData.getDialogButtonPreferences() != null) {
+                    preferences_button.setText(appNoticeData.getDialogButtonPreferences());
                 }
-                preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+                preferences_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
@@ -242,10 +237,10 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             // Accept button
             AppCompatButton accept_button = (AppCompatButton)v.findViewById(R.id.accept_button);
             if (accept_button != null) {
-                if (appNoticeData.getBric_access_button_text() != null) {
-                    accept_button.setText(appNoticeData.getBric_access_button_text());
+                if (appNoticeData.getDialogButtonConsent() != null) {
+                    accept_button.setText(appNoticeData.getDialogButtonConsent());
                 }
-                accept_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+                accept_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     accept_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
@@ -257,10 +252,10 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
             // Decline button
             AppCompatButton decline_button = (AppCompatButton)v.findViewById(R.id.decline_button);
             if (decline_button != null) {
-                if (appNoticeData.getBric_decline_button_text() != null) {
-                    decline_button.setText(appNoticeData.getBric_decline_button_text());
+                if (appNoticeData.getDialogButtonDecline() != null) {
+                    decline_button.setText(appNoticeData.getDialogButtonDecline());
                 }
-                decline_button.setTextColor(appNoticeData.getBric_decline_button_text_color());
+                decline_button.setTextColor(appNoticeData.getDialogExplicitDeclineButtonTextColor());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     decline_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_explicit_decline_button_color, context.getTheme()));
                 } else {

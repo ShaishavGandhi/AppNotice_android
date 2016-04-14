@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
@@ -30,34 +29,56 @@ public class AppNotice {
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
 
-	/**
-	 * AppNotice constructor
+    /**
+     * AppNotice constructor
+     * @param activity: Usually your start-up activity.
+     * @param companyId: The company ID assigned to you for App Notice consent.
+     * @param configId: The Configuration ID of the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     */
+    public AppNotice(Activity activity, int companyId, int configId, AppNotice_Callback appNotice_callback) {
+        AppNotice(activity, companyId, configId, appNotice_callback);
+    }
+
+    /**
+	 * AppNotice constructor (deprecated)
 	 * @param activity: Usually your start-up activity
 	 * @param companyId: The company ID assigned to you for App Notice consent
 	 * @param configId: The Configuration ID of the configuration created for this app
-	 * @param useRemoteValues:
-	 *        True = Try to use the App Notice consent dialog configuration parameters from the service;
-	 *        False = Use local resource values instead of calling the service
+     * @param useRemoteValues:
+     *        True = Try to use the App Notice consent dialog configuration parameters from the service;
+     *        False = Use local resource values instead of calling the service
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
 	 */
     public AppNotice(Activity activity, int companyId, int configId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
+        AppNotice(activity, companyId, configId, appNotice_callback);
+	}
+
+    /**
+     * AppNotice method to combine the current and deprecated constructor functionality
+     * @param activity: Usually your start-up activity.
+     * @param companyId: The company ID assigned to you for App Notice consent.
+     * @param configId: The Configuration ID of the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     */
+    private void AppNotice(Activity activity, int companyId, int configId, AppNotice_Callback appNotice_callback) {
         appContext = activity.getApplicationContext();
         extActivity = activity;
-		if ((companyId <= 0) || (configId <= 0)) {
-			throw(new IllegalArgumentException("Company ID and Config ID must both be valid identifiers."));
-		}
+        if ((companyId <= 0) || (configId <= 0)) {
+            throw(new IllegalArgumentException("Company ID and Config ID must both be valid identifiers."));
+        }
 
-		// Remember the provided callback
-		this.appNotice_callback = appNotice_callback;
-		Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
+        // Remember the provided callback
+        this.appNotice_callback = appNotice_callback;
+        Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
 
-		// Get either a new or initialized tracker config object
-		appNoticeData = AppNoticeData.getInstance(extActivity);
-		appNoticeData.useRemoteValues = useRemoteValues;
+        // Get either a new or initialized tracker config object
+        appNoticeData = AppNoticeData.getInstance(extActivity);
 
-		// Keep track of the company ID and the configuration ID
-		appNoticeData.setCompanyId(companyId);
-		appNoticeData.setConfigId(configId);
-	}
+        // Keep track of the company ID and the configuration ID
+        appNoticeData.setCompanyId(companyId);
+        appNoticeData.setConfigId(configId);
+    }
 
     /**
      * Starts the App Notice Consent flow. Must be called before your app begins tracking. The flow type
@@ -94,7 +115,7 @@ public class AppNotice {
         if (appNoticeData.isInitialized()) {
             // If initialized, use what we have
             if (isConsentFlow) {
-                startConsentFlow(appNoticeData.useRemoteValues);
+                openConsentFlowDialog();
             } else {
                 // Open the App Notice Consent preferences fragmentActivity
                 Util.showManagePreferences(extActivity);
@@ -113,7 +134,7 @@ public class AppNotice {
 
                     if (isConsentFlow) {
                         // Handle the response
-                        startConsentFlow(appNoticeData.useRemoteValues);
+                        openConsentFlowDialog();
                     } else {
                         // Open the App Notice Consent preferences fragmentActivity
                         Util.showManagePreferences(extActivity);
@@ -127,7 +148,7 @@ public class AppNotice {
 
     }
 
-    private void startConsentFlow(boolean useRemoteValues) {
+    private void openConsentFlowDialog() {
         // appNoticeData should always be initialized at this point
 
         if (appNoticeData == null || !appNoticeData.isInitialized()) {
@@ -139,7 +160,7 @@ public class AppNotice {
         } else {
             // Determine if we need to show this Implicit Notice dialog box
             boolean showNotice = true;
-            if (appNoticeData.getBric()) {
+            if (appNoticeData.getConsentFlowType()) {
                 showNotice = appNoticeData.getExplicitNoticeDisplayStatus();
             } else {
                 showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
@@ -150,16 +171,12 @@ public class AppNotice {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
                 // Create and show the dialog.
-                if (appNoticeData.getBric()) {
+                if (appNoticeData.getConsentFlowType()) {
                     ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-//                explicitInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
-                    explicitInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                     explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
                 } else {
                     ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
-//                impliedInfo_DialogFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ghostery_DialogTheme);
-                    impliedInfo_DialogFragment.setUseRemoteValues(useRemoteValues);
                     impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
 
                     // Remember that this Implicit Notice dialog box was displayed

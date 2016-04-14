@@ -3,7 +3,6 @@ package com.ghostery.privacy.appnoticesdk.model;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -31,7 +30,6 @@ import java.util.HashMap;
 // Never instantiate directly. Use getInstance() instead.
 public class AppNoticeData {
     private static final String TAG = "AppNoticeData";
-    public boolean useRemoteValues = true;
 
     private static AppNoticeData instance;
     private static Activity activity;
@@ -39,9 +37,9 @@ public class AppNoticeData {
     private boolean initialized = false;
     private static int companyId;
     private static int configId;
-    private int ric_max_default = 3;
-    private int ric_session_max_default = 1;
-    private int ric_opacity_default = 100;
+    private int implied_flow_30day_display_max_default = 3;
+    private int implied_flow_session_display_max_default = 1;
+    private int consent_flow_dialog_opacity_default = 100;
 
     private final static String TAG_APPNOTICEDATA = "appnoticedata";
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
@@ -75,58 +73,32 @@ public class AppNoticeData {
     private static final String FILE_NOT_FOUND = "File not found";
 
     // Field tags
-    private static final String TAG_BRIC = "bric";                                                      // If true, display the Explicit Consent dialog; If false, display the Implied Consent dialog
-    private static final String TAG_BRIC_ACCESS_BUTTON_COLOR = "bric_access_button_color";              // Button background color for these buttons: Explicit Accept button on  Consent dialog
-    private static final String TAG_BRIC_ACCESS_BUTTON_TEXT = "bric_access_button_text";                // Button text for Accept button on Explicit Consent dialog
-    private static final String TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR = "bric_access_button_text_color";    // Button text color for Accept button on Explicit Consent dialog
-    private static final String TAG_BRIC_BG = "bric_bg";                                                // Dialog background color for Explicit Consent dialog (missing in doc)
-    private static final String TAG_BRIC_CONTENT1 = "bric_content1";                                    // Message on Explicit Consent dialog (Combine bric_content1, bric_content2 and bric_content3 into paragraphs of this message)
-    private static final String TAG_BRIC_DECLINE_BUTTON_COLOR = "bric_decline_button_color";            // Button background color for Decline button on Explicit Consent dialog
-    private static final String TAG_BRIC_DECLINE_BUTTON_TEXT = "bric_decline_button_text";              // Button text for Decline button on Explicit Consent dialog
-    private static final String TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR = "bric_decline_button_text_color";  // Button text color for Decline button on Explicit Consent dialog
-    private static final String TAG_BRIC_HEADER_TEXT = "bric_header_text";                              // Title on Explicit Consent dialog
-    private static final String TAG_BRIC_HEADER_TEXT_COLOR = "bric_header_text_color";                  // Title color on Explicit Consent dialog
-    private static final String TAG_CLOSE_BUTTON = "close_button";                                      // Button text for Close buttons on both Implied Consent and Explicit Consent dialogs
-    private static final String TAG_MANAGE_PREFERENCES_DESCRIPTION = "manage_preferences_description";  // Text for the header of the Manage Privacy Preferences screen
-    private static final String TAG_MANAGE_PREFERENCES_HEADER = "manage_preferences_header";            // Text for the description section of the Manage Privacy Preferences screen
-    private static final String TAG_RIC = "ric";                                                        // Message on Implied Consent dialog
-    private static final String TAG_RIC_BG = "ric_bg";                                                  // Dialog background color for Implied Consent dialog
-    private static final String TAG_RIC_CLICK_MANAGE_SETTINGS = "ric_click_manage_settings";            // Button text for Manage Preferences button on Explicit Consent dialog
-    private static final String TAG_RIC_COLOR = "ric_color";                                            // Message text color for all dialogs
-    private static final String TAG_RIC_MAX = "ric_max";                                                // Maximum number of times the Implied Consent dialog should be displayed in 30 days.
-    private static final String TAG_RIC_OPACITY = "ric_opacity";                                        // Opacity setting (scale 0 to 100) for all dialogs
-    private static final String TAG_RIC_SESSION_MAX = "ric_session_max";                                // Maximum number of times the Implied Consent dialog should be displayed in a session.
-    private static final String TAG_RIC_TITLE = "ric_title";                                            // Title on Implied Consent dialog
-    private static final String TAG_RIC_TITLE_COLOR = "ric_title_color";                                // Title color on Implied Consent dialog
     private static final String TAG_TRACKERS = "trackers";                                              // Tracker list
 
     // Field values
-    private Boolean bric = false;
-    private int bric_access_button_color;
-    private String bric_access_button_text;
-    private int bric_access_button_text_color;
-    private int bric_bg;
-    private String bric_content1;
-    private int bric_decline_button_color;
-    private String bric_decline_button_text;
-    private int bric_decline_button_text_color;
-    private String bric_header_text;
-    private int bric_header_text_color;
-    private String close_button;
-    private String manage_preferences_description;
-    private String manage_preferences_header;
-    private String ric;
-    private int ric_bg;
-    private String ric_click_manage_settings;
-    private int ric_color;
-    private int ric_max;
+    private Boolean consent_flow_type = false; // If true, display the Explicit Consent dialog; If false, display the Implied Consent dialog
+    private int dialog_button_color; // Button background color for these buttons: Explicit Accept button on  Consent dialog
+    private String dialog_button_consent; // Button text for Accept button on Explicit Consent dialog
+    private int dialog_explicit_accept_button_text_color; // Button text color for Accept button on Explicit Consent dialog
+    private int dialog_background_color; // Dialog background color for Consent dialog (missing in doc)
+    private String dialog_explicit_message; // Message on Explicit Consent dialog (Combine dialog_explicit_message, bric_content2 and bric_content3 into paragraphs of this message)
+    private int dialog_explicit_decline_button_color; // Button background color for Decline button on Explicit Consent dialog
+    private String dialog_button_decline; // Button text for Decline button on Explicit Consent dialog
+    private int dialog_explicit_decline_button_text_color; // Button text color for Decline button on Explicit Consent dialog
+    private String dialog_header_text; // Title on Consent dialog
+    private int dialog_header_text_color; // Title color on Consent dialog
+    private String dialog_button_close; // Button text for Close buttons on both Implied Consent dialogs
+    private String preferences_description; // Text for the header of the Manage Privacy Preferences screen
+    private String preferences_header; // Text for the description section of the Manage Privacy Preferences screen
+    private String dialog_implicit_message; // Message on Implied Consent dialog
+    private String dialog_button_preferences; // Button text for Manage Preferences button on the Consent dialog
+    private int dialog_message_text_color; // Message text color for all dialogs
+    private int implied_flow_30day_display_max; // Maximum number of times the Implied Consent dialog should be displayed in 30 days.
 //    private String ric_maxString;
-    private float ric_opacity = 1F;
+    private float consent_flow_dialog_opacity = 1F; // Opacity setting (scale 0 to 100) for all dialogs
 //    private String ric_opacityString;
-    private int ric_session_max;
+    private int implied_flow_session_display_max; // Maximum number of times the Implied Consent dialog should be displayed in a session.
 //    private String ric_session_maxString;
-    private String ric_title;
-    private int ric_title_color;
 
     public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
 
@@ -138,29 +110,26 @@ public class AppNoticeData {
     public int getConfigId() { return configId; }
     public void setConfigId(int configId) { this.configId = configId; }
 
-    public Boolean getBric() { return bric != null ? bric : true; }
-    public int getBric_access_button_color() { return bric_access_button_color; }
-    public String getBric_access_button_text() { return bric_access_button_text; }
-    public int getBric_access_button_text_color() { return bric_access_button_text_color; }
-    public int getBric_bg() { return bric_bg; }
-    public String getBric_content1() { return bric_content1; }
-    public int getBric_decline_button_color() { return bric_decline_button_color; }
-    public String getBric_decline_button_text() { return bric_decline_button_text; }
-    public int getBric_decline_button_text_color() { return bric_decline_button_text_color; }
-    public String getBric_header_text() { return bric_header_text; }
-    public int getBric_header_text_color() { return bric_header_text_color; }
-    public String getClose_button() { return close_button; }
-    public String getManage_preferences_description() { return manage_preferences_description; }
-    public String getManage_preferences_header() { return manage_preferences_header; }
-    public String getRic() { return ric; }
-    public int getRic_bg() { return ric_bg; }
-    public String getRic_click_manage_settings() { return ric_click_manage_settings; }
-    public int getRic_color() { return ric_color; }
-    public int getRic_max() { return ric_max; }
-    public float getRic_opacity() { return ric_opacity / 100; }
-    public int getRic_session_max() { return ric_session_max; }
-    public String getRic_title() { return ric_title; }
-    public int getRic_title_color() { return ric_title_color; }
+    public Boolean getConsentFlowType() { return consent_flow_type != null ? consent_flow_type : true; }
+    public int getDialogButtonColor() { return dialog_button_color; }
+    public String getDialogButtonConsent() { return dialog_button_consent; }
+    public int getDialogExplicitAcceptButtonTextColor() { return dialog_explicit_accept_button_text_color; }
+    public int getDialogBackgroundColor() { return dialog_background_color; }
+    public String getDialogExplicitMessage() { return dialog_explicit_message; }
+    public int getDialogExplicitDeclineButtonColor() { return dialog_explicit_decline_button_color; }
+    public String getDialogButtonDecline() { return dialog_button_decline; }
+    public int getDialogExplicitDeclineButtonTextColor() { return dialog_explicit_decline_button_text_color; }
+    public String getDialogHeaderText() { return dialog_header_text; }
+    public int getDialogHeaderTextColor() { return dialog_header_text_color; }
+    public String getDialogButtonClose() { return dialog_button_close; }
+    public String getPreferencesDescription() { return preferences_description; }
+    public String getPreferencesHeader() { return preferences_header; }
+    public String getDialogImplicitMessage() { return dialog_implicit_message; }
+    public String getDialogButtonPreferences() { return dialog_button_preferences; }
+    public int getDialogMessageTextColor() { return dialog_message_text_color; }
+    public int getImpliedFlow30DayDisplayMax() { return implied_flow_30day_display_max; }
+    public float getConsentFlowDialogOpacity() { return consent_flow_dialog_opacity / 100; }
+    public int getImpliedFlowSessionDisplayMax() { return implied_flow_session_display_max; }
 //    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
 
 
@@ -179,9 +148,9 @@ public class AppNoticeData {
     // Constructor
     private AppNoticeData() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
-        ric_max = ric_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_30day_display_max);
-        ric_session_max = ric_session_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
-        ric_opacity = ric_opacity_default = activity.getResources().getInteger(R.integer.ghostery_consent_flow_dialog_opacity);
+        implied_flow_30day_display_max = implied_flow_30day_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_30day_display_max);
+        implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
+        consent_flow_dialog_opacity = consent_flow_dialog_opacity_default = activity.getResources().getInteger(R.integer.ghostery_consent_flow_dialog_opacity);
     }
 
     public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
@@ -434,11 +403,11 @@ public class AppNoticeData {
             AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
         }
 
-        if (ric_session_count >= ric_session_max) {                 // If displayed enough in this session...
+        if (ric_session_count >= implied_flow_session_display_max) {                 // If displayed enough in this session...
             showNotice = false;                                     //    don't display it now
         } else {
             if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) {     // If displayed less than 30 days ago...
-                if (implicit_display_count >= ric_max) {                                  // If displayed enough in last 30 days...
+                if (implicit_display_count >= implied_flow_30day_display_max) {                                  // If displayed enough in last 30 days...
                     showNotice = false;                                                   //    don't display it now
                 }
             } else {
@@ -582,74 +551,31 @@ public class AppNoticeData {
                 }
 
                 // Parse the returned JSON string
-                if (useRemoteValues && jsonObj != null){
-                    Log.d(TAG, "Response: " + jsonStr);
+                consent_flow_type = resources.getBoolean(R.bool.ghostery_consent_flow_type);
+                dialog_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
+                dialog_button_consent = resources.getString(R.string.ghostery_dialog_button_consent);
+                dialog_explicit_accept_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
+                dialog_background_color = resources.getColor(R.color.ghostery_dialog_background_color);
+                dialog_explicit_message = resources.getString(R.string.ghostery_dialog_explicit_message);
+                dialog_explicit_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
+                dialog_button_decline = resources.getString(R.string.ghostery_dialog_button_decline);
+                dialog_explicit_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
+                dialog_header_text = resources.getString(R.string.ghostery_dialog_header_text);
+                dialog_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
+                dialog_button_close = resources.getString(R.string.ghostery_dialog_button_close);
+                preferences_description = resources.getString(R.string.ghostery_preferences_description);
+                preferences_header = resources.getString(R.string.ghostery_preferences_header);
+                dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
+                dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
+                dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
+                implied_flow_30day_display_max = implied_flow_30day_display_max_default;
+                consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
+                implied_flow_session_display_max = implied_flow_session_display_max_default;
 
-                    try {
-                        bric = jsonObj.isNull(TAG_BRIC)? resources.getBoolean(R.bool.ghostery_consent_flow_type) : jsonObj.getBoolean(TAG_BRIC);
-                        bric_access_button_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_COLOR)? resources.getColor(R.color.ghostery_dialog_button_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_COLOR));
-                        bric_access_button_text = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT)? resources.getString(R.string.ghostery_dialog_button_consent) : jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT);
-                        bric_access_button_text_color = jsonObj.isNull(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_ACCESS_BUTTON_TEXT_COLOR));
-                        bric_bg = jsonObj.isNull(TAG_BRIC_BG)? resources.getColor(R.color.ghostery_dialog_background_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_BG));
-                        bric_content1 = jsonObj.isNull(TAG_BRIC_CONTENT1)? resources.getString(R.string.ghostery_dialog_explicit_message) : jsonObj.getString(TAG_BRIC_CONTENT1);
-                        bric_decline_button_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_COLOR));
-                        bric_decline_button_text = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT)? resources.getString(R.string.ghostery_dialog_button_decline) : jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT);
-                        bric_decline_button_text_color = jsonObj.isNull(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_DECLINE_BUTTON_TEXT_COLOR));
-                        bric_header_text = jsonObj.isNull(TAG_BRIC_HEADER_TEXT)? resources.getString(R.string.ghostery_dialog_header_text) : jsonObj.getString(TAG_BRIC_HEADER_TEXT);
-                        bric_header_text_color = jsonObj.isNull(TAG_BRIC_HEADER_TEXT_COLOR)? resources.getColor(R.color.ghostery_dialog_header_text_color) : Color.parseColor(jsonObj.getString(TAG_BRIC_HEADER_TEXT_COLOR));
-                        close_button = jsonObj.isNull(TAG_CLOSE_BUTTON)? resources.getString(R.string.ghostery_dialog_button_close) : jsonObj.getString(TAG_CLOSE_BUTTON);
-                        manage_preferences_description = jsonObj.isNull(TAG_MANAGE_PREFERENCES_DESCRIPTION)? resources.getString(R.string.ghostery_preferences_description) : jsonObj.getString(TAG_MANAGE_PREFERENCES_DESCRIPTION);
-                        manage_preferences_header = jsonObj.isNull(TAG_MANAGE_PREFERENCES_HEADER)? resources.getString(R.string.ghostery_preferences_header) : jsonObj.getString(TAG_MANAGE_PREFERENCES_HEADER);
-                        ric = jsonObj.isNull(TAG_RIC)? resources.getString(R.string.ghostery_dialog_implicit_message) : jsonObj.getString(TAG_RIC);
-                        ric_bg = jsonObj.isNull(TAG_RIC_BG)? resources.getColor(R.color.ghostery_dialog_background_color) : Color.parseColor(jsonObj.getString(TAG_RIC_BG));
-                        ric_click_manage_settings = jsonObj.isNull(TAG_RIC_CLICK_MANAGE_SETTINGS)? resources.getString(R.string.ghostery_dialog_button_preferences) : jsonObj.getString(TAG_RIC_CLICK_MANAGE_SETTINGS);
-                        ric_color = jsonObj.isNull(TAG_RIC_COLOR)? resources.getColor(R.color.ghostery_dialog_message_text_color) : Color.parseColor(jsonObj.getString(TAG_RIC_COLOR));
-                        ric_max = jsonObj.isNull(TAG_RIC_MAX)? ric_max_default : jsonObj.getInt(TAG_RIC_MAX);
-                        ric_opacity = jsonObj.isNull(TAG_RIC_OPACITY)? ric_opacity_default : jsonObj.getInt(TAG_RIC_OPACITY);
-                        ric_session_max = jsonObj.isNull(TAG_RIC_SESSION_MAX) ? ric_session_max_default : jsonObj.getInt(TAG_RIC_SESSION_MAX);
-                        ric_title = jsonObj.isNull(TAG_RIC_TITLE)? resources.getString(R.string.ghostery_dialog_header_text) : jsonObj.getString(TAG_RIC_TITLE);
-                        ric_title_color = jsonObj.isNull(TAG_RIC_TITLE_COLOR)? resources.getColor(R.color.ghostery_dialog_header_text_color) : Color.parseColor(jsonObj.getString(TAG_RIC_TITLE_COLOR));
-
-                        initTrackerList(jsonObj);
-
-                        initialized = true;
-                    } catch (JSONException e) {
-                        Log.e(TAG, "JSONException while parsing the JSON object.", e);
-                    }
-                } else {
-                    if (useRemoteValues)
-                        Log.d(TAG, "Using local values because configuration JSON could not be retrieved.");
-                    else
-                        Log.d(TAG, "Using local values as requested.");
-
-                    bric = resources.getBoolean(R.bool.ghostery_consent_flow_type);
-                    bric_access_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
-                    bric_access_button_text = resources.getString(R.string.ghostery_dialog_button_consent);
-                    bric_access_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
-                    bric_bg = resources.getColor(R.color.ghostery_dialog_background_color);
-                    bric_content1 = resources.getString(R.string.ghostery_dialog_explicit_message);
-                    bric_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
-                    bric_decline_button_text = resources.getString(R.string.ghostery_dialog_button_decline);
-                    bric_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
-                    bric_header_text = resources.getString(R.string.ghostery_dialog_header_text);
-                    bric_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
-                    close_button = resources.getString(R.string.ghostery_dialog_button_close);
-                    manage_preferences_description = resources.getString(R.string.ghostery_preferences_description);
-                    manage_preferences_header = resources.getString(R.string.ghostery_preferences_header);
-                    ric = resources.getString(R.string.ghostery_dialog_implicit_message);
-                    ric_bg = resources.getColor(R.color.ghostery_dialog_background_color);
-                    ric_click_manage_settings = resources.getString(R.string.ghostery_dialog_button_preferences);
-                    ric_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
-                    ric_max = ric_max_default;
-                    ric_opacity = ric_opacity_default;
-                    ric_session_max = ric_session_max_default;
-                    ric_title = resources.getString(R.string.ghostery_dialog_header_text);
-                    ric_title_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
-
-                    if (jsonObj != null)
-                        initTrackerList(jsonObj);
-
+                if (jsonObj != null) {
+                    initTrackerList(jsonObj);
                 }
+
             } catch (NumberFormatException e) {
                 Log.e(TAG, "Exception while parsing elements of the JSON object", e);
             } catch (Resources.NotFoundException e) {

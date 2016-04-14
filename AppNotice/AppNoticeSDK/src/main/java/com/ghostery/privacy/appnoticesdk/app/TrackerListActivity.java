@@ -74,7 +74,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
                 // If there is header text in the JSON, use it. Else use the default.
                 if (appNoticeData != null)
-                    actionBar.setTitle(appNoticeData.getManage_preferences_header());
+                    actionBar.setTitle(appNoticeData.getPreferencesHeader());
             }
 
             setAllNoneControlState();
@@ -82,7 +82,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             AppCompatTextView manage_preferences_description = (AppCompatTextView)findViewById(R.id.manage_preferences_description);
             if (manage_preferences_description != null) {
                 AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
-                String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
+                String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
                 manage_preferences_description.setText(manage_preferences_description_text);
             }
 
@@ -226,12 +226,12 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     public void onClickDescription(View view) {
-        String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
+        String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
 
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(appNoticeData.getManage_preferences_header());
+        alertDialog.setTitle(appNoticeData.getPreferencesHeader());
         alertDialog.setMessage(manage_preferences_description_text);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getClose_button(),
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
