@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 public class Util {
     public static final String SP_COMPANY_ID = "sp_companyId";
     public static final String SP_CONFIG_ID = "sp_configId";
-    public static final String SP_USE_REMOTEVALUES = "sp_useRemoteValues";
+    public static final String SP_IS_IMPLIED = "sp_isImplied";
     public static final String SP_IS_HYBRIDAPP = "sp_isHybridApp";
 
     /**

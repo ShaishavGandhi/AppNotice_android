@@ -41,7 +41,6 @@ public class AppNoticeData {
     private int implied_flow_session_display_max_default = 1;
     private int consent_flow_dialog_opacity_default = 100;
 
-    private final static String TAG_APPNOTICEDATA = "appnoticedata";
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
 
     // 0 = company ID; 1 = pub-notice ID
@@ -76,12 +75,11 @@ public class AppNoticeData {
     private static final String TAG_TRACKERS = "trackers";                                              // Tracker list
 
     // Field values
-    private Boolean consent_flow_type = false; // If true, display the Explicit Consent dialog; If false, display the Implied Consent dialog
     private int dialog_button_color; // Button background color for these buttons: Explicit Accept button on  Consent dialog
     private String dialog_button_consent; // Button text for Accept button on Explicit Consent dialog
     private int dialog_explicit_accept_button_text_color; // Button text color for Accept button on Explicit Consent dialog
     private int dialog_background_color; // Dialog background color for Consent dialog (missing in doc)
-    private String dialog_explicit_message; // Message on Explicit Consent dialog (Combine dialog_explicit_message, bric_content2 and bric_content3 into paragraphs of this message)
+    private String dialog_explicit_message; // Message on Explicit Consent dialog
     private int dialog_explicit_decline_button_color; // Button background color for Decline button on Explicit Consent dialog
     private String dialog_button_decline; // Button text for Decline button on Explicit Consent dialog
     private int dialog_explicit_decline_button_text_color; // Button text color for Decline button on Explicit Consent dialog
@@ -94,11 +92,8 @@ public class AppNoticeData {
     private String dialog_button_preferences; // Button text for Manage Preferences button on the Consent dialog
     private int dialog_message_text_color; // Message text color for all dialogs
     private int implied_flow_30day_display_max; // Maximum number of times the Implied Consent dialog should be displayed in 30 days.
-//    private String ric_maxString;
     private float consent_flow_dialog_opacity = 1F; // Opacity setting (scale 0 to 100) for all dialogs
-//    private String ric_opacityString;
     private int implied_flow_session_display_max; // Maximum number of times the Implied Consent dialog should be displayed in a session.
-//    private String ric_session_maxString;
 
     public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
 
@@ -110,7 +105,6 @@ public class AppNoticeData {
     public int getConfigId() { return configId; }
     public void setConfigId(int configId) { this.configId = configId; }
 
-    public Boolean getConsentFlowType() { return consent_flow_type != null ? consent_flow_type : true; }
     public int getDialogButtonColor() { return dialog_button_color; }
     public String getDialogButtonConsent() { return dialog_button_consent; }
     public int getDialogExplicitAcceptButtonTextColor() { return dialog_explicit_accept_button_text_color; }
@@ -396,24 +390,24 @@ public class AppNoticeData {
         long currentTime = System.currentTimeMillis();
         int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
         long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
-        int ric_session_count = (int) Session.get(Session.SYS_RIC_SESSION_COUNT, 0);
+        int impliedFlow_SessionCount = (int) Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
 
         if (implicit_last_display_time == 0L) {     // If this is the first pass...
             implicit_last_display_time = currentTime;
             AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
         }
 
-        if (ric_session_count >= implied_flow_session_display_max) {                 // If displayed enough in this session...
-            showNotice = false;                                     //    don't display it now
+        if (impliedFlow_SessionCount >= implied_flow_session_display_max) { // If displayed enough in this session...
+            showNotice = false; // don't display it now
         } else {
-            if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) {     // If displayed less than 30 days ago...
-                if (implicit_display_count >= implied_flow_30day_display_max) {                                  // If displayed enough in last 30 days...
-                    showNotice = false;                                                   //    don't display it now
+            if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
+                if (implicit_display_count >= implied_flow_30day_display_max) { // If displayed enough in last 30 days...
+                    showNotice = false; // don't display it now
                 }
             } else {
                 // If it's been more than 30 days...
-                AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);    // Reset the display count to 0
-                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime);    // And reset the last display time
+                AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0); // Reset the display count to 0
+                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
             }
         }
 
@@ -434,8 +428,8 @@ public class AppNoticeData {
         AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, currentDisplayCount + 1);
 
         // Increment the implicit session display count
-        int currentSessionCount = (int)Session.get(Session.SYS_RIC_SESSION_COUNT, 0);
-        Session.set(Session.SYS_RIC_SESSION_COUNT, currentSessionCount + 1);
+        int currentSessionCount = (int)Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
+        Session.set(Session.SYS_CURRENT_SESSION_COUNT, currentSessionCount + 1);
 
         long currentTime = System.currentTimeMillis();
         if (currentDisplayCount == 0) {             // If this is the first time being displayed in this 30-day period...
@@ -551,7 +545,6 @@ public class AppNoticeData {
                 }
 
                 // Parse the returned JSON string
-                consent_flow_type = resources.getBoolean(R.bool.ghostery_consent_flow_type);
                 dialog_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
                 dialog_button_consent = resources.getString(R.string.ghostery_dialog_button_consent);
                 dialog_explicit_accept_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);

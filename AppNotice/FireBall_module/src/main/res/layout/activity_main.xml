@@ -48,13 +48,26 @@
             android:hint="@string/hint_configId"
             android:gravity="center_horizontal" />
 
-        <android.support.v7.widget.AppCompatCheckBox
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/checkBox_useRemoteValues"
-            android:id="@+id/checkBox_useRemoteValues"
             android:layout_gravity="center_horizontal"
-            android:checked="true" />
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Implied"
+                android:id="@+id/radioButton_implied"
+                android:layout_gravity="center_horizontal"
+                android:checked="true" />
+
+            <android.support.v7.widget.AppCompatRadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explicit"
+                android:id="@+id/radioButton_explicit" />
+        </RadioGroup>
 
         <android.support.v7.widget.AppCompatCheckBox
             android:layout_width="wrap_content"

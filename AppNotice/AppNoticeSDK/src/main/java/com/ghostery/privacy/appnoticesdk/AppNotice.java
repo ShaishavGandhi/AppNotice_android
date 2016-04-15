@@ -28,6 +28,7 @@ public class AppNotice {
     private static Activity extActivity = null;
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
+    private static boolean isImpliedFlow = true;
 
     /**
      * AppNotice constructor
@@ -81,12 +82,21 @@ public class AppNotice {
     }
 
     /**
-     * Starts the App Notice Consent flow. Must be called before your app begins tracking. The flow type
-     *     (implied or explicit) is determined by the "bric" parameter in the JSON or the local
-     *     ghostery_bric resource parameter.
-     *   - appNotice_callback: The AppNotice_Callback method created in your class to handle the App Notice Consent response
+     * Starts the App Notice Implied Consent flow. Must be called before your app begins any tracking activity.
      */
-    public void startConsentFlow() {
+    public void startImpliedConsentFlow() {
+        isImpliedFlow = true;
+        init(true);
+
+        // Send notice for this event
+        AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
+    }
+
+    /**
+     * Starts the App Notice Explicit Consent flow. Must be called before your app begins any tracking activity.
+     */
+    public void startExplicitConsentFlow() {
+        isImpliedFlow = false;
         init(true);
 
         // Send notice for this event
@@ -97,7 +107,7 @@ public class AppNotice {
      * Resets the session and persistent values that AppNotice SDK uses to manage the dialog display frequency.
      */
     public void resetSDK() {
-        Session.set(Session.SYS_RIC_SESSION_COUNT, 0);
+        Session.set(Session.SYS_CURRENT_SESSION_COUNT, 0);
         AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
         AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
         AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
@@ -160,10 +170,10 @@ public class AppNotice {
         } else {
             // Determine if we need to show this Implicit Notice dialog box
             boolean showNotice = true;
-            if (appNoticeData.getConsentFlowType()) {
-                showNotice = appNoticeData.getExplicitNoticeDisplayStatus();
-            } else {
+            if (isImpliedFlow) {
                 showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
+            } else {
+                showNotice = appNoticeData.getExplicitNoticeDisplayStatus();
             }
 
             if (showNotice) {
@@ -171,16 +181,16 @@ public class AppNotice {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
                 // Create and show the dialog.
-                if (appNoticeData.getConsentFlowType()) {
-                    ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-                    explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
-
-                } else {
+                if (isImpliedFlow) {
                     ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
                     impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
 
                     // Remember that this Implicit Notice dialog box was displayed
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
+
+                } else {
+                    ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
+                    explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
                 }
             } else {

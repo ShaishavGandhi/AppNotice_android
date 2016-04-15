@@ -19,7 +19,7 @@ public class Session {
 
     // System Keys
 //    public static final String SYS_SHAREDPREFERENCES = "sys_sharedPreferences"; 		// SharedPreferences object
-    public static final String SYS_RIC_SESSION_COUNT = "sys_ric_session_count"; 		// int
+    public static final String SYS_CURRENT_SESSION_COUNT = "sys_ric_session_count"; 		// int
 
 
     // == Getters and setters ===========================================================
