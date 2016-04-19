@@ -122,7 +122,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
-        if (appNoticeData != null && appNoticeData.isInitialized()) {
+        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
             Tracker tracker = appNoticeData.getTrackerById(trackerId);
 
             if (tracker != null) {

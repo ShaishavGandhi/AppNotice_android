@@ -34,7 +34,8 @@ public class AppNoticeData {
     private static AppNoticeData instance;
     private static Activity activity;
     private ProgressDialog progressDialog;
-    private boolean initialized = false;
+    private boolean isTrackerListInitialized = false;
+    private boolean isInitialized = false;
     private static int companyId;
     private static int configId;
     private int implied_flow_30day_display_max_default = 3;
@@ -99,7 +100,8 @@ public class AppNoticeData {
 
 
     // Public getters and setters
-    public Boolean isInitialized() { return initialized; }
+    public Boolean isTrackerListInitialized() { return isTrackerListInitialized; }
+    public Boolean isInitialized() { return isInitialized; }
     public int getCompanyId() { return companyId; }
     public void setCompanyId(int companyId) { this.companyId = companyId; }
     public int getConfigId() { return configId; }
@@ -378,7 +380,34 @@ public class AppNoticeData {
     }
 
     // Init
-    public void init(JSONGetterCallback mJSONGetterCallback) {
+    public void init() {
+        Resources resources = activity.getResources();
+
+        dialog_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
+        dialog_button_consent = resources.getString(R.string.ghostery_dialog_button_consent);
+        dialog_explicit_accept_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
+        dialog_background_color = resources.getColor(R.color.ghostery_dialog_background_color);
+        dialog_explicit_message = resources.getString(R.string.ghostery_dialog_explicit_message);
+        dialog_explicit_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
+        dialog_button_decline = resources.getString(R.string.ghostery_dialog_button_decline);
+        dialog_explicit_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
+        dialog_header_text = resources.getString(R.string.ghostery_dialog_header_text);
+        dialog_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
+        dialog_button_close = resources.getString(R.string.ghostery_dialog_button_close);
+        preferences_description = resources.getString(R.string.ghostery_preferences_description);
+        preferences_header = resources.getString(R.string.ghostery_preferences_header);
+        dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
+        dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
+        dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
+        implied_flow_30day_display_max = implied_flow_30day_display_max_default;
+        consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
+        implied_flow_session_display_max = implied_flow_session_display_max_default;
+
+        isInitialized = true;
+    }
+
+    // Init
+    public void initTrackerList(JSONGetterCallback mJSONGetterCallback) {
         // Start the call to get the AppNoticeData data from the service
         JSONGetter mJSONGetter = new JSONGetter(mJSONGetterCallback);
         mJSONGetter.execute();
@@ -387,27 +416,32 @@ public class AppNoticeData {
     // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getImplicitNoticeDisplayStatus() {
         boolean showNotice = true;     // Assume we need to show the notice
-        long currentTime = System.currentTimeMillis();
-        int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
-        long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
-        int impliedFlow_SessionCount = (int) Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
 
-        if (implicit_last_display_time == 0L) {     // If this is the first pass...
-            implicit_last_display_time = currentTime;
-            AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
-        }
+        if (implied_flow_30day_display_max <= 0) {
 
-        if (impliedFlow_SessionCount >= implied_flow_session_display_max) { // If displayed enough in this session...
-            showNotice = false; // don't display it now
         } else {
-            if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
-                if (implicit_display_count >= implied_flow_30day_display_max) { // If displayed enough in last 30 days...
-                    showNotice = false; // don't display it now
-                }
+            long currentTime = System.currentTimeMillis();
+            int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
+            long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
+            int impliedFlow_SessionCount = (int) Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
+
+            if (implicit_last_display_time == 0L) {     // If this is the first pass...
+                implicit_last_display_time = currentTime;
+                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
+            }
+
+            if (impliedFlow_SessionCount >= implied_flow_session_display_max) { // If displayed enough in this session...
+                showNotice = false; // don't display it now
             } else {
-                // If it's been more than 30 days...
-                AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0); // Reset the display count to 0
-                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
+                if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
+                    if (implicit_display_count >= implied_flow_30day_display_max) { // If displayed enough in last 30 days...
+                        showNotice = false; // don't display it now
+                    }
+                } else {
+                    // If it's been more than 30 days...
+                    AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0); // Reset the display count to 0
+                    AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
+                }
             }
         }
 
@@ -532,7 +566,6 @@ public class AppNoticeData {
                 String url = getFormattedJSONUrl();
                 String jsonStr = serviceHandler.getRequest(url);
                 JSONObject jsonObj = null;
-                Resources resources = activity.getResources();
 
                 if (jsonStr != null && jsonStr.length() > 20 && !jsonStr.startsWith(FILE_NOT_FOUND)){
                     // Strip off the not-JSON outer characters
@@ -543,27 +576,6 @@ public class AppNoticeData {
 
                     jsonObj = new JSONObject(jsonStr);
                 }
-
-                // Parse the returned JSON string
-                dialog_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
-                dialog_button_consent = resources.getString(R.string.ghostery_dialog_button_consent);
-                dialog_explicit_accept_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
-                dialog_background_color = resources.getColor(R.color.ghostery_dialog_background_color);
-                dialog_explicit_message = resources.getString(R.string.ghostery_dialog_explicit_message);
-                dialog_explicit_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
-                dialog_button_decline = resources.getString(R.string.ghostery_dialog_button_decline);
-                dialog_explicit_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
-                dialog_header_text = resources.getString(R.string.ghostery_dialog_header_text);
-                dialog_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
-                dialog_button_close = resources.getString(R.string.ghostery_dialog_button_close);
-                preferences_description = resources.getString(R.string.ghostery_preferences_description);
-                preferences_header = resources.getString(R.string.ghostery_preferences_header);
-                dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
-                dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
-                dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
-                implied_flow_30day_display_max = implied_flow_30day_display_max_default;
-                consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
-                implied_flow_session_display_max = implied_flow_session_display_max_default;
 
                 if (jsonObj != null) {
                     initTrackerList(jsonObj);
@@ -643,7 +655,7 @@ public class AppNoticeData {
                     }
                 }
 
-                initialized = true;
+                isTrackerListInitialized = true;
             } catch (JSONException e) {
                 Log.e(TAG, "JSONException while parsing the JSON object.", e);
             }

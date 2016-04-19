@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.util.Patterns;
 
 import com.ghostery.privacy.appnoticesdk.app.TrackerListActivity;
+import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
+import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 import java.util.regex.Pattern;
 
@@ -13,13 +15,36 @@ import java.util.regex.Pattern;
  * Created by Steven.Overson on 2/25/2015.
  */
 public class Util {
-    public static final int DIVIDER_ALPHA = 46;
 
     public static void showManagePreferences(final Activity activity) {
+        // Get either a new or initialized tracker config object
+        final AppNoticeData appNoticeData = AppNoticeData.getInstance(activity);
+
+        if (appNoticeData.isTrackerListInitialized()) {
 //        Intent intent = new Intent(fragmentActivity, ListActivity.class);
-        Intent intent = new Intent(activity, TrackerListActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
+            Intent intent = new Intent(activity, TrackerListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
+        } else {
+            // If not initialized yet, go get it
+            appNoticeData.initTrackerList(new JSONGetterCallback() {
+
+                @Override
+                public void onTaskDone() {
+                    // Save the tracker config object in the app session
+                    Session.set(Session.APPNOTICE_DATA, appNoticeData);
+
+                    // Send notice for this event
+//                    AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+
+                    // Intent intent = new Intent(fragmentActivity, ListActivity.class);
+                    Intent intent = new Intent(activity, TrackerListActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    activity.startActivity(intent);
+                }
+            });
+        }
+
     }
 
     public static boolean checkURL(CharSequence input) {

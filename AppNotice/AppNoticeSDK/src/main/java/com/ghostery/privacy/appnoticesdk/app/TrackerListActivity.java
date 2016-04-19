@@ -60,7 +60,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
 
         appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
-        if (appNoticeData != null && appNoticeData.isInitialized()) {
+        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
             trackerArrayList = appNoticeData.trackerArrayList;
             trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
 

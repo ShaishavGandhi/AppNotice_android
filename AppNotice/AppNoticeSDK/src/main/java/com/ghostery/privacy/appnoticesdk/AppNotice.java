@@ -7,7 +7,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
-import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -122,38 +121,19 @@ public class AppNotice {
     }
 
     private void init(final boolean isConsentFlow) {
-        if (appNoticeData.isInitialized()) {
-            // If initialized, use what we have
-            if (isConsentFlow) {
-                openConsentFlowDialog();
-            } else {
-                // Open the App Notice Consent preferences fragmentActivity
-                Util.showManagePreferences(extActivity);
+        if (!appNoticeData.isInitialized()) {
+            appNoticeData.init();
+        }
 
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
-            }
+        // If initialized, use what we have
+        if (isConsentFlow) {
+            openConsentFlowDialog();
         } else {
-            // If not initialized yet, go get it
-            appNoticeData.init(new JSONGetterCallback() {
+            // Open the App Notice Consent preferences fragmentActivity
+            Util.showManagePreferences(extActivity);
 
-                @Override
-                public void onTaskDone() {
-                    // Save the tracker config object in the app session
-                    Session.set(Session.APPNOTICE_DATA, appNoticeData);
-
-                    if (isConsentFlow) {
-                        // Handle the response
-                        openConsentFlowDialog();
-                    } else {
-                        // Open the App Notice Consent preferences fragmentActivity
-                        Util.showManagePreferences(extActivity);
-
-                        // Send notice for this event
-                        AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
-                    }
-                }
-            });
+            // Send notice for this event
+            AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
         }
 
     }
