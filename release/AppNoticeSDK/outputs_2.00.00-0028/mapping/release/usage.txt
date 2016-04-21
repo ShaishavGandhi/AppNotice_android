@@ -34,10 +34,9 @@ com.ghostery.privacy.appnoticesdk.model.AppNoticeData:
     private static final java.lang.String NON_JSON_POSTFIX
     private static final java.lang.String FILE_NOT_FOUND
     private static final java.lang.String TAG_TRACKERS
-    103:103:public int getCompanyId()
-    105:105:public int getConfigId()
-    124:124:public int getImpliedFlow30DayDisplayMax()
-    126:126:public int getImpliedFlowSessionDisplayMax()
+    109:109:public int getCompanyId()
+    134:134:public int getImpliedFlow30DayDisplayMax()
+    136:136:public int getImpliedFlowSessionDisplayMax()
 com.ghostery.privacy.appnoticesdk.model.Tracker:
     private static final java.lang.String TAG
     private static final java.lang.String CAT_ESSENTIAL
@@ -55,10 +54,12 @@ com.ghostery.privacy.appnoticesdk.utils.AppData:
     public static final java.lang.String APPDATA_IMPLICIT_DISPLAY_COUNT
     public static final java.lang.String APPDATA_EXPLICIT_ACCEPTED
     public static final java.lang.String APPDATA_TRACKERSTATES
+    public static final java.lang.String APPDATA_PREV_CONFIG_ID
+    public static final java.lang.String APPDATA_PREV_JSON
     18:18:public AppData()
-    44:58:protected static void upgradeFromOldFiles(android.content.Context)
-    61:81:protected static void copySharedPreferences(android.content.SharedPreferences)
-    132:136:public static void remVal(java.lang.String)
+    46:60:protected static void upgradeFromOldFiles(android.content.Context)
+    63:83:protected static void copySharedPreferences(android.content.SharedPreferences)
+    134:138:public static void remVal(java.lang.String)
 com.ghostery.privacy.appnoticesdk.utils.FileDownloader:
     15:15:public FileDownloader()
 com.ghostery.privacy.appnoticesdk.utils.FileWriter:
@@ -69,7 +70,7 @@ com.ghostery.privacy.appnoticesdk.utils.Network
 com.ghostery.privacy.appnoticesdk.utils.ServiceHandler:
     private static final java.lang.String TAG
     private static final int httpRequestTimeoutDefault
-    66:97:public static java.lang.String postRequest(java.lang.String,java.lang.String)
+    68:99:public static java.lang.String postRequest(java.lang.String,java.lang.String)
 com.ghostery.privacy.appnoticesdk.utils.Session:
     private static final java.lang.String TAG
     public static final java.lang.String APPNOTICE_DATA
@@ -79,8 +80,7 @@ com.ghostery.privacy.appnoticesdk.utils.Session:
     public static final java.lang.String APPNOTICE_PREF_OPENED_FROM_DIALOG
     public static final java.lang.String SYS_CURRENT_SESSION_COUNT
     9:9:public Session()
-    50:51:public static void reset()
     54:54:public static boolean isSet(java.lang.String)
 com.ghostery.privacy.appnoticesdk.utils.Util:
-    public static final int DIVIDER_ALPHA
-    15:15:public Util()
+    private static final java.lang.String TAG
+    18:18:public Util()
