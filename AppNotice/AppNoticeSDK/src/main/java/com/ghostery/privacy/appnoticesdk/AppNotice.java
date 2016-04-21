@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
+import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -77,7 +78,7 @@ public class AppNotice {
 
         // Keep track of the company ID and the configuration ID
         appNoticeData.setCompanyId(companyId);
-        appNoticeData.setConfigId(configId);
+        appNoticeData.setCurrentConfigId(configId);
     }
 
     /**
@@ -106,10 +107,13 @@ public class AppNotice {
      * Resets the session and persistent values that AppNotice SDK uses to manage the dialog display frequency.
      */
     public void resetSDK() {
-        Session.set(Session.SYS_CURRENT_SESSION_COUNT, 0);
-        AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
-        AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
-        AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+        Session.reset();
+        AppData.remove(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME);
+        AppData.remove(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT);
+        AppData.remove(AppData.APPDATA_EXPLICIT_ACCEPTED);
+        AppData.remove(AppData.APPDATA_TRACKERSTATES);
+        AppData.remove(AppData.APPDATA_PREV_CONFIG_ID);
+        AppData.remove(AppData.APPDATA_PREV_JSON);
     }
 
     /**
@@ -123,6 +127,25 @@ public class AppNotice {
     private void init(final boolean isConsentFlow) {
         if (!appNoticeData.isInitialized()) {
             appNoticeData.init();
+        }
+
+        // Start getting the tracker list before we display the consent dialog or the manage preferences screen
+        if (!appNoticeData.isTrackerListInitialized()) {
+
+            // Use a non-UI thread
+            new Runnable() {
+                public void run() {
+                    Log.d(TAG, "Starting initTrackerList from AppNotice init.");
+                    appNoticeData.initTrackerList(new JSONGetterCallback() {
+
+                        @Override
+                        public void onTaskDone() {
+                            // Do nothing
+                            Log.d(TAG, "Done with initTrackerList from AppNotice init.");
+                        }
+                    });
+                }
+            };
         }
 
         // If initialized, use what we have
@@ -165,14 +188,18 @@ public class AppNotice {
                     ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
                     impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
 
-                    // Remember that this Implicit Notice dialog box was displayed
+                    // Count that this Implicit Notice dialog box was displayed
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
+
+                    // Remember that an implied notice has been shown for this config ID
+                    appNoticeData.setPreviousConfigId(appNoticeData.getConfigId());
 
                 } else {
                     ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
                     explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
                 }
+
             } else {
                 // If not showing a notice, return a true status to the
                 appNotice_callback.onNoticeSkipped();

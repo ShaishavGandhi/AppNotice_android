@@ -3,6 +3,7 @@ package com.ghostery.privacy.appnoticesdk.utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.ghostery.privacy.appnoticesdk.app.TrackerListActivity;
@@ -15,27 +16,28 @@ import java.util.regex.Pattern;
  * Created by Steven.Overson on 2/25/2015.
  */
 public class Util {
+    private static final String TAG = "Util";
 
     public static void showManagePreferences(final Activity activity) {
         // Get either a new or initialized tracker config object
         final AppNoticeData appNoticeData = AppNoticeData.getInstance(activity);
 
         if (appNoticeData.isTrackerListInitialized()) {
-//        Intent intent = new Intent(fragmentActivity, ListActivity.class);
+//          Intent intent = new Intent(fragmentActivity, ListActivity.class);
             Intent intent = new Intent(activity, TrackerListActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(intent);
         } else {
             // If not initialized yet, go get it
+            Log.d(TAG, "Starting initTrackerList from Util.showManagePreferences init.");
             appNoticeData.initTrackerList(new JSONGetterCallback() {
 
                 @Override
                 public void onTaskDone() {
-                    // Save the tracker config object in the app session
-                    Session.set(Session.APPNOTICE_DATA, appNoticeData);
+                    Log.d(TAG, "Done with initTrackerList from Util.showManagePreferences init.");
 
                     // Send notice for this event
-//                    AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+                    //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
 
                     // Intent intent = new Intent(fragmentActivity, ListActivity.class);
                     Intent intent = new Intent(activity, TrackerListActivity.class);

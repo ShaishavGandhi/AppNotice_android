@@ -37,10 +37,14 @@ public class AppNoticeData {
     private boolean isTrackerListInitialized = false;
     private boolean isInitialized = false;
     private static int companyId;
-    private static int configId;
+    private static int currentConfigId;
+    private static int previousConfigId;
     private int implied_flow_30day_display_max_default = 3;
     private int implied_flow_session_display_max_default = 1;
     private int consent_flow_dialog_opacity_default = 100;
+    private final Object waitObj = new Object();
+    private boolean gettingTrackerList = false;
+
 
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
 
@@ -104,8 +108,12 @@ public class AppNoticeData {
     public Boolean isInitialized() { return isInitialized; }
     public int getCompanyId() { return companyId; }
     public void setCompanyId(int companyId) { this.companyId = companyId; }
-    public int getConfigId() { return configId; }
-    public void setConfigId(int configId) { this.configId = configId; }
+    public int getConfigId() { return currentConfigId; }
+    public void setCurrentConfigId(int currentConfigId) { this.currentConfigId = currentConfigId; }
+    public void setPreviousConfigId(int previousConfigId) {
+        this.previousConfigId = previousConfigId;
+        AppData.setInteger(AppData.APPDATA_PREV_CONFIG_ID, previousConfigId);
+    }
 
     public int getDialogButtonColor() { return dialog_button_color; }
     public String getDialogButtonConsent() { return dialog_button_consent; }
@@ -126,7 +134,6 @@ public class AppNoticeData {
     public int getImpliedFlow30DayDisplayMax() { return implied_flow_30day_display_max; }
     public float getConsentFlowDialogOpacity() { return consent_flow_dialog_opacity / 100; }
     public int getImpliedFlowSessionDisplayMax() { return implied_flow_session_display_max; }
-//    public ArrayList<Tracker> getTrackerArrayList() { return trackerArrayList; }
 
 
     // Single instance
@@ -135,8 +142,12 @@ public class AppNoticeData {
         activity = _activity;
 
         // Ensure the app only uses one instance of this class.
-        if (instance == null)
+        if (instance == null) {
             instance = (AppNoticeData) Session.get(Session.APPNOTICE_DATA, new AppNoticeData());
+
+            // Save the tracker config object in the app session
+            Session.set(Session.APPNOTICE_DATA, instance);
+        }
 
         return instance;
     }
@@ -270,7 +281,9 @@ public class AppNoticeData {
         int changeCount = 0;    // Assume no changes
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList.size() == originalTrackerArrayList.size()) {
+        if (trackerArrayList != null && originalTrackerArrayList != null &&
+                trackerArrayList.size() == originalTrackerArrayList.size()) {
+
             for (int i = 0; i < trackerArrayList.size(); i++) {
                 Tracker tracker = trackerArrayList.get(i);
                 Tracker originalTracker = originalTrackerArrayList.get(i);
@@ -291,7 +304,7 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[7];
-                urlParams[0] = String.valueOf(configId);	// 0
+                urlParams[0] = String.valueOf(currentConfigId);	// 0
                 urlParams[1] = String.valueOf(companyId);		// 1
                 urlParams[2] = String.valueOf(trackerId);		// 2
                 urlParams[3] = optOut ? "1" : "0";  		    // 3
@@ -322,7 +335,7 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[2];
-                urlParams[0] = String.valueOf(configId);	// 0
+                urlParams[0] = String.valueOf(currentConfigId);	// 0
                 urlParams[1] = String.valueOf(companyId);		// 1
 
                 String uRL = "";
@@ -403,14 +416,50 @@ public class AppNoticeData {
         consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
+        previousConfigId = AppData.getInteger(AppData.APPDATA_PREV_CONFIG_ID, 0);
+
         isInitialized = true;
     }
 
     // Init
-    public void initTrackerList(JSONGetterCallback mJSONGetterCallback) {
-        // Start the call to get the AppNoticeData data from the service
-        JSONGetter mJSONGetter = new JSONGetter(mJSONGetterCallback);
-        mJSONGetter.execute();
+    public void initTrackerList(final JSONGetterCallback mJSONGetterCallback) {
+        synchronized(waitObj) {
+            while (gettingTrackerList)
+                try {
+                    Log.d(TAG, "Waiting for tracker list to be filled.");
+                    waitObj.wait();
+                } catch (InterruptedException e) {
+                    // Do nothing
+                    Log.d(TAG, "Wait interrupted while filling tracker list.");
+                }
+        }
+
+        // Check to see if we have a current cached tracker list
+        String previousJson = AppData.getString(AppData.APPDATA_PREV_JSON, "");
+        if (currentConfigId == previousConfigId && !previousJson.isEmpty()) {
+            fillTrackerList(previousJson);
+
+            // Restore the selection states of the trackers
+            restoreTrackerStates();
+
+            // Let the specified callback know it finished...
+            if (mJSONGetterCallback != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mJSONGetterCallback.onTaskDone();
+                    }
+                });
+            }
+
+            // Save the tracker states
+            saveTrackerStates();
+        } else {
+            // Start the call to get the AppNoticeData data from the service
+            gettingTrackerList = true;
+            JSONGetter mJSONGetter = new JSONGetter(mJSONGetterCallback);
+            mJSONGetter.execute();
+        }
     }
 
     // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
@@ -418,7 +467,10 @@ public class AppNoticeData {
         boolean showNotice = true;     // Assume we need to show the notice
 
         if (implied_flow_30day_display_max <= 0) {
-
+            // If the notice ID has changed, we need to show the notice again
+            if (currentConfigId == previousConfigId) {
+                showNotice = false;
+            }
         } else {
             long currentTime = System.currentTimeMillis();
             int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
@@ -527,6 +579,97 @@ public class AppNoticeData {
         return trackerHashMap;
     }
 
+    public void fillTrackerList(String jsonStr) {
+        try {
+            JSONObject jsonObj = null;
+
+            if (jsonStr != null && jsonStr.length() > 20 && !jsonStr.startsWith(FILE_NOT_FOUND)){
+                // Strip off the not-JSON outer characters
+                if (jsonStr.startsWith(NON_JSON_PREFIX))
+                    jsonStr = jsonStr.substring(NON_JSON_PREFIX.length());
+                if (jsonStr.endsWith(NON_JSON_POSTFIX))
+                    jsonStr = jsonStr.substring(0, jsonStr.length() - NON_JSON_POSTFIX.length());
+
+                jsonObj = new JSONObject(jsonStr);
+            }
+
+            if (jsonObj != null) {
+                try {
+                    String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
+                    if (trackerJSONString != null) {
+                        JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
+
+                        int id;
+                        for (int i = 0; i < trackerJSONArray.length(); i++) {
+                            JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
+                            Tracker tracker = new Tracker(trackerJSONObject);
+                            trackerArrayList.add(tracker);
+                        }
+
+                        // Sort by category and then by name within category
+                        Collections.sort(trackerArrayList, new Comparator<Tracker>() {
+                            @Override
+                            public int compare(Tracker tracker1, Tracker tracker2) {
+                                int result = 0;
+
+                                // Sort first by category...keeping "Essential" at the top
+                                if (tracker1.isEssential() && tracker2.isEssential()) {
+                                    result = 0;
+                                } else if (tracker1.isEssential()) {
+                                    result = -1;
+                                } else if (tracker2.isEssential()) {
+                                    result = 1;
+                                } else {
+                                    // Sort by non-essential category
+                                    String tracker1_category = tracker1.getCategory().toUpperCase();
+                                    String tracker2_category = tracker2.getCategory().toUpperCase();
+
+                                    //ascending order
+                                    result = tracker1_category.compareTo(tracker2_category);
+//                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
+                                }
+
+                                // If it's in the same category, then sort by tracker name
+                                if (result == 0) {
+                                    String tracker1_name = tracker1.getName().toUpperCase();
+                                    String tracker2_name = tracker2.getName().toUpperCase();
+
+                                    //ascending order
+                                    result = tracker1_name.compareTo(tracker2_name);
+//                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
+                                }
+                                return result;
+                            }
+                        });
+
+                        // Set header bit for first tracker in each category
+                        String categoryName = "";
+                        for (int i = 0; i < trackerArrayList.size(); i++) {
+                            Tracker tracker = trackerArrayList.get(i);
+                            tracker.uId = i;        // Set the tracker's unique ID
+
+                            // Flag tracker as having a header if this is the first tracker or if the category name is new
+                            if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
+                                tracker.setHasHeader();
+                            }
+                            categoryName = tracker.getCategory();
+                        }
+                    }
+
+                    isTrackerListInitialized = true;
+                } catch (JSONException e) {
+                    Log.e(TAG, "JSONException while parsing the JSON object.", e);
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Exception while parsing elements of the JSON object", e);
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "NotFoundException while getting the JSON object", e);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception while getting or parsing the JSON object.", e);
+        }
+    }
 
 
     // =================================================================================
@@ -561,121 +704,33 @@ public class AppNoticeData {
             // Creating service handler class instance
             ServiceHandler serviceHandler = new ServiceHandler();
 
-            try {
-                // Make a request to url for the AppNoticeData info
-                String url = getFormattedJSONUrl();
-                String jsonStr = serviceHandler.getRequest(url);
-                JSONObject jsonObj = null;
+            // Make a request to url for the AppNoticeData info
+            String url = getFormattedJSONUrl();
+            String jsonStr = serviceHandler.getRequest(url);
+            fillTrackerList(jsonStr);
 
-                if (jsonStr != null && jsonStr.length() > 20 && !jsonStr.startsWith(FILE_NOT_FOUND)){
-                    // Strip off the not-JSON outer characters
-                    if (jsonStr.startsWith(NON_JSON_PREFIX))
-                        jsonStr = jsonStr.substring(NON_JSON_PREFIX.length());
-                    if (jsonStr.endsWith(NON_JSON_POSTFIX))
-                        jsonStr = jsonStr.substring(0, jsonStr.length() - NON_JSON_POSTFIX.length());
-
-                    jsonObj = new JSONObject(jsonStr);
-                }
-
-                if (jsonObj != null) {
-                    initTrackerList(jsonObj);
-                }
-
-            } catch (NumberFormatException e) {
-                Log.e(TAG, "Exception while parsing elements of the JSON object", e);
-            } catch (Resources.NotFoundException e) {
-                Log.e(TAG, "NotFoundException while getting the JSON object", e);
-            } catch (Exception e) {
-                Log.e(TAG, "Exception while getting or parsing the JSON object.", e);
+            // If this JSON string was parsed successfully, cache it for later use
+            if (isTrackerListInitialized) {
+                AppData.setString(AppData.APPDATA_PREV_JSON, jsonStr);
+            } else {
+                Log.d(TAG, "Failed to fill tracker list.");
+//                // If fillTrackerList didn't initialize the tracker list, we need to end the wait-object here
+//                gettingTrackerList = false;
+//                synchronized(waitObj) {
+//                    Log.d(TAG, "Finished filling tracker list.");
+//                    waitObj.notifyAll();
+//                }
             }
 
             return null;
-        }
-
-        private void initTrackerList(JSONObject jsonObj) {
-            try {
-                String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
-                if (trackerJSONString != null) {
-                    JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
-
-                    int id;
-                    for (int i = 0; i < trackerJSONArray.length(); i++) {
-                        JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
-                        Tracker tracker = new Tracker(trackerJSONObject);
-                        trackerArrayList.add(tracker);
-                    }
-
-                    // Sort by category and then by name within category
-                    Collections.sort(trackerArrayList, new Comparator<Tracker>() {
-                        @Override
-                        public int compare(Tracker tracker1, Tracker tracker2) {
-                            int result = 0;
-
-                            // Sort first by category...keeping "Essential" at the top
-                            if (tracker1.isEssential() && tracker2.isEssential()) {
-                                result = 0;
-                            } else if (tracker1.isEssential()) {
-                                result = -1;
-                            } else if (tracker2.isEssential()) {
-                                result = 1;
-                            } else {
-                                // Sort by non-essential category
-                                String tracker1_category = tracker1.getCategory().toUpperCase();
-                                String tracker2_category = tracker2.getCategory().toUpperCase();
-
-                                //ascending order
-                                result = tracker1_category.compareTo(tracker2_category);
-//                                    result = tracker1.getCategory().compareToIgnoreCase(tracker2.getCategory());
-                            }
-
-                            // If it's in the same category, then sort by tracker name
-                            if (result == 0) {
-                                String tracker1_name = tracker1.getName().toUpperCase();
-                                String tracker2_name = tracker2.getName().toUpperCase();
-
-                                //ascending order
-                                result = tracker1_name.compareTo(tracker2_name);
-//                                    result = tracker1.getName().compareToIgnoreCase(tracker2.getName());
-                            }
-                            return result;
-                        }
-                    });
-
-                    // Set header bit for first tracker in each category
-                    String categoryName = "";
-                    for (int i = 0; i < trackerArrayList.size(); i++) {
-                        Tracker tracker = trackerArrayList.get(i);
-                        tracker.uId = i;        // Set the tracker's unique ID
-
-                        // Flag tracker as having a header if this is the first tracker or if the category name is new
-                        if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
-                            tracker.setHasHeader();
-                        }
-                        categoryName = tracker.getCategory();
-                    }
-                }
-
-                isTrackerListInitialized = true;
-            } catch (JSONException e) {
-                Log.e(TAG, "JSONException while parsing the JSON object.", e);
-            }
         }
 
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+            // Restore the selection states of the trackers
             restoreTrackerStates();
-
-            // Let the specified callback know it finished...
-            if (mJSONGetterCallback != null) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mJSONGetterCallback.onTaskDone();
-                    }
-                });
-            }
 
             // Save the tracker states
             saveTrackerStates();
@@ -686,12 +741,29 @@ public class AppNoticeData {
                     progressDialog.dismiss();
                 } catch (Exception e) {}
             }
+
+            // End the wait-object
+            gettingTrackerList = false;
+            synchronized(waitObj) {
+                Log.d(TAG, "Finished filling tracker list.");
+                waitObj.notifyAll();
+            }
+
+            // Let the specified callback know it finished...
+            if (mJSONGetterCallback != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mJSONGetterCallback.onTaskDone();
+                    }
+                });
+            }
         }
 
         protected String getFormattedJSONUrl() {
             Object[] urlParams = new Object[2];
             urlParams[0] = String.valueOf(companyId);			// 0
-            urlParams[1] = String.valueOf(configId);		// 1
+            urlParams[1] = String.valueOf(currentConfigId);		// 1
             return MessageFormat.format(URL_JSON_REQUEST, urlParams);
         }
 

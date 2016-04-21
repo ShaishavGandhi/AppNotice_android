@@ -53,7 +53,9 @@ public class ServiceHandler {
 			Log.e(TAG, "Error in http get request", e);
         } finally {
             try {
-                bufferedReader.close();
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
             } catch (Exception e) {
                 Log.e(TAG, "Closing reader", e);
             }

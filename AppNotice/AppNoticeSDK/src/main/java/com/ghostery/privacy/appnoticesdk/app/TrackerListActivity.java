@@ -173,7 +173,9 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         int pingBackCount = 0;      // Count the ping-backs
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList.size() == trackerArrayListClone.size()) {
+        if (trackerArrayList != null && trackerArrayListClone != null &&
+                trackerArrayList.size() == trackerArrayListClone.size()) {
+
             for (int i = 0; i < trackerArrayList.size(); i++) {
                 Tracker tracker = trackerArrayList.get(i);
                 Tracker trackerClone = trackerArrayListClone.get(i);
