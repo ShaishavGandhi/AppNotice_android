@@ -689,11 +689,17 @@ public class AppNoticeData {
             super.onPreExecute();
             if(!activity.isFinishing())
             {
-                // Showing progress dialog
-                progressDialog = new ProgressDialog(activity);
-                progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
-                progressDialog.setCancelable(false);
-                progressDialog.show();
+                // Make sure we don't have two dialogs created
+                if((progressDialog != null) && progressDialog.isShowing() ) {
+                    Log.d(TAG, "Wait dialog already showing.");
+                } else {
+                    // Showing progress dialog
+                    progressDialog = new ProgressDialog(activity);
+                    progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                }
+
             }
         }
 

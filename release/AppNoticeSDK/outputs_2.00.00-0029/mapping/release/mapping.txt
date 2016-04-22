@@ -1,0 +1,411 @@
+com.ghostery.privacy.appnoticesdk.AppNotice -> com.ghostery.privacy.appnoticesdk.AppNotice:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback appNotice_callback -> b
+    android.app.Activity extActivity -> c
+    android.content.Context appContext -> d
+    java.util.HashMap sessionMap -> e
+    boolean isImpliedFlow -> f
+    40:42:void <init>(android.app.Activity,int,int,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback) -> <init>
+    54:56:void <init>(android.app.Activity,int,int,boolean,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback) -> <init>
+    66:82:void AppNotice(android.app.Activity,int,int,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback) -> a
+    88:93:void startImpliedConsentFlow() -> startImpliedConsentFlow
+    99:104:void startExplicitConsentFlow() -> startExplicitConsentFlow
+    110:117:void resetSDK() -> resetSDK
+    124:125:void showManagePreferences() -> showManagePreferences
+    128:157:void init(boolean) -> a
+    162:203:void openConsentFlowDialog() -> a
+    206:206:java.util.HashMap getTrackerPreferences() -> getTrackerPreferences
+    210:210:java.util.HashMap getSessionMap() -> getSessionMap
+    215:215:android.content.Context getAppContext() -> getAppContext
+    220:220:android.app.Activity getParentActivity() -> getParentActivity
+    28:31:void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.AppNotice$1 -> com.ghostery.privacy.appnoticesdk.a:
+    com.ghostery.privacy.appnoticesdk.AppNotice this$0 -> a
+    136:136:void <init>(com.ghostery.privacy.appnoticesdk.AppNotice) -> <init>
+    141:142:void onTaskDone() -> a
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter -> com.ghostery.privacy.appnoticesdk.adapter.a:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> b
+    java.util.ArrayList trackerArrayList -> c
+    android.view.LayoutInflater mInflater -> d
+    android.support.v4.app.ListFragment listFragment -> a
+    35:42:void <init>(android.support.v4.app.ListFragment,int,com.ghostery.privacy.appnoticesdk.model.AppNoticeData) -> <init>
+    46:46:int getCount() -> getCount
+    51:51:java.lang.Object getItem(int) -> getItem
+    56:56:long getItemId(int) -> getItemId
+    62:111:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    24:24:void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter$ViewHolder -> com.ghostery.privacy.appnoticesdk.adapter.b:
+    android.support.v7.widget.AppCompatTextView trackerName -> a
+    android.widget.Switch optInOutSwitch -> b
+    28:28:void <init>() -> <init>
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity -> com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity:
+    int trackerId -> a
+    30:30:void <init>() -> <init>
+    36:72:void onCreate(android.os.Bundle) -> onCreate
+    76:94:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    99:105:void onBackPressed() -> onBackPressed
+    108:117:void onLinkClick(android.view.View) -> onLinkClick
+    120:132:void onOptInOutClick(android.view.View) -> onOptInOutClick
+    135:139:void setActionBarTitle(int) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment -> com.ghostery.privacy.appnoticesdk.app.a:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    com.ghostery.privacy.appnoticesdk.model.Tracker tracker -> b
+    45:46:void <init>() -> <init>
+    50:66:void onCreate(android.os.Bundle) -> onCreate
+    70:137:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    142:145:void onResume() -> onResume
+    26:26:com.ghostery.privacy.appnoticesdk.model.Tracker access$000(com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment$1 -> com.ghostery.privacy.appnoticesdk.app.b:
+    android.widget.ImageView val$imageView_trackerLogo -> a
+    android.support.v7.widget.AppCompatTextView val$textView_TrackerName -> b
+    com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment this$0 -> c
+    77:77:void <init>(com.ghostery.privacy.appnoticesdk.app.TrackerDetailFragment,android.widget.ImageView,android.support.v7.widget.AppCompatTextView) -> <init>
+    81:90:void onDownloaded(int) -> onDownloaded
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity -> com.ghostery.privacy.appnoticesdk.app.TrackerListActivity:
+    java.util.ArrayList trackerArrayList -> a
+    java.util.ArrayList trackerArrayListClone -> b
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> c
+    boolean mTwoPane -> d
+    43:43:void <init>() -> <init>
+    57:105:void onCreate(android.os.Bundle) -> onCreate
+    110:113:void onResume() -> onResume
+    121:140:void onItemSelected(int) -> a
+    144:147:void onBackPressed() -> onBackPressed
+    152:166:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    171:195:void sendOptInOutNotices() -> b
+    198:206:void saveTrackerStates() -> a
+    210:228:void onClick(android.view.View) -> onClick
+    231:243:void onClickDescription(android.view.View) -> onClickDescription
+    246:254:void onOptInOutClick(android.view.View) -> onOptInOutClick
+    257:280:void setAllNoneControlState() -> c
+    285:285:void onSupportActionModeStarted(android.support.v7.view.ActionMode) -> onSupportActionModeStarted
+    290:290:void onSupportActionModeFinished(android.support.v7.view.ActionMode) -> onSupportActionModeFinished
+com.ghostery.privacy.appnoticesdk.app.TrackerListActivity$1 -> com.ghostery.privacy.appnoticesdk.app.c:
+    com.ghostery.privacy.appnoticesdk.app.TrackerListActivity this$0 -> a
+    237:237:void <init>(com.ghostery.privacy.appnoticesdk.app.TrackerListActivity) -> <init>
+    239:240:void onClick(android.content.DialogInterface,int) -> onClick
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment -> com.ghostery.privacy.appnoticesdk.app.TrackerListFragment:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter trackerArrayAdapter -> b
+    com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$Callbacks mCallbacks -> c
+    int mActivatedPosition -> d
+    com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$Callbacks sDummyCallbacks -> e
+    38:72:void <init>() -> <init>
+    76:84:void onCreate(android.os.Bundle) -> onCreate
+    88:102:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    106:114:void onAttach(android.app.Activity) -> onAttach
+    118:122:void onDetach() -> onDetach
+    126:131:void onListItemClick(android.widget.ListView,android.view.View,int,long) -> onListItemClick
+    135:140:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    144:151:void refresh() -> a
+    160:163:void setActivateOnItemClick(boolean) -> a
+    166:173:void setActivatedPosition(int) -> a
+    23:23:com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter access$000(com.ghostery.privacy.appnoticesdk.app.TrackerListFragment) -> a
+    61:61:void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$1 -> com.ghostery.privacy.appnoticesdk.app.d:
+    61:61:void <init>() -> <init>
+    64:64:void onItemSelected(int) -> a
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$2 -> com.ghostery.privacy.appnoticesdk.app.e:
+    com.ghostery.privacy.appnoticesdk.app.TrackerListFragment this$0 -> a
+    145:145:void <init>(com.ghostery.privacy.appnoticesdk.app.TrackerListFragment) -> <init>
+    148:149:void run() -> run
+com.ghostery.privacy.appnoticesdk.app.TrackerListFragment$Callbacks -> com.ghostery.privacy.appnoticesdk.app.f:
+    void onItemSelected(int) -> a
+com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback -> com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback:
+    void onOptionSelected(boolean,java.util.HashMap) -> onOptionSelected
+    void onNoticeSkipped() -> onNoticeSkipped
+    void onTrackerStateChanged(java.util.HashMap) -> onTrackerStateChanged
+    boolean onManagePreferencesClicked() -> onManagePreferencesClicked
+com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback -> com.ghostery.privacy.appnoticesdk.callbacks.a:
+    void onTaskDone() -> a
+com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback -> com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback:
+    void onDownloaded(int) -> onDownloaded
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment -> com.ghostery.privacy.appnoticesdk.fragments.a:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    boolean useRemoteValues -> b
+    com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback appNotice_callback -> c
+    30:34:void <init>() -> <init>
+    42:49:com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment newInstance(int) -> a
+    54:58:void onCreate(android.os.Bundle) -> onCreate
+    63:128:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    133:139:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    144:156:void onResume() -> onResume
+    163:172:void onCancel(android.content.DialogInterface) -> onCancel
+    176:267:void applyCustomConfig(android.view.View) -> a
+    30:30:com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback access$000(com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment) -> a
+    30:30:com.ghostery.privacy.appnoticesdk.model.AppNoticeData access$100(com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment) -> b
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$1 -> com.ghostery.privacy.appnoticesdk.fragments.b:
+    com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment this$0 -> a
+    71:71:void <init>(com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment) -> <init>
+    74:89:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$2 -> com.ghostery.privacy.appnoticesdk.fragments.c:
+    com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment this$0 -> a
+    93:93:void <init>(com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment) -> <init>
+    96:108:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment$3 -> com.ghostery.privacy.appnoticesdk.fragments.d:
+    com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment this$0 -> a
+    112:112:void <init>(com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment) -> <init>
+    117:125:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment -> com.ghostery.privacy.appnoticesdk.fragments.e:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> a
+    boolean useRemoteValues -> b
+    com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback appNotice_callback -> c
+    29:33:void <init>() -> <init>
+    41:48:com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment newInstance(int) -> a
+    53:57:void onCreate(android.os.Bundle) -> onCreate
+    62:103:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    108:113:android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
+    118:137:void onResume() -> onResume
+    142:144:void onCancel(android.content.DialogInterface) -> onCancel
+    153:228:void applyCustomConfig(android.view.View) -> a
+    29:29:com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback access$000(com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment) -> a
+    29:29:com.ghostery.privacy.appnoticesdk.model.AppNoticeData access$100(com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment) -> b
+com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$1 -> com.ghostery.privacy.appnoticesdk.fragments.f:
+    com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment this$0 -> a
+    70:70:void <init>(com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment) -> <init>
+    73:88:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment$2 -> com.ghostery.privacy.appnoticesdk.fragments.g:
+    com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment this$0 -> a
+    92:92:void <init>(com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment) -> <init>
+    95:100:void onClick(android.view.View) -> onClick
+com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment -> com.ghostery.privacy.appnoticesdk.fragments.h:
+    com.ghostery.privacy.appnoticesdk.model.Tracker tracker -> a
+    34:36:void <init>() -> <init>
+    40:51:void onCreate(android.os.Bundle) -> onCreate
+    56:69:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    74:77:void onResume() -> onResume
+    97:99:void onDetach() -> onDetach
+com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment$1 -> com.ghostery.privacy.appnoticesdk.fragments.i:
+    com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment this$0 -> a
+    59:59:void <init>(com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment) -> <init>
+    63:64:boolean shouldOverrideUrlLoading(android.webkit.WebView,java.lang.String) -> shouldOverrideUrlLoading
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData -> com.ghostery.privacy.appnoticesdk.model.a:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData instance -> b
+    android.app.Activity activity -> c
+    android.app.ProgressDialog progressDialog -> d
+    boolean isTrackerListInitialized -> e
+    boolean isInitialized -> f
+    int companyId -> g
+    int currentConfigId -> h
+    int previousConfigId -> i
+    int implied_flow_30day_display_max_default -> j
+    int implied_flow_session_display_max_default -> k
+    int consent_flow_dialog_opacity_default -> l
+    java.lang.Object waitObj -> m
+    boolean gettingTrackerList -> n
+    int dialog_button_color -> o
+    java.lang.String dialog_button_consent -> p
+    int dialog_explicit_accept_button_text_color -> q
+    int dialog_background_color -> r
+    java.lang.String dialog_explicit_message -> s
+    int dialog_explicit_decline_button_color -> t
+    java.lang.String dialog_button_decline -> u
+    int dialog_explicit_decline_button_text_color -> v
+    java.lang.String dialog_header_text -> w
+    int dialog_header_text_color -> x
+    java.lang.String dialog_button_close -> y
+    java.lang.String preferences_description -> z
+    java.lang.String preferences_header -> A
+    java.lang.String dialog_implicit_message -> B
+    java.lang.String dialog_button_preferences -> C
+    int dialog_message_text_color -> D
+    int implied_flow_30day_display_max -> E
+    float consent_flow_dialog_opacity -> F
+    int implied_flow_session_display_max -> G
+    java.util.ArrayList trackerArrayList -> a
+    107:107:java.lang.Boolean isTrackerListInitialized() -> a
+    108:108:java.lang.Boolean isInitialized() -> b
+    110:110:void setCompanyId(int) -> a
+    111:111:int getConfigId() -> c
+    112:112:void setCurrentConfigId(int) -> b
+    114:116:void setPreviousConfigId(int) -> c
+    118:118:int getDialogButtonColor() -> d
+    119:119:java.lang.String getDialogButtonConsent() -> e
+    120:120:int getDialogExplicitAcceptButtonTextColor() -> f
+    121:121:int getDialogBackgroundColor() -> g
+    122:122:java.lang.String getDialogExplicitMessage() -> h
+    123:123:int getDialogExplicitDeclineButtonColor() -> i
+    124:124:java.lang.String getDialogButtonDecline() -> j
+    125:125:int getDialogExplicitDeclineButtonTextColor() -> k
+    126:126:java.lang.String getDialogHeaderText() -> l
+    127:127:int getDialogHeaderTextColor() -> m
+    128:128:java.lang.String getDialogButtonClose() -> n
+    129:129:java.lang.String getPreferencesDescription() -> o
+    130:130:java.lang.String getPreferencesHeader() -> p
+    131:131:java.lang.String getDialogImplicitMessage() -> q
+    132:132:java.lang.String getDialogButtonPreferences() -> r
+    133:133:int getDialogMessageTextColor() -> s
+    135:135:float getConsentFlowDialogOpacity() -> t
+    142:152:com.ghostery.privacy.appnoticesdk.model.AppNoticeData getInstance(android.app.Activity) -> a
+    37:161:void <init>() -> <init>
+    164:175:java.util.HashMap getTrackerHashMap(boolean) -> a
+    179:185:java.util.ArrayList getTrackerListClone() -> u
+    191:196:com.ghostery.privacy.appnoticesdk.model.Tracker getTrackerById(int) -> d
+    201:210:void setTrackerOnOffState(int,boolean) -> a
+    214:219:void setTrackerOnOffState(boolean) -> b
+    223:235:int getTrackerOnOffStates() -> v
+    240:252:int getNonEssentialTrackerCount() -> w
+    257:276:boolean isTrackerDuplicateOfEssentialTracker(int) -> e
+    281:298:int getTrackerStateChangeCount(java.util.ArrayList) -> a
+    304:330:void sendOptInOutNotice(int,boolean,boolean,boolean,boolean) -> a
+    335:393:void sendNotice(com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType) -> a
+    397:422:void init() -> x
+    426:463:void initTrackerList(com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback) -> a
+    467:500:boolean getImplicitNoticeDisplayStatus() -> y
+    505:506:boolean getExplicitNoticeDisplayStatus() -> z
+    510:524:void incrementImplicitNoticeDisplayCount() -> A
+    527:533:void saveTrackerStates() -> B
+    536:547:void restoreTrackerStates() -> C
+    551:579:java.util.HashMap getTrackerPreferences() -> D
+    584:672:void fillTrackerList(java.lang.String) -> a
+    31:31:int access$000() -> E
+    31:31:int access$100() -> F
+    31:31:android.app.Activity access$200() -> G
+    31:31:android.app.ProgressDialog access$300(com.ghostery.privacy.appnoticesdk.model.AppNoticeData) -> a
+    31:31:android.app.ProgressDialog access$302(com.ghostery.privacy.appnoticesdk.model.AppNoticeData,android.app.ProgressDialog) -> a
+    31:31:boolean access$400(com.ghostery.privacy.appnoticesdk.model.AppNoticeData) -> b
+    31:31:boolean access$502(com.ghostery.privacy.appnoticesdk.model.AppNoticeData,boolean) -> a
+    31:31:java.lang.Object access$600(com.ghostery.privacy.appnoticesdk.model.AppNoticeData) -> c
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$1 -> com.ghostery.privacy.appnoticesdk.model.b:
+    int val$trackerId -> a
+    boolean val$optOut -> b
+    boolean val$uniqueVisit -> c
+    boolean val$firstOptOut -> d
+    boolean val$selectAll -> e
+    304:304:void <init>(int,boolean,boolean,boolean,boolean) -> <init>
+    306:328:void run() -> run
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$2 -> com.ghostery.privacy.appnoticesdk.model.c:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType val$type -> a
+    335:335:void <init>(com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType) -> <init>
+    337:391:void run() -> run
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$3 -> com.ghostery.privacy.appnoticesdk.model.d:
+    com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback val$mJSONGetterCallback -> a
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData this$0 -> b
+    447:447:void <init>(com.ghostery.privacy.appnoticesdk.model.AppNoticeData,com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback) -> <init>
+    450:451:void run() -> run
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$4 -> com.ghostery.privacy.appnoticesdk.model.e:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData this$0 -> a
+    610:610:void <init>(com.ghostery.privacy.appnoticesdk.model.AppNoticeData) -> <init>
+    613:641:int compare(com.ghostery.privacy.appnoticesdk.model.Tracker,com.ghostery.privacy.appnoticesdk.model.Tracker) -> a
+    610:610:int compare(java.lang.Object,java.lang.Object) -> compare
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$5 -> com.ghostery.privacy.appnoticesdk.model.f:
+    int[] $SwitchMap$com$ghostery$privacy$appnoticesdk$model$AppNoticeData$NoticeType -> a
+    343:343:void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$JSONGetter -> com.ghostery.privacy.appnoticesdk.model.g:
+    com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback mJSONGetterCallback -> b
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData this$0 -> a
+    683:685:void <init>(com.ghostery.privacy.appnoticesdk.model.AppNoticeData,com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback) -> <init>
+    689:704:void onPreExecute() -> onPreExecute
+    708:731:java.lang.Void doInBackground(java.lang.Void[]) -> a
+    736:767:void onPostExecute(java.lang.Void) -> a
+    770:773:java.lang.String getFormattedJSONUrl() -> a
+    679:679:void onPostExecute(java.lang.Object) -> onPostExecute
+    679:679:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    679:679:com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback access$700(com.ghostery.privacy.appnoticesdk.model.AppNoticeData$JSONGetter) -> a
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$JSONGetter$1 -> com.ghostery.privacy.appnoticesdk.model.h:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$JSONGetter this$1 -> a
+    760:760:void <init>(com.ghostery.privacy.appnoticesdk.model.AppNoticeData$JSONGetter) -> <init>
+    763:764:void run() -> run
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType -> com.ghostery.privacy.appnoticesdk.model.i:
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType START_CONSENT_FLOW -> a
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType IMPLIED_INFO_PREF -> b
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType EXPLICIT_INFO_PREF -> c
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType EXPLICIT_INFO_ACCEPT -> d
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType EXPLICIT_INFO_DECLINE -> e
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType PREF_DIRECT -> f
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType[] $VALUES -> g
+    65:65:com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType[] values() -> values
+    65:65:com.ghostery.privacy.appnoticesdk.model.AppNoticeData$NoticeType valueOf(java.lang.String) -> valueOf
+    65:65:void <init>(java.lang.String,int) -> <init>
+    65:71:void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.model.Tracker -> com.ghostery.privacy.appnoticesdk.model.j:
+    int uId -> a
+    java.lang.String category -> b
+    int trackerId -> c
+    java.lang.String name -> d
+    java.lang.String logo_url -> e
+    java.lang.String description -> f
+    java.lang.String privacy_url -> g
+    boolean isOn -> h
+    boolean hasHeader -> i
+    35:35:java.lang.String getCategory() -> a
+    36:36:int getTrackerId() -> b
+    37:37:java.lang.String getName() -> c
+    38:38:java.lang.String getLogo_url() -> d
+    39:39:java.lang.String getDescription() -> e
+    40:40:java.lang.String getPrivacy_url() -> f
+    41:41:boolean isOn() -> g
+    42:42:void setOnOffState(boolean) -> a
+    43:43:boolean hasHeader() -> h
+    44:44:void setHasHeader() -> i
+    31:56:void <init>(com.ghostery.privacy.appnoticesdk.model.Tracker) -> <init>
+    31:75:void <init>(org.json.JSONObject) -> <init>
+    78:78:boolean isEssential() -> j
+com.ghostery.privacy.appnoticesdk.utils.AppData -> com.ghostery.privacy.appnoticesdk.utils.a:
+    android.content.SharedPreferences sharedPreferences -> a
+    33:42:android.content.SharedPreferences getSessionInfo() -> a
+    86:89:void setBoolean(java.lang.String,boolean) -> a
+    92:94:boolean getBoolean(java.lang.String,java.lang.Boolean) -> a
+    98:101:void setInteger(java.lang.String,java.lang.Integer) -> a
+    104:104:int getInteger(java.lang.String,java.lang.Integer) -> b
+    108:111:void setLong(java.lang.String,java.lang.Long) -> a
+    114:114:long getLong(java.lang.String,java.lang.Long) -> b
+    118:122:void setString(java.lang.String,java.lang.String) -> a
+    125:126:java.lang.String getString(java.lang.String,java.lang.String) -> b
+    130:130:java.lang.String getString(java.lang.String) -> a
+    141:144:void remove(java.lang.String) -> b
+    21:21:void <clinit>() -> <clinit>
+com.ghostery.privacy.appnoticesdk.utils.FileDownloader -> com.ghostery.privacy.appnoticesdk.utils.b:
+    19:35:android.graphics.Bitmap getBitmapFromUrl(java.lang.String) -> a
+com.ghostery.privacy.appnoticesdk.utils.FileWriter -> com.ghostery.privacy.appnoticesdk.utils.c:
+    35:42:void writeBitmap(android.graphics.Bitmap,java.io.File) -> a
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader -> com.ghostery.privacy.appnoticesdk.utils.d:
+    android.app.Activity activity -> a
+    java.util.Map imageCache -> b
+    com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback logoDownloadCallback -> c
+    int position -> d
+    30:35:void <init>(android.app.Activity,int,com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback) -> <init>
+    38:69:void download(java.lang.String,android.widget.ImageView) -> a
+    73:84:boolean cancelPotentialDownload(java.lang.String,android.widget.ImageView) -> b
+    89:96:com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask getBitmapDownloaderTask(android.widget.ImageView) -> b
+    23:23:com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask access$100(android.widget.ImageView) -> a
+    23:23:java.util.Map access$200(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> a
+    23:23:com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback access$300(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> b
+    23:23:int access$400(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> c
+    23:23:android.app.Activity access$500(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader) -> d
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask -> com.ghostery.privacy.appnoticesdk.utils.e:
+    java.lang.String url -> b
+    java.lang.ref.WeakReference imageViewReference -> c
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader this$0 -> a
+    104:106:void <init>(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader,android.widget.ImageView) -> <init>
+    110:111:android.graphics.Bitmap doInBackground(java.lang.String[]) -> a
+    117:146:void onPostExecute(android.graphics.Bitmap) -> a
+    100:100:void onPostExecute(java.lang.Object) -> onPostExecute
+    100:100:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    100:100:java.lang.String access$000(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask) -> a
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask$1 -> com.ghostery.privacy.appnoticesdk.utils.f:
+    com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask this$1 -> a
+    137:137:void <init>(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask) -> <init>
+    140:141:void run() -> run
+com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$DownloadedDrawable -> com.ghostery.privacy.appnoticesdk.utils.g:
+    java.lang.ref.WeakReference bitmapDownloaderTaskReference -> a
+    154:156:void <init>(com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask) -> <init>
+    159:159:com.ghostery.privacy.appnoticesdk.utils.ImageDownloader$BitmapDownloaderTask getBitmapDownloaderTask() -> a
+com.ghostery.privacy.appnoticesdk.utils.ServiceHandler -> com.ghostery.privacy.appnoticesdk.utils.h:
+    int httpRequestTimeout -> a
+    27:33:void <init>() -> <init>
+    36:63:java.lang.String getRequest(java.lang.String) -> a
+com.ghostery.privacy.appnoticesdk.utils.Session -> com.ghostery.privacy.appnoticesdk.utils.i:
+    27:28:void set(java.lang.String,java.lang.Object) -> a
+    31:31:java.lang.Object get(java.lang.String) -> a
+    36:40:java.lang.Object get(java.lang.String,java.lang.Object) -> b
+    44:47:void remove(java.lang.String) -> b
+    50:51:void reset() -> a
+com.ghostery.privacy.appnoticesdk.utils.Util -> com.ghostery.privacy.appnoticesdk.utils.j:
+    23:50:void showManagePreferences(android.app.Activity) -> a
+    53:60:boolean checkURL(java.lang.CharSequence) -> a
+    67:72:void forceAppRestart(android.app.Activity) -> b
+com.ghostery.privacy.appnoticesdk.utils.Util$1 -> com.ghostery.privacy.appnoticesdk.utils.k:
+    android.app.Activity val$activity -> a
+    33:33:void <init>(android.app.Activity) -> <init>
+    37:46:void onTaskDone() -> a

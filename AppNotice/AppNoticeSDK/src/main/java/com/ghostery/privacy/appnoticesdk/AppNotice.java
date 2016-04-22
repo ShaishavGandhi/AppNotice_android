@@ -132,20 +132,15 @@ public class AppNotice {
         // Start getting the tracker list before we display the consent dialog or the manage preferences screen
         if (!appNoticeData.isTrackerListInitialized()) {
 
-            // Use a non-UI thread
-            new Runnable() {
-                public void run() {
-                    Log.d(TAG, "Starting initTrackerList from AppNotice init.");
-                    appNoticeData.initTrackerList(new JSONGetterCallback() {
+            Log.d(TAG, "Starting initTrackerList from AppNotice init.");
+            appNoticeData.initTrackerList(new JSONGetterCallback() {
 
-                        @Override
-                        public void onTaskDone() {
-                            // Do nothing
-                            Log.d(TAG, "Done with initTrackerList from AppNotice init.");
-                        }
-                    });
+                @Override
+                public void onTaskDone() {
+                    // Do nothing
+                    Log.d(TAG, "Done with initTrackerList from AppNotice init.");
                 }
-            };
+            });
         }
 
         // If initialized, use what we have

@@ -16,7 +16,7 @@ android {
         applicationId "com.ghostery.privacy.fireball_module"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 28
+        versionCode 29
         versionName "2.0.0"
     }
 
