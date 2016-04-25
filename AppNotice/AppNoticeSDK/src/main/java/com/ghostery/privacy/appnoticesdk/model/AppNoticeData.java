@@ -37,8 +37,8 @@ public class AppNoticeData {
     private boolean isTrackerListInitialized = false;
     private boolean isInitialized = false;
     private static int companyId;
-    private static int currentConfigId;
-    private static int previousConfigId;
+    private static int currentNoticeId;
+    private static int previousNoticeId;
     private int implied_flow_30day_display_max_default = 3;
     private int implied_flow_session_display_max_default = 1;
     private int consent_flow_dialog_opacity_default = 100;
@@ -108,11 +108,11 @@ public class AppNoticeData {
     public Boolean isInitialized() { return isInitialized; }
     public int getCompanyId() { return companyId; }
     public void setCompanyId(int companyId) { this.companyId = companyId; }
-    public int getConfigId() { return currentConfigId; }
-    public void setCurrentConfigId(int currentConfigId) { this.currentConfigId = currentConfigId; }
-    public void setPreviousConfigId(int previousConfigId) {
-        this.previousConfigId = previousConfigId;
-        AppData.setInteger(AppData.APPDATA_PREV_CONFIG_ID, previousConfigId);
+    public int getNoticeId() { return currentNoticeId; }
+    public void setCurrentNoticeId(int currentNoticeId) { this.currentNoticeId = currentNoticeId; }
+    public void setPreviousNoticeId(int previousNoticeId) {
+        this.previousNoticeId = previousNoticeId;
+        AppData.setInteger(AppData.APPDATA_PREV_NOTICE_ID, previousNoticeId);
     }
 
     public int getDialogButtonColor() { return dialog_button_color; }
@@ -145,7 +145,7 @@ public class AppNoticeData {
         if (instance == null) {
             instance = (AppNoticeData) Session.get(Session.APPNOTICE_DATA, new AppNoticeData());
 
-            // Save the tracker config object in the app session
+            // Save this instance object in the app session
             Session.set(Session.APPNOTICE_DATA, instance);
         }
 
@@ -304,7 +304,7 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[7];
-                urlParams[0] = String.valueOf(currentConfigId);	// 0
+                urlParams[0] = String.valueOf(currentNoticeId);	// 0
                 urlParams[1] = String.valueOf(companyId);		// 1
                 urlParams[2] = String.valueOf(trackerId);		// 2
                 urlParams[3] = optOut ? "1" : "0";  		    // 3
@@ -335,7 +335,7 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[2];
-                urlParams[0] = String.valueOf(currentConfigId);	// 0
+                urlParams[0] = String.valueOf(currentNoticeId);	// 0
                 urlParams[1] = String.valueOf(companyId);		// 1
 
                 String uRL = "";
@@ -416,7 +416,7 @@ public class AppNoticeData {
         consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
-        previousConfigId = AppData.getInteger(AppData.APPDATA_PREV_CONFIG_ID, 0);
+        previousNoticeId = AppData.getInteger(AppData.APPDATA_PREV_NOTICE_ID, 0);
 
         isInitialized = true;
     }
@@ -436,7 +436,7 @@ public class AppNoticeData {
 
         // Check to see if we have a current cached tracker list
         String previousJson = AppData.getString(AppData.APPDATA_PREV_JSON, "");
-        if (currentConfigId == previousConfigId && !previousJson.isEmpty()) {
+        if (currentNoticeId == previousNoticeId && !previousJson.isEmpty()) {
             fillTrackerList(previousJson);
 
             // Restore the selection states of the trackers
@@ -468,7 +468,7 @@ public class AppNoticeData {
 
         if (implied_flow_30day_display_max <= 0) {
             // If the notice ID has changed, we need to show the notice again
-            if (currentConfigId == previousConfigId) {
+            if (currentNoticeId == previousNoticeId) {
                 showNotice = false;
             }
         } else {
@@ -769,7 +769,7 @@ public class AppNoticeData {
         protected String getFormattedJSONUrl() {
             Object[] urlParams = new Object[2];
             urlParams[0] = String.valueOf(companyId);			// 0
-            urlParams[1] = String.valueOf(currentConfigId);		// 1
+            urlParams[1] = String.valueOf(currentNoticeId);		// 1
             return MessageFormat.format(URL_JSON_REQUEST, urlParams);
         }
 

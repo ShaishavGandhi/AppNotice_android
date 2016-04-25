@@ -34,39 +34,37 @@ public class AppNotice {
      * AppNotice constructor
      * @param activity: Usually your start-up activity.
      * @param companyId: The company ID assigned to you for App Notice consent.
-     * @param configId: The Configuration ID of the configuration created for this app.
+     * @param noticeId: The notice ID of the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
-    public AppNotice(Activity activity, int companyId, int configId, AppNotice_Callback appNotice_callback) {
-        AppNotice(activity, companyId, configId, appNotice_callback);
+    public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
+        AppNotice(activity, companyId, noticeId, appNotice_callback);
     }
 
     /**
 	 * AppNotice constructor (deprecated)
 	 * @param activity: Usually your start-up activity
 	 * @param companyId: The company ID assigned to you for App Notice consent
-	 * @param configId: The Configuration ID of the configuration created for this app
-     * @param useRemoteValues:
-     *        True = Try to use the App Notice consent dialog configuration parameters from the service;
-     *        False = Use local resource values instead of calling the service
+	 * @param noticeId: The notice ID of the configuration created for this app
+     * @param useRemoteValues: (unused)
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
 	 */
-    public AppNotice(Activity activity, int companyId, int configId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
-        AppNotice(activity, companyId, configId, appNotice_callback);
+    public AppNotice(Activity activity, int companyId, int noticeId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
+        AppNotice(activity, companyId, noticeId, appNotice_callback);
 	}
 
     /**
      * AppNotice method to combine the current and deprecated constructor functionality
      * @param activity: Usually your start-up activity.
      * @param companyId: The company ID assigned to you for App Notice consent.
-     * @param configId: The Configuration ID of the configuration created for this app.
+     * @param noticeId: The notice ID of the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
-    private void AppNotice(Activity activity, int companyId, int configId, AppNotice_Callback appNotice_callback) {
+    private void AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
         appContext = activity.getApplicationContext();
         extActivity = activity;
-        if ((companyId <= 0) || (configId <= 0)) {
-            throw(new IllegalArgumentException("Company ID and Config ID must both be valid identifiers."));
+        if ((companyId <= 0) || (noticeId <= 0)) {
+            throw(new IllegalArgumentException("Company ID and notice ID must both be valid identifiers."));
         }
 
         // Remember the provided callback
@@ -76,9 +74,9 @@ public class AppNotice {
         // Get either a new or initialized tracker config object
         appNoticeData = AppNoticeData.getInstance(extActivity);
 
-        // Keep track of the company ID and the configuration ID
+        // Keep track of the company ID and the notice ID
         appNoticeData.setCompanyId(companyId);
-        appNoticeData.setCurrentConfigId(configId);
+        appNoticeData.setCurrentNoticeId(noticeId);
     }
 
     /**
@@ -112,7 +110,7 @@ public class AppNotice {
         AppData.remove(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT);
         AppData.remove(AppData.APPDATA_EXPLICIT_ACCEPTED);
         AppData.remove(AppData.APPDATA_TRACKERSTATES);
-        AppData.remove(AppData.APPDATA_PREV_CONFIG_ID);
+        AppData.remove(AppData.APPDATA_PREV_NOTICE_ID);
         AppData.remove(AppData.APPDATA_PREV_JSON);
     }
 
@@ -186,8 +184,8 @@ public class AppNotice {
                     // Count that this Implicit Notice dialog box was displayed
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
 
-                    // Remember that an implied notice has been shown for this config ID
-                    appNoticeData.setPreviousConfigId(appNoticeData.getConfigId());
+                    // Remember that an implied notice has been shown for this notice ID
+                    appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
 
                 } else {
                     ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
