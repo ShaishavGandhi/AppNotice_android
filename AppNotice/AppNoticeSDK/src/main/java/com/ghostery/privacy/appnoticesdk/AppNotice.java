@@ -131,14 +131,20 @@ public class AppNotice {
         if (!appNoticeData.isTrackerListInitialized()) {
 
             Log.d(TAG, "Starting initTrackerList from AppNotice init.");
-            appNoticeData.initTrackerList(new JSONGetterCallback() {
-
+            Thread thread = new Thread(new Runnable() {
                 @Override
-                public void onTaskDone() {
-                    // Do nothing
-                    Log.d(TAG, "Done with initTrackerList from AppNotice init.");
+                public void run() {
+                    appNoticeData.initTrackerList(new JSONGetterCallback() {
+
+                        @Override
+                        public void onTaskDone() {
+                            // Do nothing
+                            Log.d(TAG, "Done with initTrackerList from AppNotice init.");
+                        }
+                    });
                 }
-            });
+            }, Util.THREAD_INITTRACKERLIST);
+            thread.start();
         }
 
         // If initialized, use what we have

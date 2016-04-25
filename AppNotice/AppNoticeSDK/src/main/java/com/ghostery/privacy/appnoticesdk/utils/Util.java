@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
  */
 public class Util {
     private static final String TAG = "Util";
+    public static final String THREAD_INITTRACKERLIST = "thread_initTrackerList";
 
     public static void showManagePreferences(final Activity activity) {
         // Get either a new or initialized tracker config object
@@ -30,21 +31,27 @@ public class Util {
         } else {
             // If not initialized yet, go get it
             Log.d(TAG, "Starting initTrackerList from Util.showManagePreferences init.");
-            appNoticeData.initTrackerList(new JSONGetterCallback() {
-
+            Thread thread = new Thread(new Runnable() {
                 @Override
-                public void onTaskDone() {
-                    Log.d(TAG, "Done with initTrackerList from Util.showManagePreferences init.");
+                public void run() {
+                    appNoticeData.initTrackerList(new JSONGetterCallback() {
 
-                    // Send notice for this event
-                    //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+                        @Override
+                        public void onTaskDone() {
+                            Log.d(TAG, "Done with initTrackerList from Util.showManagePreferences init.");
 
-                    // Intent intent = new Intent(fragmentActivity, ListActivity.class);
-                    Intent intent = new Intent(activity, TrackerListActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    activity.startActivity(intent);
+                            // Send notice for this event
+                            //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+
+                            // Intent intent = new Intent(fragmentActivity, ListActivity.class);
+                            Intent intent = new Intent(activity, TrackerListActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            activity.startActivity(intent);
+                        }
+                    });
                 }
-            });
+            }, THREAD_INITTRACKERLIST);
+            thread.start();
         }
 
     }

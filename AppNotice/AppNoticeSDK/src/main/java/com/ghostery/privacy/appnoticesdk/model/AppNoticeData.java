@@ -11,6 +11,7 @@ import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
 import com.ghostery.privacy.appnoticesdk.utils.ServiceHandler;
 import com.ghostery.privacy.appnoticesdk.utils.Session;
+import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -423,8 +424,9 @@ public class AppNoticeData {
 
     // Init
     public void initTrackerList(final JSONGetterCallback mJSONGetterCallback) {
+        assert(Thread.currentThread().getName().equals(Util.THREAD_INITTRACKERLIST));
         synchronized(waitObj) {
-            while (gettingTrackerList)
+            while (gettingTrackerList) {
                 try {
                     Log.d(TAG, "Waiting for tracker list to be filled.");
                     waitObj.wait();
@@ -432,33 +434,39 @@ public class AppNoticeData {
                     // Do nothing
                     Log.d(TAG, "Wait interrupted while filling tracker list.");
                 }
-        }
+            }
 
-        // Check to see if we have a current cached tracker list
-        String previousJson = AppData.getString(AppData.APPDATA_PREV_JSON, "");
-        if (currentNoticeId == previousNoticeId && !previousJson.isEmpty()) {
-            fillTrackerList(previousJson);
+            // Check to see if we have a current cached tracker list
+            String previousJson = AppData.getString(AppData.APPDATA_PREV_JSON, "");
+            if (currentNoticeId == previousNoticeId && !previousJson.isEmpty()) {
+                fillTrackerList(previousJson);
 
-            // Restore the selection states of the trackers
-            restoreTrackerStates();
+                // Restore the selection states of the trackers
+                restoreTrackerStates();
 
-            // Let the specified callback know it finished...
-            if (mJSONGetterCallback != null) {
+                // Let the specified callback know it finished...
+                if (mJSONGetterCallback != null) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mJSONGetterCallback.onTaskDone();
+                        }
+                    });
+                }
+
+                // Save the tracker states
+                saveTrackerStates();
+            } else {
+                // Start the call to get the AppNoticeData data from the service...from the UI thread
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mJSONGetterCallback.onTaskDone();
+                        gettingTrackerList = true;
+                        JSONGetter mJSONGetter = new JSONGetter(mJSONGetterCallback);
+                        mJSONGetter.execute();
                     }
                 });
             }
-
-            // Save the tracker states
-            saveTrackerStates();
-        } else {
-            // Start the call to get the AppNoticeData data from the service
-            gettingTrackerList = true;
-            JSONGetter mJSONGetter = new JSONGetter(mJSONGetterCallback);
-            mJSONGetter.execute();
         }
     }
 
