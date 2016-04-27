@@ -17,7 +17,7 @@ android {
     }
 
     signingConfigs {
-        testConfig{
+        testConfig {
             storeFile file("C:/Dev/Keystore/ghostery_release.keystore")
             storePassword "1t9hv8vH673LD6626p19)I_2N0348O!1Uu383,53104w7{5Q2g5F7w5H9f4,67Ty7Y3>AGK37f#39vgkQ0~oE33Sc3138R4}X8x3"
             keyAlias "evidon"
@@ -31,7 +31,7 @@ android {
             minifyEnabled false
         }
         release {
-            signingConfig  signingConfigs.testConfig
+            signingConfig signingConfigs.testConfig
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -41,7 +41,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
 }
 
 android.libraryVariants.all { variant ->
