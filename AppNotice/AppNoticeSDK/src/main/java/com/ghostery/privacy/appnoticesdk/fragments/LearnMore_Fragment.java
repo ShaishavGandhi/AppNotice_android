@@ -42,7 +42,7 @@ public class LearnMore_Fragment extends Fragment {
         // Get either a new or initialized tracker config object
         AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
 
-        if (appNoticeData.isInitialized()) {
+        if (appNoticeData.isTrackerListInitialized()) {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.

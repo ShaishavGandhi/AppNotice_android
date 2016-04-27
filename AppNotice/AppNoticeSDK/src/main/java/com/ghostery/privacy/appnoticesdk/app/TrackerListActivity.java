@@ -60,7 +60,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
 
         appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
-        if (appNoticeData != null && appNoticeData.isInitialized()) {
+        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
             trackerArrayList = appNoticeData.trackerArrayList;
             trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
 
@@ -74,7 +74,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
                 // If there is header text in the JSON, use it. Else use the default.
                 if (appNoticeData != null)
-                    actionBar.setTitle(appNoticeData.getManage_preferences_header());
+                    actionBar.setTitle(appNoticeData.getPreferencesHeader());
             }
 
             setAllNoneControlState();
@@ -82,7 +82,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
             AppCompatTextView manage_preferences_description = (AppCompatTextView)findViewById(R.id.manage_preferences_description);
             if (manage_preferences_description != null) {
                 AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
-                String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
+                String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
                 manage_preferences_description.setText(manage_preferences_description_text);
             }
 
@@ -173,7 +173,9 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         int pingBackCount = 0;      // Count the ping-backs
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList.size() == trackerArrayListClone.size()) {
+        if (trackerArrayList != null && trackerArrayListClone != null &&
+                trackerArrayList.size() == trackerArrayListClone.size()) {
+
             for (int i = 0; i < trackerArrayList.size(); i++) {
                 Tracker tracker = trackerArrayList.get(i);
                 Tracker trackerClone = trackerArrayListClone.get(i);
@@ -193,13 +195,15 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     public void saveTrackerStates() {
-        appNoticeData.saveTrackerStates();
+        if (appNoticeData != null) {
+            appNoticeData.saveTrackerStates();
 
-        // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
-        int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
-        if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, false)) {
-            AppNotice_Callback appNotice_callback = (AppNotice_Callback)Session.get(Session.APPNOTICE_CALLBACK);
-            appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
+            // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
+            int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
+            if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, false)) {
+                AppNotice_Callback appNotice_callback = (AppNotice_Callback)Session.get(Session.APPNOTICE_CALLBACK);
+                appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
+            }
         }
     }
 
@@ -209,13 +213,17 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
 
         if (view.getId() == R.id.rb_all) {
-            appNoticeData.setTrackerOnOffState(true);
+            if (appNoticeData != null) {
+                appNoticeData.setTrackerOnOffState(true);
+            }
             rbAll.setChecked(true);
             rbNone.setChecked(false);
             Session.set(Session.APPNOTICE_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
             Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
         } else if (view.getId() == R.id.rb_none) {
-            appNoticeData.setTrackerOnOffState(false);
+            if (appNoticeData != null) {
+                appNoticeData.setTrackerOnOffState(false);
+            }
             rbAll.setChecked(false);
             rbNone.setChecked(true);
             Session.set(Session.APPNOTICE_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
@@ -226,24 +234,28 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     public void onClickDescription(View view) {
-        String manage_preferences_description_text = appNoticeData.getManage_preferences_description();
+        if (appNoticeData != null) {
+            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
 
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(appNoticeData.getManage_preferences_header());
-        alertDialog.setMessage(manage_preferences_description_text);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getClose_button(),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle(appNoticeData.getPreferencesHeader());
+            alertDialog.setMessage(manage_preferences_description_text);
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
+        }
     }
 
     public void onOptInOutClick(View view) {
         Boolean isOn = ((Switch)view).isChecked();
         int uId = (int)view.getTag();
-        appNoticeData.setTrackerOnOffState(uId, isOn);
+        if (appNoticeData != null) {
+            appNoticeData.setTrackerOnOffState(uId, isOn);
+        }
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
@@ -252,28 +264,30 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     }
 
     private void setAllNoneControlState() {
-        int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
-        RadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
-        RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
+        if (appNoticeData != null) {
+            int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
+            RadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
+            RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
 
-        if (nonEssentialTrackerCount > 0) {
-            int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();
-            if (trackerOnOffStates == 1) {              // All on
-                rbAll.setChecked(true);
-                rbNone.setChecked(false);
-            } else if (trackerOnOffStates == -1) {      // None on
+            if (nonEssentialTrackerCount > 0) {
+                int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();
+                if (trackerOnOffStates == 1) {              // All on
+                    rbAll.setChecked(true);
+                    rbNone.setChecked(false);
+                } else if (trackerOnOffStates == -1) {      // None on
+                    rbAll.setChecked(false);
+                    rbNone.setChecked(true);
+                } else {                                    // Some on, some off
+                    rbAll.setChecked(false);
+                    rbNone.setChecked(false);
+                }
+            } else {
+                // Set both to unchecked and disabled
                 rbAll.setChecked(false);
-                rbNone.setChecked(true);
-            } else {                                    // Some on, some off
-                rbAll.setChecked(false);
                 rbNone.setChecked(false);
+                rbAll.setEnabled(false);
+                rbNone.setEnabled(false);
             }
-        } else {
-            // Set both to unchecked and disabled
-            rbAll.setChecked(false);
-            rbNone.setChecked(false);
-            rbAll.setEnabled(false);
-            rbNone.setEnabled(false);
         }
     }
 

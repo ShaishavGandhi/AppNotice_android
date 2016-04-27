@@ -3,9 +3,12 @@ package com.ghostery.privacy.appnoticesdk.utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 
 import com.ghostery.privacy.appnoticesdk.app.TrackerListActivity;
+import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
+import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 import java.util.regex.Pattern;
 
@@ -13,13 +16,44 @@ import java.util.regex.Pattern;
  * Created by Steven.Overson on 2/25/2015.
  */
 public class Util {
-    public static final int DIVIDER_ALPHA = 46;
+    private static final String TAG = "Util";
+    public static final String THREAD_INITTRACKERLIST = "thread_initTrackerList";
 
     public static void showManagePreferences(final Activity activity) {
-//        Intent intent = new Intent(fragmentActivity, ListActivity.class);
-        Intent intent = new Intent(activity, TrackerListActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(intent);
+        // Get either a new or initialized tracker config object
+        final AppNoticeData appNoticeData = AppNoticeData.getInstance(activity);
+
+        if (appNoticeData.isTrackerListInitialized()) {
+//          Intent intent = new Intent(fragmentActivity, ListActivity.class);
+            Intent intent = new Intent(activity, TrackerListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(intent);
+        } else {
+            // If not initialized yet, go get it
+            Log.d(TAG, "Starting initTrackerList from Util.showManagePreferences init.");
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    appNoticeData.initTrackerList(new JSONGetterCallback() {
+
+                        @Override
+                        public void onTaskDone() {
+                            Log.d(TAG, "Done with initTrackerList from Util.showManagePreferences init.");
+
+                            // Send notice for this event
+                            //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+
+                            // Intent intent = new Intent(fragmentActivity, ListActivity.class);
+                            Intent intent = new Intent(activity, TrackerListActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            activity.startActivity(intent);
+                        }
+                    });
+                }
+            }, THREAD_INITTRACKERLIST);
+            thread.start();
+        }
+
     }
 
     public static boolean checkURL(CharSequence input) {
@@ -43,21 +77,6 @@ public class Util {
         activity.finish();
         activity.startActivity(i);
     }
-
-//    public static int getContrastColor(int color, int alpha)
-//    {
-//        int d = 0;
-//
-//        // Counting the perceptive luminance - human eye favors green color...
-//        double a = 1 - ( 0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
-//
-//        if (a < 0.5)
-//            d = 0;          // bright colors - black font
-//        else
-//            d = 255;        // dark colors - white font
-//
-//        return Color.argb(alpha, d, d, d);
-//    }
 
 }
 

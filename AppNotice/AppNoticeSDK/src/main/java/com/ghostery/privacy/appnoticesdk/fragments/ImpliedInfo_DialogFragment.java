@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -74,7 +73,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
 
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
                 // Let the calling class know the the manage preferences button was clicked
                 boolean wasHandled = false;
@@ -86,9 +85,6 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 if (!wasHandled) {
                     Util.showManagePreferences(getActivity());
                 }
-
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
             }
         });
 
@@ -163,15 +159,15 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         } else {
             LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
 
-            int ric_bg = appNoticeData.getRic_bg();
-            int ric_access_button_color = appNoticeData.getBric_access_button_color();
+            int ric_bg = appNoticeData.getDialogBackgroundColor();
+            int ric_access_button_color = appNoticeData.getDialogButtonColor();
 
 
             // Set background color and opacity
             if (linearLayout_outer != null) {
                 linearLayout_outer.setBackgroundColor(ric_bg);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    float opacityFloat = appNoticeData.getRic_opacity();
+                    float opacityFloat = appNoticeData.getConsentFlowDialogOpacity();
                     if (opacityFloat < 1F && opacityFloat >= 0) {
                         Drawable d = new ColorDrawable(Color.BLACK);
                         d.setAlpha((int)(255 * opacityFloat));
@@ -184,17 +180,17 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             // Title
             AppCompatTextView textView_title = (AppCompatTextView)v.findViewById(R.id.textView_title);
             if (textView_title != null) {
-                if (appNoticeData.getRic_title() != null)
-                    textView_title.setText(appNoticeData.getRic_title());
-                textView_title.setTextColor(appNoticeData.getRic_title_color());
+                if (appNoticeData.getDialogHeaderText() != null)
+                    textView_title.setText(appNoticeData.getDialogHeaderText());
+                textView_title.setTextColor(appNoticeData.getDialogHeaderTextColor());
             }
 
             // Message
             AppCompatTextView textView_message = (AppCompatTextView)v.findViewById(R.id.textView_message);
             if (textView_message != null) {
-                if (appNoticeData.getRic() != null)
-                    textView_message.setText(appNoticeData.getRic());
-                textView_message.setTextColor(appNoticeData.getRic_color());
+                if (appNoticeData.getDialogImplicitMessage() != null)
+                    textView_message.setText(appNoticeData.getDialogImplicitMessage());
+                textView_message.setTextColor(appNoticeData.getDialogMessageTextColor());
             }
 
             Context context = this.getActivity();
@@ -203,10 +199,10 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             // Preferences button
             AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
             if (preferences_button != null) {
-                if (appNoticeData.getRic_click_manage_settings() != null) {
-                    preferences_button.setText(appNoticeData.getRic_click_manage_settings());
+                if (appNoticeData.getDialogButtonPreferences() != null) {
+                    preferences_button.setText(appNoticeData.getDialogButtonPreferences());
                 }
-                preferences_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+                preferences_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {
@@ -217,10 +213,10 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
             // Close button
             AppCompatButton close_button = (AppCompatButton)v.findViewById(R.id.close_button);
             if (close_button != null) {
-                if (appNoticeData.getClose_button() != null) {
-                    close_button.setText(appNoticeData.getClose_button());
+                if (appNoticeData.getDialogButtonClose() != null) {
+                    close_button.setText(appNoticeData.getDialogButtonClose());
                 }
-                close_button.setTextColor(appNoticeData.getBric_access_button_text_color());
+                close_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
                 } else {

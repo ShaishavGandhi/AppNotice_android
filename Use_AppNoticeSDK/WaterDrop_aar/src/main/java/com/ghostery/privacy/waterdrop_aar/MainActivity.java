@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -60,28 +61,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         // If there are saved IDs, use them
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
-        String configIdString = Util.getSharedPreference(this, Util.SP_CONFIG_ID, "");
-        String useRemoteValuesString = Util.getSharedPreference(this, Util.SP_USE_REMOTEVALUES, "");
+        String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
+        String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
         String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
 
         AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
         companyIdEditText.setText(companyIdString);
 
-        AppCompatEditText configIdEditText = (AppCompatEditText)findViewById(R.id.editText_configId);
-        configIdEditText.setText(configIdString);
+        AppCompatEditText noticeIdEditText = (AppCompatEditText)findViewById(R.id.editText_noticeId);
+        noticeIdEditText.setText(noticeIdString);
 
-        AppCompatCheckBox checkBox_useRemoteValues = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
-        if (useRemoteValuesString != null && useRemoteValuesString.equals("1")) {
-            checkBox_useRemoteValues.setChecked(true);
-        } else {
-            checkBox_useRemoteValues.setChecked(false);
+        AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
+        AppCompatRadioButton radioButton_explicit = (AppCompatRadioButton)this.findViewById(R.id.radioButton_explicit);
+        boolean isImplied = isImplied_String.equals("1");
+        if (isImplied_String != null) {
+            radioButton_implied.setChecked(isImplied);
+            radioButton_explicit.setChecked(!isImplied);
         }
 
         AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (isHybridAppString != null && isHybridAppString.equals("1")) {
-            checkBox_hybridApp.setChecked(true);
-        } else {
-            checkBox_hybridApp.setChecked(false);
+        if (isHybridAppString != null) {
+            checkBox_hybridApp.setChecked(isHybridAppString.equals("1"));
         }
 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
@@ -103,23 +103,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onClick(View view) {
 
         String companyIdString = "";
-        String configIdString = "";
+        String noticeIdString = "";
         int companyId = 0;
-        int configId = 0;
-        Boolean useRemoteValues = true;
+        int noticeId = 0;
+        Boolean isImplied = true;
         isHybridApp = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
         if (tv != null)
             companyIdString = tv.getText().toString();
 
-        tv = (AppCompatEditText)this.findViewById(R.id.editText_configId);
+        tv = (AppCompatEditText)this.findViewById(R.id.editText_noticeId);
         if (tv != null)
-            configIdString = tv.getText().toString();
+            noticeIdString = tv.getText().toString();
 
-        AppCompatCheckBox checkBox_useRemoteValues = (AppCompatCheckBox)this.findViewById(R.id.checkBox_useRemoteValues);
-        if (checkBox_useRemoteValues != null) {
-            useRemoteValues = checkBox_useRemoteValues.isChecked();
+        AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
+        if (radioButton_implied != null) {
+            isImplied = radioButton_implied.isChecked();
         }
 
         AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
@@ -129,17 +129,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
-        Util.setSharedPreference(this, Util.SP_CONFIG_ID, configIdString);
-        Util.setSharedPreference(this, Util.SP_USE_REMOTEVALUES, useRemoteValues ? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
+        Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
 
-		if (companyIdString.length() == 0 || configIdString.length() == 0) {
+		if (companyIdString.length() == 0 || noticeIdString.length() == 0) {
 			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
 		} else {
 			companyId = Integer.valueOf(companyIdString);
-			configId = Integer.valueOf(configIdString);
+			noticeId = Integer.valueOf(noticeIdString);
 
-			appNotice = new AppNotice(this, companyId, configId, useRemoteValues, this);
+			appNotice = new AppNotice(this, companyId, noticeId, this);
 
 			if (view == btn_reset_sdk) {
 				appNotice.resetSDK();
@@ -168,9 +168,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 				showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
 
 			} else if (view == btn_consent_flow) {
-				appNotice.startConsentFlow();
-
-			}
+                if (isImplied) {
+                    appNotice.startImpliedConsentFlow();
+                } else {
+                    appNotice.startExplicitConsentFlow();
+                }
+            }
 		}
     }
 
