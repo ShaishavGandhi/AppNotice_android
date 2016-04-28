@@ -7,7 +7,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
         <activity
             android:name="com.ghostery.privacy.fireball_module.MainActivity"
             android:launchMode="standard"
@@ -21,6 +22,18 @@
         </activity>
 
         <activity
+            android:name="com.ghostery.privacy.appnoticesdk.app.AppNoticeActivity"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.ghostery.privacy.appnoticesdk.app.TrackerListActivity"
             android:launchMode="singleInstance"
             android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
@@ -33,6 +46,9 @@
             >
         </activity>
         <activity android:name=".HybridPrivacySettings"></activity>
+
+        <meta-data android:name="ghostery_hostApp_mainActivity" android:value="com.ghostery.privacy.fireball_module.MainActivity" />
+        <meta-data android:name="ghostery_hostApp_icon" android:value="drawable/logo" />
 
     </application>
 

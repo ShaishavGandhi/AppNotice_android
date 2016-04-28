@@ -30,11 +30,11 @@
 
     <!-- Explicit and Implied Dialog colors -->
     <!-- Header text color for both the Implied and the Explicit consent dialogs -->
-    <color name="ghostery_dialog_header_text_color">#000000</color>
+    <color name="ghostery_dialog_header_text_color">#5F5F5F</color>
     <!-- Message text color for both the Implied and the Explicit consent dialogs -->
-    <color name="ghostery_dialog_message_text_color">#000000</color>
+    <color name="ghostery_dialog_message_text_color">#5F5F5F</color>
     <!-- Background color for both the Implied and the Explicit consent dialogs -->
-    <color name="ghostery_dialog_background_color">#E5E5E5</color>
+    <color name="ghostery_dialog_background_color">#FFFFFF</color>
     <!-- Dialog button color for all but Explicit Decline -->
     <color name="ghostery_dialog_button_color">#333333</color>
 

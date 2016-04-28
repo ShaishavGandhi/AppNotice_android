@@ -1,6 +1,11 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Application theme. -->
+    <style name="ghostery_AppNoticeTheme" parent="@style/Theme.AppCompat.Light">
+        <item name="colorAccent">@color/ghostery_header_background_color</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
+    </style>
+
     <style name="ghostery_AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorAccent">@color/ghostery_header_background_color</item>
         <item name="android:actionBarStyle">@style/ghostery_ActionBar</item>
