@@ -15,8 +15,8 @@ android {
         applicationId "com.ghostery.privacy.waterdrop_aar"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 34
-        versionName "2.0.1"
+        versionCode 35
+        versionName "2.0.2"
     }
     buildTypes {
         release {

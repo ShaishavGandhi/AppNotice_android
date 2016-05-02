@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             try {
                 DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
                 dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
+                showTrackerPreferenceResults(trackerHashMap, "Tracking Declined"); // Show preference results in a dialog
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
             }
