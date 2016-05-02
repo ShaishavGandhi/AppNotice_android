@@ -13,7 +13,6 @@ import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
@@ -100,6 +99,39 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
                         .setActivateOnItemClick(true);
             }
         }
+
+        final AppCompatRadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
+        final AppCompatRadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
+
+        rbAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appNoticeData != null) {
+                    appNoticeData.setTrackerOnOffState(true);
+                }
+                rbAll.setChecked(true);
+                rbNone.setChecked(false);
+                Session.set(Session.APPNOTICE_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
+                Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
+
+                ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
+            }
+        });
+
+        rbNone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (appNoticeData != null) {
+                    appNoticeData.setTrackerOnOffState(false);
+                }
+                rbAll.setChecked(false);
+                rbNone.setChecked(true);
+                Session.set(Session.APPNOTICE_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
+                Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they selected "None", remember that "All" wasn't the last set state.
+
+                ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
+            }
+        });
 
         // TODO: If exposing deep links into your app, handle intents here.
     }
@@ -207,32 +239,6 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         }
     }
 
-
-    public void onClick(View view) {
-        RadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
-        RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
-
-        if (view.getId() == R.id.rb_all) {
-            if (appNoticeData != null) {
-                appNoticeData.setTrackerOnOffState(true);
-            }
-            rbAll.setChecked(true);
-            rbNone.setChecked(false);
-            Session.set(Session.APPNOTICE_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
-            Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
-        } else if (view.getId() == R.id.rb_none) {
-            if (appNoticeData != null) {
-                appNoticeData.setTrackerOnOffState(false);
-            }
-            rbAll.setChecked(false);
-            rbNone.setChecked(true);
-            Session.set(Session.APPNOTICE_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
-            Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they selected "None", remember that "All" wasn't the last set state.
-        }
-
-        ((TrackerListFragment) getSupportFragmentManager().findFragmentById(R.id.tracker_list)).refresh();
-    }
-
     public void onClickDescription(View view) {
         if (appNoticeData != null) {
             String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
@@ -266,8 +272,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     private void setAllNoneControlState() {
         if (appNoticeData != null) {
             int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
-            RadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
-            RadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
+            AppCompatRadioButton rbAll = (AppCompatRadioButton) findViewById(R.id.rb_all);
+            AppCompatRadioButton rbNone = (AppCompatRadioButton) findViewById(R.id.rb_none);
 
             if (nonEssentialTrackerCount > 0) {
                 int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();
