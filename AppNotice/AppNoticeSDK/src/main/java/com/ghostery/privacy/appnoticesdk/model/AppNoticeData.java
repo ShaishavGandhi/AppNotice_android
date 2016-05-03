@@ -611,6 +611,7 @@ public class AppNoticeData {
                     String trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
                     if (trackerJSONString != null) {
                         JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
+                        trackerArrayList.clear();
 
                         int id;
                         for (int i = 0; i < trackerJSONArray.length(); i++) {
