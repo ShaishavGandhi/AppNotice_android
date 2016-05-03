@@ -510,8 +510,13 @@ public class AppNoticeData {
 
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getExplicitNoticeDisplayStatus() {
-        boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
-        return !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
+        boolean showNotice = true;     // Assume we need to show the notice
+
+        // If the notice ID has changed, we need to show the notice again
+        if (currentNoticeId == previousNoticeId) {
+            showNotice = false;
+        }
+        return showNotice;
     }
 
     public static void incrementImplicitNoticeDisplayCount() {

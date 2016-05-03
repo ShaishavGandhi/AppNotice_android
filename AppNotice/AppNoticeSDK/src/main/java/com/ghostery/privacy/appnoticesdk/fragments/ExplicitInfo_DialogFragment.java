@@ -95,9 +95,6 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_ACCEPT);
 
-                // Remember in a persistent way that the explicit notice has been accepted
-                AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
-
                 // Let the calling class know the selected option
                 if (appNotice_callback != null && !getActivity().isFinishing()) {
                     appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));

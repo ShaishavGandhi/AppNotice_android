@@ -24,7 +24,6 @@ public class AppData {
     public static final String APPDATA_VERSION = "AppDataVersion";
     public static final String APPDATA_IMPLICIT_LAST_DISPLAY_TIME = "implicit_last_display_time";   // long int, timestamp in millis
     public static final String APPDATA_IMPLICIT_DISPLAY_COUNT = "implicit_display_count";           // int
-    public static final String APPDATA_EXPLICIT_ACCEPTED = "explicit_accepted";                     // Boolean
     public static final String APPDATA_TRACKERSTATES = "tracker_states";                            // String
     public static final String APPDATA_PREV_NOTICE_ID = "previous_notice_id";                       // int
     public static final String APPDATA_PREV_JSON = "previous_json";                                 // String

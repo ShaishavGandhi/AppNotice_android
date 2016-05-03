@@ -108,7 +108,6 @@ public class AppNotice {
         Session.reset();
         AppData.remove(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME);
         AppData.remove(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT);
-        AppData.remove(AppData.APPDATA_EXPLICIT_ACCEPTED);
         AppData.remove(AppData.APPDATA_TRACKERSTATES);
         AppData.remove(AppData.APPDATA_PREV_NOTICE_ID);
         AppData.remove(AppData.APPDATA_PREV_JSON);
@@ -190,14 +189,14 @@ public class AppNotice {
                     // Count that this Implicit Notice dialog box was displayed
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
 
-                    // Remember that an implied notice has been shown for this notice ID
-                    appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
-
                 } else {
                     ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
                     explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
                 }
+
+                // Remember that a notice has been shown for this notice ID
+                appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
 
             } else {
                 // If not showing a notice, return a true status to the
