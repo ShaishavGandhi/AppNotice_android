@@ -29,6 +29,32 @@ public class AppNotice {
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
     private static boolean isImpliedFlow = true;
+    public static boolean usingToken = true;
+
+    /**
+     * AppNotice constructor
+     * @param activity: Usually your start-up activity.
+     * @param appNotice_token: The notice token that identifies the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     */
+    public AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
+        usingToken = true;
+        appContext = activity.getApplicationContext();
+        extActivity = activity;
+        if (appNotice_token == null || appNotice_token.isEmpty()) {
+            throw(new IllegalArgumentException("The App Notice Token must be a valid identifier."));
+        }
+
+        // Remember the provided callback
+        this.appNotice_callback = appNotice_callback;
+        Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
+
+        // Get either a new or initialized tracker config object
+        appNoticeData = AppNoticeData.getInstance(extActivity);
+
+        // Keep track of the App Notice token
+        appNoticeData.setAppNoticeToken(appNotice_token);
+    }
 
     /**
      * AppNotice constructor
@@ -38,6 +64,7 @@ public class AppNotice {
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
     public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
+        usingToken = false;
         AppNotice(activity, companyId, noticeId, appNotice_callback);
     }
 
@@ -50,6 +77,7 @@ public class AppNotice {
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
 	 */
     public AppNotice(Activity activity, int companyId, int noticeId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
+        usingToken = false;
         AppNotice(activity, companyId, noticeId, appNotice_callback);
 	}
 

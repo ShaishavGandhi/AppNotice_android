@@ -110,12 +110,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         isHybridApp = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
-        if (tv != null)
+        if (tv != null) {
             companyIdString = tv.getText().toString();
+        }
 
         tv = (AppCompatEditText)this.findViewById(R.id.editText_noticeId);
-        if (tv != null)
+        if (tv != null) {
             noticeIdString = tv.getText().toString();
+        }
+
+        boolean usingToken = false;
+        if (!noticeIdString.isEmpty() && noticeIdString.length() > 5) {
+            usingToken = true;
+        }
 
         AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
         if (radioButton_implied != null) {
@@ -133,13 +140,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
 
-		if (companyIdString.length() == 0 || noticeIdString.length() == 0) {
-			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
+		if (noticeIdString.length() == 0 || (companyIdString.length() == 0 && !usingToken)) {
+			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
 		} else {
-			companyId = Integer.valueOf(companyIdString);
-			noticeId = Integer.valueOf(noticeIdString);
-
-			appNotice = new AppNotice(this, companyId, noticeId, this);
+            if (usingToken) {
+                appNotice = new AppNotice(this, noticeIdString, this);
+            } else {
+                companyId = Integer.valueOf(companyIdString);
+                noticeId = Integer.valueOf(noticeIdString);
+                appNotice = new AppNotice(this, companyId, noticeId, this);
+            }
 
 			if (view == btn_reset_sdk) {
 				appNotice.resetSDK();
