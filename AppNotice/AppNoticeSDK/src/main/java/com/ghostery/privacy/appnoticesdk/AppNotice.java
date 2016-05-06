@@ -37,7 +37,7 @@ public class AppNotice {
      * @param appNotice_token: The notice token that identifies the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
-    public AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
+    private AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
         usingToken = true;
         appContext = activity.getApplicationContext();
         extActivity = activity;

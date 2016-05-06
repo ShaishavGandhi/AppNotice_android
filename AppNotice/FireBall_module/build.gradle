@@ -17,7 +17,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 36
-        versionName "2.0.2"
+        versionName "2.0.1"
     }
 
     packagingOptions {

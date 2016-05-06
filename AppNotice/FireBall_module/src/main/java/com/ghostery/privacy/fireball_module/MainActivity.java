@@ -144,11 +144,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
 		} else {
             if (usingToken) {
-                appNotice = new AppNotice(this, noticeIdString, this);
+//                appNotice = new AppNotice(this, noticeIdString, this);
             } else {
-                companyId = Integer.valueOf(companyIdString);
-                noticeId = Integer.valueOf(noticeIdString);
-                appNotice = new AppNotice(this, companyId, noticeId, this);
+                try {
+                    companyId = Integer.valueOf(companyIdString);
+                    noticeId = Integer.valueOf(noticeIdString);
+                    appNotice = new AppNotice(this, companyId, noticeId, this);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "CID and NID must be integers.", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
 
 			if (view == btn_reset_sdk) {
