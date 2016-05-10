@@ -30,7 +30,7 @@ public class AppNotice {
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
     private static boolean isImpliedFlow = true;
     public static boolean usingToken = true;
-    public static boolean usingExplicitGateMode = true;
+    public static boolean usingExplicitStrictMode = true;  // Default to strict mode. This can be changed by using when starting the explicit consent flow.
 
     /**
      * AppNotice constructor
@@ -40,7 +40,6 @@ public class AppNotice {
      */
     private AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
         usingToken = true;
-        usingExplicitGateMode = activity.getResources().getBoolean(R.bool.ghostery_explicit_flow_gate_mode);
         appContext = activity.getApplicationContext();
         extActivity = activity;
         if (appNotice_token == null || appNotice_token.isEmpty()) {
@@ -91,7 +90,6 @@ public class AppNotice {
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
     private void AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
-        usingExplicitGateMode = activity.getResources().getBoolean(R.bool.ghostery_explicit_flow_gate_mode);
         appContext = activity.getApplicationContext();
         extActivity = activity;
         if ((companyId <= 0) || (noticeId <= 0)) {
@@ -119,6 +117,14 @@ public class AppNotice {
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
+    }
+
+    /**
+     * Starts the App Notice Explicit Consent flow with an option to set strict or lenient mode. Must be called before your app begins any tracking activity.
+     */
+    public void startExplicitConsentFlow(boolean useStrictMode) {
+        usingExplicitStrictMode = useStrictMode;
+        startExplicitConsentFlow();
     }
 
     /**

@@ -69,13 +69,26 @@
                 android:id="@+id/radioButton_explicit" />
         </RadioGroup>
 
-        <android.support.v7.widget.AppCompatCheckBox
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/checkBox_hybridApp"
-            android:id="@+id/checkBox_hybridApp"
-            android:layout_gravity="center_horizontal"
-            android:checked="false" />
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkBox_hybridApp"
+                android:id="@+id/checkBox_hybridApp"
+                android:checked="false" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkBox_explicitStrict"
+                android:id="@+id/checkBox_explicitStrict"
+                android:checked="true" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"

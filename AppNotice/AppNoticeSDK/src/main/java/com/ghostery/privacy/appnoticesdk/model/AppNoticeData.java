@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice;
@@ -19,8 +18,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.Authenticator;
-import java.net.PasswordAuthentication;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -523,7 +520,7 @@ public class AppNoticeData {
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getExplicitNoticeDisplayStatus() {
         Boolean displayStatus = true;     // Assume we need to show the notice
-        if (AppNotice.usingExplicitGateMode) {
+        if (AppNotice.usingExplicitStrictMode) {
             Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
             displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
         } else {

@@ -13,6 +13,7 @@ public class Util {
     public static final String SP_NOTICE_ID = "sp_noticeId";
     public static final String SP_IS_IMPLIED = "sp_isImplied";
     public static final String SP_IS_HYBRIDAPP = "sp_isHybridApp";
+    public static final String SP_IS_EXPLICITSTRICT = "sp_isExplicitStrict";
 
     /**
      * Per the design guidelines, you should show the drawer on launch until the user manually

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Button btn_reset_app;
     private Button btn_close_app;
     private Boolean isHybridApp;
+    private Boolean isExplicitStrict;
 
     // Tracker ID tags
     private final static int ADMOB_TRACKERID = 464;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
         String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
         String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
+        String isExplicitStrictString = Util.getSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, "1");
 
         AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
         companyIdEditText.setText(companyIdString);
@@ -84,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
         if (isHybridAppString != null) {
             checkBox_hybridApp.setChecked(isHybridAppString.equals("1"));
+        }
+
+        AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
+        if (isExplicitStrictString != null) {
+            checkBox_explicitStrict.setChecked(isExplicitStrictString.equals("1"));
         }
 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
@@ -112,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int noticeId = 0;
         Boolean isImplied = true;
         isHybridApp = true;
+        isExplicitStrict = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
         if (tv != null) {
@@ -138,11 +146,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             isHybridApp = checkBox_hybridApp.isChecked();
         }
 
+        AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
+        if (checkBox_explicitStrict != null) {
+            isExplicitStrict = checkBox_explicitStrict.isChecked();
+        }
+
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, isExplicitStrict ? "1" : "0");
 
 		if (noticeIdString.length() == 0 || (companyIdString.length() == 0 && !usingToken)) {
 			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
@@ -200,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 if (isImplied) {
                     appNotice.startImpliedConsentFlow();
                 } else {
-                    appNotice.startExplicitConsentFlow();
+                    appNotice.startExplicitConsentFlow(isExplicitStrict);
                 }
             }
 		}
