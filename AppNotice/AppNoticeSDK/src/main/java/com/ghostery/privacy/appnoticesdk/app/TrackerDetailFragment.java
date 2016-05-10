@@ -19,6 +19,7 @@ import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.ImageDownloader;
+import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
@@ -120,6 +121,21 @@ public class TrackerDetailFragment extends Fragment {
                 } else {
                     opt_in_out_switch.setChecked(tracker.isOn());
                     opt_in_out_switch.setEnabled(true);     // Enable the switch
+                    opt_in_out_switch.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Boolean isOn = ((Switch)v).isChecked();
+                            AppNoticeData appNoticeData = (AppNoticeData) Session.get(Session.APPNOTICE_DATA);
+                            Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
+                            Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
+
+                            if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
+                                if (tracker != null) {
+                                    appNoticeData.setTrackerOnOffState(tracker.uId, isOn);
+                                }
+                            }
+                        }
+                    });
                 }
             }
 

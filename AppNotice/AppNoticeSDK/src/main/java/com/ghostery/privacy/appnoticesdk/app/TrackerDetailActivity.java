@@ -107,21 +107,6 @@ public class TrackerDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void onOptInOutClick(View view) {
-        Boolean isOn = ((Switch)view).isChecked();
-        AppNoticeData appNoticeData = (AppNoticeData) Session.get(Session.APPNOTICE_DATA);
-        Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
-        Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
-
-        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
-            Tracker tracker = appNoticeData.getTrackerById(trackerId);
-
-            if (tracker != null) {
-                appNoticeData.setTrackerOnOffState(tracker.uId, isOn);
-            }
-        }
-    }
-
     public void setActionBarTitle(int titleId){
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
