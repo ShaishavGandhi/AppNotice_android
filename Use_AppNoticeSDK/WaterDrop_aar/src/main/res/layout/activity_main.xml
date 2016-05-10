@@ -43,10 +43,10 @@
         <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:id="@+id/editText_noticeId"
             android:hint="@string/hint_noticeId"
-            android:gravity="center_horizontal" />
+            android:gravity="center_horizontal"
+            android:inputType="text" />
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -69,55 +69,90 @@
                 android:id="@+id/radioButton_explicit" />
         </RadioGroup>
 
-        <android.support.v7.widget.AppCompatCheckBox
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/checkBox_hybridApp"
-            android:id="@+id/checkBox_hybridApp"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkBox_hybridApp"
+                android:id="@+id/checkBox_hybridApp"
+                android:checked="false" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkBox_explicitStrict"
+                android:id="@+id/checkBox_explicitStrict"
+                android:checked="true" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_consent_flow"
+                android:id="@+id/btn_consent_flow" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_manage_preferences"
+                android:id="@+id/btn_manage_preferences" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:checked="false" />
+            android:gravity="center_horizontal">
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_consent_flow"
-            android:id="@+id/btn_consent_flow"
-            android:layout_gravity="center_horizontal" />
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_get_preferences"
+                android:id="@+id/btn_get_preferences" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_manage_preferences"
-            android:id="@+id/btn_manage_preferences"
-            android:layout_gravity="center_horizontal" />
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_get_accept_state"
+                android:id="@+id/btn_get_accept_state" />
+        </LinearLayout>
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_get_preferences"
-            android:id="@+id/btn_get_preferences"
-            android:layout_gravity="center_horizontal" />
+            android:gravity="center_horizontal">
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_reset_sdk"
-            android:id="@+id/btn_reset_sdk"
-            android:layout_gravity="center_horizontal" />
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_reset_sdk"
+                android:id="@+id/btn_reset_sdk" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_reset_app"
-            android:id="@+id/btn_reset_app"
-            android:layout_gravity="center_horizontal" />
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_reset_app"
+                android:id="@+id/btn_reset_app" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_close_app"
-            android:id="@+id/btn_close_app"
-            android:layout_gravity="center_horizontal" />
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_close_app"
+                android:id="@+id/btn_close_app" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

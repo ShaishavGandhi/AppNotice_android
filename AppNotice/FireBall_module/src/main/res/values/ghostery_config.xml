@@ -16,7 +16,7 @@
     <integer name="ghostery_consent_flow_dialog_opacity">100</integer>
 
     <!-- System -->
-    <!-- HTTP request and read timeouts, in millis -->
+    <!-- HTTP connect and read timeouts, in millis -->
     <integer name="ghostery_http_connect_timeout">15000</integer>
     <integer name="ghostery_http_read_timeout">10000</integer>
 

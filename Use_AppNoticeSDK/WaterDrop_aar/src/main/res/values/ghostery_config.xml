@@ -6,6 +6,8 @@
     <!-- Height of the list-item divider on the privacy preferences screen -->
     <integer name="ghostery_list_divider_height">0</integer>
 
+    <!-- (Deprecated: Type is now determined by the start method that is called.) Consent flow type: true = Explicit, false = Implied. -->
+    <!--<bool name="ghostery_consent_flow_type">true</bool>-->
     <!-- Max times to display the Implied consent flow in a 30-day period. When set to 0, displayed whenever a new config ID is detected. -->
     <integer name="ghostery_implied_flow_30day_display_max">0</integer>
     <!-- Max times to display the Implied consent flow in an app session. -->
@@ -14,7 +16,8 @@
     <integer name="ghostery_consent_flow_dialog_opacity">100</integer>
 
     <!-- System -->
-    <!-- HTTP request timeout in millis -->
-    <integer name="ghostery_http_request_timeout">15000</integer>
+    <!-- HTTP connect and read timeouts, in millis -->
+    <integer name="ghostery_http_connect_timeout">15000</integer>
+    <integer name="ghostery_http_read_timeout">10000</integer>
 
 </resources>
