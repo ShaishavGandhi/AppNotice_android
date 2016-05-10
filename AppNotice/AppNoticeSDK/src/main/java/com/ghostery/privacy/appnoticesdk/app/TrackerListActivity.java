@@ -44,6 +44,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     private ArrayList<Tracker> trackerArrayList;
     private ArrayList<Tracker> trackerArrayListClone;
     private AppNoticeData appNoticeData;
+    private static AppCompatActivity activity;
 
     /**
      * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
@@ -53,6 +54,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ghostery_activity_tracker_list);
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);    // "All" not clicked yet
@@ -80,9 +82,28 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
             AppCompatTextView manage_preferences_description = (AppCompatTextView)findViewById(R.id.manage_preferences_description);
             if (manage_preferences_description != null) {
-                AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
+                final AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
                 String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
                 manage_preferences_description.setText(manage_preferences_description_text);
+                manage_preferences_description.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (appNoticeData != null) {
+                            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                            alertDialog.setTitle(appNoticeData.getPreferencesHeader());
+                            alertDialog.setMessage(manage_preferences_description_text);
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                        }
+                    }
+                });
             }
 
             if (findViewById(R.id.tracker_detail_container) != null) {
@@ -200,8 +221,8 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
     private void sendOptInOutNotices() {
         // Opt-in/out ping-back parameters
-        boolean allBtnSelected = (boolean)Session.get(Session.APPNOTICE_ALL_BTN_SELECT, false);
-        boolean noneBtnSelected = (boolean)Session.get(Session.APPNOTICE_NONE_BTN_SELECT, false);
+        Boolean allBtnSelected = (boolean)Session.get(Session.APPNOTICE_ALL_BTN_SELECT, false);
+        Boolean noneBtnSelected = (boolean)Session.get(Session.APPNOTICE_NONE_BTN_SELECT, false);
         int pingBackCount = 0;      // Count the ping-backs
 
         // Send opt-in/out ping-back for each changed non-essential tracker
@@ -214,10 +235,10 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
 
                 // If the tracker is non-essential and is changed...
                 if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
-                    boolean optOut = tracker.isOn() == false;
-                    boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
-                    boolean firstOptOut = pingBackCount == 0;
-                    boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+                    Boolean optOut = tracker.isOn() == false;
+                    Boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                    Boolean firstOptOut = pingBackCount == 0;
+                    Boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
 
                     AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
                     pingBackCount++;
@@ -239,26 +260,13 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
         }
     }
 
-    public void onClickDescription(View view) {
-        if (appNoticeData != null) {
-            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
-
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle(appNoticeData.getPreferencesHeader());
-            alertDialog.setMessage(manage_preferences_description_text);
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
-        }
-    }
-
     public void onOptInOutClick(View view) {
         Boolean isOn = ((Switch)view).isChecked();
         int uId = (int)view.getTag();
+        if (appNoticeData == null) {
+            appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
+        }
+
         if (appNoticeData != null) {
             appNoticeData.setTrackerOnOffState(uId, isOn);
         }

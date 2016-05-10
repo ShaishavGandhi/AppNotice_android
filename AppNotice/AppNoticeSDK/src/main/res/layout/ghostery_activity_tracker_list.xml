@@ -17,7 +17,6 @@
         android:maxLines="3"
         android:ellipsize="end"
         android:clickable="true"
-        android:onClick="onClickDescription"
         android:textColor="@color/ghostery_preferences_message_text_color"
         android:textSize="13sp"/>
 
@@ -75,7 +74,6 @@
                 android:id="@+id/rb_none"
                 android:checked="false"
                 android:layout_gravity="center_vertical"
-                android:onClick="onClick"
                 android:lines="1"
                 android:textColor="@color/ghostery_preferences_optin_text_color"/>
 
@@ -86,7 +84,6 @@
                 android:id="@+id/rb_all"
                 android:checked="true"
                 android:layout_gravity="center_vertical"
-                android:onClick="onClick"
                 android:lines="1"
                 android:textColor="@color/ghostery_preferences_optin_text_color"/>
 

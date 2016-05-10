@@ -181,6 +181,7 @@ public class AppNoticeData {
                     trackerHashMap.put(Integer.toString(tracker.getTrackerId()), tracker.isOn());
             }
         }
+
         return trackerHashMap;
     }
 
@@ -263,7 +264,7 @@ public class AppNoticeData {
 
     // Returns the number of non-essential trackers
     public boolean isTrackerDuplicateOfEssentialTracker(int trackerId) {
-        boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
+        Boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
 
         // Look for duplicate essential trackers
         for (int i = 0; i < trackerArrayList.size(); i++) {
@@ -436,13 +437,14 @@ public class AppNoticeData {
         synchronized(waitObj) {
             while (gettingTrackerList) {
                 try {
-                    Log.d(TAG, "Waiting for tracker list to be filled.");
+                    Log.d(TAG, "initTrackerList: Waiting for tracker list to be filled.");
                     waitObj.wait();
                 } catch (InterruptedException e) {
                     // Do nothing
-                    Log.d(TAG, "Wait interrupted while filling tracker list.");
+                    Log.d(TAG, "initTrackerList: Wait interrupted while filling tracker list.");
                 }
             }
+            Log.d(TAG, "initTrackerList: gettingTrackerList = " + Boolean.toString(gettingTrackerList));
 
             // Check to see if we have a current cached tracker list
             String previousJson = AppData.getString(AppData.APPDATA_PREV_JSON, "");
@@ -480,12 +482,14 @@ public class AppNoticeData {
 
     // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getImplicitNoticeDisplayStatus() {
-        boolean showNotice = true;     // Assume we need to show the notice
+        Boolean showNotice = true;     // Assume we need to show the notice
 
         if (implied_flow_30day_display_max <= 0) {
             // If the notice ID has changed, we need to show the notice again
             if (currentNoticeId == previousNoticeId) {
                 showNotice = false;
+            } else {
+                showNotice = true;
             }
         } else {
             long currentTime = System.currentTimeMillis();
@@ -518,13 +522,17 @@ public class AppNoticeData {
 
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getExplicitNoticeDisplayStatus() {
-        boolean showNotice = true;     // Assume we need to show the notice
-
-        // If the notice ID has changed, we need to show the notice again
-        if (currentNoticeId == previousNoticeId) {
-            showNotice = false;
+        Boolean displayStatus = true;     // Assume we need to show the notice
+        if (AppNotice.usingExplicitGateMode) {
+            Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+            displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
+        } else {
+            // If the notice ID has changed, we need to show the notice again
+            if (currentNoticeId == previousNoticeId) {
+                displayStatus = false;
+            }
         }
-        return showNotice;
+        return displayStatus;
     }
 
     public static void incrementImplicitNoticeDisplayCount() {
@@ -632,6 +640,7 @@ public class AppNoticeData {
                             JSONObject trackerJSONObject = trackerJSONArray.getJSONObject(i);
                             Tracker tracker = new Tracker(trackerJSONObject);
                             trackerArrayList.add(tracker);
+                            Log.d(TAG, "Add tracker: " + tracker.getTrackerId() + " (" + tracker.getName() + ")");
                         }
 
                         // Sort by category and then by name within category

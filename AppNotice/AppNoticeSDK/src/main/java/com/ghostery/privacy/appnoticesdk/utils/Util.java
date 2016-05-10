@@ -57,7 +57,7 @@ public class Util {
     }
 
     public static boolean checkURL(CharSequence input) {
-        boolean isValid = false;
+        Boolean isValid = false;
         if (TextUtils.isEmpty(input)) {
             isValid = false;
         } else {

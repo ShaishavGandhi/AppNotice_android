@@ -36,7 +36,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:onClick="onOptInOutClick"
                 android:focusable="false" />
 
             <ImageView

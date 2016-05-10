@@ -76,7 +76,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
                 // Let the calling class know the the manage preferences button was clicked
-                boolean wasHandled = false;
+                Boolean wasHandled = false;
                 if (appNotice_callback != null && !getActivity().isFinishing()) {
                     wasHandled = appNotice_callback.onManagePreferencesClicked();
                 }

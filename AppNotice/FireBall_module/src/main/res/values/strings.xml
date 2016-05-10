@@ -10,12 +10,20 @@
     <string name="btn_consent_flow">Consent Flow</string>
     <string name="btn_manage_preferences">Manage Preferences</string>
     <string name="btn_get_preferences">Get Preferences</string>
+    <string name="btn_get_accept_state">Get Accept State</string>
     <string name="btn_reset_sdk">Reset SDK</string>
     <string name="btn_reset_app">Reset App</string>
     <string name="btn_close_app">Close App</string>
     <string name="hint_companyId">Company ID</string>
     <string name="hint_noticeId">Notice ID</string>
     <string name="checkBox_hybridApp">Hybrid App</string>
+    <string name="message_get_tracker_preferences">Get Tracker Preferences</string>
+    <string name="message_option_selected">Option Selected</string>
+    <string name="message_tracking_declined">Tracking Declined</string>
+    <string name="message_dialog_skipped">Dialog skipped</string>
+    <string name="message_tracking_accepted">Tracking accepted</string>
+    <string name="message_tracking_not_accepted">Tracking not accepted</string>
+    <string name="message_tracker_state_changed">Tracker State Changed</string>
 
     <!-- Decline Confirmation dialog -->
     <string name="declineConfirmDialog_title">Declined Consent</string>

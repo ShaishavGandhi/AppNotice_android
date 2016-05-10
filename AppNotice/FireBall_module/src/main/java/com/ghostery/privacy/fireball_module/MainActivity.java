@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Button btn_consent_flow;
     private Button btn_manage_preferences;
     private Button btn_get_preferences;
+    private Button btn_get_accept_state;
     private Button btn_reset_sdk;
     private Button btn_reset_app;
     private Button btn_close_app;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Nullable
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
+
         return super.onCreateView(name, context, attrs);
     }
 
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
         AppCompatRadioButton radioButton_explicit = (AppCompatRadioButton)this.findViewById(R.id.radioButton_explicit);
-        boolean isImplied = isImplied_String.equals("1");
+        Boolean isImplied = isImplied_String.equals("1");
         if (isImplied_String != null) {
             radioButton_implied.setChecked(isImplied);
             radioButton_explicit.setChecked(!isImplied);
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (AppCompatButton) findViewById(R.id.btn_manage_preferences) ;
         btn_get_preferences = (AppCompatButton) findViewById(R.id.btn_get_preferences) ;
+        btn_get_accept_state = (AppCompatButton) findViewById(R.id.btn_get_accept_state) ;
         btn_reset_sdk = (AppCompatButton) findViewById(R.id.btn_reset_sdk) ;
         btn_reset_app = (AppCompatButton) findViewById(R.id.btn_reset_app) ;
         btn_close_app = (AppCompatButton) findViewById(R.id.btn_close_app) ;
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         btn_consent_flow.setOnClickListener(this);
         btn_manage_preferences.setOnClickListener(this);
         btn_get_preferences.setOnClickListener(this);
+        btn_get_accept_state.setOnClickListener(this);
         btn_reset_sdk.setOnClickListener(this);
         btn_reset_app.setOnClickListener(this);
         btn_close_app.setOnClickListener(this);
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             noticeIdString = tv.getText().toString();
         }
 
-        boolean usingToken = false;
+        Boolean usingToken = false;
         if (!noticeIdString.isEmpty() && noticeIdString.length() > 5) {
             usingToken = true;
         }
@@ -180,7 +184,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			} else if (view == btn_get_preferences) {
 				HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
-				showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
+				showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_get_tracker_preferences));
+
+            } else if (view == btn_get_accept_state) {
+                Boolean isAccepted = appNotice.getAcceptedState();
+                String message;
+                if (isAccepted) {
+                    message = getResources().getString(R.string.message_tracking_accepted);
+                } else {
+                    message = getResources().getString(R.string.message_tracking_not_accepted);
+                }
+                showMessage(message); // Show selected status
 
 			} else if (view == btn_consent_flow) {
                 if (isImplied) {
@@ -198,12 +212,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         // Handle your response
         if (isAccepted) {
 
-            showTrackerPreferenceResults(trackerHashMap, "Option Selected"); // Show preference results in a dialog
+            showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_option_selected)); // Show preference results in a dialog
         } else {
             try {
                 DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
                 dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
-                showTrackerPreferenceResults(trackerHashMap, "Tracking Declined"); // Show preference results in a dialog
+                showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracking_declined)); // Show preference results in a dialog
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
             }
@@ -219,21 +233,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     }
 
     @Override
-    public void onNoticeSkipped() {
+    public void onNoticeSkipped(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
-        HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
-        showTrackerPreferenceResults(trackerHashMap, "Dialog skipped: Tracking Accepted"); // Show preference results in a dialog
+        String message = getResources().getString(R.string.message_dialog_skipped);
+        if (isAccepted) {
+            message += ": " + getResources().getString(R.string.message_tracking_accepted);
+        } else {
+            message += ": " + getResources().getString(R.string.message_tracking_not_accepted);
+        }
+        showTrackerPreferenceResults(trackerHashMap, message); // Show preference results in a dialog
     }
 
     @Override
     public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap) {
-        showTrackerPreferenceResults(trackerHashMap, "Tracker State Changed"); // Show preference results in a dialog
+        showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracker_state_changed)); // Show preference results in a dialog
 
     }
 
     @Override
     public boolean onManagePreferencesClicked() {
-        boolean wasHandled = false;
+        Boolean wasHandled = false;
         if (isHybridApp) {
             // Open local preferences screen
             Intent i = new Intent(getBaseContext(), HybridPrivacySettings.class);
@@ -261,6 +280,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(prefResults);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showMessage(String title) {
+//        String prefResults = "";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+//        builder.setMessage(prefResults);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

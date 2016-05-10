@@ -30,6 +30,7 @@ public class AppNotice {
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
     private static boolean isImpliedFlow = true;
     public static boolean usingToken = true;
+    public static boolean usingExplicitGateMode = true;
 
     /**
      * AppNotice constructor
@@ -39,6 +40,7 @@ public class AppNotice {
      */
     private AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
         usingToken = true;
+        usingExplicitGateMode = activity.getResources().getBoolean(R.bool.ghostery_explicit_flow_gate_mode);
         appContext = activity.getApplicationContext();
         extActivity = activity;
         if (appNotice_token == null || appNotice_token.isEmpty()) {
@@ -89,6 +91,7 @@ public class AppNotice {
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
     private void AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
+        usingExplicitGateMode = activity.getResources().getBoolean(R.bool.ghostery_explicit_flow_gate_mode);
         appContext = activity.getApplicationContext();
         extActivity = activity;
         if ((companyId <= 0) || (noticeId <= 0)) {
@@ -136,6 +139,7 @@ public class AppNotice {
         Session.reset();
         AppData.remove(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME);
         AppData.remove(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT);
+        AppData.remove(AppData.APPDATA_EXPLICIT_ACCEPTED);
         AppData.remove(AppData.APPDATA_TRACKERSTATES);
         AppData.remove(AppData.APPDATA_PREV_NOTICE_ID);
         AppData.remove(AppData.APPDATA_PREV_JSON);
@@ -155,7 +159,18 @@ public class AppNotice {
         }
 
         // Start getting the tracker list before we display the consent dialog or the manage preferences screen
-        if (!appNoticeData.isTrackerListInitialized()) {
+        if (appNoticeData.isTrackerListInitialized()) {
+            // If initialized, use what we have
+            if (isConsentFlow) {
+                openConsentFlowDialog();
+            } else {
+                // Open the App Notice Consent preferences fragmentActivity
+                Util.showManagePreferences(extActivity);
+
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+            }
+        } else {
 
             Log.d(TAG, "Starting initTrackerList from AppNotice init.");
             Thread thread = new Thread(new Runnable() {
@@ -167,22 +182,22 @@ public class AppNotice {
                         public void onTaskDone() {
                             // Do nothing
                             Log.d(TAG, "Done with initTrackerList from AppNotice init.");
+
+                            // Now that it is initialized, use it
+                            if (isConsentFlow) {
+                                openConsentFlowDialog();
+                            } else {
+                                // Open the App Notice Consent preferences fragmentActivity
+                                Util.showManagePreferences(extActivity);
+
+                                // Send notice for this event
+                                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+                            }
                         }
                     });
                 }
             }, Util.THREAD_INITTRACKERLIST);
             thread.start();
-        }
-
-        // If initialized, use what we have
-        if (isConsentFlow) {
-            openConsentFlowDialog();
-        } else {
-            // Open the App Notice Consent preferences fragmentActivity
-            Util.showManagePreferences(extActivity);
-
-            // Send notice for this event
-            AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
         }
 
     }
@@ -198,7 +213,7 @@ public class AppNotice {
             Util.forceAppRestart(extActivity);
         } else {
             // Determine if we need to show this Implicit Notice dialog box
-            boolean showNotice = true;
+            Boolean showNotice = true;
             if (isImpliedFlow) {
                 showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
             } else {
@@ -227,14 +242,28 @@ public class AppNotice {
                 appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
 
             } else {
-                // If not showing a notice, return a true status to the
-                appNotice_callback.onNoticeSkipped();
+                // If not showing a notice, let the host app know
+                Boolean isAccepted = getAcceptedState();
+                Log.d(TAG, "trackerArrayList size = " + appNoticeData.trackerArrayList.size());
+                HashMap<Integer, Boolean> trackerHashMap = appNoticeData.getTrackerHashMap(true);
+                Log.d(TAG, "trackerHashMap size = " + trackerHashMap.size());
+                appNotice_callback.onNoticeSkipped(isAccepted, trackerHashMap);
             }
         }
     }
 
     public HashMap<Integer, Boolean> getTrackerPreferences() {
         return AppNoticeData.getTrackerPreferences();
+    }
+
+    public boolean getAcceptedState() {
+        Boolean isAccepted = false;
+        if (isImpliedFlow) {
+            isAccepted = appNoticeData.getImplicitNoticeDisplayStatus();
+        } else {
+            isAccepted = AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+        }
+        return isAccepted;
     }
 
     public static HashMap<String, Object> getSessionMap() {

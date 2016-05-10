@@ -1,5 +1,6 @@
 package com.ghostery.privacy.appnoticesdk.app;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -7,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
@@ -102,18 +105,6 @@ public class TrackerDetailActivity extends AppCompatActivity {
         } else {
             getSupportFragmentManager().popBackStack();
         }
-    }
-
-    public void onLinkClick(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
-        LearnMore_Fragment fragment = new LearnMore_Fragment();
-
-        fragment.setArguments(bundle);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.tracker_detail_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     public void onOptInOutClick(View view) {

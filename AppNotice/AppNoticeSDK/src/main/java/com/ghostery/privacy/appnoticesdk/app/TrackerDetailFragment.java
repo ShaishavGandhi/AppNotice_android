@@ -1,8 +1,11 @@
 package com.ghostery.privacy.appnoticesdk.app;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
+import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.ImageDownloader;
@@ -124,13 +128,30 @@ public class TrackerDetailFragment extends Fragment {
             AppCompatTextView textView_learn_more = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more));
             AppCompatTextView textView_learn_more_url = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more_url));
             String learnMoreUrl = tracker.getPrivacy_url();
-            boolean isUrlValid = Util.checkURL(learnMoreUrl);
-            if (isUrlValid) {
-                textView_learn_more_url.setVisibility(View.VISIBLE);
-                textView_learn_more_url.setText(learnMoreUrl);
-            } else {
-                textView_learn_more.setText(R.string.ghostery_preferences_detail_learnmore_not_provided);
-                textView_learn_more_url.setVisibility(View.GONE);
+            if (textView_learn_more_url != null) {
+                Boolean isUrlValid = Util.checkURL(learnMoreUrl);
+                if (isUrlValid) {
+                    textView_learn_more_url.setVisibility(View.VISIBLE);
+                    textView_learn_more_url.setText(learnMoreUrl);
+                } else {
+                    textView_learn_more.setText(R.string.ghostery_preferences_detail_learnmore_not_provided);
+                    textView_learn_more_url.setVisibility(View.GONE);
+                }
+
+                textView_learn_more_url.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
+                        LearnMore_Fragment fragment = new LearnMore_Fragment();
+
+                        fragment.setArguments(bundle);
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.tracker_detail_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
             }
         }
 
