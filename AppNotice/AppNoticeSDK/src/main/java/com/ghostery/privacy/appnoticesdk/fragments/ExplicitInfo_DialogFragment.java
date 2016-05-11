@@ -168,7 +168,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
         // Let the calling class know the selected option
         if (appNotice_callback != null && !getActivity().isFinishing())
-            appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
+            appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
 
         // Close this dialog
         dismiss();

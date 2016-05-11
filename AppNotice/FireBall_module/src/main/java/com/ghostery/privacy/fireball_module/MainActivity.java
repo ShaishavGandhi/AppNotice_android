@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
         String prefResults = "";
-        if (trackerHashMap.size() == 0) {
+        if (trackerHashMap == null || trackerHashMap.size() == 0) {
             Toast.makeText(this, "No privacy preferences returned.", Toast.LENGTH_LONG).show();
         } else {
             for (Map.Entry<Integer, Boolean> entry : trackerHashMap.entrySet()) {
