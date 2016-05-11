@@ -42,7 +42,6 @@ public class AppNoticeData {
     private static int companyId;
     private static int currentNoticeId;
     private static int previousNoticeId;
-    private int implied_flow_30day_display_max_default = 3;
     private int implied_flow_session_display_max_default = 1;
     private int consent_flow_dialog_opacity_default = 100;
     private final Object waitObj = new Object();
@@ -101,7 +100,6 @@ public class AppNoticeData {
     private String dialog_implicit_message; // Message on Implied Consent dialog
     private String dialog_button_preferences; // Button text for Manage Preferences button on the Consent dialog
     private int dialog_message_text_color; // Message text color for all dialogs
-    private int implied_flow_30day_display_max; // Maximum number of times the Implied Consent dialog should be displayed in 30 days.
     private float consent_flow_dialog_opacity = 1F; // Opacity setting (scale 0 to 100) for all dialogs
     private int implied_flow_session_display_max; // Maximum number of times the Implied Consent dialog should be displayed in a session.
 
@@ -137,7 +135,6 @@ public class AppNoticeData {
     public String getDialogImplicitMessage() { return dialog_implicit_message; }
     public String getDialogButtonPreferences() { return dialog_button_preferences; }
     public int getDialogMessageTextColor() { return dialog_message_text_color; }
-    public int getImpliedFlow30DayDisplayMax() { return implied_flow_30day_display_max; }
     public float getConsentFlowDialogOpacity() { return consent_flow_dialog_opacity / 100; }
     public int getImpliedFlowSessionDisplayMax() { return implied_flow_session_display_max; }
 
@@ -161,7 +158,6 @@ public class AppNoticeData {
     // Constructor
     private AppNoticeData() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
-        implied_flow_30day_display_max = implied_flow_30day_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_30day_display_max);
         implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
         consent_flow_dialog_opacity = consent_flow_dialog_opacity_default = activity.getResources().getInteger(R.integer.ghostery_consent_flow_dialog_opacity);
     }
@@ -419,7 +415,6 @@ public class AppNoticeData {
         dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
         dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
         dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
-        implied_flow_30day_display_max = implied_flow_30day_display_max_default;
         consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
@@ -481,7 +476,7 @@ public class AppNoticeData {
     public boolean getImplicitNoticeDisplayStatus() {
         Boolean showNotice = true;     // Assume we need to show the notice
 
-        if (implied_flow_30day_display_max <= 0) {
+        if (AppNotice.implied30dayDisplayMax <= 0) {
             // If the notice ID has changed, we need to show the notice again
             if (currentNoticeId == previousNoticeId) {
                 showNotice = false;
@@ -503,7 +498,7 @@ public class AppNoticeData {
                 showNotice = false; // don't display it now
             } else {
                 if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
-                    if (implicit_display_count >= implied_flow_30day_display_max) { // If displayed enough in last 30 days...
+                    if (implicit_display_count >= AppNotice.implied30dayDisplayMax) { // If displayed enough in last 30 days...
                         showNotice = false; // don't display it now
                     }
                 } else {
