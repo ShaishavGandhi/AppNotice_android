@@ -75,20 +75,38 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
-            <android.support.v7.widget.AppCompatCheckBox
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/checkBox_hybridApp"
-                android:id="@+id/checkBox_hybridApp"
-                android:checked="false" />
+                android:text="@string/textview_implied_30day_max"
+                android:id="@+id/textview_implied_30day_max" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:ems="10"
+                android:id="@+id/editText_implied_30day_max"
+                android:layout_marginRight="8dp"
+                android:text="0"
+                android:gravity="right" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkBox_explicitStrict"
                 android:id="@+id/checkBox_explicitStrict"
-                android:checked="true" />
+                android:checked="true"
+                android:layout_marginLeft="8dp" />
         </LinearLayout>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/checkBox_hybridApp"
+            android:id="@+id/checkBox_hybridApp"
+            android:checked="false"
+            android:layout_gravity="center_horizontal" />
 
         <LinearLayout
             android:orientation="horizontal"

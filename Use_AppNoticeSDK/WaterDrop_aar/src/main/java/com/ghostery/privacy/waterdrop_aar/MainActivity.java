@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
         String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
+        String implied30dayDisplayMaxString = Util.getSharedPreference(this, Util.SP_IS_30DAY_MAX, "0");
         String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
         String isExplicitStrictString = Util.getSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, "1");
 
@@ -83,14 +84,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             radioButton_explicit.setChecked(!isImplied);
         }
 
-        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (isHybridAppString != null) {
-            checkBox_hybridApp.setChecked(isHybridAppString.equals("1"));
-        }
+        AppCompatEditText implied30dayDisplayMaxEditText = (AppCompatEditText)findViewById(R.id.editText_implied_30day_max);
+        implied30dayDisplayMaxEditText.setText(implied30dayDisplayMaxString);
 
         AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
         if (isExplicitStrictString != null) {
             checkBox_explicitStrict.setChecked(isExplicitStrictString.equals("1"));
+        }
+
+        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
+        if (isHybridAppString != null) {
+            checkBox_hybridApp.setChecked(isHybridAppString.equals("1"));
         }
 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
@@ -118,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int companyId = 0;
         int noticeId = 0;
         Boolean isImplied = true;
+        int implied30dayDisplayMax = 0;
         isHybridApp = true;
         isExplicitStrict = true;
 
@@ -141,9 +146,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             isImplied = radioButton_implied.isChecked();
         }
 
-        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (checkBox_hybridApp != null) {
-            isHybridApp = checkBox_hybridApp.isChecked();
+        tv = (AppCompatEditText)this.findViewById(R.id.editText_implied_30day_max);
+        if (tv != null) {
+            String implied30dayDisplayMaxString = tv.getText().toString();
+            try {
+                implied30dayDisplayMax = Integer.parseInt(implied30dayDisplayMaxString);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "Error while parsing 30-day Display Max (" + implied30dayDisplayMaxString + ")", e);
+            }
         }
 
         AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
@@ -151,10 +161,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             isExplicitStrict = checkBox_explicitStrict.isChecked();
         }
 
+        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
+        if (checkBox_hybridApp != null) {
+            isHybridApp = checkBox_hybridApp.isChecked();
+        }
+
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_IS_30DAY_MAX, String.valueOf(implied30dayDisplayMax));
         Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, isExplicitStrict ? "1" : "0");
 
@@ -212,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			} else if (view == btn_consent_flow) {
                 if (isImplied) {
-                    appNotice.startImpliedConsentFlow();
+                    appNotice.startImpliedConsentFlow(implied30dayDisplayMax);
                 } else {
                     appNotice.startExplicitConsentFlow(isExplicitStrict);
                 }
@@ -281,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
         String prefResults = "";
-        if (trackerHashMap.size() == 0) {
+        if (trackerHashMap == null || trackerHashMap.size() == 0) {
             Toast.makeText(this, "No privacy preferences returned.", Toast.LENGTH_LONG).show();
         } else {
             for (Map.Entry<Integer, Boolean> entry : trackerHashMap.entrySet()) {

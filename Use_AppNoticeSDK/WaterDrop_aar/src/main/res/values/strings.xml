@@ -16,8 +16,9 @@
     <string name="btn_close_app">Close App</string>
     <string name="hint_companyId">Company ID</string>
     <string name="hint_noticeId">Notice ID</string>
-    <string name="checkBox_hybridApp">Hybrid App</string>
+    <string name="textview_implied_30day_max">30-Day Max</string>
     <string name="checkBox_explicitStrict">Explicit Strict</string>
+    <string name="checkBox_hybridApp">Hybrid App</string>
     <string name="message_get_tracker_preferences">Get Tracker Preferences</string>
     <string name="message_option_selected">Option Selected</string>
     <string name="message_tracking_declined">Tracking Declined</string>
