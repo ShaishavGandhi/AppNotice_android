@@ -125,7 +125,7 @@ public class AppNotice {
      */
     public void startImpliedConsentFlow() {
         isImpliedFlow = true;
-        init(true);
+        startConsentFlow(true);
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
@@ -144,7 +144,7 @@ public class AppNotice {
      */
     public void startExplicitConsentFlow() {
         isImpliedFlow = false;
-        init(true);
+        startConsentFlow(true);
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
@@ -168,10 +168,10 @@ public class AppNotice {
      *   - fragmentActivity: Usually your current fragmentActivity
      */
     public void showManagePreferences() {
-        init(false);
+        startConsentFlow(false);
     }
 
-    private void init(final boolean isConsentFlow) {
+    private void startConsentFlow(final boolean isConsentFlow) {
         if (!appNoticeData.isInitialized()) {
             appNoticeData.init();
         }
@@ -190,7 +190,7 @@ public class AppNotice {
             }
         } else {
 
-            Log.d(TAG, "Starting initTrackerList from AppNotice init.");
+            Log.d(TAG, "Starting initTrackerList from AppNotice startConsentFlow.");
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -199,7 +199,7 @@ public class AppNotice {
                         @Override
                         public void onTaskDone() {
                             // Do nothing
-                            Log.d(TAG, "Done with initTrackerList from AppNotice init.");
+                            Log.d(TAG, "Done with initTrackerList from AppNotice startConsentFlow.");
 
                             // Now that it is initialized, use it
                             if (isConsentFlow) {
@@ -227,7 +227,7 @@ public class AppNotice {
             // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
             // This forces the app to restart in a way that the SDK gets properly initialized.
             // TODO: Should this be a callback to the host app?
-            Log.d(TAG, "Force restart the host app to correctly init the SDK.");
+            Log.d(TAG, "Force restart the host app to correctly startConsentFlow the SDK.");
             Util.forceAppRestart(extActivity);
         } else {
             // Determine if we need to show this Implicit Notice dialog box

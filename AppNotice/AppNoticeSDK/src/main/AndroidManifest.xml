@@ -8,17 +8,6 @@
 
     <application android:allowBackup="true">
         <activity
-            android:name=".app.AppNoticeActivity"
-            android:alwaysRetainTaskState="true"
-            android:clearTaskOnLaunch="false"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:excludeFromRecents="true"
-            android:label=""
-            android:launchMode="singleInstance"
-            android:screenOrientation="unspecified"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
-        <activity
             android:name=".app.TrackerListActivity"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false"
