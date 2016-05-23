@@ -1,6 +1,5 @@
 package com.ghostery.privacy.appnoticesdk.app;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,24 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
-import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
-import com.ghostery.privacy.appnoticesdk.model.Tracker;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 
 /**
  * An fragmentActivity representing a single Tracker detail screen. This
  * fragmentActivity is only used on handset devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
- * in a {@link TrackerListActivity}.
+ * in a {@link AppNotice_Activity}.
  * <p/>
  * This fragmentActivity is mostly just a 'shell' fragmentActivity containing nothing
  * more than a {@link TrackerDetailFragment}.
@@ -87,7 +78,7 @@ public class TrackerDetailActivity extends AppCompatActivity {
             //
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.tracker_detail_container);
             if (currentFragment instanceof TrackerDetailFragment) {
-                NavUtils.navigateUpTo(this, new Intent(this, TrackerListActivity.class));
+                NavUtils.navigateUpTo(this, new Intent(this, AppNotice_Activity.class));
             } else {
                 getSupportFragmentManager().popBackStack();
             }

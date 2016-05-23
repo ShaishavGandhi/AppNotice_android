@@ -1,11 +1,9 @@
 package com.ghostery.privacy.appnoticesdk.app;
 
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +22,7 @@ import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
  * A fragment representing a single Tracker detail screen.
- * This fragment is either contained in a {@link TrackerListActivity}
+ * This fragment is either contained in a {@link AppNotice_Activity}
  * in two-pane mode (on tablets) or a {@link TrackerDetailActivity}
  * on handsets.
  */

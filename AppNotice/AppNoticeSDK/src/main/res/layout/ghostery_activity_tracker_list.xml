@@ -105,7 +105,7 @@
         android:name="com.ghostery.privacy.appnoticesdk.app.TrackerListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.ghostery.privacy.appnoticesdk.app.TrackerListActivity"
+        tools:context=".app.AppNotice_Activity"
         tools:layout="@android:layout/list_content" />
 
 </LinearLayout>

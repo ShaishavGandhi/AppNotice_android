@@ -39,7 +39,7 @@ import java.util.ArrayList;
  * {@link TrackerListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class TrackerListActivity extends AppCompatActivity implements TrackerListFragment.Callbacks, AppCompatCallback {
+public class AppNotice_Activity extends AppCompatActivity implements TrackerListFragment.Callbacks, AppCompatCallback {
 
     private ArrayList<Tracker> trackerArrayList;
     private ArrayList<Tracker> trackerArrayListClone;
@@ -56,7 +56,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
     protected void onCreate(Bundle savedInstanceState) {
         activity = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ghostery_activity_tracker_list);
+        setContentView(R.layout.ghostery_activity_appnotice);
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);    // "All" not clicked yet
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
 
@@ -171,7 +171,7 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
      */
     @Override
     public void onItemSelected(int uId) {
-        if (mTwoPane) {
+//        if (mTwoPane) {
             // In two-pane mode, show the detail view in this fragmentActivity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
@@ -183,13 +183,13 @@ public class TrackerListActivity extends AppCompatActivity implements TrackerLis
                     .replace(R.id.tracker_detail_container, fragment)
                     .commit();
 
-        } else {
-            // In single-pane mode, simply start the detail fragmentActivity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
-            detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, uId);
-            startActivityForResult(detailIntent, 0);
-        }
+//        } else {
+//            // In single-pane mode, simply start the detail fragmentActivity
+//            // for the selected item ID.
+//            Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
+//            detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, uId);
+//            startActivityForResult(detailIntent, 0);
+//        }
     }
 
     @Override
