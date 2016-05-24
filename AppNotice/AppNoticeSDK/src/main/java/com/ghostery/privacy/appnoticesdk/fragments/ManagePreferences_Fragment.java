@@ -1,109 +1,261 @@
 package com.ghostery.privacy.appnoticesdk.fragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ghostery.privacy.appnoticesdk.R;
+import com.ghostery.privacy.appnoticesdk.app.TrackerListFragment;
+import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
+import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
+import com.ghostery.privacy.appnoticesdk.model.Tracker;
+import com.ghostery.privacy.appnoticesdk.utils.Session;
+
+import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ManagePreferences_Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ManagePreferences_Fragment#newInstance} factory method to
- * create an instance of this fragment.
+ *
  */
 public class ManagePreferences_Fragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public ManagePreferences_Fragment() {
-        // Required empty public constructor
-    }
+    private ArrayList<Tracker> trackerArrayList;
+    private ArrayList<Tracker> trackerArrayListClone;
+    private AppNoticeData appNoticeData;
+    private static AppCompatActivity activity;
+    private TrackerListFragment trackerListFragment;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ManagePreferences_Fragment.
+     * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
+     * device.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ManagePreferences_Fragment newInstance(String param1, String param2) {
-        ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private boolean mTwoPane;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);    // "All" not clicked yet
+        Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
+
+        appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
+        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
+            trackerArrayList = appNoticeData.trackerArrayList;
+            trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
         }
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.ghostery_fragment_manage_preferences_, container, false);
+        View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences_, container, false);
+
+        AppCompatTextView manage_preferences_description = (AppCompatTextView)view.findViewById(R.id.manage_preferences_description);
+        if (manage_preferences_description != null) {
+            final AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
+            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
+            manage_preferences_description.setText(manage_preferences_description_text);
+            manage_preferences_description.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (appNoticeData != null) {
+                        String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                        alertDialog.setTitle(appNoticeData.getPreferencesHeader());
+                        alertDialog.setMessage(manage_preferences_description_text);
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
+                }
+            });
+
+            final AppCompatRadioButton rbAll = (AppCompatRadioButton)view.findViewById(R.id.rb_all);
+            final AppCompatRadioButton rbNone = (AppCompatRadioButton)view.findViewById(R.id.rb_none);
+
+            rbAll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (appNoticeData != null) {
+                        appNoticeData.setTrackerOnOffState(true);
+                    }
+                    rbAll.setChecked(true);
+                    rbNone.setChecked(false);
+                    Session.set(Session.APPNOTICE_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
+                    Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
+
+                    refreshTrackerList();
+                }
+            });
+
+            rbNone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (appNoticeData != null) {
+                        appNoticeData.setTrackerOnOffState(false);
+                    }
+                    rbAll.setChecked(false);
+                    rbNone.setChecked(true);
+                    Session.set(Session.APPNOTICE_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
+                    Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they selected "None", remember that "All" wasn't the last set state.
+
+                    refreshTrackerList();
+                }
+            });
+        }
+
+        if (view.findViewById(R.id.tracker_detail_container) != null) {
+            // The detail container view will be present only in the
+            // large-screen layouts (res/values-large and
+            // res/values-sw600dp). If this view is present, then the
+            // fragmentActivity should be in two-pane mode.
+            mTwoPane = true;
+
+            // In two-pane mode, list items should be given the
+            // 'activated' state when touched.
+            refreshTrackerList();
+            if (trackerListFragment != null) {
+                trackerListFragment.setActivateOnItemClick(true);
+            }
+        }
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    protected TrackerListFragment refreshTrackerList() {
+
+        if (trackerListFragment == null) {
+            FragmentManager f = getChildFragmentManager();
+            Fragment fragment = f.findFragmentById(R.id.tracker_list);
+            if (fragment instanceof TrackerListFragment) {
+                trackerListFragment = (TrackerListFragment)fragment;
+            }
         }
+
+        if (trackerListFragment != null) {
+            trackerListFragment.refresh();
+        }
+        return trackerListFragment;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onResume()
+    {
+        super.onResume();
+        refreshTrackerList();
+        setAllNoneControlState();
+    }
+
+    public void onBackPressed() {
+        saveTrackerStates();
+        sendOptInOutNotices();    // Send opt-in/out ping-back
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Bundle arguments = new Bundle();
+
+        int i = item.getItemId();
+        if (item.getItemId() == android.R.id.home) {
+            saveTrackerStates();
+            sendOptInOutNotices();    // Send opt-in/out ping-back
+
+            onBackPressed();
+        }
+
+        return true;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void sendOptInOutNotices() {
+        // Opt-in/out ping-back parameters
+        Boolean allBtnSelected = (boolean)Session.get(Session.APPNOTICE_ALL_BTN_SELECT, false);
+        Boolean noneBtnSelected = (boolean)Session.get(Session.APPNOTICE_NONE_BTN_SELECT, false);
+        int pingBackCount = 0;      // Count the ping-backs
+
+        // Send opt-in/out ping-back for each changed non-essential tracker
+        if (trackerArrayList != null && trackerArrayListClone != null &&
+                trackerArrayList.size() == trackerArrayListClone.size()) {
+
+            for (int i = 0; i < trackerArrayList.size(); i++) {
+                Tracker tracker = trackerArrayList.get(i);
+                Tracker trackerClone = trackerArrayListClone.get(i);
+
+                // If the tracker is non-essential and is changed...
+                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
+                    Boolean optOut = tracker.isOn() == false;
+                    Boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                    Boolean firstOptOut = pingBackCount == 0;
+                    Boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+
+                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
+                    pingBackCount++;
+                }
+            }
+        }
     }
+
+    public void saveTrackerStates() {
+        if (appNoticeData != null) {
+            appNoticeData.saveTrackerStates();
+
+            // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
+            int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
+            if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, false)) {
+                AppNotice_Callback appNotice_callback = (AppNotice_Callback)Session.get(Session.APPNOTICE_CALLBACK);
+                appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
+            }
+        }
+    }
+
+    public void setAllNoneControlState() {
+        if (appNoticeData != null) {
+            int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
+            AppCompatRadioButton rbAll = (AppCompatRadioButton)getActivity().findViewById(R.id.rb_all);
+            AppCompatRadioButton rbNone = (AppCompatRadioButton)getActivity().findViewById(R.id.rb_none);
+
+            if (nonEssentialTrackerCount > 0) {
+                int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();
+                if (trackerOnOffStates == 1) {              // All on
+                    rbAll.setChecked(true);
+                    rbNone.setChecked(false);
+                } else if (trackerOnOffStates == -1) {      // None on
+                    rbAll.setChecked(false);
+                    rbNone.setChecked(true);
+                } else {                                    // Some on, some off
+                    rbAll.setChecked(false);
+                    rbNone.setChecked(false);
+                }
+            } else {
+                // Set both to unchecked and disabled
+                rbAll.setChecked(false);
+                rbNone.setChecked(false);
+                rbAll.setEnabled(false);
+                rbNone.setEnabled(false);
+            }
+        }
+    }
+
+//    @Override
+//    public void onSupportActionModeStarted(ActionMode mode) {
+//        //let's leave this empty, for now
+//    }
+//
+//    @Override
+//    public void onSupportActionModeFinished(ActionMode mode) {
+//        // let's leave this empty, for now
+//    }
 }
