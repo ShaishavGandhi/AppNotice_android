@@ -70,7 +70,7 @@ public class ManagePreferences_Fragment extends Fragment {
                         String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
 
                         AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-                        alertDialog.setTitle(appNoticeData.getPreferencesHeader());
+                        alertDialog.setTitle(R.string.ghostery_preferences_header);
                         alertDialog.setMessage(manage_preferences_description_text);
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
                                 new DialogInterface.OnClickListener() {
@@ -157,6 +157,8 @@ public class ManagePreferences_Fragment extends Fragment {
         super.onResume();
         refreshTrackerList();
         setAllNoneControlState();
+
+        getActivity().setTitle(R.string.ghostery_preferences_header);
     }
 
     public void onBackPressed() {

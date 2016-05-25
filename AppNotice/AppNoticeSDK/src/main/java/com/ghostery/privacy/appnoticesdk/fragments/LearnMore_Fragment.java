@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 
@@ -73,7 +72,7 @@ public class LearnMore_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((TrackerDetailActivity)getActivity()).setActionBarTitle(R.string.ghostery_tracker_learnmore_title);
+//        ((TrackerDetailActivity)getActivity()).setActionBarTitle(R.string.ghostery_tracker_learnmore_title);
     }
 
     public void onButtonPressed(Uri uri) {

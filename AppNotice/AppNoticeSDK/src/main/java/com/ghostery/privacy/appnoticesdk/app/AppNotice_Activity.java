@@ -1,12 +1,16 @@
 package com.ghostery.privacy.appnoticesdk.app;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatCallback;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
 
@@ -59,10 +63,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
-
-            // If there is header text in the JSON, use it. Else use the default.
-            if (appNoticeData != null)
-                actionBar.setTitle(appNoticeData.getPreferencesHeader());
         }
 
         ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
@@ -100,7 +100,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         TrackerDetailFragment fragment = new TrackerDetailFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.tracker_detail_container, fragment)
+                .replace(R.id.appnotice_fragment_container, fragment)
                 .commit();
 
 //        } else {
@@ -135,6 +135,30 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
             managePreferences_fragment.setAllNoneControlState();
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            // This ID represents the Home or Up button. In the case of this
+            // fragmentActivity, the Up button is shown. Use NavUtils to allow users
+            // to navigate up one level in the application structure. For
+            // more details, see the Navigation pattern on Android Design:
+            //
+            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+            //
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.tracker_detail_container);
+            if (currentFragment instanceof TrackerDetailFragment) {
+                NavUtils.navigateUpTo(this, new Intent(this, AppNotice_Activity.class));
+            } else {
+                getSupportFragmentManager().popBackStack();
+            }
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 //    @Override
 //    public void onSupportActionModeStarted(ActionMode mode) {

@@ -18,17 +18,6 @@
             android:screenOrientation="unspecified"
             android:theme="@style/ghostery_AppTheme">
         </activity>
-        <activity
-            android:name=".app.TrackerDetailActivity"
-            android:alwaysRetainTaskState="true"
-            android:clearTaskOnLaunch="false"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/ghostery_tracker_detail_title"
-            android:launchMode="singleInstance"
-            android:parentActivityName=".app.AppNotice_Activity"
-            android:screenOrientation="unspecified"
-            android:theme="@style/ghostery_AppTheme">
-        </activity>
     </application>
 
 </manifest>

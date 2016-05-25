@@ -131,7 +131,7 @@ public class AppNoticeData {
     public int getDialogHeaderTextColor() { return dialog_header_text_color; }
     public String getDialogButtonClose() { return dialog_button_close; }
     public String getPreferencesDescription() { return preferences_description; }
-    public String getPreferencesHeader() { return preferences_header; }
+//    public String getPreferencesHeader() { return preferences_header; }
     public String getDialogImplicitMessage() { return dialog_implicit_message; }
     public String getDialogButtonPreferences() { return dialog_button_preferences; }
     public int getDialogMessageTextColor() { return dialog_message_text_color; }
@@ -411,7 +411,7 @@ public class AppNoticeData {
         dialog_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
         dialog_button_close = resources.getString(R.string.ghostery_dialog_button_close);
         preferences_description = resources.getString(R.string.ghostery_preferences_description);
-        preferences_header = resources.getString(R.string.ghostery_preferences_header);
+//        preferences_header = resources.getString(R.string.ghostery_preferences_header);
         dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
         dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
         dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);

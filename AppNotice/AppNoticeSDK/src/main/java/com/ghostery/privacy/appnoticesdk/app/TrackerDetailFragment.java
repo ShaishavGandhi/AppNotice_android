@@ -161,7 +161,7 @@ public class TrackerDetailFragment extends Fragment {
 
                         fragment.setArguments(bundle);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.tracker_detail_container, fragment);
+                        transaction.replace(R.id.appnotice_fragment_container, fragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
@@ -176,7 +176,11 @@ public class TrackerDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((TrackerDetailActivity) getActivity()).setActionBarTitle(R.string.ghostery_tracker_detail_title);
+        getActivity().setTitle(R.string.ghostery_tracker_detail_title);
+    }
+
+    public void onBackPressed() {
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
 }
