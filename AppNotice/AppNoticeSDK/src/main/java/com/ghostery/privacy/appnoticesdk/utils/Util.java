@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 
-import com.ghostery.privacy.appnoticesdk.app.AppNotice_Activity;
+import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 

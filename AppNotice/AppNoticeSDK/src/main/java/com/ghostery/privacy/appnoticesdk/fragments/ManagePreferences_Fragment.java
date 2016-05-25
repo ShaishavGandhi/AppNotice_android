@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.app.TrackerListFragment;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
@@ -31,7 +30,7 @@ public class ManagePreferences_Fragment extends Fragment {
     private ArrayList<Tracker> trackerArrayListClone;
     private AppNoticeData appNoticeData;
     private static AppCompatActivity activity;
-    private TrackerListFragment trackerListFragment;
+    private TrackerList_Fragment trackerListFragment;
 
     /**
      * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
@@ -117,31 +116,31 @@ public class ManagePreferences_Fragment extends Fragment {
             });
         }
 
-        if (view.findViewById(R.id.tracker_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // fragmentActivity should be in two-pane mode.
-            mTwoPane = true;
-
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            refreshTrackerList();
-            if (trackerListFragment != null) {
-                trackerListFragment.setActivateOnItemClick(true);
-            }
-        }
+//        if (view.findViewById(R.id.tracker_detail_container) != null) {
+//            // The detail container view will be present only in the
+//            // large-screen layouts (res/values-large and
+//            // res/values-sw600dp). If this view is present, then the
+//            // fragmentActivity should be in two-pane mode.
+//            mTwoPane = true;
+//
+//            // In two-pane mode, list items should be given the
+//            // 'activated' state when touched.
+//            refreshTrackerList();
+//            if (trackerListFragment != null) {
+//                trackerListFragment.setActivateOnItemClick(true);
+//            }
+//        }
 
         return view;
     }
 
-    protected TrackerListFragment refreshTrackerList() {
+    protected TrackerList_Fragment refreshTrackerList() {
 
         if (trackerListFragment == null) {
             FragmentManager f = getChildFragmentManager();
             Fragment fragment = f.findFragmentById(R.id.tracker_list);
-            if (fragment instanceof TrackerListFragment) {
-                trackerListFragment = (TrackerListFragment)fragment;
+            if (fragment instanceof TrackerList_Fragment) {
+                trackerListFragment = (TrackerList_Fragment)fragment;
             }
         }
 

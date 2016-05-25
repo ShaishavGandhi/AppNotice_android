@@ -5,5 +5,5 @@
     android:id="@+id/appnotice_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ghostery.privacy.appnoticesdk.app.AppNotice_Activity"
+    tools:context=".AppNotice_Activity"
     tools:ignore="MergeRootFrame" />

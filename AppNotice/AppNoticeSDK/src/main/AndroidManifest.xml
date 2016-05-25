@@ -8,7 +8,7 @@
 
     <application android:allowBackup="true">
         <activity
-            android:name=".app.AppNotice_Activity"
+            android:name=".AppNotice_Activity"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false"
             android:configChanges="orientation|keyboardHidden|screenSize"

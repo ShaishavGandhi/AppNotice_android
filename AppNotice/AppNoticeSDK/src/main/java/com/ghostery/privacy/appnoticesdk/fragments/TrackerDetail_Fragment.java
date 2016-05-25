@@ -1,4 +1,4 @@
-package com.ghostery.privacy.appnoticesdk.app;
+package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
+import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
-import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.ImageDownloader;
@@ -26,7 +26,7 @@ import com.ghostery.privacy.appnoticesdk.utils.Util;
  * in two-pane mode (on tablets) or a {@link TrackerDetailActivity}
  * on handsets.
  */
-public class TrackerDetailFragment extends Fragment {
+public class TrackerDetail_Fragment extends Fragment {
 
     private AppNoticeData appNoticeData;
 
@@ -45,7 +45,7 @@ public class TrackerDetailFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TrackerDetailFragment() {
+    public TrackerDetail_Fragment() {
     }
 
     @Override
@@ -156,7 +156,7 @@ public class TrackerDetailFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetailFragment.ARG_ITEM_ID, 0));
+                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetail_Fragment.ARG_ITEM_ID, 0));
                         LearnMore_Fragment fragment = new LearnMore_Fragment();
 
                         fragment.setArguments(bundle);

@@ -1,4 +1,4 @@
-package com.ghostery.privacy.appnoticesdk.app;
+package com.ghostery.privacy.appnoticesdk;
 
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
@@ -14,8 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
 
-import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
+import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
+import com.ghostery.privacy.appnoticesdk.fragments.TrackerList_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.Session;
@@ -31,14 +32,14 @@ import java.util.ArrayList;
  * item details side-by-side using two vertical panes.
  * <p/>
  * The fragmentActivity makes heavy use of fragments. The list of items is a
- * {@link TrackerListFragment} and the item details
- * (if present) is a {@link TrackerDetailFragment}.
+ * {@link TrackerList_Fragment} and the item details
+ * (if present) is a {@link TrackerDetail_Fragment}.
  * <p/>
  * This fragmentActivity also implements the required
- * {@link TrackerListFragment.Callbacks} interface
+ * {@link TrackerList_Fragment.Callbacks} interface
  * to listen for item selections.
  */
-public class AppNotice_Activity extends AppCompatActivity implements AppCompatCallback, TrackerListFragment.Callbacks  {
+public class AppNotice_Activity extends AppCompatActivity implements AppCompatCallback, TrackerList_Fragment.Callbacks  {
 
     private ArrayList<Tracker> trackerArrayList;
     private ArrayList<Tracker> trackerArrayListClone;
@@ -86,7 +87,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     }
 
     /**
-     * Callback method from {@link TrackerListFragment.Callbacks}
+     * Callback method from {@link TrackerList_Fragment.Callbacks}
      * indicating that the item with the given ID was selected.
      */
     @Override
@@ -96,8 +97,8 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         // adding or replacing the detail fragment using a
         // fragment transaction.
         Bundle arguments = new Bundle();
-        arguments.putInt(TrackerDetailFragment.ARG_ITEM_ID, uId);
-        TrackerDetailFragment fragment = new TrackerDetailFragment();
+        arguments.putInt(TrackerDetail_Fragment.ARG_ITEM_ID, uId);
+        TrackerDetail_Fragment fragment = new TrackerDetail_Fragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.appnotice_fragment_container, fragment)
@@ -107,7 +108,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
 //            // In single-pane mode, simply start the detail fragmentActivity
 //            // for the selected item ID.
 //            Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
-//            detailIntent.putExtra(TrackerDetailFragment.ARG_ITEM_ID, uId);
+//            detailIntent.putExtra(TrackerDetail_Fragment.ARG_ITEM_ID, uId);
 //            startActivityForResult(detailIntent, 0);
 //        }
     }
@@ -125,7 +126,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
-        TrackerListFragment trackerListFragment = (TrackerListFragment)getSupportFragmentManager().findFragmentById(R.id.tracker_list);
+        TrackerList_Fragment trackerListFragment = (TrackerList_Fragment)getSupportFragmentManager().findFragmentById(R.id.tracker_list);
         if (trackerListFragment != null) {
             trackerListFragment.refresh();
         }
@@ -147,12 +148,12 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
             //
             // http://developer.android.com/design/patterns/navigation.html#up-vs-back
             //
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.tracker_detail_container);
-            if (currentFragment instanceof TrackerDetailFragment) {
-                NavUtils.navigateUpTo(this, new Intent(this, AppNotice_Activity.class));
-            } else {
+//            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.appnotice_fragment_container);
+//            if (currentFragment instanceof TrackerDetail_Fragment) {
+//                NavUtils.navigateUpTo(this, new Intent(this, AppNotice_Activity.class));
+//            } else {
                 getSupportFragmentManager().popBackStack();
-            }
+//            }
 
             return true;
         }

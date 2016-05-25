@@ -1,4 +1,4 @@
-package com.ghostery.privacy.appnoticesdk.app;
+package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
@@ -9,18 +9,19 @@ import android.widget.ListView;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter;
+import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 /**
  * A list fragment representing a list of Trackers. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link TrackerDetailFragment}.
+ * currently being viewed in a {@link TrackerDetail_Fragment}.
  * <p/>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class TrackerListFragment extends ListFragment {
+public class TrackerList_Fragment extends ListFragment {
 
     private AppNoticeData appNoticeData;
     private TrackerArrayAdapter trackerArrayAdapter;
@@ -68,7 +69,7 @@ public class TrackerListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TrackerListFragment() {
+    public TrackerList_Fragment() {
     }
 
     @Override
