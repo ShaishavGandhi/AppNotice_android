@@ -168,6 +168,8 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
         // Let the calling class know the selected option
         if (appNotice_callback != null && !getActivity().isFinishing())
+            appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
+            appNoticeData.saveTrackerStates();  // And remember the states
             appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
 
         // Close this dialog
