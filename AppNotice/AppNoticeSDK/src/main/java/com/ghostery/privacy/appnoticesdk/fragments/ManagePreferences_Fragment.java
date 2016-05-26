@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -13,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
+import com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
@@ -29,8 +31,9 @@ public class ManagePreferences_Fragment extends Fragment {
     private ArrayList<Tracker> trackerArrayList;
     private ArrayList<Tracker> trackerArrayListClone;
     private AppNoticeData appNoticeData;
+    private TrackerArrayAdapter trackerArrayAdapter;
     private static AppCompatActivity activity;
-    private TrackerList_Fragment trackerListFragment;
+    private ListView trackerListView;
 
     /**
      * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
@@ -56,6 +59,14 @@ public class ManagePreferences_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences_, container, false);
+
+        // TODO: replace with a real list adapter.
+        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData);
+        trackerListView = (ListView) view.findViewById(R.id.tracker_list);
+        trackerListView.setAdapter(trackerArrayAdapter);
+        trackerListView.setOnItemClickListener((AppNotice_Activity)getActivity());
+        trackerListView.setItemsCanFocus(false);
+        trackerListView.setTextFilterEnabled(true);
 
         AppCompatTextView manage_preferences_description = (AppCompatTextView)view.findViewById(R.id.manage_preferences_description);
         if (manage_preferences_description != null) {
@@ -116,38 +127,22 @@ public class ManagePreferences_Fragment extends Fragment {
             });
         }
 
-//        if (view.findViewById(R.id.tracker_detail_container) != null) {
-//            // The detail container view will be present only in the
-//            // large-screen layouts (res/values-large and
-//            // res/values-sw600dp). If this view is present, then the
-//            // fragmentActivity should be in two-pane mode.
-//            mTwoPane = true;
-//
-//            // In two-pane mode, list items should be given the
-//            // 'activated' state when touched.
-//            refreshTrackerList();
-//            if (trackerListFragment != null) {
-//                trackerListFragment.setActivateOnItemClick(true);
-//            }
-//        }
-
         return view;
     }
 
-    protected TrackerList_Fragment refreshTrackerList() {
+    protected void refreshTrackerList() {
 
-        if (trackerListFragment == null) {
-            FragmentManager f = getChildFragmentManager();
-            Fragment fragment = f.findFragmentById(R.id.tracker_list);
-            if (fragment instanceof TrackerList_Fragment) {
-                trackerListFragment = (TrackerList_Fragment)fragment;
-            }
+        if (trackerArrayAdapter != null) {
+            trackerArrayAdapter.notifyDataSetChanged();
         }
 
-        if (trackerListFragment != null) {
-            trackerListFragment.refresh();
+        if (trackerListView == null) {
+            trackerListView = (ListView) getActivity().findViewById(R.id.tracker_list);
         }
-        return trackerListFragment;
+
+        if (trackerListView != null) {
+            trackerListView.invalidate();
+        }
     }
 
     @Override
@@ -163,6 +158,7 @@ public class ManagePreferences_Fragment extends Fragment {
     public void onBackPressed() {
         saveTrackerStates();
         sendOptInOutNotices();    // Send opt-in/out ping-back
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -250,13 +246,4 @@ public class ManagePreferences_Fragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onSupportActionModeStarted(ActionMode mode) {
-//        //let's leave this empty, for now
-//    }
-//
-//    @Override
-//    public void onSupportActionModeFinished(ActionMode mode) {
-//        // let's leave this empty, for now
-//    }
 }

@@ -161,8 +161,8 @@ public class TrackerDetail_Fragment extends Fragment {
 
                         fragment.setArguments(bundle);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.appnotice_fragment_container, fragment);
-                        transaction.addToBackStack(null);
+                        transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
+                        transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
                         transaction.commit();
                     }
                 });

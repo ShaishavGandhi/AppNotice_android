@@ -1,61 +1,43 @@
 package com.ghostery.privacy.appnoticesdk;
 
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatCallback;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Switch;
 
+import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
-import com.ghostery.privacy.appnoticesdk.fragments.TrackerList_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
-import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.Session;
 
-import java.util.ArrayList;
-
 /**
- * An fragmentActivity representing a list of Trackers. This fragmentActivity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the fragmentActivity presents a list of items, which when touched,
- * lead to a {@link TrackerDetailActivity} representing
- * item details. On tablets, the fragmentActivity presents the list of items and
- * item details side-by-side using two vertical panes.
- * <p/>
- * The fragmentActivity makes heavy use of fragments. The list of items is a
- * {@link TrackerList_Fragment} and the item details
- * (if present) is a {@link TrackerDetail_Fragment}.
- * <p/>
- * This fragmentActivity also implements the required
- * {@link TrackerList_Fragment.Callbacks} interface
- * to listen for item selections.
+ * AppNotice_Activity
  */
-public class AppNotice_Activity extends AppCompatActivity implements AppCompatCallback, TrackerList_Fragment.Callbacks  {
+public class AppNotice_Activity extends AppCompatActivity implements AppCompatCallback, AdapterView.OnItemClickListener {
 
-    private ArrayList<Tracker> trackerArrayList;
-    private ArrayList<Tracker> trackerArrayListClone;
     private AppNoticeData appNoticeData;
-    private static AppCompatActivity activity;
     private FragmentManager fragmentManager;
 
-    /**
-     * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+    // Fragment tags
+//    public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
+//    public static final String FRAGMENT_TAG_EXPLICIT_CONSENT = "EXPLICIT_CONSENT";
+    public static final String FRAGMENT_TAG_MANAGE_PREFERENCES = "MANAGE_PREFERENCES";
+//    public static final String FRAGMENT_TAG_TRACKER_LIST = "TRACKER_LIST";
+    public static final String FRAGMENT_TAG_TRACKER_DETAIL = "TRACKER_DETAIL";
+    public static final String FRAGMENT_TAG_LEARN_MORE = "LEARN_MORE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activity = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ghostery_activity_appnotice);
         fragmentManager = getSupportFragmentManager();
@@ -68,8 +50,8 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
 
         ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(R.id.appnotice_fragment_container, fragment);
-        ft.addToBackStack(null);
+        ft.replace(R.id.appnotice_fragment_container, fragment, FRAGMENT_TAG_MANAGE_PREFERENCES);
+        ft.addToBackStack(FRAGMENT_TAG_MANAGE_PREFERENCES);
         ft.commit();
     }
 
@@ -82,38 +64,45 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     @Override
     public void onBackPressed() {
         // ToDo: call current fragment's onBackPressed method
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            String tag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
 
-        super.onBackPressed();
+            Fragment fragment = fragmentManager.findFragmentByTag(tag);
+            if (fragment != null) {
+                switch (tag) {
+                    case FRAGMENT_TAG_MANAGE_PREFERENCES:
+                        ((ManagePreferences_Fragment) fragment).onBackPressed();
+                        break;
+                    case FRAGMENT_TAG_TRACKER_DETAIL:
+                        ((TrackerDetail_Fragment) fragment).onBackPressed();
+                        break;
+                    case FRAGMENT_TAG_LEARN_MORE:
+                        ((LearnMore_Fragment) fragment).onBackPressed();
+                        break;
+                    default:
+                        super.onBackPressed();
+                }
+            }
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    /**
-     * Callback method from {@link TrackerList_Fragment.Callbacks}
-     * indicating that the item with the given ID was selected.
-     */
     @Override
-    public void onItemSelected(int uId) {
-//        if (mTwoPane) {
-        // In two-pane mode, show the detail view in this fragmentActivity by
-        // adding or replacing the detail fragment using a
-        // fragment transaction.
+    public void onItemClick(AdapterView<?> parent, View view, int uId, long arg3) {
         Bundle arguments = new Bundle();
         arguments.putInt(TrackerDetail_Fragment.ARG_ITEM_ID, uId);
+
         TrackerDetail_Fragment fragment = new TrackerDetail_Fragment();
         fragment.setArguments(arguments);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.appnotice_fragment_container, fragment)
-                .commit();
-
-//        } else {
-//            // In single-pane mode, simply start the detail fragmentActivity
-//            // for the selected item ID.
-//            Intent detailIntent = new Intent(this, TrackerDetailActivity.class);
-//            detailIntent.putExtra(TrackerDetail_Fragment.ARG_ITEM_ID, uId);
-//            startActivityForResult(detailIntent, 0);
-//        }
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.appnotice_fragment_container, fragment, FRAGMENT_TAG_TRACKER_DETAIL);
+        ft.addToBackStack(FRAGMENT_TAG_TRACKER_DETAIL);
+        ft.commit();
     }
 
-    public void onOptInOutClick(View view) {
+    public void onClick_OptInOut(View view) {
         Boolean isOn = ((Switch)view).isChecked();
         int uId = (int)view.getTag();
         if (appNoticeData == null) {
@@ -126,11 +115,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
         Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
 
-        TrackerList_Fragment trackerListFragment = (TrackerList_Fragment)getSupportFragmentManager().findFragmentById(R.id.tracker_list);
-        if (trackerListFragment != null) {
-            trackerListFragment.refresh();
-        }
-
         ManagePreferences_Fragment managePreferences_fragment = (ManagePreferences_Fragment) getSupportFragmentManager().findFragmentById(R.id.appnotice_fragment_container);
         if (managePreferences_fragment != null && managePreferences_fragment.getClass().equals(ManagePreferences_Fragment.class)) {
             managePreferences_fragment.setAllNoneControlState();
@@ -141,33 +125,10 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // fragmentActivity, the Up button is shown. Use NavUtils to allow users
-            // to navigate up one level in the application structure. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-//            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.appnotice_fragment_container);
-//            if (currentFragment instanceof TrackerDetail_Fragment) {
-//                NavUtils.navigateUpTo(this, new Intent(this, AppNotice_Activity.class));
-//            } else {
-                getSupportFragmentManager().popBackStack();
-//            }
-
+            getSupportFragmentManager().popBackStack();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-//    @Override
-//    public void onSupportActionModeStarted(ActionMode mode) {
-//        //let's leave this empty, for now
-//    }
-//
-//    @Override
-//    public void onSupportActionModeFinished(ActionMode mode) {
-//        // let's leave this empty, for now
-//    }
 }

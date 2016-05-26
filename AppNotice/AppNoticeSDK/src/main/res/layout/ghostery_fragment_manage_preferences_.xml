@@ -72,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ghostery_preferences_select_none"
                 android:id="@+id/rb_none"
-                android:checked="false"
                 android:layout_gravity="center_vertical"
                 android:lines="1"
                 android:textColor="@color/ghostery_preferences_optin_text_color"/>
@@ -82,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ghostery_preferences_select_all"
                 android:id="@+id/rb_all"
-                android:checked="true"
                 android:layout_gravity="center_vertical"
                 android:lines="1"
                 android:textColor="@color/ghostery_preferences_optin_text_color"/>
@@ -99,13 +97,10 @@
         android:layout_marginRight="4dip"
         android:background="@color/ghostery_divider_color" />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ListView
         android:id="@+id/tracker_list"
-        android:name="com.ghostery.privacy.appnoticesdk.fragments.TrackerList_Fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".AppNotice_Activity"
-        tools:layout="@android:layout/list_content" />
+        />
 
 </LinearLayout>
