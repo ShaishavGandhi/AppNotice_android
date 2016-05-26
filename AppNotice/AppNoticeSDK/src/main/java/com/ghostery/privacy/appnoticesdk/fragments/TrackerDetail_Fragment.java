@@ -22,9 +22,6 @@ import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
  * A fragment representing a single Tracker detail screen.
- * This fragment is either contained in a {@link AppNotice_Activity}
- * in two-pane mode (on tablets) or a {@link TrackerDetailActivity}
- * on handsets.
  */
 public class TrackerDetail_Fragment extends Fragment {
 
@@ -180,7 +177,7 @@ public class TrackerDetail_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
-        getActivity().getSupportFragmentManager().popBackStack();
+        // Do nothing
     }
 
 }

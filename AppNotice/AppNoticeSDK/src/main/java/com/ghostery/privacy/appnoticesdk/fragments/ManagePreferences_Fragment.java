@@ -158,7 +158,6 @@ public class ManagePreferences_Fragment extends Fragment {
     public void onBackPressed() {
         saveTrackerStates();
         sendOptInOutNotices();    // Send opt-in/out ping-back
-        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override

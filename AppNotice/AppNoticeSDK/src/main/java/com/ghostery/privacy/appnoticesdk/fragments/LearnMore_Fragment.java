@@ -75,6 +75,6 @@ public class LearnMore_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
-        getActivity().getSupportFragmentManager().popBackStack();
+        // Do nothing
     }
 }

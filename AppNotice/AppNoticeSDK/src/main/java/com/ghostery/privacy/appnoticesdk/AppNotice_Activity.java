@@ -68,17 +68,21 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         if (fragmentManager.getBackStackEntryCount() > 0) {
             String tag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
 
+            // Let each fragment handle its own back click
             Fragment fragment = fragmentManager.findFragmentByTag(tag);
             if (fragment != null) {
                 switch (tag) {
                     case FRAGMENT_TAG_MANAGE_PREFERENCES:
                         ((ManagePreferences_Fragment) fragment).onBackPressed();
+                        this.finish();
                         break;
                     case FRAGMENT_TAG_TRACKER_DETAIL:
                         ((TrackerDetail_Fragment) fragment).onBackPressed();
+                        getSupportFragmentManager().popBackStack();
                         break;
                     case FRAGMENT_TAG_LEARN_MORE:
                         ((LearnMore_Fragment) fragment).onBackPressed();
+                        getSupportFragmentManager().popBackStack();
                         break;
                     default:
                         super.onBackPressed();
