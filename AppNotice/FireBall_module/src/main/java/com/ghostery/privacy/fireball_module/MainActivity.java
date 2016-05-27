@@ -217,12 +217,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 				showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_get_tracker_preferences));
 
             } else if (view == btn_get_accept_state) {
-                Boolean isAccepted = appNotice.getAcceptedState();
                 String message;
-                if (isAccepted) {
-                    message = getResources().getString(R.string.message_tracking_accepted);
-                } else {
-                    message = getResources().getString(R.string.message_tracking_not_accepted);
+                try {
+                    Boolean isAccepted = appNotice.getAcceptedState();
+                    if (isAccepted) {
+                        message = getResources().getString(R.string.message_explicit_tracking_accepted);
+                    } else {
+                        message = getResources().getString(R.string.message_explicit_tracking_not_accepted);
+                    }
+                } catch (Exception e) {
+                    message = e.getMessage();
                 }
                 showMessage(message); // Show selected status
 
@@ -267,9 +271,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         // Handle your response
         String message = getResources().getString(R.string.message_dialog_skipped);
         if (isAccepted) {
-            message += ": " + getResources().getString(R.string.message_tracking_accepted);
+            message += ": " + getResources().getString(R.string.message_explicit_tracking_accepted);
         } else {
-            message += ": " + getResources().getString(R.string.message_tracking_not_accepted);
+            message += ": " + getResources().getString(R.string.message_explicit_tracking_not_accepted);
         }
         showTrackerPreferenceResults(trackerHashMap, message); // Show preference results in a dialog
     }

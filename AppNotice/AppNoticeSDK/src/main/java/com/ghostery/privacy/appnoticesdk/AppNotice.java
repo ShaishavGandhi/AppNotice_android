@@ -277,7 +277,7 @@ public class AppNotice {
     public boolean getAcceptedState() {
         Boolean isAccepted = false;
         if (isImpliedFlow) {
-            isAccepted = appNoticeData.getImplicitNoticeDisplayStatus();
+            throw new RuntimeException("Error: The getAcceptedState method must only be called after startExplicitConsentFlow has been called in the same session.");
         } else {
             isAccepted = AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
         }
