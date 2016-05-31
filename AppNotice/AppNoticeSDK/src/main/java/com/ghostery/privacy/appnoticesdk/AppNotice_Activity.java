@@ -129,10 +129,11 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            getSupportFragmentManager().popBackStack();
+            onBackPressed();
             return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 }

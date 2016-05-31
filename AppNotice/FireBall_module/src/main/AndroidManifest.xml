@@ -20,13 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.ghostery.privacy.appnoticesdk.AppNotice_Activity"
-            android:launchMode="singleInstance"
-            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
-            >
-        </activity>
         <activity android:name=".HybridPrivacySettings"></activity>
 
     </application>

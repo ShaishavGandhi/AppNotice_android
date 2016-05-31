@@ -35,7 +35,11 @@ public class TrackerArrayAdapter extends BaseAdapter {
         super();//(managePreferences_fragment.getActivity(), resource, appNoticeData.trackerArrayList);
 
         this.appNoticeData = appNoticeData;
-        this.trackerArrayList = appNoticeData.trackerArrayList;
+        if (appNoticeData != null && appNoticeData.trackerArrayList != null) {
+            this.trackerArrayList = appNoticeData.trackerArrayList;
+        } else {
+            Log.d(TAG, "");
+        }
         this.mInflater = managePreferences_fragment.getActivity().getLayoutInflater();
         this.managePreferences_fragment = managePreferences_fragment;
         this.notifyDataSetInvalidated();
