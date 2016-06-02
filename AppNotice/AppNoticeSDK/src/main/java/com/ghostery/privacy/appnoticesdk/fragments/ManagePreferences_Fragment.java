@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -32,7 +31,6 @@ public class ManagePreferences_Fragment extends Fragment {
     private ArrayList<Tracker> trackerArrayListClone;
     private AppNoticeData appNoticeData;
     private TrackerArrayAdapter trackerArrayAdapter;
-    private static AppCompatActivity activity;
     private ListView trackerListView;
 
     /**
@@ -79,7 +77,7 @@ public class ManagePreferences_Fragment extends Fragment {
                     if (appNoticeData != null) {
                         String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
 
-                        AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
                         alertDialog.setTitle(R.string.ghostery_preferences_header);
                         alertDialog.setMessage(manage_preferences_description_text);
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
