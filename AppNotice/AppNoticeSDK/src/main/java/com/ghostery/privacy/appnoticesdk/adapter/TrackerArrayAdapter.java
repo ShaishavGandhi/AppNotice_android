@@ -47,7 +47,11 @@ public class TrackerArrayAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return trackerArrayList.size();
+        int count = 0;
+        if (trackerArrayList != null) {
+            count = trackerArrayList.size();
+        }
+        return count;
     }
 
     @Override
