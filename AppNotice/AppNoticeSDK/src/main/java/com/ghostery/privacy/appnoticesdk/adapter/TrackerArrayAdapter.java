@@ -1,29 +1,29 @@
 package com.ghostery.privacy.appnoticesdk.adapter;
 
-import android.support.v4.app.ListFragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
+import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 
 import java.util.ArrayList;
 
 
-public class TrackerArrayAdapter extends ArrayAdapter {
+public class TrackerArrayAdapter extends BaseAdapter {
 
     private AppNoticeData appNoticeData;
     private ArrayList<Tracker> trackerArrayList;
     private static LayoutInflater mInflater = null;
     private static final String TAG = "SDK_CustomListAdapter";
-    public ListFragment listFragment;
+    public ManagePreferences_Fragment managePreferences_fragment;
 
     public static class ViewHolder {
         public AppCompatTextView trackerName;
@@ -31,19 +31,27 @@ public class TrackerArrayAdapter extends ArrayAdapter {
         public Boolean isOn;
     }
 
-    public TrackerArrayAdapter(ListFragment listFragment, int resource, AppNoticeData appNoticeData) {
-        super(listFragment.getActivity(), resource, appNoticeData.trackerArrayList);
+    public TrackerArrayAdapter(ManagePreferences_Fragment managePreferences_fragment, int resource, AppNoticeData appNoticeData) {
+        super();//(managePreferences_fragment.getActivity(), resource, appNoticeData.trackerArrayList);
 
         this.appNoticeData = appNoticeData;
-        this.trackerArrayList = appNoticeData.trackerArrayList;
-        this.mInflater = listFragment.getActivity().getLayoutInflater();
-        this.listFragment = listFragment;
+        if (appNoticeData != null && appNoticeData.trackerArrayList != null) {
+            this.trackerArrayList = appNoticeData.trackerArrayList;
+        } else {
+            Log.d(TAG, "");
+        }
+        this.mInflater = managePreferences_fragment.getActivity().getLayoutInflater();
+        this.managePreferences_fragment = managePreferences_fragment;
         this.notifyDataSetInvalidated();
     }
 
     @Override
     public int getCount() {
-        return trackerArrayList.size();
+        int count = 0;
+        if (trackerArrayList != null) {
+            count = trackerArrayList.size();
+        }
+        return count;
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 
-import com.ghostery.privacy.appnoticesdk.app.TrackerListActivity;
+import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
@@ -25,7 +25,7 @@ public class Util {
 
         if (appNoticeData.isTrackerListInitialized()) {
 //          Intent intent = new Intent(fragmentActivity, ListActivity.class);
-            Intent intent = new Intent(activity, TrackerListActivity.class);
+            Intent intent = new Intent(activity, AppNotice_Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(intent);
         } else {
@@ -44,7 +44,7 @@ public class Util {
                             //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
 
                             // Intent intent = new Intent(fragmentActivity, ListActivity.class);
-                            Intent intent = new Intent(activity, TrackerListActivity.class);
+                            Intent intent = new Intent(activity, AppNotice_Activity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             activity.startActivity(intent);
                         }
@@ -57,7 +57,7 @@ public class Util {
     }
 
     public static boolean checkURL(CharSequence input) {
-        boolean isValid = false;
+        Boolean isValid = false;
         if (TextUtils.isEmpty(input)) {
             isValid = false;
         } else {

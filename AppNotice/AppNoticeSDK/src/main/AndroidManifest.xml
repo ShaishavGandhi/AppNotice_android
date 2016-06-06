@@ -6,25 +6,17 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <application
-        android:allowBackup="true" >
+    <application android:allowBackup="true">
         <activity
-            android:name="com.ghostery.privacy.appnoticesdk.app.TrackerListActivity"
-            android:label=""
+            android:name=".AppNotice_Activity"
+            android:alwaysRetainTaskState="true"
+            android:clearTaskOnLaunch="false"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
+            android:label=""
             android:launchMode="singleInstance"
-            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
-            android:theme="@style/ghostery_AppTheme"
-            >
-        </activity>
-        <activity
-            android:name="com.ghostery.privacy.appnoticesdk.app.TrackerDetailActivity"
-            android:launchMode="singleInstance"
-            android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"
-            android:label="@string/ghostery_tracker_detail_title"
-            android:parentActivityName=".app.TrackerListActivity"
-            android:theme="@style/ghostery_AppTheme"
-            >
+            android:screenOrientation="unspecified"
+            android:theme="@style/ghostery_AppTheme">
         </activity>
     </application>
 

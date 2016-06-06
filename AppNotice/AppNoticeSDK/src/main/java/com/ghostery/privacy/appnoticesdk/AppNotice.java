@@ -29,6 +29,34 @@ public class AppNotice {
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
     private static boolean isImpliedFlow = true;
+    public static boolean usingToken = true;
+    public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
+    public static boolean usingExplicitStrictMode = true;  // Default to strict mode. This can be changed by using when starting the explicit consent flow.
+
+    /**
+     * AppNotice constructor
+     * @param activity: Usually your start-up activity.
+     * @param appNotice_token: The notice token that identifies the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     */
+    private AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
+        usingToken = true;
+        appContext = activity.getApplicationContext();
+        extActivity = activity;
+        if (appNotice_token == null || appNotice_token.isEmpty()) {
+            throw(new IllegalArgumentException("The App Notice Token must be a valid identifier."));
+        }
+
+        // Remember the provided callback
+        this.appNotice_callback = appNotice_callback;
+        Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
+
+        // Get either a new or initialized tracker config object
+        appNoticeData = AppNoticeData.getInstance(extActivity);
+
+        // Keep track of the App Notice token
+        appNoticeData.setAppNoticeToken(appNotice_token);
+    }
 
     /**
      * AppNotice constructor
@@ -38,6 +66,7 @@ public class AppNotice {
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
     public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
+        usingToken = false;
         AppNotice(activity, companyId, noticeId, appNotice_callback);
     }
 
@@ -50,6 +79,7 @@ public class AppNotice {
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
 	 */
     public AppNotice(Activity activity, int companyId, int noticeId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
+        usingToken = false;
         AppNotice(activity, companyId, noticeId, appNotice_callback);
 	}
 
@@ -80,14 +110,33 @@ public class AppNotice {
     }
 
     /**
+     * Starts the App Notice Implied Consent flow with an option to specify max displays in a 30-day period.
+     * Should be called before your app begins any tracking activity.
+     *   0 displays on first start and every notice ID change (recommended).
+     *   1+ is the max number of times to display the consent screen on start up in a 30-day period.
+     */
+    public void startImpliedConsentFlow(int implied30dayDisplayMax) {
+        this.implied30dayDisplayMax = implied30dayDisplayMax;
+        startImpliedConsentFlow();
+    }
+
+    /**
      * Starts the App Notice Implied Consent flow. Must be called before your app begins any tracking activity.
      */
     public void startImpliedConsentFlow() {
         isImpliedFlow = true;
-        init(true);
+        startConsentFlow(true);
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
+    }
+
+    /**
+     * Starts the App Notice Explicit Consent flow with an option to set strict or lenient mode. Must be called before your app begins any tracking activity.
+     */
+    public void startExplicitConsentFlow(boolean useExplicitStrictMode) {
+        usingExplicitStrictMode = useExplicitStrictMode;
+        startExplicitConsentFlow();
     }
 
     /**
@@ -95,7 +144,7 @@ public class AppNotice {
      */
     public void startExplicitConsentFlow() {
         isImpliedFlow = false;
-        init(true);
+        startConsentFlow(true);
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
@@ -119,18 +168,29 @@ public class AppNotice {
      *   - fragmentActivity: Usually your current fragmentActivity
      */
     public void showManagePreferences() {
-        init(false);
+        startConsentFlow(false);
     }
 
-    private void init(final boolean isConsentFlow) {
+    private void startConsentFlow(final boolean isConsentFlow) {
         if (!appNoticeData.isInitialized()) {
             appNoticeData.init();
         }
 
         // Start getting the tracker list before we display the consent dialog or the manage preferences screen
-        if (!appNoticeData.isTrackerListInitialized()) {
+        if (appNoticeData.isTrackerListInitialized()) {
+            // If initialized, use what we have
+            if (isConsentFlow) {
+                openConsentFlowDialog();
+            } else {
+                // Open the App Notice Consent preferences fragmentActivity
+                Util.showManagePreferences(extActivity);
 
-            Log.d(TAG, "Starting initTrackerList from AppNotice init.");
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+            }
+        } else {
+
+            Log.d(TAG, "Starting initTrackerList from AppNotice startConsentFlow.");
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -139,23 +199,23 @@ public class AppNotice {
                         @Override
                         public void onTaskDone() {
                             // Do nothing
-                            Log.d(TAG, "Done with initTrackerList from AppNotice init.");
+                            Log.d(TAG, "Done with initTrackerList from AppNotice startConsentFlow.");
+
+                            // Now that it is initialized, use it
+                            if (isConsentFlow) {
+                                openConsentFlowDialog();
+                            } else {
+                                // Open the App Notice Consent preferences fragmentActivity
+                                Util.showManagePreferences(extActivity);
+
+                                // Send notice for this event
+                                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+                            }
                         }
                     });
                 }
             }, Util.THREAD_INITTRACKERLIST);
             thread.start();
-        }
-
-        // If initialized, use what we have
-        if (isConsentFlow) {
-            openConsentFlowDialog();
-        } else {
-            // Open the App Notice Consent preferences fragmentActivity
-            Util.showManagePreferences(extActivity);
-
-            // Send notice for this event
-            AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
         }
 
     }
@@ -167,11 +227,11 @@ public class AppNotice {
             // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
             // This forces the app to restart in a way that the SDK gets properly initialized.
             // TODO: Should this be a callback to the host app?
-            Log.d(TAG, "Force restart the host app to correctly init the SDK.");
+            Log.d(TAG, "Force restart the host app to correctly startConsentFlow the SDK.");
             Util.forceAppRestart(extActivity);
         } else {
             // Determine if we need to show this Implicit Notice dialog box
-            boolean showNotice = true;
+            Boolean showNotice = true;
             if (isImpliedFlow) {
                 showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
             } else {
@@ -190,24 +250,38 @@ public class AppNotice {
                     // Count that this Implicit Notice dialog box was displayed
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
 
-                    // Remember that an implied notice has been shown for this notice ID
-                    appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
-
                 } else {
                     ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
                     explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
                 }
 
+                // Remember that a notice has been shown for this notice ID
+                appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
+
             } else {
-                // If not showing a notice, return a true status to the
-                appNotice_callback.onNoticeSkipped();
+                // If not showing a notice, let the host app know
+                Boolean isAccepted = AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+                Log.d(TAG, "trackerArrayList size = " + appNoticeData.trackerArrayList.size());
+                HashMap<Integer, Boolean> trackerHashMap = appNoticeData.getTrackerHashMap(true);
+                Log.d(TAG, "trackerHashMap size = " + trackerHashMap.size());
+                appNotice_callback.onNoticeSkipped(isAccepted, trackerHashMap);
             }
         }
     }
 
     public HashMap<Integer, Boolean> getTrackerPreferences() {
         return AppNoticeData.getTrackerPreferences();
+    }
+
+    public boolean getAcceptedState() {
+        Boolean isAccepted = false;
+        if (isImpliedFlow) {
+            throw new RuntimeException("Error: The getAcceptedState method must only be called after startExplicitConsentFlow has been called in the same session.");
+        } else {
+            isAccepted = AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+        }
+        return isAccepted;
     }
 
     public static HashMap<String, Object> getSessionMap() {

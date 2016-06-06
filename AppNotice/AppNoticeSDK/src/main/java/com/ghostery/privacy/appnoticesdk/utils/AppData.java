@@ -89,8 +89,8 @@ public class AppData {
     }
 
     public static boolean getBoolean(String key, Boolean defValue){
-        boolean _defValue = defValue.equals(null) ? true : defValue;	// Convert a null value to true
-        boolean val = getSessionInfo().getBoolean(key, _defValue);
+        Boolean _defValue = defValue.equals(null) ? true : defValue;	// Convert a null value to true
+        Boolean val = getSessionInfo().getBoolean(key, _defValue);
         return val;
     }
 

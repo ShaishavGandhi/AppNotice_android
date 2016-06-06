@@ -77,7 +77,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 				AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
 
                 // Let the calling class know the the manage preferences button was clicked
-                boolean wasHandled = false;
+                Boolean wasHandled = false;
                 if (appNotice_callback != null && !getActivity().isFinishing()) {
                     wasHandled = appNotice_callback.onManagePreferencesClicked();
                 }
@@ -117,8 +117,11 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
 
                 // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing())
-                    appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
+                if (appNotice_callback != null && !getActivity().isFinishing()) {
+                    appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
+                    appNoticeData.saveTrackerStates();  // And remember the states
+                    appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
+                }
 
                 // Close this dialog
                 dismiss();
@@ -165,7 +168,9 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
 
         // Let the calling class know the selected option
         if (appNotice_callback != null && !getActivity().isFinishing())
-            appNotice_callback.onOptionSelected(false, null);    // Don't pass back a tracker hashmap if consent not given
+            appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
+            appNoticeData.saveTrackerStates();  // And remember the states
+            appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
 
         // Close this dialog
         dismiss();

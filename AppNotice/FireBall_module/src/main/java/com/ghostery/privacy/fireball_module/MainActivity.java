@@ -33,10 +33,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Button btn_consent_flow;
     private Button btn_manage_preferences;
     private Button btn_get_preferences;
+    private Button btn_get_accept_state;
     private Button btn_reset_sdk;
     private Button btn_reset_app;
     private Button btn_close_app;
     private Boolean isHybridApp;
+    private Boolean isExplicitStrict;
 
     // Tracker ID tags
     private final static int ADMOB_TRACKERID = 464;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Nullable
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
+
         return super.onCreateView(name, context, attrs);
     }
 
@@ -63,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
         String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
+        String implied30dayDisplayMaxString = Util.getSharedPreference(this, Util.SP_IS_30DAY_MAX, "0");
         String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
+        String isExplicitStrictString = Util.getSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, "1");
 
         AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
         companyIdEditText.setText(companyIdString);
@@ -73,10 +78,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
         AppCompatRadioButton radioButton_explicit = (AppCompatRadioButton)this.findViewById(R.id.radioButton_explicit);
-        boolean isImplied = isImplied_String.equals("1");
+        Boolean isImplied = isImplied_String.equals("1");
         if (isImplied_String != null) {
             radioButton_implied.setChecked(isImplied);
             radioButton_explicit.setChecked(!isImplied);
+        }
+
+        AppCompatEditText implied30dayDisplayMaxEditText = (AppCompatEditText)findViewById(R.id.editText_implied_30day_max);
+        implied30dayDisplayMaxEditText.setText(implied30dayDisplayMaxString);
+
+        AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
+        if (isExplicitStrictString != null) {
+            checkBox_explicitStrict.setChecked(isExplicitStrictString.equals("1"));
         }
 
         AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
@@ -87,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (AppCompatButton) findViewById(R.id.btn_manage_preferences) ;
         btn_get_preferences = (AppCompatButton) findViewById(R.id.btn_get_preferences) ;
+        btn_get_accept_state = (AppCompatButton) findViewById(R.id.btn_get_accept_state) ;
         btn_reset_sdk = (AppCompatButton) findViewById(R.id.btn_reset_sdk) ;
         btn_reset_app = (AppCompatButton) findViewById(R.id.btn_reset_app) ;
         btn_close_app = (AppCompatButton) findViewById(R.id.btn_close_app) ;
@@ -94,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         btn_consent_flow.setOnClickListener(this);
         btn_manage_preferences.setOnClickListener(this);
         btn_get_preferences.setOnClickListener(this);
+        btn_get_accept_state.setOnClickListener(this);
         btn_reset_sdk.setOnClickListener(this);
         btn_reset_app.setOnClickListener(this);
         btn_close_app.setOnClickListener(this);
@@ -107,19 +122,43 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int companyId = 0;
         int noticeId = 0;
         Boolean isImplied = true;
+        int implied30dayDisplayMax = 0;
         isHybridApp = true;
+        isExplicitStrict = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
-        if (tv != null)
+        if (tv != null) {
             companyIdString = tv.getText().toString();
+        }
 
         tv = (AppCompatEditText)this.findViewById(R.id.editText_noticeId);
-        if (tv != null)
+        if (tv != null) {
             noticeIdString = tv.getText().toString();
+        }
+
+        Boolean usingToken = false;
+        if (!noticeIdString.isEmpty() && noticeIdString.length() > 5) {
+            usingToken = true;
+        }
 
         AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
         if (radioButton_implied != null) {
             isImplied = radioButton_implied.isChecked();
+        }
+
+        tv = (AppCompatEditText)this.findViewById(R.id.editText_implied_30day_max);
+        if (tv != null) {
+            String implied30dayDisplayMaxString = tv.getText().toString();
+            try {
+                implied30dayDisplayMax = Integer.parseInt(implied30dayDisplayMaxString);
+            } catch (NumberFormatException e) {
+                Log.e(TAG, "Error while parsing 30-day Display Max (" + implied30dayDisplayMaxString + ")", e);
+            }
+        }
+
+        AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
+        if (checkBox_explicitStrict != null) {
+            isExplicitStrict = checkBox_explicitStrict.isChecked();
         }
 
         AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
@@ -131,15 +170,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_IS_30DAY_MAX, String.valueOf(implied30dayDisplayMax));
         Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
+        Util.setSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, isExplicitStrict ? "1" : "0");
 
-		if (companyIdString.length() == 0 || noticeIdString.length() == 0) {
-			Toast.makeText(this, "You must supply a Company ID and Notice ID.", Toast.LENGTH_LONG).show();
+		if (noticeIdString.length() == 0 || (companyIdString.length() == 0 && !usingToken)) {
+			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
 		} else {
-			companyId = Integer.valueOf(companyIdString);
-			noticeId = Integer.valueOf(noticeIdString);
-
-			appNotice = new AppNotice(this, companyId, noticeId, this);
+            if (usingToken) {
+//                appNotice = new AppNotice(this, noticeIdString, this);
+            } else {
+                try {
+                    companyId = Integer.valueOf(companyIdString);
+                    noticeId = Integer.valueOf(noticeIdString);
+                    appNotice = new AppNotice(this, companyId, noticeId, this);
+                } catch (NumberFormatException e) {
+                    Toast.makeText(this, "CID and NID must be integers.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
 
 			if (view == btn_reset_sdk) {
 				appNotice.resetSDK();
@@ -165,13 +214,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			} else if (view == btn_get_preferences) {
 				HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
-				showTrackerPreferenceResults(trackerHashMap, "Get Tracker Preferences");
+				showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_get_tracker_preferences));
+
+            } else if (view == btn_get_accept_state) {
+                String message;
+                try {
+                    Boolean isAccepted = appNotice.getAcceptedState();
+                    if (isAccepted) {
+                        message = getResources().getString(R.string.message_explicit_tracking_accepted);
+                    } else {
+                        message = getResources().getString(R.string.message_explicit_tracking_not_accepted);
+                    }
+                } catch (Exception e) {
+                    message = e.getMessage();
+                }
+                showMessage(message); // Show selected status
 
 			} else if (view == btn_consent_flow) {
                 if (isImplied) {
-                    appNotice.startImpliedConsentFlow();
+                    appNotice.startImpliedConsentFlow(implied30dayDisplayMax);
                 } else {
-                    appNotice.startExplicitConsentFlow();
+                    appNotice.startExplicitConsentFlow(isExplicitStrict);
                 }
             }
 		}
@@ -183,11 +246,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         // Handle your response
         if (isAccepted) {
 
-            showTrackerPreferenceResults(trackerHashMap, "Option Selected"); // Show preference results in a dialog
+            showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_option_selected)); // Show preference results in a dialog
         } else {
             try {
                 DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
                 dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
+                showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracking_declined)); // Show preference results in a dialog
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
             }
@@ -203,21 +267,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     }
 
     @Override
-    public void onNoticeSkipped() {
+    public void onNoticeSkipped(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
-        HashMap<Integer, Boolean> trackerHashMap = appNotice.getTrackerPreferences();
-        showTrackerPreferenceResults(trackerHashMap, "Dialog skipped: Tracking Accepted"); // Show preference results in a dialog
+        String message = getResources().getString(R.string.message_dialog_skipped);
+        if (isAccepted) {
+            message += ": " + getResources().getString(R.string.message_explicit_tracking_accepted);
+        } else {
+            message += ": " + getResources().getString(R.string.message_explicit_tracking_not_accepted);
+        }
+        showTrackerPreferenceResults(trackerHashMap, message); // Show preference results in a dialog
     }
 
     @Override
     public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap) {
-        showTrackerPreferenceResults(trackerHashMap, "Tracker State Changed"); // Show preference results in a dialog
+        showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracker_state_changed)); // Show preference results in a dialog
 
     }
 
     @Override
     public boolean onManagePreferencesClicked() {
-        boolean wasHandled = false;
+        Boolean wasHandled = false;
         if (isHybridApp) {
             // Open local preferences screen
             Intent i = new Intent(getBaseContext(), HybridPrivacySettings.class);
@@ -232,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
         String prefResults = "";
-        if (trackerHashMap.size() == 0) {
+        if (trackerHashMap == null || trackerHashMap.size() == 0) {
             Toast.makeText(this, "No privacy preferences returned.", Toast.LENGTH_LONG).show();
         } else {
             for (Map.Entry<Integer, Boolean> entry : trackerHashMap.entrySet()) {
@@ -245,6 +314,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(prefResults);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showMessage(String title) {
+//        String prefResults = "";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+//        builder.setMessage(prefResults);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

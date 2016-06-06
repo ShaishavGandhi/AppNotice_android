@@ -2,6 +2,8 @@ package com.ghostery.privacy.appnoticesdk.model;
 
 import android.util.Log;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,14 @@ import org.json.JSONObject;
 public class Tracker {
     private static final String TAG = "Tracker";
     private final static String CAT_ESSENTIAL = "Essential";
+
+    // Field tags for token-based notice list
+    private static final String TAG_CATEGORY_VIA_TOKEN = "category";
+    private static final String TAG_TRACKERID_VIA_TOKEN = "id";
+    private static final String TAG_NAME_VIA_TOKEN = "name";
+    private static final String TAG_LOGO_URL_VIA_TOKEN = "logoUrl";
+    private static final String TAG_DESCRIPTION_VIA_TOKEN = "description";
+    private static final String TAG_PRIVACY_URL_VIA_TOKEN = "privacyUrl";
 
     // Field tags
     private static final String TAG_CATEGORY = "category";
@@ -57,15 +67,27 @@ public class Tracker {
 
     public Tracker(JSONObject trackerJSONObject) {
         try {
-            this.uId = uId;
-            category = trackerJSONObject.isNull(TAG_CATEGORY)? null : trackerJSONObject.getString(TAG_CATEGORY);
-            trackerId = trackerJSONObject.isNull(TAG_TRACKERID)? null : trackerJSONObject.getInt(TAG_TRACKERID);
-            name = trackerJSONObject.isNull(TAG_NAME)? null : trackerJSONObject.getString(TAG_NAME);
-            logo_url = trackerJSONObject.isNull(TAG_LOGO_URL)? null : trackerJSONObject.getString(TAG_LOGO_URL);
-            description = trackerJSONObject.isNull(TAG_DESCRIPTION)? null : trackerJSONObject.getString(TAG_DESCRIPTION);
-            privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL)? null : trackerJSONObject.getString(TAG_PRIVACY_URL);
-            isOn = true;
-            hasHeader = false;
+            if (AppNotice.usingToken) {
+                this.uId = uId;
+                category = trackerJSONObject.isNull(TAG_CATEGORY_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_CATEGORY_VIA_TOKEN);
+                trackerId = trackerJSONObject.isNull(TAG_TRACKERID_VIA_TOKEN)? null : trackerJSONObject.getInt(TAG_TRACKERID_VIA_TOKEN);
+                name = trackerJSONObject.isNull(TAG_NAME_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_NAME_VIA_TOKEN);
+                logo_url = trackerJSONObject.isNull(TAG_LOGO_URL_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_LOGO_URL_VIA_TOKEN);
+                description = trackerJSONObject.isNull(TAG_DESCRIPTION_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_DESCRIPTION_VIA_TOKEN);
+                privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_PRIVACY_URL_VIA_TOKEN);
+                isOn = true;
+                hasHeader = false;
+            } else {
+                this.uId = uId;
+                category = trackerJSONObject.isNull(TAG_CATEGORY)? null : trackerJSONObject.getString(TAG_CATEGORY);
+                trackerId = trackerJSONObject.isNull(TAG_TRACKERID)? null : trackerJSONObject.getInt(TAG_TRACKERID);
+                name = trackerJSONObject.isNull(TAG_NAME)? null : trackerJSONObject.getString(TAG_NAME);
+                logo_url = trackerJSONObject.isNull(TAG_LOGO_URL)? null : trackerJSONObject.getString(TAG_LOGO_URL);
+                description = trackerJSONObject.isNull(TAG_DESCRIPTION)? null : trackerJSONObject.getString(TAG_DESCRIPTION);
+                privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL)? null : trackerJSONObject.getString(TAG_PRIVACY_URL);
+                isOn = true;
+                hasHeader = false;
+            }
         } catch (JSONException e) {
             Log.e(TAG, "JSONException while parsing the Tracker object.", e);
         } catch (Exception e) {

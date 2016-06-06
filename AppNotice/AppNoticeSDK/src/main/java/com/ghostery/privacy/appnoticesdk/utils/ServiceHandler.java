@@ -5,6 +5,7 @@ package com.ghostery.privacy.appnoticesdk.utils;
  */
 
 import android.content.res.Resources;
+import android.util.Base64;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice;
@@ -15,18 +16,26 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.Authenticator;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.PasswordAuthentication;
 import java.net.URL;
 
 public class ServiceHandler {
 
 	private static final String TAG = "SDK_ServiceHandler";
-	private static int httpRequestTimeout;	// In millis
-	private static final int httpRequestTimeoutDefault = 15000;	// In millis
+    private static int httpConnectTimeout;	// In millis
+    private static int httpReadTimeout;	// In millis
+    private static final int httpConnectTimeoutDefault = 15000;	// In millis
+    private static final int httpReadTimeoutDefault = 10000;	// In millis
+    private final static String APP_NOTICE_USER = "nfoster@ghostery.com";
+    private final static String APP_NOTICE_PASSWORD = "betterads";
 
     public ServiceHandler() {
 		try {
-			httpRequestTimeout = AppNotice.getAppContext().getResources().getInteger(R.integer.ghostery_http_request_timeout);
+            httpConnectTimeout = AppNotice.getAppContext().getResources().getInteger(R.integer.ghostery_http_connect_timeout);
+            httpReadTimeout = AppNotice.getAppContext().getResources().getInteger(R.integer.ghostery_http_read_timeout);
 		} catch (Resources.NotFoundException e) {
             Log.e(TAG, "Getting req timeout", e);
 		}
@@ -36,9 +45,18 @@ public class ServiceHandler {
         String Content = null;
         BufferedReader bufferedReader = null;
         try {
+
             URL url = new URL(urlVal);
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-            httpURLConnection.setConnectTimeout(httpRequestTimeout);
+            httpURLConnection.setConnectTimeout(httpConnectTimeout);
+            httpURLConnection.setReadTimeout(httpReadTimeout);
+
+            if (AppNotice.usingToken) {
+                String userCredentials = APP_NOTICE_USER + ":" + APP_NOTICE_PASSWORD;
+                String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes("UTF-8"), android.util.Base64.NO_WRAP);
+                httpURLConnection.setRequestProperty("Authorization", basicAuth);
+            }
+
             bufferedReader = new BufferedReader(new InputStreamReader(
                     httpURLConnection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
@@ -69,7 +87,7 @@ public class ServiceHandler {
         try{
             URL url = new URL(urlStr);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setConnectTimeout(15000);
+            httpURLConnection.setConnectTimeout(httpConnectTimeout);
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Accept", "application/json");
             httpURLConnection.setRequestProperty("Content-type", "application/json");
