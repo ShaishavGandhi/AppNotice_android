@@ -14,7 +14,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:label=""
-            android:launchMode="singleInstance"
             android:screenOrientation="unspecified"
             android:theme="@style/ghostery_AppTheme">
         </activity>
