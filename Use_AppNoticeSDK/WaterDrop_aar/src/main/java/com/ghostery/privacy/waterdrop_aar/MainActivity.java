@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Button btn_close_app;
     private Boolean isHybridApp;
     private Boolean isExplicitStrict;
+    public static boolean isInitialized = false;
 
     // Tracker ID tags
     private final static int ADMOB_TRACKERID = 464;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context = App.getContext();
+        isInitialized = true;
     }
 
     @Nullable

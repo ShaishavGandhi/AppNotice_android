@@ -1,5 +1,6 @@
 package com.ghostery.privacy.waterdrop_aar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +12,13 @@ public class HybridPrivacySettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!MainActivity.isInitialized) {  // If this activity started before MainActivity...
+            Intent i = new Intent(this, MainActivity.class);
+            finish();  //Kill this activity
+            startActivity(i);  // Start MainActivity
+            return;
+        }
+
         setContentView(R.layout.activity_hybrid_privacy_settings);
 
         LinearLayout pref_in_app_privacy_layout = (LinearLayout)findViewById(R.id.pref_in_app_privacy_layout);

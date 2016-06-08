@@ -24,7 +24,6 @@
 
         <!--<activity-->
             <!--android:name="com.ghostery.privacy.appnoticesdk.AppNotice_Activity"-->
-            <!--android:launchMode="singleInstance"-->
             <!--android:noHistory="true"-->
             <!--android:configChanges="orientation|keyboardHidden|screenSize" android:screenOrientation="unspecified" android:alwaysRetainTaskState="true" android:clearTaskOnLaunch="false"-->
             <!--&gt;-->

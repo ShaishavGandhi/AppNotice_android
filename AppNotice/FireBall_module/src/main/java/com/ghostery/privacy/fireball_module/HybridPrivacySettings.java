@@ -12,10 +12,10 @@ public class HybridPrivacySettings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (!MainActivity.isInitialized) {
+        if (!MainActivity.isInitialized) {  // If this activity started before MainActivity...
             Intent i = new Intent(this, MainActivity.class);
-            finish();  //Kill the activity from which you will go to next activity
-            startActivity(i);
+            finish();  //Kill this activity
+            startActivity(i);  // Start MainActivity
             return;
         }
 
