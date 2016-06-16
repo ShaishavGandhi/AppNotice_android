@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App colors -->
+    <color name="colorPrimary">#88121a</color>
+    <color name="colorPrimaryDark">#881247</color>
+    <color name="textColorPrimary">#f47979</color>
+    <color name="windowBackground">#d8f4a1</color>
+    <color name="navigationBarColor">#162245</color>
+    <color name="colorAccent">#c8e8ff</color>
+
     <!-- Action Bar/Header text color for both the vendor list and the vendor detail screens -->
     <color name="ghostery_header_text_color">#000000</color>
     <!-- Action Bar/Header background color for both the vendor list and the vendor detail screens -->

@@ -17,7 +17,6 @@
 
         <WebView
             android:id="@+id/learnmore_webview"
-            style="@style/ghostery_style_fragment_detail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
 

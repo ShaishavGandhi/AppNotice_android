@@ -15,7 +15,8 @@
             android:excludeFromRecents="true"
             android:label=""
             android:screenOrientation="unspecified"
-            android:theme="@style/ghostery_AppTheme">
+            android:theme="@style/ghostery_AppNoticeTheme"
+            >
         </activity>
     </application>
 

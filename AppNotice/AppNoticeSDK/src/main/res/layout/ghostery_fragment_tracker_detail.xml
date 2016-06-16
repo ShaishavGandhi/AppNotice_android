@@ -24,14 +24,14 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textView_TrackerName"
-                style="@style/ghostery_style_custom_list_adapter"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                style="@style/ghostery_style_custom_list_adapter"
                 android:id="@+id/opt_in_out_switch"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
@@ -40,13 +40,13 @@
 
             <ImageView
                 android:id="@+id/imageView_trackerLogo"
-                style="@style/ghostery_style_custom_list_adapter"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/opt_in_out_switch"
                 android:paddingRight="15dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"
-                android:layout_width="match_parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
 
         </RelativeLayout>
@@ -61,37 +61,41 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerInfo"
-            style="@style/ghostery_style_custom_list_adapter"
             android:text="@string/ghostery_preferences_detail_trackerinfo"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/ghostery_list_vendor_name_text_color"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerDescription"
-            style="@style/ghostery_style_fragment_detail"
             android:textColor="@color/ghostery_preferences_message_text_color"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_learn_more"
-            style="@style/ghostery_style_fragment_detail"
             android:text="@string/ghostery_preferences_detail_learnmore"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/ghostery_preferences_message_text_color"
-            android:textSize="13sp"/>
+            android:textSize="13sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_learn_more_url"
-            style="@style/ghostery_style_fragment_detail"
             android:clickable="true"
             android:linksClickable="true"
             android:onClick="onLinkClick"
             android:textSize="13sp"
-            android:textColor="@color/accent_material_dark" />
+            android:textColor="@color/accent_material_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
