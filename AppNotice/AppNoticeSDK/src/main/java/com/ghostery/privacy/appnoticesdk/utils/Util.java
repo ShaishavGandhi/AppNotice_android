@@ -24,7 +24,6 @@ public class Util {
         final AppNoticeData appNoticeData = AppNoticeData.getInstance(activity);
 
         if (appNoticeData.isTrackerListInitialized()) {
-//          Intent intent = new Intent(fragmentActivity, ListActivity.class);
             Intent intent = new Intent(activity, AppNotice_Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             activity.startActivity(intent);
@@ -43,7 +42,6 @@ public class Util {
                             // Send notice for this event
                             //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
 
-                            // Intent intent = new Intent(fragmentActivity, ListActivity.class);
                             Intent intent = new Intent(activity, AppNotice_Activity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             activity.startActivity(intent);

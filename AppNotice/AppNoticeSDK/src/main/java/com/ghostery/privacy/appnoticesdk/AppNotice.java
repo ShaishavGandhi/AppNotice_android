@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
-import com.ghostery.privacy.appnoticesdk.fragments.ExplicitInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
@@ -251,8 +251,12 @@ public class AppNotice {
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
 
                 } else {
-                    ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-                    explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
+                    Intent intent = new Intent(extActivity, AppNotice_Activity.class);
+                    intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_CONSENT);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    extActivity.startActivity(intent);
+//                    ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
+//                    explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
 
                 }
 

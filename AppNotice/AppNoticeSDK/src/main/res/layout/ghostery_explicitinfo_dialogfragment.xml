@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="left|top"
-    tools:context=".ImpliedIntro_DialogFragment"
+    tools:context=".ExplicitInfo_DialogFragment"
     android:background="@color/ghostery_dialog_background_color"
     android:orientation="vertical">
 
@@ -22,7 +22,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:id="@+id/scrollView3"
+        android:id="@+id/scrollView_message"
         android:layout_margin="10dp"
         android:fadeScrollbars="false"
         android:scrollbarAlwaysDrawVerticalTrack="true">
