@@ -59,29 +59,37 @@ android:weightSum="1">
             android:textColor="@color/ghostery_dialog_message_text_color" />
     </ScrollView>
 
-    <android.support.v7.widget.AppCompatButton
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/accept_button"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/ghostery_dialog_button_consent" />
+        android:layout_gravity="center_horizontal">
 
-    <android.support.v7.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ghostery_dialog_button_decline"
-        android:id="@+id/decline_button"
-        android:layout_gravity="center_horizontal"
-        />
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/accept_button"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/ghostery_dialog_button_consent" />
 
-    <android.support.v7.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ghostery_dialog_button_preferences"
-        android:id="@+id/preferences_button"
-        android:background="?android:attr/selectableItemBackground"
-        android:layout_gravity="center_horizontal"
-        />
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ghostery_dialog_button_decline"
+            android:id="@+id/decline_button"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ghostery_dialog_button_preferences"
+            android:id="@+id/preferences_button"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>
 
