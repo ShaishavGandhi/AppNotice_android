@@ -82,7 +82,7 @@ public class ExplicitInfo_DialogFragment extends DialogFragment {
                     wasHandled = appNotice_callback.onManagePreferencesClicked();
                 }
 
-				// Open the App Notice Consent preferences fragmentActivity
+				// Open the App Notice manage preferences fragment
                 if (!wasHandled) {
                     Util.showManagePreferences(getActivity());
                 }

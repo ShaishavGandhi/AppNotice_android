@@ -61,7 +61,7 @@ public class AppNotice {
     /**
      * AppNotice constructor
      * @param activity: Usually your start-up activity.
-     * @param companyId: The company ID assigned to you for App Notice consent.
+     * @param companyId: The company ID assigned to you for the App Notice SDK.
      * @param noticeId: The notice ID of the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
@@ -73,7 +73,7 @@ public class AppNotice {
     /**
 	 * AppNotice constructor (deprecated)
 	 * @param activity: Usually your start-up activity
-	 * @param companyId: The company ID assigned to you for App Notice consent
+	 * @param companyId: The company ID assigned to you for the App Notice SDK
 	 * @param noticeId: The notice ID of the configuration created for this app
      * @param useRemoteValues: (unused)
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
@@ -86,7 +86,7 @@ public class AppNotice {
     /**
      * AppNotice method to combine the current and deprecated constructor functionality
      * @param activity: Usually your start-up activity.
-     * @param companyId: The company ID assigned to you for App Notice consent.
+     * @param companyId: The company ID assigned to you for the App Notice SDK.
      * @param noticeId: The notice ID of the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
@@ -182,7 +182,7 @@ public class AppNotice {
             if (isConsentFlow) {
                 openConsentFlowDialog();
             } else {
-                // Open the App Notice Consent preferences fragmentActivity
+                // Open the App Notice manage preferences fragment
                 Util.showManagePreferences(extActivity);
 
                 // Send notice for this event
@@ -205,7 +205,7 @@ public class AppNotice {
                             if (isConsentFlow) {
                                 openConsentFlowDialog();
                             } else {
-                                // Open the App Notice Consent preferences fragmentActivity
+                                // Open the App Notice manage preferences fragment
                                 Util.showManagePreferences(extActivity);
 
                                 // Send notice for this event

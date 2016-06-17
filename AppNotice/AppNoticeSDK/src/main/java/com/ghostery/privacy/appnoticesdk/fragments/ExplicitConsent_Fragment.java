@@ -56,7 +56,7 @@ public class ExplicitConsent_Fragment extends Fragment {
                     wasHandled = appNotice_callback.onManagePreferencesClicked();
                 }
 
-                // Open the App Notice Consent preferences fragmentActivity
+                // Open the App Notice manage preferences fragment
                 if (!wasHandled) {
                     Util.showManagePreferences(getActivity());
                 }
@@ -87,16 +87,6 @@ public class ExplicitConsent_Fragment extends Fragment {
             public void onClick(View v) {
                 // User cancelled the dialog...negating consent
 
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
-
-                // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing()) {
-                    appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
-                    appNoticeData.saveTrackerStates();  // And remember the states
-                    appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
-                }
-
                 // Close this dialog
                 getActivity().onBackPressed();
             }
@@ -106,7 +96,16 @@ public class ExplicitConsent_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
-        // Do nothing
-   }
+        // Send notice for this event
+        AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
+
+        // Let the calling class know the selected option
+        if (appNotice_callback != null && !getActivity().isFinishing()) {
+            appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
+            appNoticeData.saveTrackerStates();  // And remember the states
+            appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
+        }
+
+    }
 
 }

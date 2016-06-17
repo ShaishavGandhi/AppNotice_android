@@ -25,8 +25,10 @@ import com.ghostery.privacy.appnoticesdk.utils.Session;
  */
 public class AppNotice_Activity extends AppCompatActivity implements AppCompatCallback, AdapterView.OnItemClickListener {
 
+    private static AppNotice_Activity instance;
     private AppNoticeData appNoticeData;
     private FragmentManager fragmentManager;
+    public static boolean consentStarted = false;
 
     // Fragment tags
 //    public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
@@ -37,9 +39,14 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     public static final String FRAGMENT_TAG_LEARN_MORE = "LEARN_MORE";
 
 
+    public static AppNotice_Activity getInstance() {
+        return instance;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.ghostery_activity_appnotice);
         fragmentManager = getSupportFragmentManager();
 
@@ -57,12 +64,14 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         }
 
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
+            consentStarted = false;
             ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
             ft.addToBackStack(fragmentType);
             ft.commit();
         } else if (fragmentType.equals(FRAGMENT_TAG_EXPLICIT_CONSENT)) {
+            consentStarted = true;
             if (actionBar != null) {
                 actionBar.hide();
             }
@@ -98,7 +107,11 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                         break;
                     case FRAGMENT_TAG_MANAGE_PREFERENCES:
                         ((ManagePreferences_Fragment) fragment).onBackPressed();
-                        this.finish();
+                        if (consentStarted) {
+                            getSupportFragmentManager().popBackStack();
+                        } else {
+                            this.finish();
+                        }
                         break;
                     case FRAGMENT_TAG_TRACKER_DETAIL:
                         ((TrackerDetail_Fragment) fragment).onBackPressed();
