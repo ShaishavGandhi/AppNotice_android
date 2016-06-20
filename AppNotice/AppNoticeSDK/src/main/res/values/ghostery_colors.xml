@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App colors -->
-    <color name="colorPrimary">#88121a</color>
-    <color name="colorPrimaryDark">#881247</color>
-    <color name="textColorPrimary">#f47979</color>
-    <color name="windowBackground">#d8f4a1</color>
-    <color name="navigationBarColor">#162245</color>
-    <color name="colorAccent">#c8e8ff</color>
+    <color name="ghosteryColorPrimary">#03A9F4</color>
+    <color name="ghosteryColorPrimaryDark">#0288D1</color>
+    <color name="ghosteryColorAccent">#00BCD4</color>
+    <color name="ghosteryColorButtonPrimary">#03A9F4</color>
+    <color name="ghosteryColorButtonTextPrimary">#FFFFFF</color>
+    <color name="ghosteryColorButtonSecondary">#CCCCCC</color>
+    <color name="ghosteryColorButtonTextSecondary">#666666</color>
+    <color name="ghosteryColorButtonTextBorderless">#03A9F4</color>
 
 -->
 

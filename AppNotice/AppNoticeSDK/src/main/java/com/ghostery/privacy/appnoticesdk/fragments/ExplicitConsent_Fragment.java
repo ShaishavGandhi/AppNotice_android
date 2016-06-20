@@ -77,8 +77,9 @@ public class ExplicitConsent_Fragment extends Fragment {
                     appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                 }
 
-                // Close this dialog
-                getActivity().onBackPressed();
+                // Close this fragment
+                getActivity().getSupportFragmentManager().popBackStack();
+                getActivity().finish();
             }
         });
 

@@ -64,6 +64,10 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
 
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
             isConsentActive = false;
+            if (actionBar != null) {
+                actionBar.show();
+            }
+
             ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
