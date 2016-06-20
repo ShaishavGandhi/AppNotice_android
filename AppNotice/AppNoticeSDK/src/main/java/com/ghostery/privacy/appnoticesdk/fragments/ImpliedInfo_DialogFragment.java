@@ -2,23 +2,14 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
@@ -63,7 +54,7 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
 
         // Apply the tracker config customizations
         //if (useRemoteValues)
-            applyCustomConfig(view);
+//            applyCustomConfig(view);
 
         // Watch for button clicks.
         AppCompatButton preferences_button = (AppCompatButton)view.findViewById(R.id.preferences_button);
@@ -147,83 +138,82 @@ public class ImpliedInfo_DialogFragment extends DialogFragment {
         this.useRemoteValues = useRemoteValues;
     }
 
-    @SuppressWarnings("deprecation")    // This is for pre-Android-M getColorStateList which is deprecated in M (level 23)
-    private void applyCustomConfig(View v) {
-        // Set custom config values from the appNoticeData object
-        if (appNoticeData == null || !appNoticeData.isInitialized()) {
-            // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
-            // This forces the app to restart in a way that the SDK gets properly initialized.
-            // TODO: Should this be a callback to the host app?
-            Log.d(TAG, "Force restart the host app to correctly init the SDK.");
-            Util.forceAppRestart(getActivity());
-        } else {
-            LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
-
-            int ric_bg = appNoticeData.getDialogBackgroundColor();
-            int ric_access_button_color = appNoticeData.getDialogButtonColor();
-
-
-            // Set background color and opacity
-            if (linearLayout_outer != null) {
-                linearLayout_outer.setBackgroundColor(ric_bg);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    float opacityFloat = appNoticeData.getConsentFlowDialogOpacity();
-                    if (opacityFloat < 1F && opacityFloat >= 0) {
-                        Drawable d = new ColorDrawable(Color.BLACK);
-                        d.setAlpha((int)(255 * opacityFloat));
-                        getDialog().getWindow().setBackgroundDrawable(d);
-                        linearLayout_outer.setAlpha(opacityFloat);
-                    }
-                }
-            }
-
-            // Title
-            AppCompatTextView textView_title = (AppCompatTextView)v.findViewById(R.id.textView_title);
-            if (textView_title != null) {
-                if (appNoticeData.getDialogHeaderText() != null)
-                    textView_title.setText(appNoticeData.getDialogHeaderText());
-                textView_title.setTextColor(appNoticeData.getDialogHeaderTextColor());
-            }
-
-            // Message
-            AppCompatTextView textView_message = (AppCompatTextView)v.findViewById(R.id.textView_message);
-            if (textView_message != null) {
-                if (appNoticeData.getDialogImplicitMessage() != null)
-                    textView_message.setText(appNoticeData.getDialogImplicitMessage());
-                textView_message.setTextColor(appNoticeData.getDialogMessageTextColor());
-            }
-
-            Context context = this.getActivity();
-            Resources resources = context.getResources();
-
-            // Preferences button
-            AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
-            if (preferences_button != null) {
-                if (appNoticeData.getDialogButtonPreferences() != null) {
-                    preferences_button.setText(appNoticeData.getDialogButtonPreferences());
-                }
-                preferences_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
-                } else {
-                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
-                }
-            }
-
-            // Close button
-            AppCompatButton close_button = (AppCompatButton)v.findViewById(R.id.close_button);
-            if (close_button != null) {
-                if (appNoticeData.getDialogButtonClose() != null) {
-                    close_button.setText(appNoticeData.getDialogButtonClose());
-                }
-                close_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
-                } else {
-                    close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
-                }
-            }
-
-        }
-    }
+//    @SuppressWarnings("deprecation")    // This is for pre-Android-M getColorStateList which is deprecated in M (level 23)
+//    private void applyCustomConfig(View v) {
+//        // Set custom config values from the appNoticeData object
+//        if (appNoticeData == null || !appNoticeData.isInitialized()) {
+//            // This handles a rare case where the app object has been killed, but the SDK activity continues to run.
+//            // This forces the app to restart in a way that the SDK gets properly initialized.
+//            // TODO: Should this be a callback to the host app?
+//            Log.d(TAG, "Force restart the host app to correctly init the SDK.");
+//            Util.forceAppRestart(getActivity());
+//        } else {
+//            LinearLayout linearLayout_outer = (LinearLayout)v.findViewById(R.id.linearLayout_outer);
+//
+////            int ric_bg = appNoticeData.getDialogBackgroundColor();
+////            int ric_access_button_color = appNoticeData.getDialogButtonColor();
+//
+//
+//            // Set background color and opacity
+//            if (linearLayout_outer != null) {
+//                linearLayout_outer.setBackgroundColor(ric_bg);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//                    float opacityFloat = appNoticeData.getConsentFlowDialogOpacity();
+//                    if (opacityFloat < 1F && opacityFloat >= 0) {
+//                        Drawable d = new ColorDrawable(Color.BLACK);
+//                        d.setAlpha((int)(255 * opacityFloat));
+//                        getDialog().getWindow().setBackgroundDrawable(d);
+//                        linearLayout_outer.setAlpha(opacityFloat);
+//                    }
+//                }
+//            }
+//
+//            // Title
+//            AppCompatTextView textView_title = (AppCompatTextView)v.findViewById(R.id.textView_title);
+//            if (textView_title != null) {
+//                if (appNoticeData.getDialogHeaderText() != null)
+//                    textView_title.setText(appNoticeData.getDialogHeaderText());
+//                textView_title.setTextColor(appNoticeData.getDialogHeaderTextColor());
+//            }
+//
+//            // Message
+//            AppCompatTextView textView_message = (AppCompatTextView)v.findViewById(R.id.textView_message);
+//            if (textView_message != null) {
+//                if (appNoticeData.getDialogImplicitMessage() != null)
+//                    textView_message.setText(appNoticeData.getDialogImplicitMessage());
+//                textView_message.setTextColor(appNoticeData.getDialogMessageTextColor());
+//            }
+//
+//            Context context = this.getActivity();
+//            Resources resources = context.getResources();
+//
+//            // Preferences button
+//            AppCompatButton preferences_button = (AppCompatButton)v.findViewById(R.id.preferences_button);
+//            if (preferences_button != null) {
+//                if (appNoticeData.getDialogButtonPreferences() != null) {
+//                    preferences_button.setText(appNoticeData.getDialogButtonPreferences());
+//                }
+//                preferences_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+//                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
+//                } else {
+//                    preferences_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
+//                }
+//            }
+//
+//            // Close button
+//            AppCompatButton close_button = (AppCompatButton)v.findViewById(R.id.close_button);
+//            if (close_button != null) {
+//                if (appNoticeData.getDialogButtonClose() != null) {
+//                    close_button.setText(appNoticeData.getDialogButtonClose());
+//                }
+//                close_button.setTextColor(appNoticeData.getDialogExplicitAcceptButtonTextColor());
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+//                    close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color, context.getTheme()));
+//                } else {
+//                    close_button.setSupportBackgroundTintList(resources.getColorStateList(R.color.ghostery_dialog_button_color));
+//                }
+//            }
+//        }
+//    }
 }

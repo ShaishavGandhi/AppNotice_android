@@ -9,7 +9,7 @@
     android:layout_alignLeft="@+id/go_to_site"
     android:layout_alignStart="@+id/go_to_site"
     android:layout_marginBottom="41dp"
-    android:background="@color/ghostery_list_background">
+    >
 
     <LinearLayout
         android:id="@+id/category_header_layout"
@@ -22,7 +22,7 @@
             android:id="@+id/divider_view2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ghostery_list_category_divider_height"
-            android:background="@color/ghostery_list_category_divider_color" />
+            />
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
@@ -30,8 +30,6 @@
             android:id="@+id/category_header_text"
             android:text="Essential"
             android:textSize="12sp"
-            android:background="@color/ghostery_list_background"
-            android:textColor="@color/ghostery_list_category_text_color"
             android:padding="6dp"
             android:gravity="center_vertical"/>
     </LinearLayout>
@@ -49,7 +47,6 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tracker_name"
             android:text="Google"
-            android:textColor="@color/ghostery_list_vendor_name_text_color"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

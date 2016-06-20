@@ -13,7 +13,7 @@
         android:padding="10dp"
         android:textIsSelectable="true"
         tools:context=".DetailFragment"
-        android:background="@color/ghostery_list_background">
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,7 +55,6 @@
             android:id="@+id/divider_view1"
             android:layout_width="match_parent"
             android:layout_height="1dip"
-            android:background="@color/ghostery_list_category_divider_color"
             android:layout_alignParentTop="true"
             android:layout_margin="4dp" />
 
@@ -65,14 +64,12 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/ghostery_list_vendor_name_text_color"
             android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerDescription"
-            android:textColor="@color/ghostery_preferences_message_text_color"
             android:textSize="13sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -82,7 +79,6 @@
             android:text="@string/ghostery_preferences_detail_learnmore"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/ghostery_preferences_message_text_color"
             android:textSize="13sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

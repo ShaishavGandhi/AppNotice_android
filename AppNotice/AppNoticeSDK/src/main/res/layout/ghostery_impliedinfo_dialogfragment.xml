@@ -4,15 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="left|top"
-    tools:context=".ImpliedIntro_DialogFragment"
-    android:background="@color/ghostery_dialog_background_color"
     android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/ghostery_dialog_header_text_color"
         android:text="@string/ghostery_dialog_header_text"
         android:id="@+id/textView_title"
         android:layout_gravity="center_horizontal"

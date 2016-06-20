@@ -84,23 +84,6 @@ public class AppNoticeData {
     private static final String TAG_TRACKERS = "trackers";                                              // Tracker list
 
     // Field values
-    private int dialog_button_color; // Button background color for these buttons: Explicit Accept button on  Consent dialog
-    private String dialog_button_consent; // Button text for Accept button on Explicit Consent dialog
-    private int dialog_explicit_accept_button_text_color; // Button text color for Accept button on Explicit Consent dialog
-    private int dialog_background_color; // Dialog background color for Consent dialog (missing in doc)
-    private String dialog_explicit_message; // Message on Explicit Consent dialog
-    private int dialog_explicit_decline_button_color; // Button background color for Decline button on Explicit Consent dialog
-    private String dialog_button_decline; // Button text for Decline button on Explicit Consent dialog
-    private int dialog_explicit_decline_button_text_color; // Button text color for Decline button on Explicit Consent dialog
-    private String dialog_header_text; // Title on Consent dialog
-    private int dialog_header_text_color; // Title color on Consent dialog
-    private String dialog_button_close; // Button text for Close buttons on both Implied Consent dialogs
-    private String preferences_description; // Text for the header of the Manage Privacy Preferences screen
-    private String preferences_header; // Text for the description section of the Manage Privacy Preferences screen
-    private String dialog_implicit_message; // Message on Implied Consent dialog
-    private String dialog_button_preferences; // Button text for Manage Preferences button on the Consent dialog
-    private int dialog_message_text_color; // Message text color for all dialogs
-    private float consent_flow_dialog_opacity = 1F; // Opacity setting (scale 0 to 100) for all dialogs
     private int implied_flow_session_display_max; // Maximum number of times the Implied Consent dialog should be displayed in a session.
 
     public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
@@ -118,24 +101,6 @@ public class AppNoticeData {
         this.previousNoticeId = previousNoticeId;
         AppData.setInteger(AppData.APPDATA_PREV_NOTICE_ID, previousNoticeId);
     }
-
-    public int getDialogButtonColor() { return dialog_button_color; }
-    public String getDialogButtonConsent() { return dialog_button_consent; }
-    public int getDialogExplicitAcceptButtonTextColor() { return dialog_explicit_accept_button_text_color; }
-    public int getDialogBackgroundColor() { return dialog_background_color; }
-    public String getDialogExplicitMessage() { return dialog_explicit_message; }
-    public int getDialogExplicitDeclineButtonColor() { return dialog_explicit_decline_button_color; }
-    public String getDialogButtonDecline() { return dialog_button_decline; }
-    public int getDialogExplicitDeclineButtonTextColor() { return dialog_explicit_decline_button_text_color; }
-    public String getDialogHeaderText() { return dialog_header_text; }
-    public int getDialogHeaderTextColor() { return dialog_header_text_color; }
-    public String getDialogButtonClose() { return dialog_button_close; }
-    public String getPreferencesDescription() { return preferences_description; }
-//    public String getPreferencesHeader() { return preferences_header; }
-    public String getDialogImplicitMessage() { return dialog_implicit_message; }
-    public String getDialogButtonPreferences() { return dialog_button_preferences; }
-    public int getDialogMessageTextColor() { return dialog_message_text_color; }
-    public float getConsentFlowDialogOpacity() { return consent_flow_dialog_opacity / 100; }
     public int getImpliedFlowSessionDisplayMax() { return implied_flow_session_display_max; }
 
 
@@ -159,7 +124,6 @@ public class AppNoticeData {
     private AppNoticeData() {
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
         implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
-        consent_flow_dialog_opacity = consent_flow_dialog_opacity_default = activity.getResources().getInteger(R.integer.ghostery_consent_flow_dialog_opacity);
     }
 
     public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
@@ -399,23 +363,6 @@ public class AppNoticeData {
     public void init() {
         Resources resources = activity.getResources();
 
-        dialog_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
-        dialog_button_consent = resources.getString(R.string.ghostery_dialog_button_consent);
-        dialog_explicit_accept_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
-        dialog_background_color = resources.getColor(R.color.ghostery_dialog_background_color);
-        dialog_explicit_message = resources.getString(R.string.ghostery_dialog_explicit_message);
-        dialog_explicit_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
-        dialog_button_decline = resources.getString(R.string.ghostery_dialog_button_decline);
-        dialog_explicit_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
-        dialog_header_text = resources.getString(R.string.ghostery_dialog_header_text);
-        dialog_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
-        dialog_button_close = resources.getString(R.string.ghostery_dialog_button_close);
-        preferences_description = resources.getString(R.string.ghostery_preferences_description);
-//        preferences_header = resources.getString(R.string.ghostery_preferences_header);
-        dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
-        dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
-        dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
-        consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
         previousNoticeId = AppData.getInteger(AppData.APPDATA_PREV_NOTICE_ID, 0);

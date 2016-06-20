@@ -5,7 +5,6 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:layout_gravity="start|top"
 tools:context="com.ghostery.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment"
-android:background="@color/ghostery_dialog_background_color"
 android:orientation="vertical"
 android:padding="32dp"
 android:weightSum="1">
@@ -16,7 +15,6 @@ android:weightSum="1">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".fragments.ExplicitConsent_Fragment"
-    android:background="@color/ghostery_dialog_background_color"
     android:orientation="vertical"
     android:weightSum="1"
     android:layout_gravity="center">
@@ -33,7 +31,6 @@ android:weightSum="1">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/ghostery_dialog_header_text_color"
         android:text="@string/ghostery_dialog_header_text"
         android:id="@+id/textView_title"
         android:layout_gravity="center"
@@ -56,7 +53,7 @@ android:weightSum="1">
             android:text="@string/ghostery_dialog_explicit_message"
             android:id="@+id/textView_message"
             android:ellipsize="end"
-            android:textColor="@color/ghostery_dialog_message_text_color" />
+            />
     </ScrollView>
 
     <LinearLayout

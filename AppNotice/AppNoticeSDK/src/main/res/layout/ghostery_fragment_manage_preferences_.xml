@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/ghostery_preferences_optin_background_color">
+    >
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -17,7 +17,6 @@
         android:maxLines="3"
         android:ellipsize="end"
         android:clickable="true"
-        android:textColor="@color/ghostery_preferences_message_text_color"
         android:textSize="13sp"/>
 
     <LinearLayout
@@ -25,7 +24,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="@color/ghostery_list_background"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
@@ -45,7 +43,6 @@
                 android:text="@string/ghostery_preferences_optin_text"
                 android:id="@+id/textView_optIn_header"
                 android:textSize="16sp"
-                android:textColor="@color/ghostery_preferences_optin_text_color"
                 android:lines="1"/>
 
             <android.support.v7.widget.AppCompatTextView
@@ -53,8 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ghostery_preferences_optin_subtext"
                 android:id="@+id/textView_optIn_text"
-                android:textSize="11sp"
-                android:textColor="@color/ghostery_preferences_optin_subtext_color"
+                android:textSize="12sp"
                 />
 
         </LinearLayout>
@@ -74,7 +70,7 @@
                 android:id="@+id/rb_none"
                 android:layout_gravity="center_vertical"
                 android:lines="1"
-                android:textColor="@color/ghostery_preferences_optin_text_color"/>
+                />
 
             <android.support.v7.widget.AppCompatRadioButton
                 android:layout_width="wrap_content"
@@ -83,7 +79,7 @@
                 android:id="@+id/rb_all"
                 android:layout_gravity="center_vertical"
                 android:lines="1"
-                android:textColor="@color/ghostery_preferences_optin_text_color"/>
+                />
 
         </LinearLayout>
 
@@ -95,7 +91,7 @@
         android:layout_height="1dip"
         android:layout_marginLeft="4dip"
         android:layout_marginRight="4dip"
-        android:background="@color/ghostery_divider_color" />
+        />
 
     <ListView
         android:id="@+id/tracker_list"

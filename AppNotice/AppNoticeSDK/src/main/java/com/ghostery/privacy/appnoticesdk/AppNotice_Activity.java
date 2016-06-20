@@ -1,6 +1,5 @@
 package com.ghostery.privacy.appnoticesdk;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +27,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     private static AppNotice_Activity instance;
     private AppNoticeData appNoticeData;
     private FragmentManager fragmentManager;
-    public static boolean consentStarted = false;
+    public static boolean isConsentActive = false;
 
     // Fragment tags
 //    public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
@@ -60,18 +59,18 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
+//            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
         }
 
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
-            consentStarted = false;
+            isConsentActive = false;
             ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
             ft.addToBackStack(fragmentType);
             ft.commit();
         } else if (fragmentType.equals(FRAGMENT_TAG_EXPLICIT_CONSENT)) {
-            consentStarted = true;
+            isConsentActive = true;
             if (actionBar != null) {
                 actionBar.hide();
             }
@@ -91,6 +90,12 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        isConsentActive = false;
+    }
+
+    @Override
     public void onBackPressed() {
         // ToDo: call current fragment's onBackPressed method
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -107,7 +112,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                         break;
                     case FRAGMENT_TAG_MANAGE_PREFERENCES:
                         ((ManagePreferences_Fragment) fragment).onBackPressed();
-                        if (consentStarted) {
+                        if (isConsentActive) {
                             getSupportFragmentManager().popBackStack();
                         } else {
                             this.finish();

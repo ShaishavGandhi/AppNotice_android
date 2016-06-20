@@ -1,10 +1,8 @@
 package com.ghostery.privacy.appnoticesdk.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -69,24 +67,24 @@ public class ManagePreferences_Fragment extends Fragment {
         AppCompatTextView manage_preferences_description = (AppCompatTextView)view.findViewById(R.id.manage_preferences_description);
         if (manage_preferences_description != null) {
             final AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
-            manage_preferences_description.setText(manage_preferences_description_text);
+//            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
+//            manage_preferences_description.setText(manage_preferences_description_text);
             manage_preferences_description.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (appNoticeData != null) {
-                        String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
-
-                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                        alertDialog.setTitle(R.string.ghostery_preferences_header);
-                        alertDialog.setMessage(manage_preferences_description_text);
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
+////                        String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
+//
+//                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+//                        alertDialog.setTitle(R.string.ghostery_preferences_header);
+////                        alertDialog.setMessage(manage_preferences_description_text);
+//                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                });
+//                        alertDialog.show();
                     }
                 }
             });
