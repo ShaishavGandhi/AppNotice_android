@@ -9,4 +9,14 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
+    <style name="ghostery_AppNoticeTheme.Button" parent="ghostery_AppNoticeTheme">
+        <item name="colorAccent">@color/ghosteryColorButtonPrimary</item>
+        <item name="android:textColor">@color/ghosteryColorButtonTextPrimary</item>
+    </style>
+
+    <style name="ghostery_AppNoticeTheme.Button.Secondary" parent="ghostery_AppNoticeTheme">
+        <item name="colorAccent">@color/ghosteryColorButtonSecondary</item>
+        <item name="android:textColor">@color/ghosteryColorButtonTextSecondary</item>
+    </style>
+
 </resources>

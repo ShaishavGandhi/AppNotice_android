@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 
-import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
+import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
@@ -48,6 +50,12 @@ public class TrackerDetail_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.show();
+        }
 
         // Get either a new or initialized tracker config object
         appNoticeData = AppNoticeData.getInstance(getActivity());

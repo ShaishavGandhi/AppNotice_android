@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatCallback;
 import android.view.MenuItem;
@@ -13,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment;
+import com.ghostery.privacy.appnoticesdk.fragments.ImpliedConsent_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
@@ -30,7 +30,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     public static boolean isConsentActive = false;
 
     // Fragment tags
-//    public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
+    public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
     public static final String FRAGMENT_TAG_EXPLICIT_CONSENT = "EXPLICIT_CONSENT";
     public static final String FRAGMENT_TAG_MANAGE_PREFERENCES = "MANAGE_PREFERENCES";
 //    public static final String FRAGMENT_TAG_TRACKER_LIST = "TRACKER_LIST";
@@ -55,29 +55,23 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
             fragmentType = extras.getString("FRAGMENT_TYPE");
         }
 
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.ghostery_header_background_color)));
-        }
-
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
             isConsentActive = false;
-            if (actionBar != null) {
-                actionBar.show();
-            }
-
             ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
+            ft.addToBackStack(fragmentType);
+            ft.commit();
+        } else if (fragmentType.equals(FRAGMENT_TAG_IMPLIED_CONSENT)) {
+            isConsentActive = true;
+
+            ImpliedConsent_Fragment fragment = new ImpliedConsent_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
             ft.addToBackStack(fragmentType);
             ft.commit();
         } else if (fragmentType.equals(FRAGMENT_TAG_EXPLICIT_CONSENT)) {
             isConsentActive = true;
-            if (actionBar != null) {
-                actionBar.hide();
-            }
 
             ExplicitConsent_Fragment fragment = new ExplicitConsent_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -110,6 +104,10 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
             Fragment fragment = fragmentManager.findFragmentByTag(tag);
             if (fragment != null) {
                 switch (tag) {
+                    case FRAGMENT_TAG_IMPLIED_CONSENT:
+                        ((ImpliedConsent_Fragment) fragment).onBackPressed();
+                        this.finish();
+                        break;
                     case FRAGMENT_TAG_EXPLICIT_CONSENT:
                         ((ExplicitConsent_Fragment) fragment).onBackPressed();
                         this.finish();

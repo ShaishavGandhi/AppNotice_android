@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
-import com.ghostery.privacy.appnoticesdk.fragments.ImpliedInfo_DialogFragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
 import com.ghostery.privacy.appnoticesdk.utils.Session;
@@ -244,8 +243,10 @@ public class AppNotice {
 
                 // Create and show the dialog.
                 if (isImpliedFlow) {
-                    ImpliedInfo_DialogFragment impliedInfo_DialogFragment = ImpliedInfo_DialogFragment.newInstance(0);
-                    impliedInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_impliedInfo");
+                    Intent intent = new Intent(extActivity, AppNotice_Activity.class);
+                    intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_IMPLIED_CONSENT);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    extActivity.startActivity(intent);
 
                     // Count that this Implicit Notice dialog box was displayed
                     AppNoticeData.incrementImplicitNoticeDisplayCount();
@@ -255,9 +256,6 @@ public class AppNotice {
                     intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_CONSENT);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     extActivity.startActivity(intent);
-//                    ExplicitInfo_DialogFragment explicitInfo_DialogFragment = ExplicitInfo_DialogFragment.newInstance(0);
-//                    explicitInfo_DialogFragment.show(fragmentTransaction, "dialog_fragment_explicitInfo");
-
                 }
 
                 // Remember that a notice has been shown for this notice ID

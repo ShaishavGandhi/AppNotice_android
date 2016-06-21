@@ -3,6 +3,8 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -56,7 +58,13 @@ public class ManagePreferences_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences_, container, false);
 
-        // TODO: replace with a real list adapter.
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.show();
+        }
+
+            // TODO: replace with a real list adapter.
         trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData);
         trackerListView = (ListView) view.findViewById(R.id.tracker_list);
         trackerListView.setAdapter(trackerArrayAdapter);
