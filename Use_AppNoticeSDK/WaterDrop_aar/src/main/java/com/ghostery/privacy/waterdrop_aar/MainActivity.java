@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}
     }
 
-    // Handle callbacks for the App Notice Consent SDK
+    // Handle callbacks for the App Notice SDK
     @Override
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
@@ -251,8 +251,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_option_selected)); // Show preference results in a dialog
         } else {
             try {
-                DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
-                dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
+                showMessage(getString(R.string.declineConfirmDialog_title), getString(R.string.declineConfirmDialog_message));
                 showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracking_declined)); // Show preference results in a dialog
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
@@ -316,6 +315,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(prefResults);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showMessage(String title, String message) {
+//        String prefResults = "";
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

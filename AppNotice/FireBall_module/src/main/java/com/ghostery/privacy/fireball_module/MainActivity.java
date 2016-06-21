@@ -53,16 +53,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         isInitialized = true;
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -124,11 +114,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         btn_reset_sdk.setOnClickListener(this);
         btn_reset_app.setOnClickListener(this);
         btn_close_app.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
     }
 
     @Override
@@ -266,8 +251,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_option_selected)); // Show preference results in a dialog
         } else {
             try {
-//                DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
-//                dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
                 showMessage(getString(R.string.declineConfirmDialog_title), getString(R.string.declineConfirmDialog_message));
                 showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracking_declined)); // Show preference results in a dialog
             } catch (IllegalStateException e) {

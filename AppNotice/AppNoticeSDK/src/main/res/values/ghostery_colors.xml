@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App colors -->
+    <!-- Ghostery SDK colors -->
     <color name="ghosteryColorPrimary">#03A9F4</color>
     <color name="ghosteryColorPrimaryDark">#0288D1</color>
     <color name="ghosteryColorAccent">#00BCD4</color>
@@ -9,7 +9,5 @@
     <color name="ghosteryColorButtonSecondary">#CCCCCC</color>
     <color name="ghosteryColorButtonTextSecondary">#666666</color>
     <color name="ghosteryColorButtonTextBorderless">#03A9F4</color>
-
--->
 
 </resources>
