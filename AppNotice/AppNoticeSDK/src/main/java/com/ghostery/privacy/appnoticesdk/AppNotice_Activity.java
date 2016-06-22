@@ -36,6 +36,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
 //    public static final String FRAGMENT_TAG_TRACKER_LIST = "TRACKER_LIST";
     public static final String FRAGMENT_TAG_TRACKER_DETAIL = "TRACKER_DETAIL";
     public static final String FRAGMENT_TAG_LEARN_MORE = "LEARN_MORE";
+    public static final String FRAGMENT_TAG_HOST_SETTINGS = "HOST_SETTINGS";
 
 
     public static AppNotice_Activity getInstance() {
@@ -56,14 +57,12 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         }
 
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
-            isConsentActive = false;
             ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
             ft.addToBackStack(fragmentType);
             ft.commit();
         } else if (fragmentType.equals(FRAGMENT_TAG_IMPLIED_CONSENT)) {
-            isConsentActive = true;
 
             ImpliedConsent_Fragment fragment = new ImpliedConsent_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -71,7 +70,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
             ft.addToBackStack(fragmentType);
             ft.commit();
         } else if (fragmentType.equals(FRAGMENT_TAG_EXPLICIT_CONSENT)) {
-            isConsentActive = true;
 
             ExplicitConsent_Fragment fragment = new ExplicitConsent_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -90,12 +88,10 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     @Override
     protected void onStop() {
         super.onStop();
-        isConsentActive = false;
     }
 
     @Override
     public void onBackPressed() {
-        // ToDo: call current fragment's onBackPressed method
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
             String tag = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName();
@@ -126,6 +122,9 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                         break;
                     case FRAGMENT_TAG_LEARN_MORE:
                         ((LearnMore_Fragment) fragment).onBackPressed();
+                        getSupportFragmentManager().popBackStack();
+                        break;
+                    case FRAGMENT_TAG_HOST_SETTINGS:
                         getSupportFragmentManager().popBackStack();
                         break;
                     default:

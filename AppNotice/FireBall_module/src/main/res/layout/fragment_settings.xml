@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ghostery.privacy.fireball_module.HybridPrivacySettings">
+    tools:context=".Settings_Fragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -75,13 +75,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/pref_in_app_privacy"
-                    android:id="@+id/pref_in_app_privacy" />
+                    android:id="@+id/pref_in_app_privacy"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/pref_web_privacy_layout"
                 android:padding="15dp">
 
                 <TextView

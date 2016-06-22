@@ -2,6 +2,7 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -40,6 +42,7 @@ public class ImpliedConsent_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.ghostery_fragment_implied_consent, container, false);
+        AppNotice_Activity.isConsentActive = true;
 
         // Watch for button clicks.
         AppCompatButton preferences_button = (AppCompatButton)view.findViewById(R.id.preferences_button);
@@ -54,7 +57,14 @@ public class ImpliedConsent_Fragment extends Fragment {
                 // Let the calling class know the the manage preferences button was clicked
                 Boolean wasHandled = false;
                 if (appNotice_callback != null && !getActivity().isFinishing()) {
-                    wasHandled = appNotice_callback.onManagePreferencesClicked();
+                    Fragment fragment = appNotice_callback.onManagePreferencesClicked();
+                    if (fragment != null) {
+                        FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
+                        transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
+                        transaction.commit();
+                        wasHandled = true;
+                    }
                 }
 
                 // Open the App Notice manage preferences fragment
@@ -92,6 +102,8 @@ public class ImpliedConsent_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
+        AppNotice_Activity.isConsentActive = true;
+
         // Let the calling class know the selected option
         if (appNotice_callback != null) {
             appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));

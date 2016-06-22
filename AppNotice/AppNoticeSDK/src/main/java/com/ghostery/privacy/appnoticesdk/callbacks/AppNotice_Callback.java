@@ -1,5 +1,7 @@
 package com.ghostery.privacy.appnoticesdk.callbacks;
 
+import android.support.v4.app.Fragment;
+
 import java.util.HashMap;
 
 /**
@@ -9,5 +11,5 @@ public interface AppNotice_Callback {
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap);
     public void onNoticeSkipped(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap);
     public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap);
-    public boolean onManagePreferencesClicked();
+    public Fragment onManagePreferencesClicked();
 }

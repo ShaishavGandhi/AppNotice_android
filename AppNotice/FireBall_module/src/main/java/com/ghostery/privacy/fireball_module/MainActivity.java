@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -286,18 +287,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     }
 
     @Override
-    public boolean onManagePreferencesClicked() {
-        Boolean wasHandled = false;
+    public Fragment onManagePreferencesClicked() {
         if (isHybridApp) {
             // Open local preferences screen
-            Intent i = new Intent(getBaseContext(), HybridPrivacySettings.class);
-            startActivity(i);
-            wasHandled = true;  // Handled
-
+            Settings_Fragment settings_fragment = new Settings_Fragment();
+            return settings_fragment;
         } else {
-            wasHandled = false; // Not handled
+            return null;
         }
-        return wasHandled;
     }
 
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
