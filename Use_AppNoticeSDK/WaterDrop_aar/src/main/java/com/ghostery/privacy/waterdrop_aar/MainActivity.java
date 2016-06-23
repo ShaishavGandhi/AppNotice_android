@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Button btn_reset_sdk;
     private Button btn_reset_app;
     private Button btn_close_app;
-    private Boolean isHybridApp;
     private Boolean isExplicitStrict;
     public static boolean isInitialized = false;
 
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
         String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
         String implied30dayDisplayMaxString = Util.getSharedPreference(this, Util.SP_IS_30DAY_MAX, "0");
-        String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
         String isExplicitStrictString = Util.getSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, "1");
 
         AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
@@ -92,11 +90,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
         if (isExplicitStrictString != null) {
             checkBox_explicitStrict.setChecked(isExplicitStrictString.equals("1"));
-        }
-
-        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (isHybridAppString != null) {
-            checkBox_hybridApp.setChecked(isHybridAppString.equals("1"));
         }
 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
@@ -125,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int noticeId = 0;
         Boolean isImplied = true;
         int implied30dayDisplayMax = 0;
-        isHybridApp = true;
         isExplicitStrict = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
@@ -163,17 +155,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             isExplicitStrict = checkBox_explicitStrict.isChecked();
         }
 
-        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (checkBox_hybridApp != null) {
-            isHybridApp = checkBox_hybridApp.isChecked();
-        }
-
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_30DAY_MAX, String.valueOf(implied30dayDisplayMax));
-        Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, isExplicitStrict ? "1" : "0");
 
 		if (noticeIdString.length() == 0 || (companyIdString.length() == 0 && !usingToken)) {
@@ -283,21 +269,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onTrackerStateChanged(HashMap<Integer, Boolean> trackerHashMap) {
         showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracker_state_changed)); // Show preference results in a dialog
 
-    }
-
-    @Override
-    public boolean onManagePreferencesClicked() {
-        Boolean wasHandled = false;
-        if (isHybridApp) {
-            // Open local preferences screen
-            Intent i = new Intent(getBaseContext(), HybridPrivacySettings.class);
-            startActivity(i);
-            wasHandled = true;  // Handled
-
-        } else {
-            wasHandled = false; // Not handled
-        }
-        return wasHandled;
     }
 
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {

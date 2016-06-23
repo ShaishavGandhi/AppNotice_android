@@ -13,7 +13,6 @@ public class Util {
     public static final String SP_NOTICE_ID = "sp_noticeId";
     public static final String SP_IS_IMPLIED = "sp_isImplied";
     public static final String SP_IS_30DAY_MAX = "sp_implied30DayMax";
-    public static final String SP_IS_HYBRIDAPP = "sp_isHybridApp";
     public static final String SP_IS_EXPLICITSTRICT = "sp_isExplicitStrict";
 
     /**
