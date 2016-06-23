@@ -3,7 +3,6 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -56,23 +55,8 @@ public class ImpliedConsent_Fragment extends Fragment {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
-                // Let the calling class know the the manage preferences button was clicked
-                Boolean wasHandled = false;
-                if (appNotice_callback != null && !getActivity().isFinishing()) {
-                    Fragment fragment = appNotice_callback.onManagePreferencesClicked();
-                    if (fragment != null) {
-                        FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
-                        transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
-                        transaction.commit();
-                        wasHandled = true;
-                    }
-                }
-
                 // Open the App Notice manage preferences fragment
-                if (!wasHandled) {
-                    Util.showManagePreferences(getActivity());
-                }
+                Util.showManagePreferences(getActivity());
             }
         });
 
@@ -85,23 +69,8 @@ public class ImpliedConsent_Fragment extends Fragment {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
-                // Let the calling class know the the manage preferences button was clicked
-                Boolean wasHandled = false;
-                if (appNotice_callback != null && !getActivity().isFinishing()) {
-                    Fragment fragment = appNotice_callback.onManagePreferencesClicked();
-                    if (fragment != null) {
-                        FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
-                        transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
-                        transaction.commit();
-                        wasHandled = true;
-                    }
-                }
-
                 // Open the App Notice manage preferences fragment
-                if (!wasHandled) {
-                    Util.showManagePreferences(getActivity());
-                }
+                Util.showManagePreferences(getActivity());
             }
         });
 
