@@ -244,7 +244,7 @@ public class AppNotice {
                 // Create and show the dialog.
                 if (isImpliedFlow) {
                     Intent intent = new Intent(extActivity, AppNotice_Activity.class);
-                    intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_IMPLIED_CONSENT);
+                    Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, AppNotice_Activity.FRAGMENT_TAG_IMPLIED_CONSENT);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     extActivity.startActivity(intent);
 
@@ -253,7 +253,7 @@ public class AppNotice {
 
                 } else {
                     Intent intent = new Intent(extActivity, AppNotice_Activity.class);
-                    intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_CONSENT);
+                    Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_CONSENT);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     extActivity.startActivity(intent);
                 }

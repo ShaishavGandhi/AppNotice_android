@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
+import com.ghostery.privacy.appnoticesdk.utils.Session;
 
 /**
  */
@@ -21,10 +22,9 @@ public class LearnMore_Fragment extends Fragment {
 //    private OnFragmentInteractionListener mListener;
 
     /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
+     * Selected item ID for this fragment.
      */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static int itemId;
 
     /**
      * The content this fragment is presenting.
@@ -52,7 +52,8 @@ public class LearnMore_Fragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            tracker = appNoticeData.getTrackerById(getArguments().getInt(ARG_ITEM_ID));
+            itemId = (int) Session.get(Session.APPNOTICE_SELECTED_ITEM_ID, 0);
+            tracker = appNoticeData.getTrackerById(itemId);
         }
     }
 
