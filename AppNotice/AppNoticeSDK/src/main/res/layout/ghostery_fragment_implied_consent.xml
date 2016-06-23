@@ -60,12 +60,13 @@ android:weightSum="1">
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/buttons_layout_portrait">
 
         <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/close_button"
+            android:id="@+id/close_button_portrait"
             android:layout_gravity="center_horizontal"
             android:text="@string/ghostery_dialog_button_close"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -76,7 +77,7 @@ android:weightSum="1">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ghostery_dialog_button_preferences"
-            android:id="@+id/preferences_button"
+            android:id="@+id/preferences_button_portrait"
             android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/ghosteryColorButtonTextBorderless"
@@ -84,6 +85,38 @@ android:weightSum="1">
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/buttons_layout_landscape">
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/preferences_button_landscape"
+            android:text="@string/ghostery_dialog_button_preferences"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/ghosteryColorButtonTextBorderless"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/close_button_landscape"
+                android:text="@string/ghostery_dialog_button_close"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:theme="@style/ghostery_AppNoticeTheme.Button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>
 
 </FrameLayout>

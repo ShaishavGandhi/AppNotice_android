@@ -86,11 +86,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
