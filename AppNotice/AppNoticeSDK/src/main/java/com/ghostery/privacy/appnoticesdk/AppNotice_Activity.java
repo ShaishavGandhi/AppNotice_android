@@ -49,92 +49,34 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         instance = this;
         setContentView(R.layout.ghostery_activity_appnotice);
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        String fragmentType = (String)Session.get(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, FRAGMENT_TAG_MANAGE_PREFERENCES);
 
-        if (savedInstanceState == null) {
-            switch (fragmentType) {
-                case FRAGMENT_TAG_IMPLIED_CONSENT:
-                    ImpliedConsent_Fragment impliedConsent_fragment = new ImpliedConsent_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, impliedConsent_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_EXPLICIT_CONSENT:
-                    ExplicitConsent_Fragment explicitConsent_fragment = new ExplicitConsent_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, explicitConsent_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_MANAGE_PREFERENCES:
-                    ManagePreferences_Fragment managePreferences_fragment = new ManagePreferences_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, managePreferences_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_TRACKER_DETAIL:
-                    TrackerDetail_Fragment trackerDetail_fragment = new TrackerDetail_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, trackerDetail_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_LEARN_MORE:
-                    LearnMore_Fragment learnMore_fragment = new LearnMore_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, learnMore_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_HOST_SETTINGS:
-                    ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
-                    break;
-                default:
-            }
-            ft.addToBackStack(fragmentType);
-            ft.commit();
-        } else {
-            switch (fragmentType) {
-                case FRAGMENT_TAG_IMPLIED_CONSENT:
-                    ImpliedConsent_Fragment impliedConsent_fragment = (ImpliedConsent_Fragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_IMPLIED_CONSENT);
-                    ft.replace(R.id.appnotice_fragment_container, impliedConsent_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_EXPLICIT_CONSENT:
-                    ExplicitConsent_Fragment explicitConsent_fragment = new ExplicitConsent_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, explicitConsent_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_MANAGE_PREFERENCES:
-                    ManagePreferences_Fragment managePreferences_fragment = new ManagePreferences_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, managePreferences_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_TRACKER_DETAIL:
-                    TrackerDetail_Fragment trackerDetail_fragment = new TrackerDetail_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, trackerDetail_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_LEARN_MORE:
-                    LearnMore_Fragment learnMore_fragment = new LearnMore_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, learnMore_fragment, fragmentType);
-                    break;
-                case FRAGMENT_TAG_HOST_SETTINGS:
-                    ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
-                    ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
-                    break;
-                default:
-            }
-            getFragmentManager().popBackStack();
+        Bundle extras = getIntent().getExtras();
+        String fragmentType = FRAGMENT_TAG_MANAGE_PREFERENCES;
+        if (extras != null) {
+            fragmentType = extras.getString("FRAGMENT_TYPE");
         }
 
+        if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
+            ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
+            ft.addToBackStack(fragmentType);
+            ft.commit();
+        } else if (fragmentType.equals(FRAGMENT_TAG_IMPLIED_CONSENT)) {
 
-//        if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
-//            ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
-//            FragmentTransaction ft = fragmentManager.beginTransaction();
-//            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
-//            ft.addToBackStack(fragmentType);
-//            ft.commit();
-//        } else if (fragmentType.equals(FRAGMENT_TAG_IMPLIED_CONSENT)) {
-//
-//            ImpliedConsent_Fragment fragment = new ImpliedConsent_Fragment();
-//            FragmentTransaction ft = fragmentManager.beginTransaction();
-//            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
-//            ft.addToBackStack(fragmentType);
-//            ft.commit();
-//        } else if (fragmentType.equals(FRAGMENT_TAG_EXPLICIT_CONSENT)) {
-//
-//            ExplicitConsent_Fragment fragment = new ExplicitConsent_Fragment();
-//            FragmentTransaction ft = fragmentManager.beginTransaction();
-//            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
-//            ft.addToBackStack(fragmentType);
-//            ft.commit();
-//        }
+            ImpliedConsent_Fragment fragment = new ImpliedConsent_Fragment();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
+            ft.addToBackStack(fragmentType);
+            ft.commit();
+        } else if (fragmentType.equals(FRAGMENT_TAG_EXPLICIT_CONSENT)) {
+
+            ExplicitConsent_Fragment fragment = new ExplicitConsent_Fragment();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
+            ft.addToBackStack(fragmentType);
+            ft.commit();
+        }
     }
 
     @Override
@@ -160,18 +102,17 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                 switch (tag) {
                     case FRAGMENT_TAG_IMPLIED_CONSENT:
                         ((ImpliedConsent_Fragment) fragment).onBackPressed();
-                        getSupportFragmentManager().popBackStack();
                         this.finish();
                         break;
                     case FRAGMENT_TAG_EXPLICIT_CONSENT:
                         ((ExplicitConsent_Fragment) fragment).onBackPressed();
-                        getSupportFragmentManager().popBackStack();
                         this.finish();
                         break;
                     case FRAGMENT_TAG_MANAGE_PREFERENCES:
                         ((ManagePreferences_Fragment) fragment).onBackPressed();
-                        getSupportFragmentManager().popBackStack();
-                        if (!isConsentActive) {
+                        if (isConsentActive) {
+                            getSupportFragmentManager().popBackStack();
+                        } else {
                             this.finish();
                         }
                         break;
@@ -193,21 +134,12 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         } else {
             super.onBackPressed();
         }
-
-        // Get the tag of the new current fragment and remember it as the current fragment
-        int backStackCount = fragmentManager.getBackStackEntryCount();
-        if (backStackCount > 0) {
-            String tag = fragmentManager.getBackStackEntryAt(backStackCount - 1).getName();
-            Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, tag);
-        } else {
-            Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, "");
-        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int uId, long arg3) {
         Bundle arguments = new Bundle();
-        Session.set(Session.APPNOTICE_SELECTED_ITEM_ID, uId);
+        arguments.putInt(TrackerDetail_Fragment.ARG_ITEM_ID, uId);
 
         TrackerDetail_Fragment fragment = new TrackerDetail_Fragment();
         fragment.setArguments(arguments);

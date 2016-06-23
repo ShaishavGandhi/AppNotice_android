@@ -11,7 +11,7 @@
             android:name="com.ghostery.privacy.appnoticesdk.AppNotice_Activity"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false"
-            android:configChanges="keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:label=""
             android:screenOrientation="unspecified"

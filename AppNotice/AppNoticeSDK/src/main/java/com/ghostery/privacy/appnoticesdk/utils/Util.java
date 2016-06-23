@@ -27,7 +27,6 @@ public class Util {
         final AppNoticeData appNoticeData = AppNoticeData.getInstance(activity);
 
         if (appNoticeData.isTrackerListInitialized()) {
-            Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
             if (AppNotice_Activity.isConsentActive) {
                 ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
                 FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
@@ -54,7 +53,6 @@ public class Util {
                             // Send notice for this event
                             //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
 
-                            Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
                             if (AppNotice_Activity.isConsentActive) {
                                 ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
                                 FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();

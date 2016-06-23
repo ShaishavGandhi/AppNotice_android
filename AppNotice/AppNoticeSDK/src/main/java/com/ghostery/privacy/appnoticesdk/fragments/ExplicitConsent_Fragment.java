@@ -60,7 +60,6 @@ public class ExplicitConsent_Fragment extends Fragment {
                     Fragment fragment = appNotice_callback.onManagePreferencesClicked();
                     if (fragment != null) {
                         // Open the host apps intermediate fragment
-                        Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
                         FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);
                         transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_HOST_SETTINGS);

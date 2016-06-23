@@ -30,9 +30,10 @@ public class TrackerDetail_Fragment extends Fragment {
     private AppNoticeData appNoticeData;
 
     /**
-     * Selected item ID for this fragment.
+     * The fragment argument representing the item ID that this fragment
+     * represents.
      */
-    public static int itemId;
+    public static final String ARG_ITEM_ID = "item_id";
 
     /**
      * The content this fragment is presenting.
@@ -64,7 +65,9 @@ public class TrackerDetail_Fragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             Bundle bundle = getArguments();
-            itemId = (int)Session.get(Session.APPNOTICE_SELECTED_ITEM_ID, 0);
+            int itemId = 0;
+            if (bundle != null)
+                itemId = bundle.getInt(ARG_ITEM_ID);
             tracker = appNoticeData.getTrackerById(itemId);
 
         }
@@ -157,8 +160,11 @@ public class TrackerDetail_Fragment extends Fragment {
                 textView_learn_more_url.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetail_Fragment.ARG_ITEM_ID, 0));
                         LearnMore_Fragment fragment = new LearnMore_Fragment();
-                        Session.set(Session.APPNOTICE_CURRENT_FRAGMENT_TAG, AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
+
+                        fragment.setArguments(bundle);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
                         transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
