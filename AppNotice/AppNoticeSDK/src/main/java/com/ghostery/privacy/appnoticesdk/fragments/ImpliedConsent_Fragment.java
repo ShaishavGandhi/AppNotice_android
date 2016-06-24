@@ -49,9 +49,6 @@ public class ImpliedConsent_Fragment extends Fragment {
         AppCompatButton preferences_button = (AppCompatButton)view.findViewById(R.id.preferences_button_portrait);
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Remember that the tracker preferences screen was opened from a consent flow dialog
-                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
-
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
@@ -63,9 +60,6 @@ public class ImpliedConsent_Fragment extends Fragment {
         AppCompatButton preferences_button_land = (AppCompatButton)view.findViewById(R.id.preferences_button_landscape);
         preferences_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Remember that the tracker preferences screen was opened from a consent flow dialog
-                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, true);
-
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
 
@@ -83,6 +77,7 @@ public class ImpliedConsent_Fragment extends Fragment {
                 }
 
                 // Close this fragment
+                AppNotice_Activity.isConsentActive = false;
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().finish();
             }
@@ -97,6 +92,7 @@ public class ImpliedConsent_Fragment extends Fragment {
                 }
 
                 // Close this fragment
+                AppNotice_Activity.isConsentActive = false;
                 getActivity().getSupportFragmentManager().popBackStack();
                 getActivity().finish();
             }
@@ -138,7 +134,7 @@ public class ImpliedConsent_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
-        AppNotice_Activity.isConsentActive = true;
+        AppNotice_Activity.isConsentActive = false;
 
         // Let the calling class know the selected option
         if (appNotice_callback != null) {

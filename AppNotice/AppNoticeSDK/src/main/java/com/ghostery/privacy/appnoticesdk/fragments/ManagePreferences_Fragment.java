@@ -212,7 +212,7 @@ public class ManagePreferences_Fragment extends Fragment {
 
             // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
             int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
-            if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, false)) {
+            if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_CONSENT, false)) {
                 AppNotice_Callback appNotice_callback = (AppNotice_Callback)Session.get(Session.APPNOTICE_CALLBACK);
                 appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
             }

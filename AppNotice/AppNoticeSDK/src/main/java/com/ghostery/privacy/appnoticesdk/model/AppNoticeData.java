@@ -462,14 +462,13 @@ public class AppNoticeData {
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getExplicitNoticeDisplayStatus() {
         Boolean displayStatus = true;     // Assume we need to show the notice
-        if (AppNotice.usingExplicitStrictMode) {
+        if (currentNoticeId != previousNoticeId) {
+            // If the notice ID has changed, we need to show the notice again
+            displayStatus = true;
+        } else {
+            // If the notice ID is the same, see if this has been accepted
             Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
             displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
-        } else {
-            // If the notice ID has changed, we need to show the notice again
-            if (currentNoticeId == previousNoticeId) {
-                displayStatus = false;
-            }
         }
         return displayStatus;
     }
@@ -689,14 +688,6 @@ public class AppNoticeData {
             // Make a request to url for the AppNoticeData info
             String url = getFormattedJSONUrl();
 
-
-
-
-
-
-
-
-
             String jsonStr = serviceHandler.getRequest(url);
             fillTrackerList(jsonStr);
 
@@ -705,12 +696,6 @@ public class AppNoticeData {
                 AppData.setString(AppData.APPDATA_PREV_JSON, jsonStr);
             } else {
                 Log.d(TAG, "Failed to fill tracker list.");
-//                // If fillTrackerList didn't initialize the tracker list, we need to end the wait-object here
-//                gettingTrackerList = false;
-//                synchronized(waitObj) {
-//                    Log.d(TAG, "Finished filling tracker list.");
-//                    waitObj.notifyAll();
-//                }
             }
 
             return null;

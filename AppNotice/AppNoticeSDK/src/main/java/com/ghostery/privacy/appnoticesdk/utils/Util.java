@@ -28,12 +28,18 @@ public class Util {
 
         if (appNoticeData.isTrackerListInitialized()) {
             if (AppNotice_Activity.isConsentActive) {
+                // Remember that the tracker preferences screen was opened from a consent flow dialog
+                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_CONSENT, true);
+
                 ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
                 FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
                 transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
                 transaction.commit();
             } else {
+                // Remember that the tracker preferences screen was opened from a consent flow dialog
+                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_CONSENT, false);
+
                 Intent intent = new Intent(activity, AppNotice_Activity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.startActivity(intent);
@@ -54,12 +60,18 @@ public class Util {
                             //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
 
                             if (AppNotice_Activity.isConsentActive) {
+                                // Remember that the tracker preferences screen was opened from a consent flow dialog
+                                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_CONSENT, true);
+
                                 ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
                                 FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
                                 transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
                                 transaction.commit();
                             } else {
+                                // Remember that the tracker preferences screen was opened from a consent flow dialog
+                                Session.set(Session.APPNOTICE_PREF_OPENED_FROM_CONSENT, false);
+
                                 Intent intent = new Intent(activity, AppNotice_Activity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 activity.startActivity(intent);

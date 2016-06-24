@@ -4,7 +4,7 @@
     <!-- Text of the close button in the Implied Consent flow dialog. -->
     <string name="ghostery_dialog_button_close">Close</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_consent">Accept All</string>
+    <string name="ghostery_dialog_button_consent">Accept</string>
     <!-- Text of the Decline button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_decline">Decline All</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->

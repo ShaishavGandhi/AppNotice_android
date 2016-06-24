@@ -15,7 +15,7 @@ public class Session {
     public static final String APPNOTICE_CALLBACK = "appNotice_callback";
     public static final String APPNOTICE_ALL_BTN_SELECT = "appNotice_selectAll";
     public static final String APPNOTICE_NONE_BTN_SELECT = "appNotice_selectNone";
-    public static final String APPNOTICE_PREF_OPENED_FROM_DIALOG = "appNotice_prefOpenedFromDialog";  // Boolean
+    public static final String APPNOTICE_PREF_OPENED_FROM_CONSENT = "appNotice_prefOpenedFromConsent";  // Boolean
 
     // System Keys
 //    public static final String SYS_SHAREDPREFERENCES = "sys_sharedPreferences"; 		// SharedPreferences object

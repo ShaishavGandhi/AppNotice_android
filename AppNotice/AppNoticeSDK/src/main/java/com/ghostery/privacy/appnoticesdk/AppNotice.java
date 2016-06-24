@@ -30,7 +30,6 @@ public class AppNotice {
     private static boolean isImpliedFlow = true;
     public static boolean usingToken = true;
     public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
-    public static boolean usingExplicitStrictMode = true;  // Default to strict mode. This can be changed by using when starting the explicit consent flow.
 
     /**
      * AppNotice constructor
@@ -128,14 +127,6 @@ public class AppNotice {
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
-    }
-
-    /**
-     * Starts the App Notice Explicit Consent flow with an option to set strict or lenient mode. Must be called before your app begins any tracking activity.
-     */
-    public void startExplicitConsentFlow(boolean useExplicitStrictMode) {
-        usingExplicitStrictMode = useExplicitStrictMode;
-        startExplicitConsentFlow();
     }
 
     /**
