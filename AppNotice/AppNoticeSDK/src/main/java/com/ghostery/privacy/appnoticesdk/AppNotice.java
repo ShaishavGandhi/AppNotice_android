@@ -145,8 +145,8 @@ public class AppNotice {
      */
     public void resetSDK() {
         Session.reset();
-        AppData.remove(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME);
-        AppData.remove(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT);
+        AppData.remove(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME);
+        AppData.remove(AppData.APPDATA_IMPLIED_DISPLAY_COUNT);
         AppData.remove(AppData.APPDATA_EXPLICIT_ACCEPTED);
         AppData.remove(AppData.APPDATA_TRACKERSTATES);
         AppData.remove(AppData.APPDATA_PREV_NOTICE_ID);
@@ -220,10 +220,10 @@ public class AppNotice {
             Log.d(TAG, "Force restart the host app to correctly startConsentFlow the SDK.");
             Util.forceAppRestart(extActivity);
         } else {
-            // Determine if we need to show this Implicit Notice dialog box
+            // Determine if we need to show this Implied Notice dialog box
             Boolean showNotice = true;
             if (isImpliedFlow) {
-                showNotice = appNoticeData.getImplicitNoticeDisplayStatus();
+                showNotice = appNoticeData.getImpliedNoticeDisplayStatus();
             } else {
                 showNotice = appNoticeData.getExplicitNoticeDisplayStatus();
             }
@@ -239,8 +239,8 @@ public class AppNotice {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     extActivity.startActivity(intent);
 
-                    // Count that this Implicit Notice dialog box was displayed
-                    AppNoticeData.incrementImplicitNoticeDisplayCount();
+                    // Count that this Implied Notice dialog box was displayed
+                    AppNoticeData.incrementImpliedNoticeDisplayCount();
 
                 } else {
                     Intent intent = new Intent(extActivity, AppNotice_Activity.class);

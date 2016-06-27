@@ -1,24 +1,26 @@
 <resources>
 
-    <!--Dialog text -->
+    <!--Consent Screen Text -->
+    <!-- Text of the message in the Implied Consent flow dialog. -->
+    <string name="ghostery_dialog_implied_message">This app is built with technologies that we use to optimize your experience and help us make our product better. Our Privacy Policy clearly states that we will vigilantly protect this data.\n\nBy accepting, you agree to these technologies in full. Alternatively, you can view the details and opt-out of some or all of them.</string>
+    <!-- Text of the message in the Explicit Consent flow dialog. -->
+    <string name="ghostery_dialog_explicit_message">This app is built with technologies that we use to optimize your experience and help us make our product better. Our Privacy Policy clearly states that we will vigilantly protect this data.\n\nBy accepting, you agree to these technologies in full. Alternatively, you can view the details and opt-out of some or all of them.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_button_close">Close</string>
-    <!-- Text of the Accept button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_consent">Accept</string>
+    <string name="ghostery_dialog_button_close">Accept</string>
+    <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->
+    <string name="ghostery_dialog_button_accept_all">Accept All</string>
+    <!-- Text of the Accept button in the Explicit Consent flow dialog when less than all will be accepted. -->
+    <string name="ghostery_dialog_button_accept">Accept</string>
     <!-- Text of the Decline button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_decline">Decline All</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_preferences">Customize</string>
-    <!-- Text of the message in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_explicit_message">This app is built with technologies that we use to optimize your experience and help us make our product better. Our <a href="http://www.ghostery.com">Privacy Policy</a> clearly states that we will vigilantly protect this data.\n\nBy accepting, you agree to these technologies in full. Alternatively, you can view the details and opt-out of some or all of them.</string>
     <!-- Text of the title in both the Explicit Consent and Implied consent flow dialogs. -->
     <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
-    <!-- Text of the message in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_implicit_message">This app is built with technologies that we use to optimize your experience and help us make our product better. Our <a href="http://www.ghostery.com">Privacy Policy</a> clearly states that we will vigilantly protect this data.\n\nBy accepting, you agree to these technologies in full. Alternatively, you can view the details and opt-out of some or all of them.</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
     <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
 
-    <!-- Manage Preferences -->
+    <!-- Manage Preferences Text -->
     <!-- Text of the description section near the top of the privacy preferences screen. -->
     <string name="ghostery_preferences_description">Our company, with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->

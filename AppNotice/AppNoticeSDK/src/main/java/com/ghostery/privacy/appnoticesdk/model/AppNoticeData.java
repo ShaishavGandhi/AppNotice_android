@@ -419,8 +419,8 @@ public class AppNoticeData {
         }
     }
 
-    // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
-    public boolean getImplicitNoticeDisplayStatus() {
+    // Determine if the Implied notice should be shown. True = show notice; False = don't show notice.
+    public boolean getImpliedNoticeDisplayStatus() {
         Boolean showNotice = true;     // Assume we need to show the notice
 
         if (AppNotice.implied30dayDisplayMax <= 0) {
@@ -432,26 +432,26 @@ public class AppNoticeData {
             }
         } else {
             long currentTime = System.currentTimeMillis();
-            int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
-            long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
+            int implied_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0);
+            long implied_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, 0L);
             int impliedFlow_SessionCount = (int) Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
 
-            if (implicit_last_display_time == 0L) {     // If this is the first pass...
-                implicit_last_display_time = currentTime;
-                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
+            if (implied_last_display_time == 0L) {     // If this is the first pass...
+                implied_last_display_time = currentTime;
+                AppData.setLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, implied_last_display_time);
             }
 
             if (impliedFlow_SessionCount >= implied_flow_session_display_max) { // If displayed enough in this session...
                 showNotice = false; // don't display it now
             } else {
-                if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
-                    if (implicit_display_count >= AppNotice.implied30dayDisplayMax) { // If displayed enough in last 30 days...
+                if (currentTime <= implied_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
+                    if (implied_display_count >= AppNotice.implied30dayDisplayMax) { // If displayed enough in last 30 days...
                         showNotice = false; // don't display it now
                     }
                 } else {
                     // If it's been more than 30 days...
-                    AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0); // Reset the display count to 0
-                    AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
+                    AppData.setInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0); // Reset the display count to 0
+                    AppData.setLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
                 }
             }
         }
@@ -473,20 +473,20 @@ public class AppNoticeData {
         return displayStatus;
     }
 
-    public static void incrementImplicitNoticeDisplayCount() {
-        long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
+    public static void incrementImpliedNoticeDisplayCount() {
+        long implied_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, 0L);
 
-        // Increment the implicit display count
-        int currentDisplayCount = AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
-        AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, currentDisplayCount + 1);
+        // Increment the implied display count
+        int currentDisplayCount = AppData.getInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0);
+        AppData.setInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, currentDisplayCount + 1);
 
-        // Increment the implicit session display count
+        // Increment the implied session display count
         int currentSessionCount = (int)Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
         Session.set(Session.SYS_CURRENT_SESSION_COUNT, currentSessionCount + 1);
 
         long currentTime = System.currentTimeMillis();
         if (currentDisplayCount == 0) {             // If this is the first time being displayed in this 30-day period...
-            AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime);   //   reset the last display time to now
+            AppData.setLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, currentTime);   //   reset the last display time to now
         }
     }
 

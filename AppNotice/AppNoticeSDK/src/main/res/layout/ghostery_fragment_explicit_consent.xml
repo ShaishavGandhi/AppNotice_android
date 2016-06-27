@@ -23,10 +23,9 @@ android:orientation="vertical"
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView_logo"
+        android:id="@+id/imageView_hoat_app_logo"
         android:layout_gravity="center_horizontal|top"
-        android:layout_margin="20dp"
-        android:src="@drawable/ghostery_host_app_logo" />
+        android:layout_margin="20dp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -69,7 +68,7 @@ android:orientation="vertical"
             android:layout_height="wrap_content"
             android:id="@+id/accept_button_portrait"
             android:layout_gravity="center_horizontal"
-            android:text="@string/ghostery_dialog_button_consent"
+            android:text="@string/ghostery_dialog_button_accept_all"
             style="@style/Widget.AppCompat.Button.Colored"
             android:theme="@style/ghostery_AppNoticeTheme.Button"
             />
@@ -131,7 +130,7 @@ android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/accept_button_land"
-                android:text="@string/ghostery_dialog_button_consent"
+                android:text="@string/ghostery_dialog_button_accept_all"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:theme="@style/ghostery_AppNoticeTheme.Button"
                 />

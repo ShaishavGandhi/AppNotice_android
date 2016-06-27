@@ -1,14 +1,17 @@
 package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
@@ -153,13 +156,32 @@ public class ExplicitConsent_Fragment extends Fragment {
     }
 
     protected void handleOrientationConfig(int orientation) {
+        // Get the layout components
+        ImageView imageView_hoat_app_logo = (ImageView)getActivity().findViewById(R.id.imageView_hoat_app_logo);
         LinearLayout linearLayout_port = (LinearLayout)getActivity().findViewById(R.id.buttons_layout_portrait);
         LinearLayout linearLayout_land = (LinearLayout)getActivity().findViewById(R.id.buttons_layout_landscape);
-        if (linearLayout_port != null && linearLayout_land != null) {
+
+        // See if there is a host app logo
+        boolean wasLogoFound = false;
+        int imageResourceId = getResources().getIdentifier("@drawable/ghostery_host_app_logo", null, getActivity().getPackageName());
+        if (imageResourceId > 0) {
+            Drawable hostAppLogo = ResourcesCompat.getDrawable(getResources(), imageResourceId, null);
+            if (hostAppLogo != null) {
+                wasLogoFound = true;
+                imageView_hoat_app_logo.setImageDrawable(hostAppLogo);
+            }
+        }
+
+        // Enable and disable layout components depending on orientation and existence
+        if (linearLayout_port != null && linearLayout_land != null && imageView_hoat_app_logo != null) {
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                if (wasLogoFound) {
+                    imageView_hoat_app_logo.setVisibility(View.VISIBLE);
+                }
                 linearLayout_land.setVisibility(View.GONE);
                 linearLayout_port.setVisibility(View.VISIBLE);
             } else {
+                imageView_hoat_app_logo.setVisibility(View.GONE);
                 linearLayout_port.setVisibility(View.GONE);
                 linearLayout_land.setVisibility(View.VISIBLE);
             }

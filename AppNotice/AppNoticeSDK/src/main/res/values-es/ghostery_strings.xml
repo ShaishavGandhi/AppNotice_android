@@ -1,24 +1,26 @@
 <resources>
 
-    <!--Dialog text -->
+    <!--Consent Screen Text -->
+    <!-- Text of the message in the Implied Consent flow dialog. -->
+    <string name="ghostery_dialog_implied_message">Nuestra aplicación usa tecnologías para que nosotros, y nuestros colaboradores, podamos recordarle y comprender cómo usa usted nuestra app. Para ver una lista completa de estas tecnologías y para decirnos si pueden ser utilizadas en su dispositivo, pulse el botón  \&quot;Gestionar preferencias\&quot; que aparece más abajo. Si sigue utilizando esta app se considerará que ha dado su consentimiento.</string>
+    <!-- Text of the message in the Explicit Consent flow dialog. -->
+    <string name="ghostery_dialog_explicit_message">Nuestra aplicación usa tecnologías para que nosotros y nuestros colaboradores, podamos recordarle y comprender cómo usa usted nuestra app. Para ver una lista completa de estas tecnologías y para decirnos explícitamente si pueden ser utilizadas en su dispositivo, pulse el botón  \&quot;Gestionar preferencias\&quot; que aparece más abajo. Para darnos su consentimiento pulse el botón \&quot;Aceptar\&quot;.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
     <string name="ghostery_dialog_button_close">Cerrar</string>
-    <!-- Text of the Accept button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_consent">Aceptar</string>
+    <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->
+    <string name="ghostery_dialog_button_accept_all">Accept All</string>
+    <!-- Text of the Accept button in the Explicit Consent flow dialog when less than all will be accepted. -->
+    <string name="ghostery_dialog_button_accept">Aceptar</string>
     <!-- Text of the Decline button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_decline">Declinar</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_preferences">Gestionar preferencias</string>
-    <!-- Text of the message in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_explicit_message">Nuestra aplicación usa tecnologías para que nosotros y nuestros colaboradores, podamos recordarle y comprender cómo usa usted nuestra app. Para ver una lista completa de estas tecnologías y para decirnos explícitamente si pueden ser utilizadas en su dispositivo, pulse el botón  \&quot;Gestionar preferencias\&quot; que aparece más abajo. Para darnos su consentimiento pulse el botón \&quot;Aceptar\&quot;.</string>
     <!-- Text of the title in both the Explicit Consent and Implied consent flow dialogs. -->
     <string name="ghostery_dialog_header_text">Nos importa su privacidad</string>
-    <!-- Text of the message in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_implicit_message">Nuestra aplicación usa tecnologías para que nosotros, y nuestros colaboradores, podamos recordarle y comprender cómo usa usted nuestra app. Para ver una lista completa de estas tecnologías y para decirnos si pueden ser utilizadas en su dispositivo, pulse el botón  \&quot;Gestionar preferencias\&quot; que aparece más abajo. Si sigue utilizando esta app se considerará que ha dado su consentimiento.</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
     <string name="ghostery_dialog_pleaseWait">Por favor espere...</string>
 
-    <!-- Manage Preferences -->
+    <!-- Manage Preferences Text -->
     <!-- Text of the description section near the top of the privacy preferences screen. -->
     <string name="ghostery_preferences_description">Nuestra empresa, con la ayuda de nuestros colaboradores, recoge datos sobre el uso que hace usted de esta app. Respetamos su privacidad y si desea limitar los datos que recogemos, por favor use el panel de control que aparece más abajo. Por favor visite nuestra política de privacidad para ver más información sobre cómo usamos los datos.</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
