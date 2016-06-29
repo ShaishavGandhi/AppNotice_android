@@ -15,14 +15,14 @@
     <string name="ghostery_dialog_button_decline">Decline All</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_preferences">Customize</string>
-    <!-- Text of the title in both the Explicit Consent and Implied consent flow dialogs. -->
+    <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
     <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
     <string name="ghostery_dialog_pleaseWait">Please Wait...</string>
 
     <!-- Manage Preferences Text -->
     <!-- Text of the description section near the top of the privacy preferences screen. -->
-    <string name="ghostery_preferences_description">Our company, with help from our partners, collects data about your use of this app. We respect your privacy and if you would like to limit the data we collect please use the control panel below. To find out more about how we use data please visit our privacy policy.</string>
+    <string name="ghostery_preferences_description">We use the following technologies to optimize your experience with this app. Tap to learn more or disable any non-essential tools below.</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
     <string name="ghostery_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
     <!-- Text used in the case there is no learn-more link provided -->

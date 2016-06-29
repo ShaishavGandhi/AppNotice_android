@@ -30,4 +30,10 @@
     <string name="declineConfirmDialog_message">To enjoy the full functionality of this app, you must either upgrade to the paid version or accept the privacy preferences in this version. Please restart this app if you would like to accept. This app will now continue with limited functionality.</string>
     <string name="declineConfirmDialog_posBtn">OK</string>
 
+    <!-- Ghostery App Notice SDK Customization -->
+    <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
+    <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
+    <!-- Text of the description section near the top of the privacy preferences screen. -->
+    <string name="ghostery_preferences_description">WaterDrop uses the following technologies to optimize your experience with this app. Tap to learn more or disable any non-essential tools below.</string>
+
 </resources>
