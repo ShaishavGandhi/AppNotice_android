@@ -2,9 +2,9 @@
 
     <!--Dialog text -->
     <!-- Text of the message in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_implied_message">Unsere Anwendung verwendet Technologien, damit wir und unsere Partner Sie wiedererkennen und verstehen können, wie Sie unsere App nutzen. Um eine vollständige Liste dieser Technologien zu sehen und uns mitzuteilen, ob diese auf Ihrem Gerät verwendet werden können, klicken Sie auf die Schaltfläche \&quot;Voreinstellungen verwalten\&quot; unten. Die weitere Nutzung dieser App wird als Zustimmung betrachtet.</string>
+    <string name="ghostery_manage_preferences_implied_message">Unsere Anwendung verwendet Technologien, damit wir und unsere Partner Sie wiedererkennen und verstehen können, wie Sie unsere App nutzen. Um eine vollständige Liste dieser Technologien zu sehen und uns mitzuteilen, ob diese auf Ihrem Gerät verwendet werden können, klicken Sie auf die Schaltfläche \&quot;Voreinstellungen verwalten\&quot; unten. Die weitere Nutzung dieser App wird als Zustimmung betrachtet.</string>
     <!-- Text of the message in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_explicit_message">Unsere Anwendung verwendet Technologien, damit wir und unsere Partner Sie wiedererkennen und verstehen können, wie Sie unsere App nutzen. Um eine vollständige Liste dieser Technologien zu sehen und uns mitzuteilen, ob diese auf Ihrem Gerät verwendet werden können, klicken Sie auf die Schaltfläche \&quot;Voreinstellungen verwalten\&quot; unten. Um uns Ihre Zustimmung zu geben, klicken Sie auf die Schaltfläche \&quot;Akzeptieren\&quot;.</string>
+    <string name="ghostery_manage_preferences_explicit_message">Unsere Anwendung verwendet Technologien, damit wir und unsere Partner Sie wiedererkennen und verstehen können, wie Sie unsere App nutzen. Um eine vollständige Liste dieser Technologien zu sehen und uns mitzuteilen, ob diese auf Ihrem Gerät verwendet werden können, klicken Sie auf die Schaltfläche \&quot;Voreinstellungen verwalten\&quot; unten. Um uns Ihre Zustimmung zu geben, klicken Sie auf die Schaltfläche \&quot;Akzeptieren\&quot;.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
     <string name="ghostery_dialog_button_close">Schließen</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->

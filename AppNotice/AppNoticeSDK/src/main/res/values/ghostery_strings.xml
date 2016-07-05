@@ -1,10 +1,10 @@
 <resources>
 
     <!--Consent Screen Text -->
-    <!-- Text of the message in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_implied_message">This app is built with technologies that we use to optimize your experience and help us make our product better. Our Privacy Policy clearly states that we will vigilantly protect this data.\n\nBy using this app, you agree to these technologies in full. Alternatively, you can view the details and opt-out of some or all of them.</string>
-    <!-- Text of the message in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_explicit_message">This app is built with technologies that we use to optimize your experience and help us make our product better. Our Privacy Policy clearly states that we will vigilantly protect this data.\n\nBy accepting, you agree to these technologies in full. Alternatively, you can view the details and opt-out of some or all of them.</string>
+    <!-- Text of the message nn the Implied Consent screen. -->
+    <string name="ghostery_manage_preferences_implied_message">This app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a list of these technologies and choose whether they can be used, please manage your preferences below. Further use of this app will be considered consent.</string>
+    <!-- Text of the message on the Explicit Consent screen. -->
+    <string name="ghostery_manage_preferences_explicit_message">This app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a list of these technologies and choose whether they can be used, please manage your preferences.\n\nBefore proceeding, you must accept, decline or manage your privacy preferences below.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
     <string name="ghostery_dialog_button_close">Close</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->
@@ -22,7 +22,13 @@
 
     <!-- Manage Preferences Text -->
     <!-- Text of the description section near the top of the privacy preferences screen. -->
-    <string name="ghostery_preferences_description">We use the following technologies to optimize your experience with this app. Tap to learn more or disable any non-essential tools below.</string>
+    <string name="ghostery_preferences_description">Learn more about the technologies ised in this app by reviewing the list below.</string>
+    <!-- Text of the message above the list of optional trackers. -->
+    <string name="ghostery_preferences_optional_message">The following optional technologies can be disabled at your discretion.</string>
+    <!-- Text of the message above the list of essential trackers. -->
+    <string name="ghostery_preferences_essential_message">The following essential technologies are necessary for the app to function and are listed for informational purposes only.</string>
+    <!-- Text of the message above the list of web-based trackers. -->
+    <string name="ghostery_preferences_webbased_message">Some portions of this app utilize webviews, which may use cookies. The Cookie-based opt-out is available later within the app settings.</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
     <string name="ghostery_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
     <!-- Text used in the case there is no learn-more link provided -->

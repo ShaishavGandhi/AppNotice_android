@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
+import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_TrackerList_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 
@@ -23,7 +23,7 @@ public class TrackerArrayAdapter extends BaseAdapter {
     private ArrayList<Tracker> trackerArrayList;
     private static LayoutInflater mInflater = null;
     private static final String TAG = "SDK_CustomListAdapter";
-    public ManagePreferences_Fragment managePreferences_fragment;
+    public ManagePreferences_TrackerList_Fragment managePreferences_trackerList_fragment;
 
     public static class ViewHolder {
         public AppCompatTextView trackerName;
@@ -31,8 +31,8 @@ public class TrackerArrayAdapter extends BaseAdapter {
         public Boolean isOn;
     }
 
-    public TrackerArrayAdapter(ManagePreferences_Fragment managePreferences_fragment, int resource, AppNoticeData appNoticeData) {
-        super();//(managePreferences_fragment.getActivity(), resource, appNoticeData.trackerArrayList);
+    public TrackerArrayAdapter(ManagePreferences_TrackerList_Fragment managePreferences_trackerList_fragment, int resource, AppNoticeData appNoticeData) {
+        super();//(managePreferences_trackerList_fragment.getActivity(), resource, appNoticeData.trackerArrayList);
 
         this.appNoticeData = appNoticeData;
         if (appNoticeData != null && appNoticeData.trackerArrayList != null) {
@@ -40,8 +40,8 @@ public class TrackerArrayAdapter extends BaseAdapter {
         } else {
             Log.d(TAG, "");
         }
-        this.mInflater = managePreferences_fragment.getActivity().getLayoutInflater();
-        this.managePreferences_fragment = managePreferences_fragment;
+        this.managePreferences_trackerList_fragment = managePreferences_trackerList_fragment;
+        this.mInflater = managePreferences_trackerList_fragment.getActivity().getLayoutInflater();
         this.notifyDataSetInvalidated();
     }
 

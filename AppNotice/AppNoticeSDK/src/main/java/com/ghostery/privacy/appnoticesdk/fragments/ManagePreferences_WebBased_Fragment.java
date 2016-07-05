@@ -2,9 +2,7 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -12,16 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
 
 /**
  *
  */
-public class ManagePreferences_Fragment extends Fragment {
+public class ManagePreferences_WebBased_Fragment extends Fragment {
 //    private ArrayList<Tracker> trackerArrayList;
 //    private ArrayList<Tracker> trackerArrayListClone;
 //    private AppNoticeData appNoticeData;
-////    private TrackerArrayAdapter trackerArrayAdapter;
+//    private TrackerArrayAdapter trackerArrayAdapter;
 //    private ListView trackerListView;
 
     /**
@@ -33,7 +30,9 @@ public class ManagePreferences_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);    // "All" not clicked yet
+//        Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
+//
 //        appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
 //        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
 //            trackerArrayList = appNoticeData.trackerArrayList;
@@ -45,7 +44,7 @@ public class ManagePreferences_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences, container, false);
+        View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences_webbased, container, false);
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -53,37 +52,6 @@ public class ManagePreferences_Fragment extends Fragment {
             actionBar.show();
         }
 
-        TabLayout tab_layout = (TabLayout) view.findViewById(R.id.tab_layout);
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 1"));
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 2"));
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 3"));
-
-        final ViewPager view_pager = (ViewPager) view.findViewById(R.id.view_pager);
-
-        final ManagePreferences_ViewPager_Adapter adapter = new ManagePreferences_ViewPager_Adapter
-                (getActivity().getSupportFragmentManager(), tab_layout.getTabCount());
-
-        view_pager.setAdapter(adapter);
-
-        view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
-
-        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                view_pager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 //            // TODO: replace with a real list adapter.
 //        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData);
 //        trackerListView = (ListView) view.findViewById(R.id.tracker_list);
@@ -91,7 +59,7 @@ public class ManagePreferences_Fragment extends Fragment {
 //        trackerListView.setOnItemClickListener((AppNotice_Activity)getActivity());
 //        trackerListView.setItemsCanFocus(false);
 //        trackerListView.setTextFilterEnabled(true);
-
+//
 //        AppCompatTextView manage_preferences_description = (AppCompatTextView)view.findViewById(R.id.manage_preferences_description);
 //        if (manage_preferences_description != null) {
 //            final AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
@@ -127,7 +95,7 @@ public class ManagePreferences_Fragment extends Fragment {
 //                    Session.set(Session.APPNOTICE_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
 //                    Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
 //
-////                    refreshTrackerList();
+//                    refreshTrackerList();
 //                }
 //            });
 //
@@ -142,7 +110,7 @@ public class ManagePreferences_Fragment extends Fragment {
 //                    Session.set(Session.APPNOTICE_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
 //                    Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they selected "None", remember that "All" wasn't the last set state.
 //
-////                    refreshTrackerList();
+//                    refreshTrackerList();
 //                }
 //            });
 //        }
@@ -195,7 +163,7 @@ public class ManagePreferences_Fragment extends Fragment {
 //
 //        return true;
 //    }
-//
+
 //    private void sendOptInOutNotices() {
 //        // Opt-in/out ping-back parameters
 //        Boolean allBtnSelected = (boolean)Session.get(Session.APPNOTICE_ALL_BTN_SELECT, false);
@@ -223,7 +191,7 @@ public class ManagePreferences_Fragment extends Fragment {
 //            }
 //        }
 //    }
-//
+
 //    public void saveTrackerStates() {
 //        if (appNoticeData != null) {
 //            appNoticeData.saveTrackerStates();
@@ -236,7 +204,7 @@ public class ManagePreferences_Fragment extends Fragment {
 //            }
 //        }
 //    }
-//
+
 //    public void setAllNoneControlState() {
 //        if (appNoticeData != null) {
 //            int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();

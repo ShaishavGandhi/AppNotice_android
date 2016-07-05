@@ -49,7 +49,7 @@ android:weightSum="1">
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="@string/ghostery_dialog_implied_message"
+            android:text="@string/ghostery_manage_preferences_implied_message"
             android:id="@+id/textView_message"
             android:ellipsize="end"
             />

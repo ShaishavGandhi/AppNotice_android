@@ -2,9 +2,9 @@
 
     <!--Consent Screen Text -->
     <!-- Text of the message in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_implied_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \&quot;Gestisci preferenze\&quot;. L\'ulteriore utilizzo dell\'app varrà come consenso.</string>
+    <string name="ghostery_manage_preferences_implied_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \&quot;Gestisci preferenze\&quot;. L\'ulteriore utilizzo dell\'app varrà come consenso.</string>
     <!-- Text of the message in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_explicit_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci in modo chiaro se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \&quot;Gestisci preferenze\&quot;. Per fornirci il consenso, fai clic sul pulsante \&quot;Accetta\&quot;.</string>
+    <string name="ghostery_manage_preferences_explicit_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci in modo chiaro se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \&quot;Gestisci preferenze\&quot;. Per fornirci il consenso, fai clic sul pulsante \&quot;Accetta\&quot;.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
     <string name="ghostery_dialog_button_close">Chiudi</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->

@@ -154,13 +154,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         if (appNoticeData != null) {
             appNoticeData.setTrackerOnOffState(uId, isOn);
         }
-        Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
-        Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
-
-        ManagePreferences_Fragment managePreferences_fragment = (ManagePreferences_Fragment) getSupportFragmentManager().findFragmentById(R.id.appnotice_fragment_container);
-        if (managePreferences_fragment != null && managePreferences_fragment.getClass().equals(ManagePreferences_Fragment.class)) {
-            managePreferences_fragment.setAllNoneControlState();
-        }
     }
 
     @Override
