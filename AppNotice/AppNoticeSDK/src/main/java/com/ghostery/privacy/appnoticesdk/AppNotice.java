@@ -50,7 +50,7 @@ public class AppNotice {
         Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
 
         // Get either a new or initialized tracker config object
-        appNoticeData = AppNoticeData.getInstance(extActivity);
+        appNoticeData = AppNoticeData.getInstance(activity);
 
         // Keep track of the App Notice token
         appNoticeData.setAppNoticeToken(appNotice_token);
@@ -100,7 +100,7 @@ public class AppNotice {
         Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
 
         // Get either a new or initialized tracker config object
-        appNoticeData = AppNoticeData.getInstance(extActivity);
+        appNoticeData = AppNoticeData.getInstance(activity);
 
         // Keep track of the company ID and the notice ID
         appNoticeData.setCompanyId(companyId);
@@ -255,7 +255,7 @@ public class AppNotice {
             } else {
                 // If not showing a notice, let the host app know
                 Boolean isAccepted = AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
-                Log.d(TAG, "trackerArrayList size = " + appNoticeData.trackerArrayList.size());
+                Log.d(TAG, "optionalTrackerArrayList size = " + appNoticeData.optionalTrackerArrayList.size());
                 HashMap<Integer, Boolean> trackerHashMap = appNoticeData.getTrackerHashMap(true);
                 Log.d(TAG, "trackerHashMap size = " + trackerHashMap.size());
                 appNotice_callback.onNoticeSkipped(isAccepted, trackerHashMap);

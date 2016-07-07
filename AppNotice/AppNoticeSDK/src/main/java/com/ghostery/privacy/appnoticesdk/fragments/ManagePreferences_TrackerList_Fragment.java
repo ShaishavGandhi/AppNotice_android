@@ -1,11 +1,9 @@
 package com.ghostery.privacy.appnoticesdk.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -33,6 +31,7 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
     private AppNoticeData appNoticeData;
     private TrackerArrayAdapter trackerArrayAdapter;
     private ListView trackerListView;
+    private boolean isEssential = false;
 
     /**
      * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
@@ -44,10 +43,16 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
+        isEssential = getArguments().getBoolean("isEssential", false);
+
+        appNoticeData = AppNoticeData.getInstance(getActivity());
         if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
-            trackerArrayList = appNoticeData.trackerArrayList;
-            trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
+            if (isEssential) {
+                trackerArrayList = appNoticeData.essentialTrackerArrayList;
+            } else {
+                trackerArrayList = appNoticeData.optionalTrackerArrayList;
+            }
+            trackerArrayListClone = appNoticeData.getOptionalTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
         }
     }
 
@@ -63,35 +68,21 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
             actionBar.show();
         }
 
-            // TODO: replace with a real list adapter.
-        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData);
+        AppCompatTextView managePreferencesDescription = (AppCompatTextView) view.findViewById(R.id.manage_preferences_description);
+        if (managePreferencesDescription != null) {
+            if (isEssential) {
+                managePreferencesDescription.setText(R.string.ghostery_preferences_essential_message);
+            } else {
+                managePreferencesDescription.setText(R.string.ghostery_preferences_optional_message);
+            }
+        }
+
+        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData, isEssential);
         trackerListView = (ListView) view.findViewById(R.id.tracker_list);
         trackerListView.setAdapter(trackerArrayAdapter);
         trackerListView.setOnItemClickListener((AppNotice_Activity)getActivity());
         trackerListView.setItemsCanFocus(false);
         trackerListView.setTextFilterEnabled(true);
-
-        AppCompatTextView manage_preferences_description = (AppCompatTextView)view.findViewById(R.id.manage_preferences_description);
-        if (manage_preferences_description != null) {
-            final AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-            manage_preferences_description.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (appNoticeData != null) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                        alertDialog.setTitle(R.string.ghostery_preferences_header);
-                        alertDialog.setMessage(getActivity().getResources().getString(R.string.ghostery_preferences_description));
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getActivity().getResources().getString(R.string.ghostery_dialog_button_close),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                    }
-                }
-            });
-        }
 
         return view;
     }
@@ -116,7 +107,6 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
     {
         super.onResume();
         refreshTrackerList();
-//        setAllNoneControlState();
 
         getActivity().setTitle(R.string.ghostery_preferences_header);
     }
@@ -142,7 +132,7 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
         return true;
     }
 
-    private void sendOptInOutNotices() {
+    public void sendOptInOutNotices() {
         // Opt-in/out ping-back parameters
         int pingBackCount = 0;      // Count the ping-backs
 
@@ -181,33 +171,5 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
             }
         }
     }
-
-//    public void setAllNoneControlState() {
-//        if (appNoticeData != null) {
-//            int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
-//            AppCompatRadioButton rbAll = (AppCompatRadioButton)getActivity().findViewById(R.id.rb_all);
-//            AppCompatRadioButton rbNone = (AppCompatRadioButton)getActivity().findViewById(R.id.rb_none);
-//
-//            if (nonEssentialTrackerCount > 0) {
-//                int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();
-//                if (trackerOnOffStates == 1) {              // All on
-//                    rbAll.setChecked(true);
-//                    rbNone.setChecked(false);
-//                } else if (trackerOnOffStates == -1) {      // None on
-//                    rbAll.setChecked(false);
-//                    rbNone.setChecked(true);
-//                } else {                                    // Some on, some off
-//                    rbAll.setChecked(false);
-//                    rbNone.setChecked(false);
-//                }
-//            } else {
-//                // Set both to unchecked and disabled
-//                rbAll.setChecked(false);
-//                rbNone.setChecked(false);
-//                rbAll.setEnabled(false);
-//                rbNone.setEnabled(false);
-//            }
-//        }
-//    }
 
 }

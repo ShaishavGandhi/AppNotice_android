@@ -11,32 +11,9 @@
     android:layout_marginBottom="41dp"
     >
 
-    <LinearLayout
-        android:id="@+id/category_header_layout"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        >
-
-        <View
-            android:id="@+id/divider_view2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ghostery_list_category_divider_height"
-            />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/category_header_text"
-            android:text="Essential"
-            android:textSize="12sp"
-            android:padding="6dp"
-            android:gravity="center_vertical"/>
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="64dp"
         android:gravity="center_vertical"
         tools:context=".ListActivity"
         android:paddingLeft="11dp"
@@ -47,20 +24,29 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tracker_name"
             android:text="Google"
-            android:textSize="16sp"
+            android:textSize="@dimen/abc_text_size_large_material"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textStyle="bold" />
 
-        <Switch
+        <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:id="@+id/opt_in_out_switch"
+            android:id="@+id/opt_in_out_checkbox"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:onClick="onClick_OptInOut"
             android:focusable="false" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tracker_category"
+            android:text="Analytics"
+            android:textSize="@dimen/abc_text_size_small_material"
+            android:layout_below="@id/tracker_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 </LinearLayout>

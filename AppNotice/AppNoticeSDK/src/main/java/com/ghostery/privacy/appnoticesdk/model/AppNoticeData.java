@@ -46,6 +46,9 @@ public class AppNoticeData {
     private int consent_flow_dialog_opacity_default = 100;
     private final Object waitObj = new Object();
     private boolean gettingTrackerList = false;
+    private ArrayList<Tracker> trackerArrayList = new ArrayList<>();
+    public ArrayList<Tracker> optionalTrackerArrayList = new ArrayList<>();
+    public ArrayList<Tracker> essentialTrackerArrayList = new ArrayList<>();
 
 
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
@@ -86,8 +89,6 @@ public class AppNoticeData {
     // Field values
     private int implied_flow_session_display_max; // Maximum number of times the Implied Consent dialog should be displayed in a session.
 
-    public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
-
 
     // Public getters and setters
     public Boolean isTrackerListInitialized() { return isTrackerListInitialized; }
@@ -111,10 +112,7 @@ public class AppNoticeData {
 
         // Ensure the app only uses one instance of this class.
         if (instance == null) {
-            instance = (AppNoticeData) Session.get(Session.APPNOTICE_DATA, new AppNoticeData());
-
-            // Save this instance object in the app session
-            Session.set(Session.APPNOTICE_DATA, instance);
+            instance = new AppNoticeData();
         }
 
         return instance;
@@ -122,6 +120,7 @@ public class AppNoticeData {
 
     // Constructor
     private AppNoticeData() {
+        instance = this;
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
         implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
     }
@@ -142,11 +141,11 @@ public class AppNoticeData {
         return trackerHashMap;
     }
 
-    public ArrayList<Tracker> getTrackerListClone() {
+    public ArrayList<Tracker> getOptionalTrackerListClone() {
         ArrayList<Tracker> trackerArrayListClone = new ArrayList<>();
 
-        // Loop through the tracker list and add all tracker IDs and their on/off state
-        for (Tracker tracker : trackerArrayList) {
+        // Loop through the optional tracker list and add all tracker IDs and their on/off state
+        for (Tracker tracker : optionalTrackerArrayList) {
             trackerArrayListClone.add(new Tracker(tracker));
         }
         return trackerArrayListClone;
@@ -154,8 +153,8 @@ public class AppNoticeData {
 
     // Returns requested tracker. If not found, returns null.
     public Tracker getTrackerById(int uId) {
-        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
-        for (Tracker tracker : trackerArrayList) {
+        // Loop through the tracker list to look for the requested tracker
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (tracker.uId == uId) {
                 return tracker;
             }
@@ -168,7 +167,7 @@ public class AppNoticeData {
         Tracker selectedTracker = getTrackerById(uId);  // Get the tracker object for the specified tracker
         if (!selectedTracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(selectedTracker.getTrackerId())) {
             int selectedTrackerId = selectedTracker.getTrackerId();
-            for (Tracker tracker : trackerArrayList) {
+            for (Tracker tracker : optionalTrackerArrayList) {
                 if (tracker.getTrackerId() == selectedTrackerId) {
                     tracker.setOnOffState(isOn);
                 }
@@ -178,7 +177,7 @@ public class AppNoticeData {
 
     // Sets all non-essential tracker on/off states to the specified value.
     public void setTrackerOnOffState(boolean isOn) {
-        for (Tracker tracker : trackerArrayList) {
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 tracker.setOnOffState(isOn);
             }
@@ -189,7 +188,7 @@ public class AppNoticeData {
     public int getTrackerOnOffStates() {
         int trackerCount = 0;
         int trackerOnCount = 0;
-        for (Tracker tracker : trackerArrayList) {
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 trackerCount++;
                 if (tracker.isOn()) {
@@ -207,8 +206,8 @@ public class AppNoticeData {
         int nonEssentialTrackerCount = 0;    // Assume no changes
 
         // Count non-essential trackers
-        for (int i = 0; i < trackerArrayList.size(); i++) {
-            Tracker tracker = trackerArrayList.get(i);
+        for (int i = 0; i < optionalTrackerArrayList.size(); i++) {
+            Tracker tracker = optionalTrackerArrayList.get(i);
 
             // If the tracker is non-essential...
             if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
@@ -219,7 +218,6 @@ public class AppNoticeData {
         return nonEssentialTrackerCount;
     }
 
-    // Returns the number of non-essential trackers
     public boolean isTrackerDuplicateOfEssentialTracker(int trackerId) {
         Boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
 
@@ -248,11 +246,11 @@ public class AppNoticeData {
         int changeCount = 0;    // Assume no changes
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList != null && originalTrackerArrayList != null &&
-                trackerArrayList.size() == originalTrackerArrayList.size()) {
+        if (optionalTrackerArrayList != null && originalTrackerArrayList != null &&
+                optionalTrackerArrayList.size() == originalTrackerArrayList.size()) {
 
-            for (int i = 0; i < trackerArrayList.size(); i++) {
-                Tracker tracker = trackerArrayList.get(i);
+            for (int i = 0; i < optionalTrackerArrayList.size(); i++) {
+                Tracker tracker = optionalTrackerArrayList.get(i);
                 Tracker originalTracker = originalTrackerArrayList.get(i);
 
                 // If the tracker is non-essential and is changed...
@@ -361,8 +359,6 @@ public class AppNoticeData {
 
     // Init
     public void init() {
-        Resources resources = activity.getResources();
-
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
         previousNoticeId = AppData.getInteger(AppData.APPDATA_PREV_NOTICE_ID, 0);
@@ -503,7 +499,7 @@ public class AppNoticeData {
         HashMap trackerHashMap = getTrackerPreferences();
 
         // Look for a non-essential tracker with the same ID. If found, set its state.
-        for (Tracker tracker : trackerArrayList) {
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (!tracker.isEssential()) {
                 Boolean trackerState = (Boolean)trackerHashMap.get(tracker.getTrackerId());
 
@@ -572,6 +568,8 @@ public class AppNoticeData {
                     if (trackerJSONString != null) {
                         JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
                         trackerArrayList.clear();
+                        optionalTrackerArrayList.clear();
+                        essentialTrackerArrayList.clear();
 
                         int id;
                         for (int i = 0; i < trackerJSONArray.length(); i++) {
@@ -617,17 +615,17 @@ public class AppNoticeData {
                             }
                         });
 
-                        // Set header bit for first tracker in each category
-                        String categoryName = "";
+                        // Fill essential and optional tracker array lists
                         for (int i = 0; i < trackerArrayList.size(); i++) {
                             Tracker tracker = trackerArrayList.get(i);
                             tracker.uId = i;        // Set the tracker's unique ID
 
-                            // Flag tracker as having a header if this is the first tracker or if the category name is new
-                            if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
-                                tracker.setHasHeader();
+                            // If the tracker is non-essential and is changed...
+                            if (tracker.isEssential()) {
+                                essentialTrackerArrayList.add(tracker);
+                            } else {
+                                optionalTrackerArrayList.add(tracker);
                             }
-                            categoryName = tracker.getCategory();
                         }
                     }
 
@@ -680,8 +678,6 @@ public class AppNoticeData {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            trackerArrayList.clear();       // Start with an empty tracker array
-
             // Creating service handler class instance
             ServiceHandler serviceHandler = new ServiceHandler();
 

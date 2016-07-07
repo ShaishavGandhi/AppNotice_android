@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.Switch;
+import android.widget.CheckBox;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_TrackerList_Fragment;
@@ -24,19 +23,26 @@ public class TrackerArrayAdapter extends BaseAdapter {
     private static LayoutInflater mInflater = null;
     private static final String TAG = "SDK_CustomListAdapter";
     public ManagePreferences_TrackerList_Fragment managePreferences_trackerList_fragment;
+    private boolean isEssential = false;
 
     public static class ViewHolder {
         public AppCompatTextView trackerName;
-        public Switch optInOutSwitch;
+        public AppCompatTextView trackerCategory;
+        public CheckBox optInOutCheckBox;
         public Boolean isOn;
     }
 
-    public TrackerArrayAdapter(ManagePreferences_TrackerList_Fragment managePreferences_trackerList_fragment, int resource, AppNoticeData appNoticeData) {
-        super();//(managePreferences_trackerList_fragment.getActivity(), resource, appNoticeData.trackerArrayList);
+    public TrackerArrayAdapter(ManagePreferences_TrackerList_Fragment managePreferences_trackerList_fragment, int resource, AppNoticeData appNoticeData, boolean isEssential) {
+        super();//(managePreferences_trackerList_fragment.getActivity(), resource, appNoticeData.optionalTrackerArrayList);
+        this.isEssential = isEssential;
 
         this.appNoticeData = appNoticeData;
-        if (appNoticeData != null && appNoticeData.trackerArrayList != null) {
-            this.trackerArrayList = appNoticeData.trackerArrayList;
+        if (appNoticeData != null && appNoticeData.optionalTrackerArrayList != null) {
+            if (isEssential) {
+                trackerArrayList = appNoticeData.essentialTrackerArrayList;
+            } else {
+                trackerArrayList = appNoticeData.optionalTrackerArrayList;
+            }
         } else {
             Log.d(TAG, "");
         }
@@ -74,7 +80,8 @@ public class TrackerArrayAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
             holder.trackerName = (AppCompatTextView) itemView.findViewById(R.id.tracker_name);
-            holder.optInOutSwitch = (Switch) itemView.findViewById(R.id.opt_in_out_switch);
+            holder.trackerCategory = (AppCompatTextView) itemView.findViewById(R.id.tracker_category);
+            holder.optInOutCheckBox = (CheckBox) itemView.findViewById(R.id.opt_in_out_checkbox);
 
             Log.d(TAG,  "Cat: " + tracker.getCategory() + " Name: " + tracker.getName() +" ID:" + tracker.getTrackerId());
 
@@ -87,34 +94,25 @@ public class TrackerArrayAdapter extends BaseAdapter {
         itemView.setId(tracker.uId);
 
         if (tracker.isEssential()) {
-            holder.optInOutSwitch.setVisibility(View.INVISIBLE);
+            holder.optInOutCheckBox.setEnabled(false);
         } else {
-            holder.optInOutSwitch.setVisibility(View.VISIBLE);
-            holder.optInOutSwitch.setTag(tracker.uId);
 
             // If this tracker is a duplicate of an essential tracker, disable it
             if (appNoticeData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
-                holder.optInOutSwitch.setChecked(true);     // Make sure it is checked
-                holder.optInOutSwitch.setEnabled(false);    // Disable the switch
+                holder.optInOutCheckBox.setChecked(true);     // Make sure it is checked
+                holder.optInOutCheckBox.setEnabled(false);    // Disable the switch
             } else {
-                holder.optInOutSwitch.setChecked(tracker.isOn());
-                holder.optInOutSwitch.setEnabled(true);     // Enable the switch
+                holder.optInOutCheckBox.setChecked(tracker.isOn());
+                holder.optInOutCheckBox.setEnabled(true);     // Enable the switch
             }
-        }
+            holder.optInOutCheckBox.setEnabled(true);
+            holder.optInOutCheckBox.setTag(tracker.uId);
 
-        // Make the header visible and set its text if needed
-        LinearLayout categoryHeader_linearLayout = (LinearLayout)itemView.findViewById(R.id.category_header_layout);
-        AppCompatTextView categoryHeader_textView = (AppCompatTextView)itemView.findViewById(R.id.category_header_text);
-        if (categoryHeader_linearLayout != null && categoryHeader_textView != null) {
-            if (tracker.hasHeader()) {
-                categoryHeader_linearLayout.setVisibility(View.VISIBLE);
-                categoryHeader_textView.setText(tracker.getCategory());
-            } else {
-                categoryHeader_linearLayout.setVisibility(View.GONE);
-            }
+            holder.optInOutCheckBox.setChecked(tracker.isOn());
         }
 
         holder.trackerName.setText(trackerArrayList.get(position).getName());
+        holder.trackerCategory.setText(trackerArrayList.get(position).getCategory());
 
         return itemView;
     }

@@ -1,5 +1,6 @@
 package com.ghostery.privacy.appnoticesdk.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -12,6 +13,9 @@ import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_WebBased_Fr
  */
 public class ManagePreferences_ViewPager_Adapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
+    ManagePreferences_TrackerList_Fragment tab1;
+    ManagePreferences_TrackerList_Fragment tab2;
+    ManagePreferences_WebBased_Fragment tab3;
 
     public ManagePreferences_ViewPager_Adapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
@@ -23,13 +27,25 @@ public class ManagePreferences_ViewPager_Adapter extends FragmentStatePagerAdapt
 
         switch (position) {
             case 0:
-                ManagePreferences_TrackerList_Fragment tab1 = new ManagePreferences_TrackerList_Fragment();
+                if (tab1 == null) {
+                    tab1 = new ManagePreferences_TrackerList_Fragment();
+                    Bundle args = new Bundle();
+                    args.putBoolean("isEssential", false);
+                    tab1.setArguments(args);
+                }
                 return tab1;
             case 1:
-                ManagePreferences_TrackerList_Fragment tab2 = new ManagePreferences_TrackerList_Fragment();
+                if (tab2 == null) {
+                    tab2 = new ManagePreferences_TrackerList_Fragment();
+                    Bundle args = new Bundle();
+                    args.putBoolean("isEssential", true);
+                    tab2.setArguments(args);
+                }
                 return tab2;
             case 2:
-                ManagePreferences_WebBased_Fragment tab3 = new ManagePreferences_WebBased_Fragment();
+                if (tab3 == null) {
+                    tab3 = new ManagePreferences_WebBased_Fragment();
+                }
                 return tab3;
 
             default:

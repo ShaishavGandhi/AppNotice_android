@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -19,7 +20,6 @@ import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.ImageDownloader;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
@@ -111,24 +111,24 @@ public class TrackerDetail_Fragment extends Fragment {
                 textView_TrackerName.setVisibility(View.GONE);
             }
 
-            Switch opt_in_out_switch = ((Switch) rootView.findViewById(R.id.opt_in_out_switch));
+            CheckBox opt_in_out_checkbox = ((CheckBox) rootView.findViewById(R.id.opt_in_out_checkbox));
             if (tracker.isEssential()) {
-                opt_in_out_switch.setVisibility(View.INVISIBLE);
+                opt_in_out_checkbox.setEnabled(false);
             } else {
-                opt_in_out_switch.setVisibility(View.VISIBLE);
+                opt_in_out_checkbox.setEnabled(true);
 
                 // If this tracker is a duplicate of an essential tracker, disable it
                 if (appNoticeData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
-                    opt_in_out_switch.setChecked(true);     // Make sure it is checked
-                    opt_in_out_switch.setEnabled(false);    // Disable the switch
+                    opt_in_out_checkbox.setChecked(true);     // Make sure it is checked
+                    opt_in_out_checkbox.setEnabled(false);    // Disable the switch
                 } else {
-                    opt_in_out_switch.setChecked(tracker.isOn());
-                    opt_in_out_switch.setEnabled(true);     // Enable the switch
-                    opt_in_out_switch.setOnClickListener(new View.OnClickListener() {
+                    opt_in_out_checkbox.setChecked(tracker.isOn());
+                    opt_in_out_checkbox.setEnabled(true);     // Enable the switch
+                    opt_in_out_checkbox.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Boolean isOn = ((Switch)v).isChecked();
-                            AppNoticeData appNoticeData = (AppNoticeData) Session.get(Session.APPNOTICE_DATA);
+                            AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
 
                             if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
                                 if (tracker != null) {

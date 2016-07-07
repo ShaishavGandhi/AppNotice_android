@@ -11,7 +11,6 @@ public class Session {
     private static final String TAG = "Common.Session";
 
     // == Keys ==========================================================================
-    public static final String APPNOTICE_DATA = "appNotice_data";
     public static final String APPNOTICE_CALLBACK = "appNotice_callback";
     public static final String APPNOTICE_PREF_OPENED_FROM_CONSENT = "appNotice_prefOpenedFromConsent";  // Boolean
 

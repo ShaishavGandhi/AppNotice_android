@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatCallback;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Switch;
+import android.widget.CheckBox;
 
 import com.ghostery.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ImpliedConsent_Fragment;
@@ -17,7 +17,6 @@ import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 
 /**
  * AppNotice_Activity
@@ -145,10 +144,10 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     }
 
     public void onClick_OptInOut(View view) {
-        Boolean isOn = ((Switch)view).isChecked();
+        Boolean isOn = ((CheckBox)view).isChecked();
         int uId = (int)view.getTag();
         if (appNoticeData == null) {
-            appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
+            appNoticeData = AppNoticeData.getInstance(this);
         }
 
         if (appNoticeData != null) {

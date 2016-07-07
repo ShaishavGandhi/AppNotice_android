@@ -28,11 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <Switch
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:id="@+id/opt_in_out_switch"
+                android:id="@+id/opt_in_out_checkbox"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
@@ -41,7 +41,7 @@
             <ImageView
                 android:id="@+id/imageView_trackerLogo"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/opt_in_out_switch"
+                android:layout_toLeftOf="@id/opt_in_out_checkbox"
                 android:paddingRight="15dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"

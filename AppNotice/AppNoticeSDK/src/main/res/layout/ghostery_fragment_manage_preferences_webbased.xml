@@ -14,9 +14,6 @@
         android:paddingTop="6dp"
         android:paddingRight="12dp"
         android:paddingBottom="6dp"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:clickable="true"
-        android:textSize="13sp"/>
+        />
 
 </LinearLayout>
