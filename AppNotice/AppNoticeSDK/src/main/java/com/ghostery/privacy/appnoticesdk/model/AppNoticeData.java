@@ -154,7 +154,7 @@ public class AppNoticeData {
     // Returns requested tracker. If not found, returns null.
     public Tracker getTrackerById(int uId) {
         // Loop through the tracker list to look for the requested tracker
-        for (Tracker tracker : optionalTrackerArrayList) {
+        for (Tracker tracker : trackerArrayList) {
             if (tracker.uId == uId) {
                 return tracker;
             }
@@ -165,10 +165,9 @@ public class AppNoticeData {
     // Sets all the specified non-essential tracker (and all duplicate non-essential trackers) on/off state to the specified value.
     public void setTrackerOnOffState(int uId, boolean isOn) {
         Tracker selectedTracker = getTrackerById(uId);  // Get the tracker object for the specified tracker
-        if (!selectedTracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(selectedTracker.getTrackerId())) {
-            int selectedTrackerId = selectedTracker.getTrackerId();
+        if (!selectedTracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(uId)) {
             for (Tracker tracker : optionalTrackerArrayList) {
-                if (tracker.getTrackerId() == selectedTrackerId) {
+                if (tracker.getTrackerId() == uId) {
                     tracker.setOnOffState(isOn);
                 }
             }

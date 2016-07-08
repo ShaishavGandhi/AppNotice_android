@@ -159,7 +159,7 @@ public class TrackerDetail_Fragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetail_Fragment.ARG_ITEM_ID, 0));
+                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetail_Fragment.ARG_ITEM_ID, tracker.uId));
                         LearnMore_Fragment fragment = new LearnMore_Fragment();
 
                         fragment.setArguments(bundle);

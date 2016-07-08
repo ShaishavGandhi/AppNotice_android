@@ -133,7 +133,8 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int uId, long arg3) {
         Bundle arguments = new Bundle();
-        arguments.putInt(TrackerDetail_Fragment.ARG_ITEM_ID, uId);
+        int id = view.getId();
+        arguments.putInt(TrackerDetail_Fragment.ARG_ITEM_ID, id);
 
         TrackerDetail_Fragment fragment = new TrackerDetail_Fragment();
         fragment.setArguments(arguments);
