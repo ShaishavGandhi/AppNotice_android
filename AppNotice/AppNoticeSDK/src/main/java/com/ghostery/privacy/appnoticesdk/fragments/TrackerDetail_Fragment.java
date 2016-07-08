@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Switch;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
@@ -127,7 +126,7 @@ public class TrackerDetail_Fragment extends Fragment {
                     opt_in_out_checkbox.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Boolean isOn = ((Switch)v).isChecked();
+                            Boolean isOn = ((CheckBox)v).isChecked();
                             AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
 
                             if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
