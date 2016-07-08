@@ -3,6 +3,7 @@ package com.ghostery.privacy.appnoticesdk.fragments;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
@@ -25,7 +25,7 @@ import com.ghostery.privacy.appnoticesdk.utils.Session;
  *
  */
 public class ManagePreferences_Fragment extends Fragment {
-    LinearLayout linearLayout_ManagePreferences;
+    CoordinatorLayout coordinatorlayout;
     ManagePreferences_ViewPager_Adapter managePreferences_viewPager_adapter;
 
     /**
@@ -91,10 +91,10 @@ public class ManagePreferences_Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        linearLayout_ManagePreferences = (LinearLayout)getView().findViewById(R.id.linearLayout_ManagePreferences);
+        coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorlayout);
         Snackbar snackbar = Snackbar
-                .make(linearLayout_ManagePreferences, "Ready to go?", Snackbar.LENGTH_INDEFINITE)
-                .setAction("Continue", new View.OnClickListener() {
+                .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         handleTrackerStateChanges();
@@ -133,4 +133,5 @@ public class ManagePreferences_Fragment extends Fragment {
         managePreferences_trackerList_fragment.saveTrackerStates();
         managePreferences_trackerList_fragment.sendOptInOutNotices();
     }
+
 }

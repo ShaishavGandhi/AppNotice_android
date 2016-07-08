@@ -29,13 +29,18 @@
     <string name="ghostery_preferences_essential_title">Essential</string>
     <!-- Text of the title of web-based trackers tab. -->
     <string name="ghostery_preferences_webbased_title">Web-based</string>
-
     <!-- Text of the message above the list of optional trackers. -->
     <string name="ghostery_preferences_optional_message">The following optional technologies can be disabled at your discretion.</string>
     <!-- Text of the message above the list of essential trackers. -->
     <string name="ghostery_preferences_essential_message">The following essential technologies are necessary for the app to function and are listed for informational purposes only.</string>
     <!-- Text of the message above the list of web-based trackers. -->
     <string name="ghostery_preferences_webbased_message">Some portions of this app utilize webviews, which may use cookies. Cookie-based opt-out is available later within the app settings.</string>
+    <!-- Text of the privacy tools message at the bottom of the privacy preferences screen. -->
+    <string name="ghostery_preferences_controls_message">Privacy controls by Ghostery, Inc.</string>
+    <!-- Text of the message on the implied manage preferences snackbar. -->
+    <string name="ghostery_preferences_ready_message">Ready to go?</string>
+    <!-- Text of the message on the implied manage preferences snackbar. -->
+    <string name="ghostery_preferences_continue_button">Continue</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
     <string name="ghostery_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
     <!-- Text used in the case there is no learn-more link provided -->

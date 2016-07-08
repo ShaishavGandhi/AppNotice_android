@@ -9,5 +9,6 @@
     <color name="ghosteryColorButtonSecondary">#CCCCCC</color>
     <color name="ghosteryColorButtonTextSecondary">#666666</color>
     <color name="ghosteryColorButtonTextBorderless">#03A9F4</color>
+    <color name="ghosteryColorPrivacyTools">#9FA2A4</color>
 
 </resources>

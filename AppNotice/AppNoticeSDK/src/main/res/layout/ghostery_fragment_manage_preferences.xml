@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:id="@+id/linearLayout_ManagePreferences"
+    android:orientation="vertical"
     >
 
     <android.support.v7.widget.AppCompatTextView
@@ -42,6 +42,36 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="bottom"
+            app:layout_behavior="com.ghostery.privacy.appnoticesdk.utils.SnackbarBehavior">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ghostery_preferences_controls_message"
+                android:id="@+id/preferences_controls_message"
+                android:paddingLeft="12dp"
+                android:paddingTop="6dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="6dp"
+                android:textColor="@color/ghosteryColorPrivacyTools"
+                android:textSize="@dimen/abc_text_size_small_material"
+                />
+        </LinearLayout>
+
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>
