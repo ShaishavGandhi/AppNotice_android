@@ -6,7 +6,7 @@
     <!-- Text of the message on the Explicit Consent screen. -->
     <string name="ghostery_manage_preferences_explicit_message">This app uses technologies so that we, and our partners, can remember you and understand how you use our app. To see a list of these technologies and choose whether they can be used, please manage your preferences.\n\nBefore proceeding, you must accept, decline or manage your privacy preferences below.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_button_close">Close</string>
+    <string name="ghostery_dialog_button_close">Continue</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->
     <string name="ghostery_dialog_button_accept_all">Accept All</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when less than all will be accepted. -->
@@ -14,7 +14,7 @@
     <!-- Text of the Decline button in the Explicit Consent flow dialog. -->
     <string name="ghostery_dialog_button_decline">Decline All</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_preferences">Customize</string>
+    <string name="ghostery_dialog_button_preferences">Manage Preferences</string>
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
     <string name="ghostery_dialog_header_text">We Care About Your Privacy</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->

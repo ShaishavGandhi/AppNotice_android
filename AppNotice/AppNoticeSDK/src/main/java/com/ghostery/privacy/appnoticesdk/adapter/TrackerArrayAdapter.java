@@ -94,6 +94,7 @@ public class TrackerArrayAdapter extends BaseAdapter {
         itemView.setId(tracker.uId);
 
         if (tracker.isEssential()) {
+            holder.optInOutCheckBox.setChecked(true);     // All essential trackers should be checked
             holder.optInOutCheckBox.setEnabled(false);
         } else {
 
