@@ -89,7 +89,7 @@ public class ManagePreferences_Fragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
 
-        if (AppNotice.isConsentFlow) {
+        if (AppNotice_Activity.isConsentActive) {
             if (AppNotice.isImpliedFlow) {
                 // If implied flow, hide the explicit button layout
                 explicitButtonLayout.setVisibility(View.GONE);
@@ -141,7 +141,6 @@ public class ManagePreferences_Fragment extends Fragment {
 
                         // Close this fragment
                         AppNotice_Activity.isConsentActive = false;
-                        getActivity().getSupportFragmentManager().popBackStack();
                         getActivity().finish();
                     }
                 });

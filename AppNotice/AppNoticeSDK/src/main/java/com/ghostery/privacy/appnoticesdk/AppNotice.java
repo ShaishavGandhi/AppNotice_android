@@ -28,7 +28,6 @@ public class AppNotice {
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
     public static boolean isImpliedFlow = true;
-    public static boolean isConsentFlow = false;
     public static boolean usingToken = true;
     public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
 
@@ -103,8 +102,6 @@ public class AppNotice {
     }
 
     private void startConsentFlow(final boolean isConsentFlow) {
-        this.isConsentFlow = isConsentFlow;
-
         if (!appNoticeData.isInitialized()) {
             appNoticeData.init();
         }
