@@ -7,7 +7,7 @@ package com.ghostery.privacy.appnoticesdk.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
+import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 import java.util.Map;
 
@@ -31,7 +31,7 @@ public class AppData {
 
     public static SharedPreferences getSessionInfo(){
         if( sharedPreferences == null ) {
-            Context appContext = AppNotice.getAppContext();
+            Context appContext = AppNoticeData.appContext;
             String packageName = appContext.getPackageName();
             sharedPreferences = appContext.getSharedPreferences(packageName + APPDATA_FILENAME_END, appContext.MODE_PRIVATE);
             if (!sharedPreferences.contains(APPDATA_VERSION)) {

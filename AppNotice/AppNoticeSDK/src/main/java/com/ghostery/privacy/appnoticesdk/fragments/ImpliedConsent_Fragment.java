@@ -16,9 +16,7 @@ import android.widget.LinearLayout;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
@@ -27,12 +25,10 @@ import com.ghostery.privacy.appnoticesdk.utils.Util;
 public class ImpliedConsent_Fragment extends Fragment {
     private static final String TAG = "ImpliedConsent_Frag";
 
-    private AppNotice_Callback appNotice_callback;
     private AppNoticeData appNoticeData;
 
     public ImpliedConsent_Fragment() {
         // Required empty public constructor
-        appNotice_callback = (AppNotice_Callback) Session.get(Session.APPNOTICE_CALLBACK);
         appNoticeData = AppNoticeData.getInstance(getActivity());
     }
 
@@ -75,8 +71,8 @@ public class ImpliedConsent_Fragment extends Fragment {
         close_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Let the calling class know the selected option
-                if (appNotice_callback != null) {
-                    appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                if (AppNotice_Activity.appNotice_callback != null) {
+                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                 }
 
                 // Close this fragment
@@ -90,8 +86,8 @@ public class ImpliedConsent_Fragment extends Fragment {
         close_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Let the calling class know the selected option
-                if (appNotice_callback != null) {
-                    appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                if (AppNotice_Activity.appNotice_callback != null) {
+                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                 }
 
                 // Close this fragment
@@ -159,8 +155,8 @@ public class ImpliedConsent_Fragment extends Fragment {
         AppNotice_Activity.isConsentActive = false;
 
         // Let the calling class know the selected option
-        if (appNotice_callback != null) {
-            appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+        if (AppNotice_Activity.appNotice_callback != null) {
+            AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
         }
     }
 

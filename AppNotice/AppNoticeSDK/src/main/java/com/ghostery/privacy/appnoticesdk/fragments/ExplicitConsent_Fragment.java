@@ -16,10 +16,8 @@ import android.widget.LinearLayout;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
@@ -28,12 +26,10 @@ import com.ghostery.privacy.appnoticesdk.utils.Util;
 public class ExplicitConsent_Fragment extends Fragment {
     private static final String TAG = "ExplicitConsent_Frag";
 
-    private AppNotice_Callback appNotice_callback;
     private AppNoticeData appNoticeData;
 
     public ExplicitConsent_Fragment() {
         // Required empty public constructor
-        appNotice_callback = (AppNotice_Callback) Session.get(Session.APPNOTICE_CALLBACK);
         appNoticeData = AppNoticeData.getInstance(getActivity());
     }
 
@@ -82,8 +78,8 @@ public class ExplicitConsent_Fragment extends Fragment {
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                 // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing()) {
-                    appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
+                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                 }
 
                 // Close this fragment
@@ -103,8 +99,8 @@ public class ExplicitConsent_Fragment extends Fragment {
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                 // Let the calling class know the selected option
-                if (appNotice_callback != null && !getActivity().isFinishing()) {
-                    appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
+                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                 }
 
                 // Close this fragment
@@ -194,10 +190,10 @@ public class ExplicitConsent_Fragment extends Fragment {
         AppNotice_Activity.isConsentActive = false;
 
         // Let the calling class know the selected option
-        if (appNotice_callback != null && !getActivity().isFinishing()) {
+        if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
             appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
             appNoticeData.saveTrackerStates();  // And remember the states
-            appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
+            AppNotice_Activity.appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
         }
 
     }

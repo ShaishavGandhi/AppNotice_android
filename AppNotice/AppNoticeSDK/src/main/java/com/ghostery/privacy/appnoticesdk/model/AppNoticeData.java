@@ -2,16 +2,15 @@ package com.ghostery.privacy.appnoticesdk.model;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
 import com.ghostery.privacy.appnoticesdk.utils.ServiceHandler;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 import org.json.JSONArray;
@@ -49,7 +48,10 @@ public class AppNoticeData {
     private ArrayList<Tracker> trackerArrayList = new ArrayList<>();
     public ArrayList<Tracker> optionalTrackerArrayList = new ArrayList<>();
     public ArrayList<Tracker> essentialTrackerArrayList = new ArrayList<>();
-
+    public static Context appContext;
+    public static boolean usingToken = true;
+    public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
+    public static int impliedFlow_SessionCount;
 
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
 
@@ -419,7 +421,7 @@ public class AppNoticeData {
     public boolean getImpliedNoticeDisplayStatus() {
         Boolean showNotice = true;     // Assume we need to show the notice
 
-        if (AppNotice.implied30dayDisplayMax <= 0) {
+        if (implied30dayDisplayMax <= 0) {
             // If the notice ID has changed, we need to show the notice again
             if (currentNoticeId == previousNoticeId) {
                 showNotice = false;
@@ -430,7 +432,6 @@ public class AppNoticeData {
             long currentTime = System.currentTimeMillis();
             int implied_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0);
             long implied_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, 0L);
-            int impliedFlow_SessionCount = (int) Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
 
             if (implied_last_display_time == 0L) {     // If this is the first pass...
                 implied_last_display_time = currentTime;
@@ -441,7 +442,7 @@ public class AppNoticeData {
                 showNotice = false; // don't display it now
             } else {
                 if (currentTime <= implied_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
-                    if (implied_display_count >= AppNotice.implied30dayDisplayMax) { // If displayed enough in last 30 days...
+                    if (implied_display_count >= AppNoticeData.implied30dayDisplayMax) { // If displayed enough in last 30 days...
                         showNotice = false; // don't display it now
                     }
                 } else {
@@ -477,8 +478,7 @@ public class AppNoticeData {
         AppData.setInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, currentDisplayCount + 1);
 
         // Increment the implied session display count
-        int currentSessionCount = (int)Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
-        Session.set(Session.SYS_CURRENT_SESSION_COUNT, currentSessionCount + 1);
+        impliedFlow_SessionCount++;
 
         long currentTime = System.currentTimeMillis();
         if (currentDisplayCount == 0) {             // If this is the first time being displayed in this 30-day period...
@@ -559,7 +559,7 @@ public class AppNoticeData {
             if (jsonObj != null) {
                 try {
                     String trackerJSONString;
-                    if (AppNotice.usingToken) {
+                    if (usingToken) {
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS_VIA_TOKEN)? null : jsonObj.getString(TAG_TRACKERS_VIA_TOKEN);
                     } else {
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
@@ -734,7 +734,7 @@ public class AppNoticeData {
 
         protected String getFormattedJSONUrl() {
             String formattedJSONUrl = "";
-            if (AppNotice.usingToken) {
+            if (usingToken) {
                 Object[] urlParams = new Object[1];
                 urlParams[0] = String.valueOf(appNotice_token);			// 0
                 formattedJSONUrl = MessageFormat.format(URL_JSON_REQUEST_VIA_TOKEN, urlParams);
@@ -747,5 +747,9 @@ public class AppNoticeData {
             return formattedJSONUrl;
         }
 
+    }
+
+    public static void resetSessionData() {
+        impliedFlow_SessionCount = 0;
     }
 }

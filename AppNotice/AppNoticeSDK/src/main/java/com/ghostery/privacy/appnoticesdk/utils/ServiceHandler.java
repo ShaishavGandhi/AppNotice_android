@@ -8,18 +8,15 @@ import android.content.res.Resources;
 import android.util.Base64;
 import android.util.Log;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
+import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.PasswordAuthentication;
 import java.net.URL;
 
 public class ServiceHandler {
@@ -34,8 +31,8 @@ public class ServiceHandler {
 
     public ServiceHandler() {
 		try {
-            httpConnectTimeout = AppNotice.getAppContext().getResources().getInteger(R.integer.ghostery_http_connect_timeout);
-            httpReadTimeout = AppNotice.getAppContext().getResources().getInteger(R.integer.ghostery_http_read_timeout);
+            httpConnectTimeout = AppNoticeData.appContext.getResources().getInteger(R.integer.ghostery_http_connect_timeout);
+            httpReadTimeout = AppNoticeData.appContext.getResources().getInteger(R.integer.ghostery_http_read_timeout);
 		} catch (Resources.NotFoundException e) {
             Log.e(TAG, "Getting req timeout", e);
 		}
@@ -51,7 +48,7 @@ public class ServiceHandler {
             httpURLConnection.setConnectTimeout(httpConnectTimeout);
             httpURLConnection.setReadTimeout(httpReadTimeout);
 
-            if (AppNotice.usingToken) {
+            if (AppNoticeData.usingToken) {
                 String userCredentials = APP_NOTICE_USER + ":" + APP_NOTICE_PASSWORD;
                 String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes("UTF-8"), android.util.Base64.NO_WRAP);
                 httpURLConnection.setRequestProperty("Authorization", basicAuth);

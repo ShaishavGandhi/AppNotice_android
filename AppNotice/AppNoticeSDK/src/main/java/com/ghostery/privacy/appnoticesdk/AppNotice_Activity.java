@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 
+import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ImpliedConsent_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
@@ -26,7 +27,9 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     private static AppNotice_Activity instance;
     private AppNoticeData appNoticeData;
     private FragmentManager fragmentManager;
+    public static AppNotice_Callback appNotice_callback;
     public static boolean isConsentActive = false;
+    public static boolean isImpliedMode = true;
 
     // Fragment tags
     public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
@@ -53,6 +56,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         String fragmentType = FRAGMENT_TAG_MANAGE_PREFERENCES;
         if (extras != null) {
             fragmentType = extras.getString("FRAGMENT_TYPE");
+            isImpliedMode = extras.getBoolean("ISIMPLIEDMODE");
         }
 
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {

@@ -16,14 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 
 /**
  *
@@ -90,11 +87,11 @@ public class ManagePreferences_Fragment extends Fragment {
         LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
 
         if (AppNotice_Activity.isConsentActive) {
-            if (AppNotice.isImpliedFlow) {
-                // If implied flow, hide the explicit button layout
+            if (AppNotice_Activity.isImpliedMode) {
+                // If implied mode, hide the explicit button layout
                 explicitButtonLayout.setVisibility(View.GONE);
 
-                // If implied flow, show the snackbar
+                // If implied mode, show the snackbar
                 CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorlayout);
                 Snackbar snackbar = Snackbar
                         .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
@@ -104,11 +101,10 @@ public class ManagePreferences_Fragment extends Fragment {
                                 handleTrackerStateChanges();
 
                                 // Let the calling class know the selected option
-                                AppNotice_Callback appNotice_callback = (AppNotice_Callback) Session.get(Session.APPNOTICE_CALLBACK);
                                 AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
 
-                                if (appNotice_callback != null) {
-                                    appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                                if (AppNotice_Activity.appNotice_callback != null) {
+                                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                                 }
 
                                 // Close this fragment
@@ -119,7 +115,7 @@ public class ManagePreferences_Fragment extends Fragment {
 
                 snackbar.show();
             } else {
-                // If explicit flow, show the explicit button layout
+                // If explicit mode, show the explicit button layout
                 explicitButtonLayout.setVisibility(View.VISIBLE);
 
                 // Watch for button clicks.
@@ -133,10 +129,9 @@ public class ManagePreferences_Fragment extends Fragment {
                         AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                         // Let the calling class know the selected option
-                        AppNotice_Callback appNotice_callback = (AppNotice_Callback) Session.get(Session.APPNOTICE_CALLBACK);
                         AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-                        if (appNotice_callback != null && !getActivity().isFinishing()) {
-                            appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                        if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
+                            AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                         }
 
                         // Close this fragment

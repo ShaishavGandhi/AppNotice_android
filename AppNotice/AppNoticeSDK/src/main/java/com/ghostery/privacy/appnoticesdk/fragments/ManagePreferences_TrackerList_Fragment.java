@@ -15,10 +15,8 @@ import android.widget.ListView;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter;
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 
 import java.util.ArrayList;
 
@@ -165,9 +163,8 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
 
             // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
             int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
-            if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_CONSENT, false)) {
-                AppNotice_Callback appNotice_callback = (AppNotice_Callback)Session.get(Session.APPNOTICE_CALLBACK);
-                appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
+            if (trackerStateChangeCount > 0 && !AppNotice_Activity.isConsentActive) {
+                AppNotice_Activity.appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
             }
         }
     }

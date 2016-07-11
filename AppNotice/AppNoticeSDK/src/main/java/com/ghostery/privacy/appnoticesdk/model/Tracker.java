@@ -2,8 +2,6 @@ package com.ghostery.privacy.appnoticesdk.model;
 
 import android.util.Log;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,7 +61,7 @@ public class Tracker {
 
     public Tracker(JSONObject trackerJSONObject) {
         try {
-            if (AppNotice.usingToken) {
+            if (AppNoticeData.usingToken) {
                 category = trackerJSONObject.isNull(TAG_CATEGORY_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_CATEGORY_VIA_TOKEN);
                 trackerId = trackerJSONObject.isNull(TAG_TRACKERID_VIA_TOKEN)? null : trackerJSONObject.getInt(TAG_TRACKERID_VIA_TOKEN);
                 name = trackerJSONObject.isNull(TAG_NAME_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_NAME_VIA_TOKEN);
