@@ -27,68 +27,21 @@ public class AppNotice {
     private static Activity extActivity = null;
     private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
-    private static boolean isImpliedFlow = true;
+    public static boolean isImpliedFlow = true;
+    public static boolean isConsentFlow = false;
     public static boolean usingToken = true;
     public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
 
     /**
      * AppNotice constructor
      * @param activity: Usually your start-up activity.
-     * @param appNotice_token: The notice token that identifies the configuration created for this app.
-     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
-     */
-    private AppNotice(Activity activity, String appNotice_token, AppNotice_Callback appNotice_callback) {
-        usingToken = true;
-        appContext = activity.getApplicationContext();
-        extActivity = activity;
-        if (appNotice_token == null || appNotice_token.isEmpty()) {
-            throw(new IllegalArgumentException("The App Notice Token must be a valid identifier."));
-        }
-
-        // Remember the provided callback
-        this.appNotice_callback = appNotice_callback;
-        Session.set(Session.APPNOTICE_CALLBACK, appNotice_callback);
-
-        // Get either a new or initialized tracker config object
-        appNoticeData = AppNoticeData.getInstance(activity);
-
-        // Keep track of the App Notice token
-        appNoticeData.setAppNoticeToken(appNotice_token);
-    }
-
-    /**
-     * AppNotice constructor
-     * @param activity: Usually your start-up activity.
      * @param companyId: The company ID assigned to you for the App Notice SDK.
      * @param noticeId: The notice ID of the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
      */
-    public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
+    public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback, boolean isImpliedFlow) {
+        this.isImpliedFlow = isImpliedFlow;
         usingToken = false;
-        AppNotice(activity, companyId, noticeId, appNotice_callback);
-    }
-
-    /**
-	 * AppNotice constructor (deprecated)
-	 * @param activity: Usually your start-up activity
-	 * @param companyId: The company ID assigned to you for the App Notice SDK
-	 * @param noticeId: The notice ID of the configuration created for this app
-     * @param useRemoteValues: (unused)
-     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
-	 */
-    public AppNotice(Activity activity, int companyId, int noticeId, boolean useRemoteValues, AppNotice_Callback appNotice_callback) {
-        usingToken = false;
-        AppNotice(activity, companyId, noticeId, appNotice_callback);
-	}
-
-    /**
-     * AppNotice method to combine the current and deprecated constructor functionality
-     * @param activity: Usually your start-up activity.
-     * @param companyId: The company ID assigned to you for the App Notice SDK.
-     * @param noticeId: The notice ID of the configuration created for this app.
-     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
-     */
-    private void AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
         appContext = activity.getApplicationContext();
         extActivity = activity;
         if ((companyId <= 0) || (noticeId <= 0)) {
@@ -113,27 +66,15 @@ public class AppNotice {
      *   0 displays on first start and every notice ID change (recommended).
      *   1+ is the max number of times to display the consent screen on start up in a 30-day period.
      */
-    public void startImpliedConsentFlow(int implied30dayDisplayMax) {
+    public void startConsentFlow(int implied30dayDisplayMax) {
         this.implied30dayDisplayMax = implied30dayDisplayMax;
-        startImpliedConsentFlow();
+        startConsentFlow();
     }
 
     /**
      * Starts the App Notice Implied Consent flow. Must be called before your app begins any tracking activity.
      */
-    public void startImpliedConsentFlow() {
-        isImpliedFlow = true;
-        startConsentFlow(true);
-
-        // Send notice for this event
-        AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
-    }
-
-    /**
-     * Starts the App Notice Explicit Consent flow. Must be called before your app begins any tracking activity.
-     */
-    public void startExplicitConsentFlow() {
-        isImpliedFlow = false;
+    public void startConsentFlow() {
         startConsentFlow(true);
 
         // Send notice for this event
@@ -162,6 +103,8 @@ public class AppNotice {
     }
 
     private void startConsentFlow(final boolean isConsentFlow) {
+        this.isConsentFlow = isConsentFlow;
+
         if (!appNoticeData.isInitialized()) {
             appNoticeData.init();
         }

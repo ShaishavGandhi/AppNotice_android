@@ -10,29 +10,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
+import com.ghostery.privacy.appnoticesdk.utils.AppData;
 import com.ghostery.privacy.appnoticesdk.utils.Session;
 
 /**
  *
  */
 public class ManagePreferences_Fragment extends Fragment {
-    CoordinatorLayout coordinatorlayout;
     ManagePreferences_ViewPager_Adapter managePreferences_viewPager_adapter;
-
-    /**
-     * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,30 +87,79 @@ public class ManagePreferences_Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
 
-        coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorlayout);
-        Snackbar snackbar = Snackbar
-                .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        handleTrackerStateChanges();
+        if (AppNotice.isConsentFlow) {
+            if (AppNotice.isImpliedFlow) {
+                // If implied flow, hide the explicit button layout
+                explicitButtonLayout.setVisibility(View.GONE);
+
+                // If implied flow, show the snackbar
+                CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorlayout);
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                handleTrackerStateChanges();
+
+                                // Let the calling class know the selected option
+                                AppNotice_Callback appNotice_callback = (AppNotice_Callback) Session.get(Session.APPNOTICE_CALLBACK);
+                                AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
+
+                                if (appNotice_callback != null) {
+                                    appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                                }
+
+                                // Close this fragment
+                                AppNotice_Activity.isConsentActive = false;
+                                getActivity().finish();
+                            }
+                        });
+
+                snackbar.show();
+            } else {
+                // If explicit flow, show the explicit button layout
+                explicitButtonLayout.setVisibility(View.VISIBLE);
+
+                // Watch for button clicks.
+                AppCompatButton preferences_button_accept = (AppCompatButton)getView().findViewById(R.id.preferences_button_accept);
+                preferences_button_accept.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // Send notice for this event
+                        AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_ACCEPT);
+
+                        // Remember in a persistent way that the explicit notice has been accepted
+                        AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
                         // Let the calling class know the selected option
                         AppNotice_Callback appNotice_callback = (AppNotice_Callback) Session.get(Session.APPNOTICE_CALLBACK);
                         AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-
-                        if (appNotice_callback != null) {
+                        if (appNotice_callback != null && !getActivity().isFinishing()) {
                             appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                         }
 
                         // Close this fragment
                         AppNotice_Activity.isConsentActive = false;
+                        getActivity().getSupportFragmentManager().popBackStack();
                         getActivity().finish();
                     }
                 });
 
-        snackbar.show();
+                AppCompatButton preferences_button_decline = (AppCompatButton)getView().findViewById(R.id.preferences_button_decline);
+                preferences_button_decline.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // ToDo: Show decline message
+
+                        // Close this dialog
+                        getActivity().onBackPressed();
+                    }
+                });
+            }
+        } else {
+            // If not in a consent flow, hide the explicit button layout
+            explicitButtonLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
