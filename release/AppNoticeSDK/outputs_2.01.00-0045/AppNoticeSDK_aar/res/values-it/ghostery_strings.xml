@@ -6,19 +6,19 @@
     <!-- Text of the message in the Explicit Consent flow dialog. -->
     <string name="ghostery_manage_preferences_explicit_message">La nostra applicazione utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco completo di queste tecnologie e comunicarci in modo chiaro se possono essere utilizzate sul tuo dispositivo, fai clic sul pulsante seguente \&quot;Gestisci preferenze\&quot;. Per fornirci il consenso, fai clic sul pulsante \&quot;Accetta\&quot;.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_button_close">Chiudi</string>
+    <string name="ghostery_consent_button_close">Chiudi</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->
-    <string name="ghostery_dialog_button_accept_all">Accept All</string>
+    <string name="ghostery_consent_button_accept_all">Accept All</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when less than all will be accepted. -->
-    <string name="ghostery_dialog_button_accept">Accetta</string>
+    <string name="ghostery_consent_button_accept">Accetta</string>
     <!-- Text of the Decline button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_decline">Rifiuta</string>
+    <string name="ghostery_consent_button_decline">Rifiuta</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_preferences">Gestisci preferenze</string>
+    <string name="ghostery_consent_button_preferences">Gestisci preferenze</string>
     <!-- Text of the title in both the Explicit Consent and Implied consent flow dialogs. -->
-    <string name="ghostery_dialog_header_text">Per noi la tua privacy è importante</string>
+    <string name="ghostery_consent_header_text">Per noi la tua privacy è importante</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
-    <string name="ghostery_dialog_pleaseWait">Attendere...</string>
+    <string name="ghostery_pleaseWait">Attendere...</string>
 
     <!-- Manage Preferences Text -->
     <!-- Text of the description section near the top of the privacy preferences screen. -->

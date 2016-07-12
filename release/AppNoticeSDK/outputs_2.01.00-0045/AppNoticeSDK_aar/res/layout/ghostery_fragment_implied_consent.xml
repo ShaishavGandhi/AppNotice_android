@@ -30,7 +30,7 @@ android:weightSum="1">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/ghostery_dialog_header_text"
+        android:text="@string/ghostery_consent_header_text"
         android:id="@+id/textView_title"
         android:layout_gravity="center"
         android:textSize="@dimen/abc_text_size_title_material"
@@ -67,7 +67,7 @@ android:weightSum="1">
             android:layout_height="wrap_content"
             android:id="@+id/close_button_portrait"
             android:layout_gravity="center_horizontal"
-            android:text="@string/ghostery_dialog_button_close"
+            android:text="@string/ghostery_consent_button_close"
             style="@style/Widget.AppCompat.Button.Colored"
             android:theme="@style/ghostery_AppNoticeTheme.Button"
             />
@@ -75,7 +75,7 @@ android:weightSum="1">
         <android.support.v7.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ghostery_dialog_button_preferences"
+            android:text="@string/ghostery_consent_button_preferences"
             android:id="@+id/preferences_button_portrait"
             android:background="?android:attr/selectableItemBackground"
             android:layout_gravity="center_horizontal"
@@ -94,7 +94,7 @@ android:weightSum="1">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/preferences_button_landscape"
-            android:text="@string/ghostery_dialog_button_preferences"
+            android:text="@string/ghostery_consent_button_preferences"
             android:background="?android:attr/selectableItemBackground"
             android:textColor="@color/ghosteryColorButtonTextBorderless"
             />
@@ -109,7 +109,7 @@ android:weightSum="1">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/close_button_landscape"
-                android:text="@string/ghostery_dialog_button_close"
+                android:text="@string/ghostery_consent_button_close"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:theme="@style/ghostery_AppNoticeTheme.Button" />
 

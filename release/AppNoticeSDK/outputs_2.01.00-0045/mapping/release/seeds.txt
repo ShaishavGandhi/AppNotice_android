@@ -3538,7 +3538,6 @@ com.ghostery.privacy.appnoticesdk.R$id: int linearLayout_container
 com.ghostery.privacy.appnoticesdk.R$id: int linearLayout_outer
 com.ghostery.privacy.appnoticesdk.R$id: int listMode
 com.ghostery.privacy.appnoticesdk.R$id: int list_item
-com.ghostery.privacy.appnoticesdk.R$id: int manage_preferences_description
 com.ghostery.privacy.appnoticesdk.R$id: int media_actions
 com.ghostery.privacy.appnoticesdk.R$id: int middle
 com.ghostery.privacy.appnoticesdk.R$id: int mini
@@ -3557,6 +3556,9 @@ com.ghostery.privacy.appnoticesdk.R$id: int preferences_button_land
 com.ghostery.privacy.appnoticesdk.R$id: int preferences_button_landscape
 com.ghostery.privacy.appnoticesdk.R$id: int preferences_button_portrait
 com.ghostery.privacy.appnoticesdk.R$id: int preferences_controls_message
+com.ghostery.privacy.appnoticesdk.R$id: int preferences_description
+com.ghostery.privacy.appnoticesdk.R$id: int preferences_tracker_message
+com.ghostery.privacy.appnoticesdk.R$id: int preferences_webbased_message
 com.ghostery.privacy.appnoticesdk.R$id: int progress_circular
 com.ghostery.privacy.appnoticesdk.R$id: int progress_horizontal
 com.ghostery.privacy.appnoticesdk.R$id: int radio

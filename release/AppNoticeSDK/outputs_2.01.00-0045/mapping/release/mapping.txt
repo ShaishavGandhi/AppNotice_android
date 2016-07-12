@@ -2915,21 +2915,22 @@ com.ghostery.privacy.appnoticesdk.AppNotice$1$1 -> com.ghostery.privacy.appnotic
     151:151:void <init>(com.ghostery.privacy.appnoticesdk.AppNotice$1) -> <init>
     156:168:void onTaskDone() -> a
 com.ghostery.privacy.appnoticesdk.AppNotice_Activity -> com.ghostery.privacy.appnoticesdk.AppNotice_Activity:
-    com.ghostery.privacy.appnoticesdk.AppNotice_Activity instance -> d
-    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> e
-    android.support.v4.app.FragmentManager fragmentManager -> f
+    com.ghostery.privacy.appnoticesdk.AppNotice_Activity instance -> f
+    android.support.v4.app.FragmentManager fragmentManager -> g
     com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback appNotice_callback -> a
     boolean isConsentActive -> b
     boolean isImpliedMode -> c
-    25:25:void <init>() -> <init>
-    45:45:com.ghostery.privacy.appnoticesdk.AppNotice_Activity getInstance() -> a
-    50:83:void onCreate(android.os.Bundle) -> onCreate
-    88:89:void onResume() -> onResume
-    93:135:void onBackPressed() -> onBackPressed
-    139:149:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-    152:161:void onClick_OptInOut(android.view.View) -> onClick_OptInOut
-    165:170:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    31:32:void <clinit>() -> <clinit>
+    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> d
+    java.util.ArrayList optionalTrackerArrayListClone -> e
+    28:28:void <init>() -> <init>
+    49:49:com.ghostery.privacy.appnoticesdk.AppNotice_Activity getInstance() -> a
+    54:87:void onCreate(android.os.Bundle) -> onCreate
+    92:93:void onResume() -> onResume
+    97:139:void onBackPressed() -> onBackPressed
+    143:153:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    156:165:void onClick_OptInOut(android.view.View) -> onClick_OptInOut
+    169:174:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    33:34:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.R -> com.ghostery.privacy.appnoticesdk.R:
     10:10:void <init>() -> <init>
 com.ghostery.privacy.appnoticesdk.R$anim -> com.ghostery.privacy.appnoticesdk.R$anim:
@@ -3621,7 +3622,6 @@ com.ghostery.privacy.appnoticesdk.R$id -> com.ghostery.privacy.appnoticesdk.R$id
     int linearLayout_outer -> linearLayout_outer
     int listMode -> listMode
     int list_item -> list_item
-    int manage_preferences_description -> manage_preferences_description
     int media_actions -> media_actions
     int middle -> middle
     int mini -> mini
@@ -3640,6 +3640,9 @@ com.ghostery.privacy.appnoticesdk.R$id -> com.ghostery.privacy.appnoticesdk.R$id
     int preferences_button_landscape -> preferences_button_landscape
     int preferences_button_portrait -> preferences_button_portrait
     int preferences_controls_message -> preferences_controls_message
+    int preferences_description -> preferences_description
+    int preferences_tracker_message -> preferences_tracker_message
+    int preferences_webbased_message -> preferences_webbased_message
     int progress_circular -> progress_circular
     int progress_horizontal -> progress_horizontal
     int radio -> radio
@@ -3705,7 +3708,7 @@ com.ghostery.privacy.appnoticesdk.R$id -> com.ghostery.privacy.appnoticesdk.R$id
     int withText -> withText
     int wrap_content -> wrap_content
     2280:2280:void <init>() -> <init>
-    2281:2452:void <clinit>() -> <clinit>
+    2281:2454:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.R$integer -> com.ghostery.privacy.appnoticesdk.R$integer:
     int abc_config_activityDefaultDur -> abc_config_activityDefaultDur
     int abc_config_activityShortDur -> abc_config_activityShortDur
@@ -3719,8 +3722,8 @@ com.ghostery.privacy.appnoticesdk.R$integer -> com.ghostery.privacy.appnoticesdk
     int ghostery_implied_flow_session_display_max -> ghostery_implied_flow_session_display_max
     int ghostery_list_divider_height -> ghostery_list_divider_height
     int status_bar_notification_info_maxnum -> status_bar_notification_info_maxnum
-    2454:2454:void <init>() -> <init>
-    2455:2466:void <clinit>() -> <clinit>
+    2456:2456:void <init>() -> <init>
+    2457:2468:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.R$layout -> com.ghostery.privacy.appnoticesdk.R$layout:
     int abc_action_bar_title_item -> abc_action_bar_title_item
     int abc_action_bar_up_container -> abc_action_bar_up_container
@@ -3780,8 +3783,8 @@ com.ghostery.privacy.appnoticesdk.R$layout -> com.ghostery.privacy.appnoticesdk.
     int select_dialog_multichoice_material -> select_dialog_multichoice_material
     int select_dialog_singlechoice_material -> select_dialog_singlechoice_material
     int support_simple_spinner_dropdown_item -> support_simple_spinner_dropdown_item
-    2468:2468:void <init>() -> <init>
-    2469:2526:void <clinit>() -> <clinit>
+    2470:2470:void <init>() -> <init>
+    2471:2528:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.R$string -> com.ghostery.privacy.appnoticesdk.R$string:
     int abc_action_bar_home_description -> abc_action_bar_home_description
     int abc_action_bar_home_description_format -> abc_action_bar_home_description_format
@@ -3836,8 +3839,8 @@ com.ghostery.privacy.appnoticesdk.R$string -> com.ghostery.privacy.appnoticesdk.
     int ghostery_tracker_detail_title -> ghostery_tracker_detail_title
     int ghostery_tracker_learnmore_title -> ghostery_tracker_learnmore_title
     int status_bar_notification_info_overflow -> status_bar_notification_info_overflow
-    2528:2528:void <init>() -> <init>
-    2529:2581:void <clinit>() -> <clinit>
+    2530:2530:void <init>() -> <init>
+    2531:2583:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.R$style -> com.ghostery.privacy.appnoticesdk.R$style:
     int AlertDialog_AppCompat -> AlertDialog_AppCompat
     int AlertDialog_AppCompat_Light -> AlertDialog_AppCompat_Light
@@ -4186,8 +4189,8 @@ com.ghostery.privacy.appnoticesdk.R$style -> com.ghostery.privacy.appnoticesdk.R
     int ghostery_AppNoticeTheme_Base -> ghostery_AppNoticeTheme_Base
     int ghostery_AppNoticeTheme_Button -> ghostery_AppNoticeTheme_Button
     int ghostery_AppNoticeTheme_Button_Secondary -> ghostery_AppNoticeTheme_Button_Secondary
-    2583:2583:void <init>() -> <init>
-    2584:2930:void <clinit>() -> <clinit>
+    2585:2585:void <init>() -> <init>
+    2586:2932:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.R$styleable -> com.ghostery.privacy.appnoticesdk.R$styleable:
     int[] ActionBar -> ActionBar
     int ActionBar_background -> ActionBar_background
@@ -4627,8 +4630,8 @@ com.ghostery.privacy.appnoticesdk.R$styleable -> com.ghostery.privacy.appnotices
     int ViewStubCompat_android_id -> ViewStubCompat_android_id
     int ViewStubCompat_android_inflatedId -> ViewStubCompat_android_inflatedId
     int ViewStubCompat_android_layout -> ViewStubCompat_android_layout
-    2932:2932:void <init>() -> <init>
-    2995:8770:void <clinit>() -> <clinit>
+    2934:2934:void <init>() -> <init>
+    2997:8772:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter -> com.ghostery.privacy.appnoticesdk.a.a:
     int mNumOfTabs -> a
     com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_TrackerList_Fragment tab1 -> b
@@ -4763,20 +4766,18 @@ com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment$4 -> com.
     149:150:void onClick(android.view.View) -> onClick
 com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_TrackerList_Fragment -> com.ghostery.privacy.appnoticesdk.b.t:
     java.util.ArrayList trackerArrayList -> a
-    java.util.ArrayList trackerArrayListClone -> b
-    com.ghostery.privacy.appnoticesdk.model.AppNoticeData appNoticeData -> c
-    com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter trackerArrayAdapter -> d
-    android.widget.ListView trackerListView -> e
-    boolean isEssential -> f
-    26:32:void <init>() -> <init>
-    42:55:void onCreate(android.os.Bundle) -> onCreate
-    61:85:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    90:101:void refreshTrackerList() -> a
-    106:110:void onResume() -> onResume
-    113:115:void onBackPressed() -> b
-    120:130:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-    135:158:void sendOptInOutNotices() -> c
-    161:170:void saveTrackerStates() -> d
+    com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter trackerArrayAdapter -> b
+    android.widget.ListView trackerListView -> c
+    boolean isEssential -> d
+    26:30:void <init>() -> <init>
+    40:53:void onCreate(android.os.Bundle) -> onCreate
+    59:83:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    88:99:void refreshTrackerList() -> a
+    104:108:void onResume() -> onResume
+    111:113:void onBackPressed() -> b
+    118:128:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    133:156:void sendOptInOutNotices() -> c
+    159:168:void saveTrackerStates() -> d
 com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_WebBased_Fragment -> com.ghostery.privacy.appnoticesdk.b.u:
     17:17:void <init>() -> <init>
     27:28:void onCreate(android.os.Bundle) -> onCreate
