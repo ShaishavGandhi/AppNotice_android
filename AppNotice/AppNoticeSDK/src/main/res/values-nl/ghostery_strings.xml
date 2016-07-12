@@ -6,19 +6,19 @@
     <!-- Text of the message in the Explicit Consent flow dialog. -->
     <string name="ghostery_manage_preferences_explicit_message">Onze applicatie maakt gebruik van technologieën om ons en onze partners in staat te stellen u te herinneren, en om te begrijpen op welke manier u onze website gebruikt. Klik op de knop \&quot;Voorkeuren beheren\&quot; hieronder voor een volledige lijst van deze technologieën en om ons expliciet te laten weten of deze al dan niet gebruikt mogen worden op uw apparaat. Klik op de knop \&quot;Accepteren\&quot; om ons toestemming te geven.</string>
     <!-- Text of the close button in the Implied Consent flow dialog. -->
-    <string name="ghostery_dialog_button_close">Sluiten</string>
+    <string name="ghostery_consent_button_close">Sluiten</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when all will be accepted. -->
-    <string name="ghostery_dialog_button_accept_all">Accept All</string>
+    <string name="ghostery_consent_button_accept_all">Accept All</string>
     <!-- Text of the Accept button in the Explicit Consent flow dialog when less than all will be accepted. -->
-    <string name="ghostery_dialog_button_accept">Accepteren</string>
+    <string name="ghostery_consent_button_accept">Accepteren</string>
     <!-- Text of the Decline button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_decline">Weigeren</string>
+    <string name="ghostery_consent_button_decline">Weigeren</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow dialog. -->
-    <string name="ghostery_dialog_button_preferences">Voorkeuren beheren</string>
+    <string name="ghostery_consent_button_preferences">Voorkeuren beheren</string>
     <!-- Text of the title in both the Explicit Consent and Implied consent flow dialogs. -->
-    <string name="ghostery_dialog_header_text">Uw privacy is belangrijk voor ons</string>
+    <string name="ghostery_consent_header_text">Uw privacy is belangrijk voor ons</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
-    <string name="ghostery_dialog_pleaseWait">Een ogenblik geduld</string>
+    <string name="ghostery_pleaseWait">Een ogenblik geduld</string>
 
     <!-- Manage Preferences Text -->
     <!-- Text of the description section near the top of the privacy preferences screen. -->

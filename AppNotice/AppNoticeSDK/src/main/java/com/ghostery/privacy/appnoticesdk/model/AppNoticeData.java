@@ -668,7 +668,7 @@ public class AppNoticeData {
                 } else {
                     // Showing progress dialog
                     progressDialog = new ProgressDialog(activity);
-                    progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
+                    progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_pleaseWait));
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                 }

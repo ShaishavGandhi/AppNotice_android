@@ -3805,15 +3805,15 @@ com.ghostery.privacy.appnoticesdk.R$string -> com.ghostery.privacy.appnoticesdk.
     int appbar_scrolling_view_behavior -> appbar_scrolling_view_behavior
     int bottom_sheet_behavior -> bottom_sheet_behavior
     int character_counter_pattern -> character_counter_pattern
-    int ghostery_consent_button_accept -> ghostery_consent_button_accept
-    int ghostery_consent_button_accept_all -> ghostery_consent_button_accept_all
-    int ghostery_consent_button_close -> ghostery_consent_button_close
-    int ghostery_consent_button_decline -> ghostery_consent_button_decline
-    int ghostery_consent_button_preferences -> ghostery_consent_button_preferences
-    int ghostery_consent_header_text -> ghostery_consent_header_text
+    int ghostery_dialog_button_accept -> ghostery_dialog_button_accept
+    int ghostery_dialog_button_accept_all -> ghostery_dialog_button_accept_all
+    int ghostery_dialog_button_close -> ghostery_dialog_button_close
+    int ghostery_dialog_button_decline -> ghostery_dialog_button_decline
+    int ghostery_dialog_button_preferences -> ghostery_dialog_button_preferences
+    int ghostery_dialog_header_text -> ghostery_dialog_header_text
+    int ghostery_dialog_pleaseWait -> ghostery_dialog_pleaseWait
     int ghostery_manage_preferences_explicit_message -> ghostery_manage_preferences_explicit_message
     int ghostery_manage_preferences_implied_message -> ghostery_manage_preferences_implied_message
-    int ghostery_pleaseWait -> ghostery_pleaseWait
     int ghostery_preferences_continue_button -> ghostery_preferences_continue_button
     int ghostery_preferences_controls_message -> ghostery_preferences_controls_message
     int ghostery_preferences_description -> ghostery_preferences_description

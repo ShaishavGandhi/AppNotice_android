@@ -40584,15 +40584,15 @@ Constant Pool (count = 226):
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.appbar_scrolling_view_behavior I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.bottom_sheet_behavior I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.character_counter_pattern I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_accept I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_accept_all I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_close I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_decline I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_preferences I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_header_text I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_accept I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_accept_all I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_close I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_decline I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_preferences I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_header_text I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_pleaseWait I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_manage_preferences_explicit_message I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_manage_preferences_implied_message I]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_pleaseWait I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_preferences_continue_button I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_preferences_controls_message I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_preferences_description I]
@@ -40639,15 +40639,15 @@ Constant Pool (count = 226):
   + NameAndType [appbar_scrolling_view_behavior I]
   + NameAndType [bottom_sheet_behavior I]
   + NameAndType [character_counter_pattern I]
-  + NameAndType [ghostery_consent_button_accept I]
-  + NameAndType [ghostery_consent_button_accept_all I]
-  + NameAndType [ghostery_consent_button_close I]
-  + NameAndType [ghostery_consent_button_decline I]
-  + NameAndType [ghostery_consent_button_preferences I]
-  + NameAndType [ghostery_consent_header_text I]
+  + NameAndType [ghostery_dialog_button_accept I]
+  + NameAndType [ghostery_dialog_button_accept_all I]
+  + NameAndType [ghostery_dialog_button_close I]
+  + NameAndType [ghostery_dialog_button_decline I]
+  + NameAndType [ghostery_dialog_button_preferences I]
+  + NameAndType [ghostery_dialog_header_text I]
+  + NameAndType [ghostery_dialog_pleaseWait I]
   + NameAndType [ghostery_manage_preferences_explicit_message I]
   + NameAndType [ghostery_manage_preferences_implied_message I]
-  + NameAndType [ghostery_pleaseWait I]
   + NameAndType [ghostery_preferences_continue_button I]
   + NameAndType [ghostery_preferences_controls_message I]
   + NameAndType [ghostery_preferences_description I]
@@ -40700,15 +40700,15 @@ Constant Pool (count = 226):
   + Utf8 [bottom_sheet_behavior]
   + Utf8 [character_counter_pattern]
   + Utf8 [com/ghostery/privacy/appnoticesdk/R$string]
-  + Utf8 [ghostery_consent_button_accept]
-  + Utf8 [ghostery_consent_button_accept_all]
-  + Utf8 [ghostery_consent_button_close]
-  + Utf8 [ghostery_consent_button_decline]
-  + Utf8 [ghostery_consent_button_preferences]
-  + Utf8 [ghostery_consent_header_text]
+  + Utf8 [ghostery_dialog_button_accept]
+  + Utf8 [ghostery_dialog_button_accept_all]
+  + Utf8 [ghostery_dialog_button_close]
+  + Utf8 [ghostery_dialog_button_decline]
+  + Utf8 [ghostery_dialog_button_preferences]
+  + Utf8 [ghostery_dialog_header_text]
+  + Utf8 [ghostery_dialog_pleaseWait]
   + Utf8 [ghostery_manage_preferences_explicit_message]
   + Utf8 [ghostery_manage_preferences_implied_message]
-  + Utf8 [ghostery_pleaseWait]
   + Utf8 [ghostery_preferences_continue_button]
   + Utf8 [ghostery_preferences_controls_message]
   + Utf8 [ghostery_preferences_description]
@@ -40800,33 +40800,33 @@ Fields (count = 53):
   + Field:        character_counter_pattern I
     Access flags: 0x9
       = public static int character_counter_pattern
-  + Field:        ghostery_consent_button_accept I
+  + Field:        ghostery_dialog_button_accept I
     Access flags: 0x9
-      = public static int ghostery_consent_button_accept
-  + Field:        ghostery_consent_button_accept_all I
+      = public static int ghostery_dialog_button_accept
+  + Field:        ghostery_dialog_button_accept_all I
     Access flags: 0x9
-      = public static int ghostery_consent_button_accept_all
-  + Field:        ghostery_consent_button_close I
+      = public static int ghostery_dialog_button_accept_all
+  + Field:        ghostery_dialog_button_close I
     Access flags: 0x9
-      = public static int ghostery_consent_button_close
-  + Field:        ghostery_consent_button_decline I
+      = public static int ghostery_dialog_button_close
+  + Field:        ghostery_dialog_button_decline I
     Access flags: 0x9
-      = public static int ghostery_consent_button_decline
-  + Field:        ghostery_consent_button_preferences I
+      = public static int ghostery_dialog_button_decline
+  + Field:        ghostery_dialog_button_preferences I
     Access flags: 0x9
-      = public static int ghostery_consent_button_preferences
-  + Field:        ghostery_consent_header_text I
+      = public static int ghostery_dialog_button_preferences
+  + Field:        ghostery_dialog_header_text I
     Access flags: 0x9
-      = public static int ghostery_consent_header_text
+      = public static int ghostery_dialog_header_text
+  + Field:        ghostery_dialog_pleaseWait I
+    Access flags: 0x9
+      = public static int ghostery_dialog_pleaseWait
   + Field:        ghostery_manage_preferences_explicit_message I
     Access flags: 0x9
       = public static int ghostery_manage_preferences_explicit_message
   + Field:        ghostery_manage_preferences_implied_message I
     Access flags: 0x9
       = public static int ghostery_manage_preferences_implied_message
-  + Field:        ghostery_pleaseWait I
-    Access flags: 0x9
-      = public static int ghostery_pleaseWait
   + Field:        ghostery_preferences_continue_button I
     Access flags: 0x9
       = public static int ghostery_preferences_continue_button
@@ -41004,39 +41004,39 @@ Methods (count = 2):
       [110] ldc #21
         + Integer [2131034132]
       [112] putstatic #78
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_accept I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_accept I]
       [115] ldc #22
         + Integer [2131034133]
       [117] putstatic #79
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_accept_all I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_accept_all I]
       [120] ldc #23
         + Integer [2131034134]
       [122] putstatic #80
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_close I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_close I]
       [125] ldc #24
         + Integer [2131034135]
       [127] putstatic #81
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_decline I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_decline I]
       [130] ldc #25
         + Integer [2131034136]
       [132] putstatic #82
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_button_preferences I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_button_preferences I]
       [135] ldc #26
         + Integer [2131034137]
       [137] putstatic #83
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_consent_header_text I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_header_text I]
       [140] ldc #27
         + Integer [2131034138]
       [142] putstatic #84
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_manage_preferences_explicit_message I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_pleaseWait I]
       [145] ldc #28
         + Integer [2131034139]
       [147] putstatic #85
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_manage_preferences_implied_message I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_manage_preferences_explicit_message I]
       [150] ldc #29
         + Integer [2131034140]
       [152] putstatic #86
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_pleaseWait I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_manage_preferences_implied_message I]
       [155] ldc #45
         + Integer [2131034156]
       [157] putstatic #87
@@ -63337,7 +63337,7 @@ Constant Pool (count = 197):
   + Class [java/lang/String]
   + Class [java/lang/Void]
   + Class [java/text/MessageFormat]
-  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_pleaseWait I]
+  + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_pleaseWait I]
   + Fieldref [com/ghostery/privacy/appnoticesdk/c/a.d Z]
   + Fieldref [com/ghostery/privacy/appnoticesdk/c/h.a Lcom/ghostery/privacy/appnoticesdk/c/a;]
   + Fieldref [com/ghostery/privacy/appnoticesdk/c/h.b Lcom/ghostery/privacy/appnoticesdk/callbacks/a;]
@@ -63400,7 +63400,7 @@ Constant Pool (count = 197):
   + NameAndType [format (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;]
   + NameAndType [getResources ()Landroid/content/res/Resources;]
   + NameAndType [getString (I)Ljava/lang/String;]
-  + NameAndType [ghostery_pleaseWait I]
+  + NameAndType [ghostery_dialog_pleaseWait I]
   + NameAndType [i ()V]
   + NameAndType [isFinishing ()Z]
   + NameAndType [isShowing ()Z]
@@ -63483,7 +63483,7 @@ Constant Pool (count = 197):
   + Utf8 [format]
   + Utf8 [getResources]
   + Utf8 [getString]
-  + Utf8 [ghostery_pleaseWait]
+  + Utf8 [ghostery_dialog_pleaseWait]
   + Utf8 [http://privacyapi.ghosterydev.com/api/v1/appnotice/configuration/{0}]
   + Utf8 [https://c.betrad.com/pub/c/{0}/{1}.js]
   + Utf8 [i]
@@ -63599,7 +63599,7 @@ Methods (count = 8):
       [75] invokevirtual #30
         + Methodref [android/app/Activity.getResources ()Landroid/content/res/Resources;]
       [78] getstatic #26
-        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_pleaseWait I]
+        + Fieldref [com/ghostery/privacy/appnoticesdk/R$string.ghostery_dialog_pleaseWait I]
       [81] invokevirtual #39
         + Methodref [android/content/res/Resources.getString (I)Ljava/lang/String;]
       [84] invokevirtual #37
