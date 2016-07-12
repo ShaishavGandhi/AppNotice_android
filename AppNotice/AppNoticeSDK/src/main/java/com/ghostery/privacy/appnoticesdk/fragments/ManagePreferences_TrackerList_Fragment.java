@@ -64,12 +64,12 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
             actionBar.show();
         }
 
-        AppCompatTextView managePreferencesDescription = (AppCompatTextView) view.findViewById(R.id.manage_preferences_description);
-        if (managePreferencesDescription != null) {
+        AppCompatTextView preferencesTrackerMessage = (AppCompatTextView) view.findViewById(R.id.preferences_tracker_message);
+        if (preferencesTrackerMessage != null) {
             if (isEssential) {
-                managePreferencesDescription.setText(R.string.ghostery_preferences_essential_message);
+                preferencesTrackerMessage.setText(R.string.ghostery_preferences_essential_message);
             } else {
-                managePreferencesDescription.setText(R.string.ghostery_preferences_optional_message);
+                preferencesTrackerMessage.setText(R.string.ghostery_preferences_optional_message);
             }
         }
 
