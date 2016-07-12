@@ -18,6 +18,9 @@ import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
+import com.ghostery.privacy.appnoticesdk.model.Tracker;
+
+import java.util.ArrayList;
 
 /**
  * AppNotice_Activity
@@ -25,11 +28,12 @@ import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 public class AppNotice_Activity extends AppCompatActivity implements AppCompatCallback, AdapterView.OnItemClickListener {
 
     private static AppNotice_Activity instance;
-    private AppNoticeData appNoticeData;
     private FragmentManager fragmentManager;
     public static AppNotice_Callback appNotice_callback;
     public static boolean isConsentActive = false;
     public static boolean isImpliedMode = true;
+    public static AppNoticeData appNoticeData;
+    public static ArrayList<Tracker> optionalTrackerArrayListClone;
 
     // Fragment tags
     public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";

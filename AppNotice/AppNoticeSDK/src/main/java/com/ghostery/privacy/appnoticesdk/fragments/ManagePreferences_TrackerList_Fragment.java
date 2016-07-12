@@ -25,8 +25,6 @@ import java.util.ArrayList;
  */
 public class ManagePreferences_TrackerList_Fragment extends Fragment {
     private ArrayList<Tracker> trackerArrayList;
-    private ArrayList<Tracker> trackerArrayListClone;
-    private AppNoticeData appNoticeData;
     private TrackerArrayAdapter trackerArrayAdapter;
     private ListView trackerListView;
     private boolean isEssential = false;
@@ -43,14 +41,14 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
 
         isEssential = getArguments().getBoolean("isEssential", false);
 
-        appNoticeData = AppNoticeData.getInstance(getActivity());
-        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
+        AppNotice_Activity.appNoticeData = AppNoticeData.getInstance(getActivity());
+        if (AppNotice_Activity.appNoticeData != null && AppNotice_Activity.appNoticeData.isTrackerListInitialized()) {
             if (isEssential) {
-                trackerArrayList = appNoticeData.essentialTrackerArrayList;
+                trackerArrayList = AppNotice_Activity.appNoticeData.essentialTrackerArrayList;
             } else {
-                trackerArrayList = appNoticeData.optionalTrackerArrayList;
+                trackerArrayList = AppNotice_Activity.appNoticeData.optionalTrackerArrayList;
+                AppNotice_Activity.optionalTrackerArrayListClone = AppNotice_Activity.appNoticeData.getOptionalTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
             }
-            trackerArrayListClone = appNoticeData.getOptionalTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
         }
     }
 
@@ -75,7 +73,7 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
             }
         }
 
-        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData, isEssential);
+        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, AppNotice_Activity.appNoticeData, isEssential);
         trackerListView = (ListView) view.findViewById(R.id.tracker_list);
         trackerListView.setAdapter(trackerArrayAdapter);
         trackerListView.setOnItemClickListener((AppNotice_Activity)getActivity());
@@ -135,12 +133,12 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
         int pingBackCount = 0;      // Count the ping-backs
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList != null && trackerArrayListClone != null &&
-                trackerArrayList.size() == trackerArrayListClone.size()) {
+        if (trackerArrayList != null && AppNotice_Activity.optionalTrackerArrayListClone != null &&
+                trackerArrayList.size() == AppNotice_Activity.optionalTrackerArrayListClone.size()) {
 
             for (int i = 0; i < trackerArrayList.size(); i++) {
                 Tracker tracker = trackerArrayList.get(i);
-                Tracker trackerClone = trackerArrayListClone.get(i);
+                Tracker trackerClone = AppNotice_Activity.optionalTrackerArrayListClone.get(i);
 
                 // If the tracker is non-essential and is changed...
                 if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
@@ -158,13 +156,13 @@ public class ManagePreferences_TrackerList_Fragment extends Fragment {
     }
 
     public void saveTrackerStates() {
-        if (appNoticeData != null) {
-            appNoticeData.saveTrackerStates();
+        if (AppNotice_Activity.appNoticeData != null) {
+            AppNotice_Activity.appNoticeData.saveTrackerStates();
 
             // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
-            int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
+            int trackerStateChangeCount = AppNotice_Activity.appNoticeData.getTrackerStateChangeCount(AppNotice_Activity.optionalTrackerArrayListClone);
             if (trackerStateChangeCount > 0 && !AppNotice_Activity.isConsentActive) {
-                AppNotice_Activity.appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
+                AppNotice_Activity.appNotice_callback.onTrackerStateChanged(AppNotice_Activity.appNoticeData.getTrackerHashMap(true));
             }
         }
     }
