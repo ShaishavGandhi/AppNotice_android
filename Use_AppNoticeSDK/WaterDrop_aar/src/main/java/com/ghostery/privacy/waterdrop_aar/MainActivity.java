@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 try {
                     companyId = Integer.valueOf(companyIdString);
                     noticeId = Integer.valueOf(noticeIdString);
-                    appNotice = new AppNotice(this, companyId, noticeId, this);
+                    appNotice = new AppNotice(this, companyId, noticeId, this, isImplied);
                 } catch (NumberFormatException e) {
                     Toast.makeText(this, "CID and NID must be integers.", Toast.LENGTH_LONG).show();
                     return;
@@ -205,9 +205,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			} else if (view == btn_consent_flow) {
                 if (isImplied) {
-                    appNotice.startImpliedConsentFlow(implied30dayDisplayMax);
+                    appNotice.startConsentFlow(implied30dayDisplayMax);
                 } else {
-                    appNotice.startExplicitConsentFlow();
+                    appNotice.startConsentFlow();
                 }
             }
 		}

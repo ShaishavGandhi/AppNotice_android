@@ -33,7 +33,5 @@
     <!-- Ghostery App Notice SDK Customization -->
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
     <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
-    <!-- Text of the description section near the top of the privacy preferences screen. -->
-    <string name="ghostery_preferences_description">WaterDrop uses the following technologies to optimize your experience with this app. Tap to learn more or disable any non-essential tools below.</string>
 
 </resources>
