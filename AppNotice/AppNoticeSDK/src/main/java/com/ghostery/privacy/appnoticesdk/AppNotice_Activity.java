@@ -14,7 +14,6 @@ import android.widget.CheckBox;
 import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 import com.ghostery.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ImpliedConsent_Fragment;
-import com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -41,7 +40,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     public static final String FRAGMENT_TAG_MANAGE_PREFERENCES = "MANAGE_PREFERENCES";
 //    public static final String FRAGMENT_TAG_TRACKER_LIST = "TRACKER_LIST";
     public static final String FRAGMENT_TAG_TRACKER_DETAIL = "TRACKER_DETAIL";
-    public static final String FRAGMENT_TAG_LEARN_MORE = "LEARN_MORE";
     public static final String FRAGMENT_TAG_HOST_SETTINGS = "HOST_SETTINGS";
 
 
@@ -120,10 +118,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                         break;
                     case FRAGMENT_TAG_TRACKER_DETAIL:
                         ((TrackerDetail_Fragment) fragment).onBackPressed();
-                        getSupportFragmentManager().popBackStack();
-                        break;
-                    case FRAGMENT_TAG_LEARN_MORE:
-                        ((LearnMore_Fragment) fragment).onBackPressed();
                         getSupportFragmentManager().popBackStack();
                         break;
                     case FRAGMENT_TAG_HOST_SETTINGS:

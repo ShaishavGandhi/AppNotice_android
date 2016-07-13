@@ -24,11 +24,11 @@
     <!-- Text of the description section near the top of the privacy preferences screen. -->
     <string name="ghostery_preferences_description">Nuestra empresa, con la ayuda de nuestros colaboradores, recoge datos sobre el uso que hace usted de esta app. Respetamos su privacidad y si desea limitar los datos que recogemos, por favor use el panel de control que aparece más abajo. Por favor visite nuestra política de privacidad para ver más información sobre cómo usamos los datos.</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
-    <string name="ghostery_preferences_detail_learnmore">Para más información sobre cómo recogemos y usamos la información para apps móviles por favor visite:</string>
+    <string name="ghostery_tracker_detail_learnmore">Para más información sobre cómo recogemos y usamos la información para apps móviles por favor visite:</string>
     <!-- Text used in the case there is no learn-more link provided -->
-    <string name="ghostery_preferences_detail_learnmore_not_provided">Política de privacidad no provista</string>
+    <string name="ghostery_tracker_detail_learnmore_not_provided">Política de privacidad no provista</string>
     <!-- Text for the header above the vendor-info section of the vendor detail screen -->
-    <string name="ghostery_preferences_detail_trackerinfo">Información de rastreador</string>
+    <string name="ghostery_tracker_detail_allow_technology">Información de rastreador</string>
     <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
     <string name="ghostery_preferences_empty_list">No se pudo cargar la lista de rastreadores. Por favor asegúrese de que tiene acceso a Internet e inténtelo de nuevo más tarde.</string>
     <!-- Title text on the privacy preferences screen. -->

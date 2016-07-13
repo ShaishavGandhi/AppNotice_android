@@ -41,12 +41,6 @@
     <string name="ghostery_preferences_ready_message">Ready to go?</string>
     <!-- Text of the message on the implied manage preferences snackbar. -->
     <string name="ghostery_preferences_continue_button">Continue</string>
-    <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
-    <string name="ghostery_preferences_detail_learnmore">To learn more about how we collect and use information for mobile apps, please visit:</string>
-    <!-- Text used in the case there is no learn-more link provided -->
-    <string name="ghostery_preferences_detail_learnmore_not_provided">Privacy Policy Not Provided</string>
-    <!-- Text for the header above the vendor-info section of the vendor detail screen -->
-    <string name="ghostery_preferences_detail_trackerinfo">Tracker Info</string>
     <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
     <string name="ghostery_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
     <!-- Title text on the privacy preferences screen. -->
@@ -61,9 +55,13 @@
     <string name="ghostery_preferences_select_none">None</string>
 
     <!-- Tracker Detail -->
+    <!-- Text for the "allow" checkbox line of the tracker detail screen -->
+    <string name="ghostery_tracker_detail_allow_technology">Allow?</string>
+    <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
+    <string name="ghostery_tracker_detail_learnmore">To learn more about this technology, please visit their website:</string>
     <!-- Header text on the vendor detail screen -->
-    <string name="ghostery_tracker_detail_title">Tracker Detail</string>
-    <!-- Title text of the learn-more screen -->
-    <string name="ghostery_tracker_learnmore_title">Learn More</string>
+    <string name="ghostery_tracker_detail_open_message">(Opens in default browser)</string>
+    <!-- Text used in the case there is no learn-more link provided -->
+    <string name="ghostery_tracker_detail_learnmore_not_provided">(Privacy Policy not provided)</string>
 
 </resources>

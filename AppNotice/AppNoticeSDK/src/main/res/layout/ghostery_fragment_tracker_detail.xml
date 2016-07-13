@@ -17,16 +17,18 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:gravity="center_vertical"
             android:padding="8dp"
             tools:context=".ListActivity" >
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textView_TrackerName"
+                android:id="@+id/textView_allow_technology"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/ghostery_tracker_detail_allow_technology"
+                android:layout_centerVertical="true" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -38,17 +40,6 @@
                 android:layout_alignParentEnd="true"
                 android:focusable="false" />
 
-            <ImageView
-                android:id="@+id/imageView_trackerLogo"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/opt_in_out_checkbox"
-                android:paddingRight="15dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-
         </RelativeLayout>
 
         <View
@@ -56,17 +47,30 @@
             android:layout_width="match_parent"
             android:layout_height="1dip"
             android:layout_alignParentTop="true"
-            android:layout_margin="4dp" />
+            android:layout_margin="4dp"
+            android:background="@color/button_material_light" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/textView_trackerInfo"
-            android:text="@string/ghostery_preferences_detail_trackerinfo"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="8dp"
+            tools:context=".ListActivity" >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textView_TrackerName"
+                android:textSize="@dimen/abc_text_size_large_material"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imageView_trackerLogo"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerDescription"
@@ -76,7 +80,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_learn_more"
-            android:text="@string/ghostery_preferences_detail_learnmore"
+            android:text="@string/ghostery_tracker_detail_learnmore"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:textSize="13sp"
@@ -90,6 +94,13 @@
             android:onClick="onLinkClick"
             android:textSize="13sp"
             android:textColor="@color/accent_material_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textView_open_message"
+            android:text="@string/ghostery_tracker_detail_open_message"
+            android:textSize="13sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
