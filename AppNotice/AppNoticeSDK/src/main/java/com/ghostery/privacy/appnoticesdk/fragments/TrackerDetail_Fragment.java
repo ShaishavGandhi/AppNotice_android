@@ -112,14 +112,15 @@ public class TrackerDetail_Fragment extends Fragment {
 
             CheckBox opt_in_out_checkbox = ((CheckBox) rootView.findViewById(R.id.opt_in_out_checkbox));
             if (tracker.isEssential()) {
-                opt_in_out_checkbox.setEnabled(false);
+                opt_in_out_checkbox.setChecked(true);     // Make sure it is checked
+                opt_in_out_checkbox.setEnabled(false);    // Disable the checkbox
             } else {
                 opt_in_out_checkbox.setEnabled(true);
 
                 // If this tracker is a duplicate of an essential tracker, disable it
                 if (appNoticeData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
                     opt_in_out_checkbox.setChecked(true);     // Make sure it is checked
-                    opt_in_out_checkbox.setEnabled(false);    // Disable the switch
+                    opt_in_out_checkbox.setEnabled(false);    // Disable the checkbox
                 } else {
                     opt_in_out_checkbox.setChecked(tracker.isOn());
                     opt_in_out_checkbox.setEnabled(true);     // Enable the switch

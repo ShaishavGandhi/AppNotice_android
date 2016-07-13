@@ -106,10 +106,7 @@ public class TrackerArrayAdapter extends BaseAdapter {
                 holder.optInOutCheckBox.setChecked(tracker.isOn());
                 holder.optInOutCheckBox.setEnabled(true);     // Enable the switch
             }
-            holder.optInOutCheckBox.setEnabled(true);
             holder.optInOutCheckBox.setTag(tracker.uId);
-
-            holder.optInOutCheckBox.setChecked(tracker.isOn());
         }
 
         holder.trackerName.setText(trackerArrayList.get(position).getName());

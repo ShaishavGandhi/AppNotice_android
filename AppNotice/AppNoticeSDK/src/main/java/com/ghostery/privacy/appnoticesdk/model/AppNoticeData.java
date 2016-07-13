@@ -402,7 +402,7 @@ public class AppNoticeData {
                 }
 
                 // Save the tracker states
-                saveTrackerStates();
+//                saveTrackerStates();
             } else {
                 // Start the call to get the AppNoticeData data from the service...from the UI thread
                 activity.runOnUiThread(new Runnable() {
