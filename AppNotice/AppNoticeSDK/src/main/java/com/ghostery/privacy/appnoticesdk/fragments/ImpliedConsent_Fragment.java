@@ -44,6 +44,12 @@ public class ImpliedConsent_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.ghostery_fragment_implied_consent, container, false);
         AppNotice_Activity.isConsentActive = true;
 
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setShowHideAnimationEnabled(false);
+            actionBar.hide();
+        }
+
         // Watch for button clicks.
         AppCompatButton preferences_button = (AppCompatButton)view.findViewById(R.id.preferences_button_portrait);
         preferences_button.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +109,6 @@ public class ImpliedConsent_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
 
         handleOrientationConfig(getActivity().getResources().getConfiguration().orientation);
     }

@@ -41,6 +41,13 @@ public class ExplicitConsent_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setShowHideAnimationEnabled(false);
+            actionBar.hide();
+        }
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.ghostery_fragment_explicit_consent, container, false);
         AppNotice_Activity.isConsentActive = true;
@@ -136,11 +143,6 @@ public class ExplicitConsent_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
 
         handleOrientationConfig(getActivity().getResources().getConfiguration().orientation);
     }
