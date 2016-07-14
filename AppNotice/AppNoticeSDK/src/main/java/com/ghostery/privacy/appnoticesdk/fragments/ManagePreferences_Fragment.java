@@ -92,7 +92,7 @@ public class ManagePreferences_Fragment extends Fragment {
                 explicitButtonLayout.setVisibility(View.GONE);
 
                 // If implied mode, show the snackbar
-                CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorlayout);
+                CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
                 Snackbar snackbar = Snackbar
                         .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
                         .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {

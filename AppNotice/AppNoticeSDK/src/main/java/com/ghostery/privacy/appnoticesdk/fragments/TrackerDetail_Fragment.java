@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -126,8 +128,8 @@ public class TrackerDetail_Fragment extends Fragment {
                     opt_in_out_checkbox.setEnabled(true);     // Enable the switch
                     opt_in_out_checkbox.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
-                            Boolean isOn = ((CheckBox)v).isChecked();
+                        public void onClick(View checkBoxView) {
+                            Boolean isOn = ((CheckBox)checkBoxView).isChecked();
                             AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
 
                             if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
@@ -135,6 +137,12 @@ public class TrackerDetail_Fragment extends Fragment {
                                     appNoticeData.setTrackerOnOffState(tracker.uId, isOn);
                                 }
                             }
+
+                            // Show the snackbar with an accept/decline message
+                            CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
+                            int snackBarMessageId = isOn? R.string.ghostery_tracker_detail_opt_in : R.string.ghostery_tracker_detail_opt_out;
+                            Snackbar snackbar = Snackbar.make(coordinatorlayout, snackBarMessageId, Snackbar.LENGTH_LONG);
+                            snackbar.show();
                         }
                     });
                 }
