@@ -19,4 +19,9 @@
         <item name="android:textColor">@color/ghosteryColorButtonTextSecondary</item>
     </style>
 
+    <style name="ghostery_inverse_button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/ghosteryColorButtonTextPrimary</item>
+        <item name="android:textColor">@color/ghosteryColorPrimary</item>
+    </style>
+
 </resources>
