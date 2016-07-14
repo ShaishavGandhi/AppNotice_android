@@ -45,15 +45,6 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class com.android.vending.licensing.ILicensingService
 
-#For design support library
--keep class android.support.design.widget.** { *; }
--keep interface android.support.design.widget.** { *; }
--dontwarn android.support.design.**
-
--keepattributes *Annotation*
--keep public class * extends android.support.design.widget.CoordinatorLayout.Behavior { *; }
--keep public class * extends android.support.design.widget.ViewOffsetBehavior { *; }
-
 
 #To remove debug logs:
 -assumenosideeffects class android.util.Log {
