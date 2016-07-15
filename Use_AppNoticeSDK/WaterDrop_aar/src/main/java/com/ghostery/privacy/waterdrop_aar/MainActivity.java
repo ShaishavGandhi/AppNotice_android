@@ -282,8 +282,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     }
 
     private void showMessage(String title, String message) {
-//        String prefResults = "";
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(message);
@@ -298,11 +296,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     }
 
     private void showMessage(String title) {
-//        String prefResults = "";
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
-//        builder.setMessage(prefResults);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

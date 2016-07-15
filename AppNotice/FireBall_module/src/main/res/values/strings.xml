@@ -26,8 +26,8 @@
     <string name="message_tracker_state_changed">Tracker State Changed</string>
 
     <!-- Decline Confirmation dialog -->
-    <string name="declineConfirmDialog_title">Declined Consent</string>
-    <string name="declineConfirmDialog_message">To enjoy the full functionality of this app, you must either upgrade to the paid version or accept the privacy preferences in this version. Please restart this app if you would like to accept. This app will now continue with limited functionality.</string>
+    <string name="declineConfirmDialog_title">Error</string>
+    <string name="declineConfirmDialog_message">(Invalid state)</string>
     <string name="declineConfirmDialog_posBtn">OK</string>
 
 </resources>
