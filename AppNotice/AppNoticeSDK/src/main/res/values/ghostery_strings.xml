@@ -21,6 +21,8 @@
     <string name="ghostery_pleaseWait">Please Wait...</string>
 
     <!-- Manage Preferences Text -->
+    <!-- Title text on the privacy preferences screen. -->
+    <string name="ghostery_preferences_header">Manage Preferences</string>
     <!-- Text of the description section near the top of the privacy preferences screen. -->
     <string name="ghostery_preferences_description">Learn more about the technologies used in this app by reviewing the list below.</string>
     <!-- Text of the title of optional trackers tab. -->
@@ -39,12 +41,10 @@
     <string name="ghostery_preferences_controls_message">Privacy controls by Ghostery, Inc.</string>
     <!-- Text of the message on the implied manage preferences snackbar. -->
     <string name="ghostery_preferences_ready_message">Ready to go?</string>
-    <!-- Text of the message on the implied manage preferences snackbar. -->
+    <!-- Text of the action on the implied manage preferences snackbar. -->
     <string name="ghostery_preferences_continue_button">Continue</string>
     <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
     <string name="ghostery_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
-    <!-- Title text on the privacy preferences screen. -->
-    <string name="ghostery_preferences_header">Manage Preferences</string>
     <!-- Text of the Opt-in main text on the privacy preferences screen -->
     <string name="ghostery_preferences_optin_text">Opt In</string>
     <!-- Text of the Opt-in subtext on the privacy preferences screen -->
@@ -67,5 +67,13 @@
     <string name="ghostery_tracker_detail_opt_out">Opted out of this technology</string>
     <!-- Text used in the snackbar when tracker is opted out of from the detail view -->
     <string name="ghostery_tracker_detail_opt_in">Opted into this technology</string>
+
+    <!-- Explicit Decline Consent -->
+    <!-- Title text on the explicit decline screen. -->
+    <string name="ghostery_explicit_decline_header">Decline Notice</string>
+    <!-- Title text for the Explicit Decline Consent screen -->
+    <string name="ghostery_explicit_decline_header_text">Your Consent is Required</string>
+    <!-- Message text for the Explicit Decline Consent screen -->
+    <string name="ghostery_explicit_decline_message_text">To use this app, your consent for us to use technologies is required. You can go back and modify your privacy preferences by turning off any optional technology or uninstall the app.</string>
 
 </resources>

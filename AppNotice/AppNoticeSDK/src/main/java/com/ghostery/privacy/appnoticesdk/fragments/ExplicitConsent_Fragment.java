@@ -4,6 +4,8 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -155,7 +157,7 @@ public class ExplicitConsent_Fragment extends Fragment {
 
     protected void handleOrientationConfig(int orientation) {
         // Get the layout components
-        ImageView imageView_hoat_app_logo = (ImageView)getActivity().findViewById(R.id.imageView_hoat_app_logo);
+        ImageView imageView_host_app_logo = (ImageView)getActivity().findViewById(R.id.imageView_host_app_logo);
         LinearLayout linearLayout_port = (LinearLayout)getActivity().findViewById(R.id.buttons_layout_portrait);
         LinearLayout linearLayout_land = (LinearLayout)getActivity().findViewById(R.id.buttons_layout_landscape);
 
@@ -166,20 +168,20 @@ public class ExplicitConsent_Fragment extends Fragment {
             Drawable hostAppLogo = ResourcesCompat.getDrawable(getResources(), imageResourceId, null);
             if (hostAppLogo != null) {
                 wasLogoFound = true;
-                imageView_hoat_app_logo.setImageDrawable(hostAppLogo);
+                imageView_host_app_logo.setImageDrawable(hostAppLogo);
             }
         }
 
         // Enable and disable layout components depending on orientation and existence
-        if (linearLayout_port != null && linearLayout_land != null && imageView_hoat_app_logo != null) {
+        if (linearLayout_port != null && linearLayout_land != null && imageView_host_app_logo != null) {
             if (orientation == Configuration.ORIENTATION_PORTRAIT) {
                 if (wasLogoFound) {
-                    imageView_hoat_app_logo.setVisibility(View.VISIBLE);
+                    imageView_host_app_logo.setVisibility(View.VISIBLE);
                 }
                 linearLayout_land.setVisibility(View.GONE);
                 linearLayout_port.setVisibility(View.VISIBLE);
             } else {
-                imageView_hoat_app_logo.setVisibility(View.GONE);
+                imageView_host_app_logo.setVisibility(View.GONE);
                 linearLayout_port.setVisibility(View.GONE);
                 linearLayout_land.setVisibility(View.VISIBLE);
             }
@@ -187,17 +189,12 @@ public class ExplicitConsent_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
-        // Send notice for this event
-        AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_DECLINE);
-        AppNotice_Activity.isConsentActive = false;
-
-        // Let the calling class know the selected option
-        if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
-            appNoticeData.setTrackerOnOffState(false);   // Set all non-essential tracker to off
-            appNoticeData.saveTrackerStates();  // And remember the states
-            AppNotice_Activity.appNotice_callback.onOptionSelected(false, appNoticeData.getTrackerHashMap(true));
-        }
-
+        ExplicitDecline_Fragment fragment = new ExplicitDecline_Fragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_DECLINE);
+        ft.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_DECLINE);
+        ft.commit();
     }
 
 }

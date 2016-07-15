@@ -38,9 +38,8 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     public static final String FRAGMENT_TAG_IMPLIED_CONSENT = "IMPLIED_CONSENT";
     public static final String FRAGMENT_TAG_EXPLICIT_CONSENT = "EXPLICIT_CONSENT";
     public static final String FRAGMENT_TAG_MANAGE_PREFERENCES = "MANAGE_PREFERENCES";
-//    public static final String FRAGMENT_TAG_TRACKER_LIST = "TRACKER_LIST";
     public static final String FRAGMENT_TAG_TRACKER_DETAIL = "TRACKER_DETAIL";
-    public static final String FRAGMENT_TAG_HOST_SETTINGS = "HOST_SETTINGS";
+    public static final String FRAGMENT_TAG_EXPLICIT_DECLINE = "EXPLICIT_DECLINE";
 
 
     public static AppNotice_Activity getInstance() {
@@ -106,7 +105,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                         break;
                     case FRAGMENT_TAG_EXPLICIT_CONSENT:
                         ((ExplicitConsent_Fragment) fragment).onBackPressed();
-                        this.finish();
                         break;
                     case FRAGMENT_TAG_MANAGE_PREFERENCES:
                         ((ManagePreferences_Fragment) fragment).onBackPressed();
@@ -120,7 +118,7 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
                         ((TrackerDetail_Fragment) fragment).onBackPressed();
                         getSupportFragmentManager().popBackStack();
                         break;
-                    case FRAGMENT_TAG_HOST_SETTINGS:
+                    case FRAGMENT_TAG_EXPLICIT_DECLINE:
                         getSupportFragmentManager().popBackStack();
                         break;
                     default:

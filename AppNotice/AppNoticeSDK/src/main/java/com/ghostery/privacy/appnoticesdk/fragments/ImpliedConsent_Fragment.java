@@ -121,7 +121,7 @@ public class ImpliedConsent_Fragment extends Fragment {
 
     protected void handleOrientationConfig(int orientation) {
         // Get the layout components
-        ImageView imageView_hoat_app_logo = (ImageView)getActivity().findViewById(R.id.imageView_hoat_app_logo);
+        ImageView imageView_hoat_app_logo = (ImageView)getActivity().findViewById(R.id.imageView_host_app_logo);
         LinearLayout linearLayout_port = (LinearLayout)getActivity().findViewById(R.id.buttons_layout_portrait);
         LinearLayout linearLayout_land = (LinearLayout)getActivity().findViewById(R.id.buttons_layout_landscape);
 

@@ -23,7 +23,7 @@ android:orientation="vertical"
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView_hoat_app_logo"
+        android:id="@+id/imageView_host_app_logo"
         android:layout_gravity="center_horizontal|top"
         android:layout_margin="20dp" />
 
