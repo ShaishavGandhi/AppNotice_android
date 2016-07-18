@@ -38,8 +38,8 @@ public class ExplicitDecline_Fragment extends Fragment {
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.show();
+            actionBar.setShowHideAnimationEnabled(false);
+            actionBar.hide();
         }
 
         return view;
@@ -49,7 +49,6 @@ public class ExplicitDecline_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle(R.string.ghostery_explicit_decline_header);
         handleOrientationConfig(getActivity().getResources().getConfiguration().orientation);
     }
 

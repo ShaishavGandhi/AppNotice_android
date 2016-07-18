@@ -59,8 +59,6 @@
     <string name="ghostery_tracker_detail_opt_in">La tecnologia ha permesso.</string>
 
     <!-- Explicit Decline Consent -->
-    <!-- Title text on the explicit decline screen. -->
-    <string name="ghostery_explicit_decline_header">Decline Notice</string>
     <!-- Title text for the Explicit Decline Consent screen -->
     <string name="ghostery_explicit_decline_header_text">Your Consent is Required</string>
     <!-- Message text for the Explicit Decline Consent screen -->
