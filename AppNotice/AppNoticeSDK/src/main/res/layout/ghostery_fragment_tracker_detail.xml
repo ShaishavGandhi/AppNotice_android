@@ -23,6 +23,7 @@
         >
 
         <RelativeLayout
+            android:id="@+id/relativeLayout_allow_technology"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
@@ -48,14 +49,6 @@
                 android:focusable="false" />
 
         </RelativeLayout>
-
-        <View
-            android:id="@+id/divider_view1"
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_alignParentTop="true"
-            android:layout_margin="4dp"
-            android:background="@color/button_material_light" />
 
         <RelativeLayout
             android:layout_width="match_parent"

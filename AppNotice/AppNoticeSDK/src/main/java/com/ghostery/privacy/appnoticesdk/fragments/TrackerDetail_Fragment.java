@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
@@ -112,20 +113,16 @@ public class TrackerDetail_Fragment extends Fragment {
                 textView_TrackerName.setVisibility(View.GONE);
             }
 
+            RelativeLayout relativeLayout_allow_technology = ((RelativeLayout) rootView.findViewById(R.id.relativeLayout_allow_technology));
             CheckBox opt_in_out_checkbox = ((CheckBox) rootView.findViewById(R.id.opt_in_out_checkbox));
             if (tracker.isEssential()) {
-                opt_in_out_checkbox.setChecked(true);     // Make sure it is checked
-                opt_in_out_checkbox.setEnabled(false);    // Disable the checkbox
+                relativeLayout_allow_technology.setVisibility(View.GONE);
             } else {
-                opt_in_out_checkbox.setEnabled(true);
-
                 // If this tracker is a duplicate of an essential tracker, disable it
                 if (appNoticeData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
-                    opt_in_out_checkbox.setChecked(true);     // Make sure it is checked
-                    opt_in_out_checkbox.setEnabled(false);    // Disable the checkbox
+                    relativeLayout_allow_technology.setVisibility(View.GONE);
                 } else {
                     opt_in_out_checkbox.setChecked(tracker.isOn());
-                    opt_in_out_checkbox.setEnabled(true);     // Enable the switch
                     opt_in_out_checkbox.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View checkBoxView) {
