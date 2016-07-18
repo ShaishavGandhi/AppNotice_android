@@ -22,7 +22,7 @@
 
     <!-- Manage Preferences Text -->
     <!-- Title text on the privacy preferences screen. -->
-    <string name="ghostery_preferences_header">Manage Preferences</string>
+    <string name="ghostery_preferences_header">Privacy Preferences</string>
     <!-- Text of the description section near the top of the privacy preferences screen. -->
     <string name="ghostery_preferences_description">Learn more about the technologies used in this app by reviewing the list below.</string>
     <!-- Text of the title of optional trackers tab. -->
