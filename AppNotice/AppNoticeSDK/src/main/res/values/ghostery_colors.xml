@@ -3,7 +3,7 @@
     <!-- Ghostery SDK colors -->
     <color name="ghosteryColorPrimary">#03a9f4</color>
     <color name="ghosteryColorPrimaryDark">#0288D1</color>
-    <color name="ghosteryColorAccent">#00BCD4</color>
+    <color name="ghosteryColorAccent">#40c4ff</color>
     <color name="ghosteryColorButtonPrimary">#03A9F4</color>
     <color name="ghosteryColorButtonTextPrimary">#FFFFFF</color>
     <color name="ghosteryColorButtonSecondary">#CCCCCC</color>

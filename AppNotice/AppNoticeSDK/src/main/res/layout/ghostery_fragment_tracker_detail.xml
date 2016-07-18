@@ -31,7 +31,7 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/textView_allow_technology"
-                android:textSize="18sp"
+                android:textSize="@dimen/abc_text_size_large_material"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ghostery_tracker_detail_allow_technology"
@@ -81,7 +81,6 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/textView_trackerDescription"
-            android:textSize="13sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -90,7 +89,6 @@
             android:text="@string/ghostery_tracker_detail_learnmore"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textSize="13sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -99,15 +97,7 @@
             android:clickable="true"
             android:linksClickable="true"
             android:onClick="onLinkClick"
-            android:textSize="13sp"
             android:textColor="@color/accent_material_dark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/textView_open_message"
-            android:text="@string/ghostery_tracker_detail_open_message"
-            android:textSize="13sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

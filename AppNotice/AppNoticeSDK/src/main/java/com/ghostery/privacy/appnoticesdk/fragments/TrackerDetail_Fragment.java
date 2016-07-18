@@ -152,18 +152,15 @@ public class TrackerDetail_Fragment extends Fragment {
 
             AppCompatTextView textView_learn_more = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more));
             AppCompatTextView textView_learn_more_url = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more_url));
-            AppCompatTextView textView_open_message = ((AppCompatTextView) rootView.findViewById(R.id.textView_open_message));
             String learnMoreUrl = tracker.getPrivacy_url();
             if (textView_learn_more_url != null) {
                 Boolean isUrlValid = Util.checkURL(learnMoreUrl);
                 if (isUrlValid) {
                     textView_learn_more_url.setVisibility(View.VISIBLE);
                     textView_learn_more_url.setText(learnMoreUrl);
-                    textView_open_message.setVisibility(View.VISIBLE);
                 } else {
                     textView_learn_more.setText(R.string.ghostery_tracker_detail_learnmore_not_provided);
                     textView_learn_more_url.setVisibility(View.GONE);
-                    textView_open_message.setVisibility(View.GONE);
                 }
 
                 textView_learn_more_url.setOnClickListener(new View.OnClickListener() {
