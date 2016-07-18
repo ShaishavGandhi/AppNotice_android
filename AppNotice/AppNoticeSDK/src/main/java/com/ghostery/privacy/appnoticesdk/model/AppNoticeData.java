@@ -285,7 +285,8 @@ public class AppNoticeData {
                     Log.d(TAG, "Sending notice beacon: (type=OptInOut) " + uRL);
                     try{
                         ServiceHandler serviceHandler = new ServiceHandler();
-                        String temp = serviceHandler.getRequest(uRL);
+                        String resp = serviceHandler.getRequest(uRL);
+                        Log.d(TAG, "Notice beacon resp: " + resp);
                     }catch(Exception e){
                         Log.e(TAG, "Error sending notice beacon: (type=OptInOut) " + uRL, e);
                     }

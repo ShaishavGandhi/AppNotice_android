@@ -22,6 +22,7 @@ import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
+import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
 
 /**
@@ -130,6 +131,8 @@ public class ManagePreferences_Fragment extends Fragment {
                         // Remember in a persistent way that the explicit notice has been accepted
                         AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
+                        handleTrackerStateChanges();
+
                         // Let the calling class know the selected option
                         AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
                         if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
@@ -173,9 +176,48 @@ public class ManagePreferences_Fragment extends Fragment {
     }
 
     public void handleTrackerStateChanges() {
-        ManagePreferences_TrackerList_Fragment managePreferences_trackerList_fragment = (ManagePreferences_TrackerList_Fragment)managePreferences_viewPager_adapter.getItem(0);
-        managePreferences_trackerList_fragment.saveTrackerStates();
-        managePreferences_trackerList_fragment.sendOptInOutNotices();
+        saveTrackerStates();
+        sendOptInOutNotices();
+    }
+
+    public void sendOptInOutNotices() {
+        // Opt-in/out ping-back parameters
+        int pingBackCount = 0;      // Count the ping-backs
+        AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
+
+        // Send opt-in/out ping-back for each changed non-essential tracker
+        if (appNoticeData.optionalTrackerArrayList != null && AppNotice_Activity.optionalTrackerArrayListClone != null &&
+                appNoticeData.optionalTrackerArrayList.size() == AppNotice_Activity.optionalTrackerArrayListClone.size()) {
+
+            for (int i = 0; i < appNoticeData.optionalTrackerArrayList.size(); i++) {
+                Tracker tracker = appNoticeData.optionalTrackerArrayList.get(i);
+                Tracker trackerClone = AppNotice_Activity.optionalTrackerArrayListClone.get(i);
+
+                // If the tracker is non-essential and is changed...
+                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
+                    Boolean optOut = tracker.isOn() == false;
+                    Boolean uniqueVisit = false;//((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                    Boolean firstOptOut = pingBackCount == 0;
+                    Boolean selectAll = false;//((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+
+                    // TODO: Get correct values for uniqueVisit and selectAll
+                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
+                    pingBackCount++;
+                }
+            }
+        }
+    }
+
+    public void saveTrackerStates() {
+        if (AppNotice_Activity.appNoticeData != null) {
+            AppNotice_Activity.appNoticeData.saveTrackerStates();
+
+            // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
+            int trackerStateChangeCount = AppNotice_Activity.appNoticeData.getTrackerStateChangeCount(AppNotice_Activity.optionalTrackerArrayListClone);
+            if (trackerStateChangeCount > 0 && !AppNotice_Activity.isConsentActive) {
+                AppNotice_Activity.appNotice_callback.onTrackerStateChanged(AppNotice_Activity.appNoticeData.getTrackerHashMap(true));
+            }
+        }
     }
 
 }

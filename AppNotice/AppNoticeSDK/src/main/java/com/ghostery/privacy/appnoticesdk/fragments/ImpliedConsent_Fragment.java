@@ -76,6 +76,9 @@ public class ImpliedConsent_Fragment extends Fragment {
         AppCompatButton close_button = (AppCompatButton)view.findViewById(R.id.close_button_portrait);
         close_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
+
                 // Let the calling class know the selected option
                 if (AppNotice_Activity.appNotice_callback != null) {
                     AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
@@ -91,6 +94,9 @@ public class ImpliedConsent_Fragment extends Fragment {
         AppCompatButton close_button_land = (AppCompatButton)view.findViewById(R.id.close_button_landscape);
         close_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
+
                 // Let the calling class know the selected option
                 if (AppNotice_Activity.appNotice_callback != null) {
                     AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
