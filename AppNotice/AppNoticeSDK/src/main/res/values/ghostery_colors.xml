@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Ghostery SDK colors -->
-    <color name="ghosteryColorPrimary">#03A9F4</color>
+    <color name="ghosteryColorPrimary">#03a9f4</color>
     <color name="ghosteryColorPrimaryDark">#0288D1</color>
     <color name="ghosteryColorAccent">#00BCD4</color>
     <color name="ghosteryColorButtonPrimary">#03A9F4</color>

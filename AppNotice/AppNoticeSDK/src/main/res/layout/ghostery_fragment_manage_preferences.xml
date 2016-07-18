@@ -15,9 +15,7 @@
         android:paddingLeft="12dp"
         android:paddingTop="6dp"
         android:paddingRight="12dp"
-        android:paddingBottom="6dp"
-        android:background="@color/ghosteryColorPrimary"
-        android:textColor="@color/ghosteryColorButtonTextPrimary" />
+        android:paddingBottom="6dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -25,7 +23,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/explicit_button_layout"
         android:gravity="right"
-        android:background="@color/ghosteryColorPrimary"
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
 
@@ -35,16 +32,16 @@
             android:id="@+id/preferences_button_decline"
             android:text="@string/ghostery_consent_button_decline"
             android:background="?android:attr/selectableItemBackground"
-            android:textColor="@color/ghosteryColorButtonTextPrimary"
-            android:paddingRight="12dp" />
+            android:paddingRight="12dp"
+            android:textColor="@color/ghosteryColorPrimary" />
 
         <android.support.v7.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/preferences_button_accept"
             android:text="@string/ghostery_consent_button_accept"
-            android:theme="@style/ghostery_inverse_button"
-            />
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:theme="@style/ghostery_AppNoticeTheme.Button" />
 
     </LinearLayout>
 
