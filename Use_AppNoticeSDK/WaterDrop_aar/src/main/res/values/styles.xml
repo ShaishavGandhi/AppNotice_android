@@ -9,14 +9,4 @@
 
     <style name="ghostery_AppNoticeTheme.Base" parent="@style/Theme.AppCompat" />
 
-    <!--&lt;!&ndash; Ghostery SDK colors &ndash;&gt;-->
-    <!--<color name="ghosteryColorPrimary">#B34984</color>-->
-    <!--<color name="ghosteryColorPrimaryDark">#923861</color>-->
-    <!--<color name="ghosteryColorAccent">#FF0000</color>-->
-    <!--<color name="ghosteryColorButtonPrimary">#A0B54B</color>-->
-    <!--<color name="ghosteryColorButtonTextPrimary">#FFAAFF</color>-->
-    <!--<color name="ghosteryColorButtonSecondary">#FCCC91</color>-->
-    <!--<color name="ghosteryColorButtonTextSecondary">#866686</color>-->
-    <!--<color name="ghosteryColorButtonTextBorderless">#03F4A9</color>-->
-
 </resources>
