@@ -53,10 +53,6 @@
     <string name="ghostery_tracker_detail_learnmore">Pour en savoir plus sur la manière dont nous recueillons et utilisons des informations pour les applications mobiles, veuillez consulter:</string>
     <!-- Text used in the case there is no learn-more link provided -->
     <string name="ghostery_tracker_detail_learnmore_not_provided">Politique de confidentialité non fournie</string>
-    <!-- Text used in the snackbar when tracker is opted out of from the detail view -->
-    <string name="ghostery_tracker_detail_opt_out">Technologie désactivé.</string>
-    <!-- Text used in the snackbar when tracker is opted out of from the detail view -->
-    <string name="ghostery_tracker_detail_opt_in">Technologie activée.</string>
 
     <!-- Explicit Decline Consent -->
     <!-- Title text for the Explicit Decline Consent screen -->
