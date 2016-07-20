@@ -2,12 +2,15 @@ package com.ghostery.privacy.appnoticesdk.utils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
+import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
+import com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 import java.util.regex.Pattern;
@@ -24,10 +27,17 @@ public class Util {
         final AppNoticeData appNoticeData = AppNoticeData.getInstance(activity);
 
         if (appNoticeData.isTrackerListInitialized()) {
-//          Intent intent = new Intent(fragmentActivity, ListActivity.class);
-            Intent intent = new Intent(activity, AppNotice_Activity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(intent);
+            if (AppNotice_Activity.isConsentActive) {
+                ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
+                FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
+                transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
+                transaction.commit();
+            } else {
+                Intent intent = new Intent(activity, AppNotice_Activity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
+            }
         } else {
             // If not initialized yet, go get it
             Log.d(TAG, "Starting initTrackerList from Util.showManagePreferences init.");
@@ -43,10 +53,17 @@ public class Util {
                             // Send notice for this event
                             //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
 
-                            // Intent intent = new Intent(fragmentActivity, ListActivity.class);
-                            Intent intent = new Intent(activity, AppNotice_Activity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            activity.startActivity(intent);
+                            if (AppNotice_Activity.isConsentActive) {
+                                ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
+                                FragmentTransaction transaction = AppNotice_Activity.getInstance().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
+                                transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_MANAGE_PREFERENCES);
+                                transaction.commit();
+                            } else {
+                                Intent intent = new Intent(activity, AppNotice_Activity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                activity.startActivity(intent);
+                            }
                         }
                     });
                 }

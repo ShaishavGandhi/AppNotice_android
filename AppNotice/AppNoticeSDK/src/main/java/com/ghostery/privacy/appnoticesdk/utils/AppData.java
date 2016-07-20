@@ -7,7 +7,7 @@ package com.ghostery.privacy.appnoticesdk.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
+import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 
 import java.util.Map;
 
@@ -22,8 +22,8 @@ public class AppData {
 
     // Application data keys
     public static final String APPDATA_VERSION = "AppDataVersion";
-    public static final String APPDATA_IMPLICIT_LAST_DISPLAY_TIME = "implicit_last_display_time";   // long int, timestamp in millis
-    public static final String APPDATA_IMPLICIT_DISPLAY_COUNT = "implicit_display_count";           // int
+    public static final String APPDATA_IMPLIED_LAST_DISPLAY_TIME = "implied_last_display_time";   // long int, timestamp in millis
+    public static final String APPDATA_IMPLIED_DISPLAY_COUNT = "implied_display_count";           // int
     public static final String APPDATA_EXPLICIT_ACCEPTED = "explicit_accepted";                     // Boolean
     public static final String APPDATA_TRACKERSTATES = "tracker_states";                            // String
     public static final String APPDATA_PREV_NOTICE_ID = "previous_notice_id";                       // int
@@ -31,7 +31,7 @@ public class AppData {
 
     public static SharedPreferences getSessionInfo(){
         if( sharedPreferences == null ) {
-            Context appContext = AppNotice.getAppContext();
+            Context appContext = AppNoticeData.appContext;
             String packageName = appContext.getPackageName();
             sharedPreferences = appContext.getSharedPreferences(packageName + APPDATA_FILENAME_END, appContext.MODE_PRIVATE);
             if (!sharedPreferences.contains(APPDATA_VERSION)) {

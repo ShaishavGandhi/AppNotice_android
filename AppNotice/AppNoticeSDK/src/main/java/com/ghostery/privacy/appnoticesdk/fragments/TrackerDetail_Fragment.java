@@ -1,23 +1,30 @@
 package com.ghostery.privacy.appnoticesdk.fragments;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.Switch;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
+import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
 import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.ImageDownloader;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 /**
@@ -48,6 +55,12 @@ public class TrackerDetail_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.show();
+        }
 
         // Get either a new or initialized tracker config object
         appNoticeData = AppNoticeData.getInstance(getActivity());
@@ -103,26 +116,21 @@ public class TrackerDetail_Fragment extends Fragment {
                 textView_TrackerName.setVisibility(View.GONE);
             }
 
-            Switch opt_in_out_switch = ((Switch) rootView.findViewById(R.id.opt_in_out_switch));
+            RelativeLayout relativeLayout_allow_technology = ((RelativeLayout) rootView.findViewById(R.id.relativeLayout_allow_technology));
+            CheckBox opt_in_out_checkbox = ((CheckBox) rootView.findViewById(R.id.opt_in_out_checkbox));
             if (tracker.isEssential()) {
-                opt_in_out_switch.setVisibility(View.INVISIBLE);
+                relativeLayout_allow_technology.setVisibility(View.GONE);
             } else {
-                opt_in_out_switch.setVisibility(View.VISIBLE);
-
                 // If this tracker is a duplicate of an essential tracker, disable it
                 if (appNoticeData.isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())){
-                    opt_in_out_switch.setChecked(true);     // Make sure it is checked
-                    opt_in_out_switch.setEnabled(false);    // Disable the switch
+                    relativeLayout_allow_technology.setVisibility(View.GONE);
                 } else {
-                    opt_in_out_switch.setChecked(tracker.isOn());
-                    opt_in_out_switch.setEnabled(true);     // Enable the switch
-                    opt_in_out_switch.setOnClickListener(new View.OnClickListener() {
+                    opt_in_out_checkbox.setChecked(tracker.isOn());
+                    opt_in_out_checkbox.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
-                            Boolean isOn = ((Switch)v).isChecked();
-                            AppNoticeData appNoticeData = (AppNoticeData) Session.get(Session.APPNOTICE_DATA);
-                            Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they changed the state of a tracker, remember that "All" wasn't the last set state.
-                            Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they changed the state of a tracker, remember that "None" wasn't the last set state.
+                        public void onClick(View checkBoxView) {
+                            Boolean isOn = ((CheckBox)checkBoxView).isChecked();
+                            AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
 
                             if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
                                 if (tracker != null) {
@@ -145,22 +153,16 @@ public class TrackerDetail_Fragment extends Fragment {
                     textView_learn_more_url.setVisibility(View.VISIBLE);
                     textView_learn_more_url.setText(learnMoreUrl);
                 } else {
-                    textView_learn_more.setText(R.string.ghostery_preferences_detail_learnmore_not_provided);
+                    textView_learn_more.setText(R.string.ghostery_tracker_detail_learnmore_not_provided);
                     textView_learn_more_url.setVisibility(View.GONE);
                 }
 
                 textView_learn_more_url.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(LearnMore_Fragment.ARG_ITEM_ID, getActivity().getIntent().getIntExtra(TrackerDetail_Fragment.ARG_ITEM_ID, 0));
-                        LearnMore_Fragment fragment = new LearnMore_Fragment();
-
-                        fragment.setArguments(bundle);
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
-                        transaction.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_LEARN_MORE);
-                        transaction.commit();
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(tracker.getPrivacy_url()));
+                        startActivity(i);
                     }
                 });
             }
@@ -170,10 +172,45 @@ public class TrackerDetail_Fragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
+
+        if (AppNotice_Activity.isConsentActive) {
+            if (AppNotice_Activity.isImpliedMode) {
+                // If implied mode, show the snackbar
+                CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                appNotice_activity.handleTrackerStateChanges();
+
+                                // Let the calling class know the selected option
+                                AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
+
+                                if (AppNotice_Activity.appNotice_callback != null) {
+                                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                                }
+
+                                // Close this fragment
+                                AppNotice_Activity.isConsentActive = false;
+                                appNotice_activity.finish();
+                            }
+                        });
+
+                snackbar.show();
+            }
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
-        getActivity().setTitle(R.string.ghostery_tracker_detail_title);
+        getActivity().setTitle(tracker.getName());  // (R.string.ghostery_tracker_detail_title);
     }
 
     public void onBackPressed() {

@@ -2,16 +2,15 @@ package com.ghostery.privacy.appnoticesdk.model;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
 import com.ghostery.privacy.appnoticesdk.utils.ServiceHandler;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
 import com.ghostery.privacy.appnoticesdk.utils.Util;
 
 import org.json.JSONArray;
@@ -46,7 +45,13 @@ public class AppNoticeData {
     private int consent_flow_dialog_opacity_default = 100;
     private final Object waitObj = new Object();
     private boolean gettingTrackerList = false;
-
+    private ArrayList<Tracker> trackerArrayList = new ArrayList<>();
+    public ArrayList<Tracker> optionalTrackerArrayList = new ArrayList<>();
+    public ArrayList<Tracker> essentialTrackerArrayList = new ArrayList<>();
+    public static Context appContext;
+    public static boolean usingToken = true;
+    public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
+    public static int impliedFlow_SessionCount;
 
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
 
@@ -84,26 +89,7 @@ public class AppNoticeData {
     private static final String TAG_TRACKERS = "trackers";                                              // Tracker list
 
     // Field values
-    private int dialog_button_color; // Button background color for these buttons: Explicit Accept button on  Consent dialog
-    private String dialog_button_consent; // Button text for Accept button on Explicit Consent dialog
-    private int dialog_explicit_accept_button_text_color; // Button text color for Accept button on Explicit Consent dialog
-    private int dialog_background_color; // Dialog background color for Consent dialog (missing in doc)
-    private String dialog_explicit_message; // Message on Explicit Consent dialog
-    private int dialog_explicit_decline_button_color; // Button background color for Decline button on Explicit Consent dialog
-    private String dialog_button_decline; // Button text for Decline button on Explicit Consent dialog
-    private int dialog_explicit_decline_button_text_color; // Button text color for Decline button on Explicit Consent dialog
-    private String dialog_header_text; // Title on Consent dialog
-    private int dialog_header_text_color; // Title color on Consent dialog
-    private String dialog_button_close; // Button text for Close buttons on both Implied Consent dialogs
-    private String preferences_description; // Text for the header of the Manage Privacy Preferences screen
-    private String preferences_header; // Text for the description section of the Manage Privacy Preferences screen
-    private String dialog_implicit_message; // Message on Implied Consent dialog
-    private String dialog_button_preferences; // Button text for Manage Preferences button on the Consent dialog
-    private int dialog_message_text_color; // Message text color for all dialogs
-    private float consent_flow_dialog_opacity = 1F; // Opacity setting (scale 0 to 100) for all dialogs
     private int implied_flow_session_display_max; // Maximum number of times the Implied Consent dialog should be displayed in a session.
-
-    public ArrayList<Tracker> trackerArrayList = new ArrayList<>();
 
 
     // Public getters and setters
@@ -118,24 +104,6 @@ public class AppNoticeData {
         this.previousNoticeId = previousNoticeId;
         AppData.setInteger(AppData.APPDATA_PREV_NOTICE_ID, previousNoticeId);
     }
-
-    public int getDialogButtonColor() { return dialog_button_color; }
-    public String getDialogButtonConsent() { return dialog_button_consent; }
-    public int getDialogExplicitAcceptButtonTextColor() { return dialog_explicit_accept_button_text_color; }
-    public int getDialogBackgroundColor() { return dialog_background_color; }
-    public String getDialogExplicitMessage() { return dialog_explicit_message; }
-    public int getDialogExplicitDeclineButtonColor() { return dialog_explicit_decline_button_color; }
-    public String getDialogButtonDecline() { return dialog_button_decline; }
-    public int getDialogExplicitDeclineButtonTextColor() { return dialog_explicit_decline_button_text_color; }
-    public String getDialogHeaderText() { return dialog_header_text; }
-    public int getDialogHeaderTextColor() { return dialog_header_text_color; }
-    public String getDialogButtonClose() { return dialog_button_close; }
-    public String getPreferencesDescription() { return preferences_description; }
-//    public String getPreferencesHeader() { return preferences_header; }
-    public String getDialogImplicitMessage() { return dialog_implicit_message; }
-    public String getDialogButtonPreferences() { return dialog_button_preferences; }
-    public int getDialogMessageTextColor() { return dialog_message_text_color; }
-    public float getConsentFlowDialogOpacity() { return consent_flow_dialog_opacity / 100; }
     public int getImpliedFlowSessionDisplayMax() { return implied_flow_session_display_max; }
 
 
@@ -146,10 +114,7 @@ public class AppNoticeData {
 
         // Ensure the app only uses one instance of this class.
         if (instance == null) {
-            instance = (AppNoticeData) Session.get(Session.APPNOTICE_DATA, new AppNoticeData());
-
-            // Save this instance object in the app session
-            Session.set(Session.APPNOTICE_DATA, instance);
+            instance = new AppNoticeData();
         }
 
         return instance;
@@ -157,9 +122,9 @@ public class AppNoticeData {
 
     // Constructor
     private AppNoticeData() {
+        instance = this;
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
         implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
-        consent_flow_dialog_opacity = consent_flow_dialog_opacity_default = activity.getResources().getInteger(R.integer.ghostery_consent_flow_dialog_opacity);
     }
 
     public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
@@ -178,11 +143,11 @@ public class AppNoticeData {
         return trackerHashMap;
     }
 
-    public ArrayList<Tracker> getTrackerListClone() {
+    public ArrayList<Tracker> getOptionalTrackerListClone() {
         ArrayList<Tracker> trackerArrayListClone = new ArrayList<>();
 
-        // Loop through the tracker list and add all tracker IDs and their on/off state
-        for (Tracker tracker : trackerArrayList) {
+        // Loop through the optional tracker list and add all tracker IDs and their on/off state
+        for (Tracker tracker : optionalTrackerArrayList) {
             trackerArrayListClone.add(new Tracker(tracker));
         }
         return trackerArrayListClone;
@@ -190,7 +155,7 @@ public class AppNoticeData {
 
     // Returns requested tracker. If not found, returns null.
     public Tracker getTrackerById(int uId) {
-        // Loop through the tracker list and add non-essential tracker IDs and their on/off state
+        // Loop through the tracker list to look for the requested tracker
         for (Tracker tracker : trackerArrayList) {
             if (tracker.uId == uId) {
                 return tracker;
@@ -204,7 +169,7 @@ public class AppNoticeData {
         Tracker selectedTracker = getTrackerById(uId);  // Get the tracker object for the specified tracker
         if (!selectedTracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(selectedTracker.getTrackerId())) {
             int selectedTrackerId = selectedTracker.getTrackerId();
-            for (Tracker tracker : trackerArrayList) {
+            for (Tracker tracker : optionalTrackerArrayList) {
                 if (tracker.getTrackerId() == selectedTrackerId) {
                     tracker.setOnOffState(isOn);
                 }
@@ -214,7 +179,7 @@ public class AppNoticeData {
 
     // Sets all non-essential tracker on/off states to the specified value.
     public void setTrackerOnOffState(boolean isOn) {
-        for (Tracker tracker : trackerArrayList) {
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 tracker.setOnOffState(isOn);
             }
@@ -225,7 +190,7 @@ public class AppNoticeData {
     public int getTrackerOnOffStates() {
         int trackerCount = 0;
         int trackerOnCount = 0;
-        for (Tracker tracker : trackerArrayList) {
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
                 trackerCount++;
                 if (tracker.isOn()) {
@@ -243,8 +208,8 @@ public class AppNoticeData {
         int nonEssentialTrackerCount = 0;    // Assume no changes
 
         // Count non-essential trackers
-        for (int i = 0; i < trackerArrayList.size(); i++) {
-            Tracker tracker = trackerArrayList.get(i);
+        for (int i = 0; i < optionalTrackerArrayList.size(); i++) {
+            Tracker tracker = optionalTrackerArrayList.get(i);
 
             // If the tracker is non-essential...
             if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
@@ -255,7 +220,6 @@ public class AppNoticeData {
         return nonEssentialTrackerCount;
     }
 
-    // Returns the number of non-essential trackers
     public boolean isTrackerDuplicateOfEssentialTracker(int trackerId) {
         Boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
 
@@ -284,11 +248,11 @@ public class AppNoticeData {
         int changeCount = 0;    // Assume no changes
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList != null && originalTrackerArrayList != null &&
-                trackerArrayList.size() == originalTrackerArrayList.size()) {
+        if (optionalTrackerArrayList != null && originalTrackerArrayList != null &&
+                optionalTrackerArrayList.size() == originalTrackerArrayList.size()) {
 
-            for (int i = 0; i < trackerArrayList.size(); i++) {
-                Tracker tracker = trackerArrayList.get(i);
+            for (int i = 0; i < optionalTrackerArrayList.size(); i++) {
+                Tracker tracker = optionalTrackerArrayList.get(i);
                 Tracker originalTracker = originalTrackerArrayList.get(i);
 
                 // If the tracker is non-essential and is changed...
@@ -321,7 +285,8 @@ public class AppNoticeData {
                     Log.d(TAG, "Sending notice beacon: (type=OptInOut) " + uRL);
                     try{
                         ServiceHandler serviceHandler = new ServiceHandler();
-                        String temp = serviceHandler.getRequest(uRL);
+                        String resp = serviceHandler.getRequest(uRL);
+                        Log.d(TAG, "Notice beacon resp: " + resp);
                     }catch(Exception e){
                         Log.e(TAG, "Error sending notice beacon: (type=OptInOut) " + uRL, e);
                     }
@@ -397,25 +362,6 @@ public class AppNoticeData {
 
     // Init
     public void init() {
-        Resources resources = activity.getResources();
-
-        dialog_button_color = resources.getColor(R.color.ghostery_dialog_button_color);
-        dialog_button_consent = resources.getString(R.string.ghostery_dialog_button_consent);
-        dialog_explicit_accept_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_accept_button_text_color);
-        dialog_background_color = resources.getColor(R.color.ghostery_dialog_background_color);
-        dialog_explicit_message = resources.getString(R.string.ghostery_dialog_explicit_message);
-        dialog_explicit_decline_button_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_color);
-        dialog_button_decline = resources.getString(R.string.ghostery_dialog_button_decline);
-        dialog_explicit_decline_button_text_color = resources.getColor(R.color.ghostery_dialog_explicit_decline_button_text_color);
-        dialog_header_text = resources.getString(R.string.ghostery_dialog_header_text);
-        dialog_header_text_color = resources.getColor(R.color.ghostery_dialog_header_text_color);
-        dialog_button_close = resources.getString(R.string.ghostery_dialog_button_close);
-        preferences_description = resources.getString(R.string.ghostery_preferences_description);
-//        preferences_header = resources.getString(R.string.ghostery_preferences_header);
-        dialog_implicit_message = resources.getString(R.string.ghostery_dialog_implicit_message);
-        dialog_button_preferences = resources.getString(R.string.ghostery_dialog_button_preferences);
-        dialog_message_text_color = resources.getColor(R.color.ghostery_dialog_message_text_color);
-        consent_flow_dialog_opacity = consent_flow_dialog_opacity_default;
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
         previousNoticeId = AppData.getInteger(AppData.APPDATA_PREV_NOTICE_ID, 0);
@@ -457,7 +403,7 @@ public class AppNoticeData {
                 }
 
                 // Save the tracker states
-                saveTrackerStates();
+//                saveTrackerStates();
             } else {
                 // Start the call to get the AppNoticeData data from the service...from the UI thread
                 activity.runOnUiThread(new Runnable() {
@@ -472,11 +418,11 @@ public class AppNoticeData {
         }
     }
 
-    // Determine if the Implicit notice should be shown. True = show notice; False = don't show notice.
-    public boolean getImplicitNoticeDisplayStatus() {
+    // Determine if the Implied notice should be shown. True = show notice; False = don't show notice.
+    public boolean getImpliedNoticeDisplayStatus() {
         Boolean showNotice = true;     // Assume we need to show the notice
 
-        if (AppNotice.implied30dayDisplayMax <= 0) {
+        if (implied30dayDisplayMax <= 0) {
             // If the notice ID has changed, we need to show the notice again
             if (currentNoticeId == previousNoticeId) {
                 showNotice = false;
@@ -485,26 +431,25 @@ public class AppNoticeData {
             }
         } else {
             long currentTime = System.currentTimeMillis();
-            int implicit_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
-            long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
-            int impliedFlow_SessionCount = (int) Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
+            int implied_display_count = (int) AppData.getInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0);
+            long implied_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, 0L);
 
-            if (implicit_last_display_time == 0L) {     // If this is the first pass...
-                implicit_last_display_time = currentTime;
-                AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, implicit_last_display_time);
+            if (implied_last_display_time == 0L) {     // If this is the first pass...
+                implied_last_display_time = currentTime;
+                AppData.setLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, implied_last_display_time);
             }
 
             if (impliedFlow_SessionCount >= implied_flow_session_display_max) { // If displayed enough in this session...
                 showNotice = false; // don't display it now
             } else {
-                if (currentTime <= implicit_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
-                    if (implicit_display_count >= AppNotice.implied30dayDisplayMax) { // If displayed enough in last 30 days...
+                if (currentTime <= implied_last_display_time + ELAPSED_30_DAYS_MILLIS) { // If displayed less than 30 days ago...
+                    if (implied_display_count >= AppNoticeData.implied30dayDisplayMax) { // If displayed enough in last 30 days...
                         showNotice = false; // don't display it now
                     }
                 } else {
                     // If it's been more than 30 days...
-                    AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0); // Reset the display count to 0
-                    AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
+                    AppData.setInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0); // Reset the display count to 0
+                    AppData.setLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, currentTime); // And reset the last display time
                 }
             }
         }
@@ -515,32 +460,30 @@ public class AppNoticeData {
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getExplicitNoticeDisplayStatus() {
         Boolean displayStatus = true;     // Assume we need to show the notice
-        if (AppNotice.usingExplicitStrictMode) {
+        if (currentNoticeId != previousNoticeId) {
+            // If the notice ID has changed, we need to show the notice again
+            displayStatus = true;
+        } else {
+            // If the notice ID is the same, see if this has been accepted
             Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
             displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
-        } else {
-            // If the notice ID has changed, we need to show the notice again
-            if (currentNoticeId == previousNoticeId) {
-                displayStatus = false;
-            }
         }
         return displayStatus;
     }
 
-    public static void incrementImplicitNoticeDisplayCount() {
-        long implicit_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, 0L);
+    public static void incrementImpliedNoticeDisplayCount() {
+        long implied_last_display_time = (long) AppData.getLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, 0L);
 
-        // Increment the implicit display count
-        int currentDisplayCount = AppData.getInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, 0);
-        AppData.setInteger(AppData.APPDATA_IMPLICIT_DISPLAY_COUNT, currentDisplayCount + 1);
+        // Increment the implied display count
+        int currentDisplayCount = AppData.getInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, 0);
+        AppData.setInteger(AppData.APPDATA_IMPLIED_DISPLAY_COUNT, currentDisplayCount + 1);
 
-        // Increment the implicit session display count
-        int currentSessionCount = (int)Session.get(Session.SYS_CURRENT_SESSION_COUNT, 0);
-        Session.set(Session.SYS_CURRENT_SESSION_COUNT, currentSessionCount + 1);
+        // Increment the implied session display count
+        impliedFlow_SessionCount++;
 
         long currentTime = System.currentTimeMillis();
         if (currentDisplayCount == 0) {             // If this is the first time being displayed in this 30-day period...
-            AppData.setLong(AppData.APPDATA_IMPLICIT_LAST_DISPLAY_TIME, currentTime);   //   reset the last display time to now
+            AppData.setLong(AppData.APPDATA_IMPLIED_LAST_DISPLAY_TIME, currentTime);   //   reset the last display time to now
         }
     }
 
@@ -557,7 +500,7 @@ public class AppNoticeData {
         HashMap trackerHashMap = getTrackerPreferences();
 
         // Look for a non-essential tracker with the same ID. If found, set its state.
-        for (Tracker tracker : trackerArrayList) {
+        for (Tracker tracker : optionalTrackerArrayList) {
             if (!tracker.isEssential()) {
                 Boolean trackerState = (Boolean)trackerHashMap.get(tracker.getTrackerId());
 
@@ -617,7 +560,7 @@ public class AppNoticeData {
             if (jsonObj != null) {
                 try {
                     String trackerJSONString;
-                    if (AppNotice.usingToken) {
+                    if (usingToken) {
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS_VIA_TOKEN)? null : jsonObj.getString(TAG_TRACKERS_VIA_TOKEN);
                     } else {
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
@@ -626,6 +569,8 @@ public class AppNoticeData {
                     if (trackerJSONString != null) {
                         JSONArray trackerJSONArray = new JSONArray(trackerJSONString);
                         trackerArrayList.clear();
+                        optionalTrackerArrayList.clear();
+                        essentialTrackerArrayList.clear();
 
                         int id;
                         for (int i = 0; i < trackerJSONArray.length(); i++) {
@@ -671,17 +616,17 @@ public class AppNoticeData {
                             }
                         });
 
-                        // Set header bit for first tracker in each category
-                        String categoryName = "";
+                        // Fill essential and optional tracker array lists
                         for (int i = 0; i < trackerArrayList.size(); i++) {
                             Tracker tracker = trackerArrayList.get(i);
                             tracker.uId = i;        // Set the tracker's unique ID
 
-                            // Flag tracker as having a header if this is the first tracker or if the category name is new
-                            if (i == 0 || !tracker.getCategory().equalsIgnoreCase(categoryName)) {
-                                tracker.setHasHeader();
+                            // If the tracker is non-essential and is changed...
+                            if (tracker.isEssential()) {
+                                essentialTrackerArrayList.add(tracker);
+                            } else {
+                                optionalTrackerArrayList.add(tracker);
                             }
-                            categoryName = tracker.getCategory();
                         }
                     }
 
@@ -724,7 +669,7 @@ public class AppNoticeData {
                 } else {
                     // Showing progress dialog
                     progressDialog = new ProgressDialog(activity);
-                    progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_dialog_pleaseWait));
+                    progressDialog.setMessage(activity.getResources().getString(R.string.ghostery_pleaseWait));
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                 }
@@ -734,21 +679,11 @@ public class AppNoticeData {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            trackerArrayList.clear();       // Start with an empty tracker array
-
             // Creating service handler class instance
             ServiceHandler serviceHandler = new ServiceHandler();
 
             // Make a request to url for the AppNoticeData info
             String url = getFormattedJSONUrl();
-
-
-
-
-
-
-
-
 
             String jsonStr = serviceHandler.getRequest(url);
             fillTrackerList(jsonStr);
@@ -758,12 +693,6 @@ public class AppNoticeData {
                 AppData.setString(AppData.APPDATA_PREV_JSON, jsonStr);
             } else {
                 Log.d(TAG, "Failed to fill tracker list.");
-//                // If fillTrackerList didn't initialize the tracker list, we need to end the wait-object here
-//                gettingTrackerList = false;
-//                synchronized(waitObj) {
-//                    Log.d(TAG, "Finished filling tracker list.");
-//                    waitObj.notifyAll();
-//                }
             }
 
             return null;
@@ -806,7 +735,7 @@ public class AppNoticeData {
 
         protected String getFormattedJSONUrl() {
             String formattedJSONUrl = "";
-            if (AppNotice.usingToken) {
+            if (usingToken) {
                 Object[] urlParams = new Object[1];
                 urlParams[0] = String.valueOf(appNotice_token);			// 0
                 formattedJSONUrl = MessageFormat.format(URL_JSON_REQUEST_VIA_TOKEN, urlParams);
@@ -819,5 +748,9 @@ public class AppNoticeData {
             return formattedJSONUrl;
         }
 
+    }
+
+    public static void resetSessionData() {
+        impliedFlow_SessionCount = 0;
     }
 }

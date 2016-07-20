@@ -1,145 +1,165 @@
 package com.ghostery.privacy.appnoticesdk.fragments;
 
-import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatRadioButton;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
-import com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter;
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
+import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
-import com.ghostery.privacy.appnoticesdk.model.Tracker;
-import com.ghostery.privacy.appnoticesdk.utils.Session;
-
-import java.util.ArrayList;
+import com.ghostery.privacy.appnoticesdk.utils.AppData;
 
 /**
  *
  */
 public class ManagePreferences_Fragment extends Fragment {
-    private ArrayList<Tracker> trackerArrayList;
-    private ArrayList<Tracker> trackerArrayListClone;
-    private AppNoticeData appNoticeData;
-    private TrackerArrayAdapter trackerArrayAdapter;
-    private ListView trackerListView;
-
-    /**
-     * Whether or not the fragmentActivity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
+    ManagePreferences_ViewPager_Adapter managePreferences_viewPager_adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);    // "All" not clicked yet
-        Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);   // "None" not clicked yet
 
-        appNoticeData = (AppNoticeData)Session.get(Session.APPNOTICE_DATA);
-        if (appNoticeData != null && appNoticeData.isTrackerListInitialized()) {
-            trackerArrayList = appNoticeData.trackerArrayList;
-            trackerArrayListClone = appNoticeData.getTrackerListClone(); // Get a copy of the current tracker list so it can be compared on save
-        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences_, container, false);
+        View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences, container, false);
 
-        // TODO: replace with a real list adapter.
-        trackerArrayAdapter = new TrackerArrayAdapter(this, R.id.tracker_name, appNoticeData);
-        trackerListView = (ListView) view.findViewById(R.id.tracker_list);
-        trackerListView.setAdapter(trackerArrayAdapter);
-        trackerListView.setOnItemClickListener((AppNotice_Activity)getActivity());
-        trackerListView.setItemsCanFocus(false);
-        trackerListView.setTextFilterEnabled(true);
-
-        AppCompatTextView manage_preferences_description = (AppCompatTextView)view.findViewById(R.id.manage_preferences_description);
-        if (manage_preferences_description != null) {
-            final AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-            String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
-            manage_preferences_description.setText(manage_preferences_description_text);
-            manage_preferences_description.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (appNoticeData != null) {
-                        String manage_preferences_description_text = appNoticeData.getPreferencesDescription();
-
-                        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                        alertDialog.setTitle(R.string.ghostery_preferences_header);
-                        alertDialog.setMessage(manage_preferences_description_text);
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, appNoticeData.getDialogButtonClose(),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
-                    }
-                }
-            });
-
-            final AppCompatRadioButton rbAll = (AppCompatRadioButton)view.findViewById(R.id.rb_all);
-            final AppCompatRadioButton rbNone = (AppCompatRadioButton)view.findViewById(R.id.rb_none);
-
-            rbAll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (appNoticeData != null) {
-                        appNoticeData.setTrackerOnOffState(true);
-                    }
-                    rbAll.setChecked(true);
-                    rbNone.setChecked(false);
-                    Session.set(Session.APPNOTICE_ALL_BTN_SELECT, true);    // If they selected "All", remember it.
-                    Session.set(Session.APPNOTICE_NONE_BTN_SELECT, false);  // If they selected "None", remember that "None" wasn't the last set state.
-
-                    refreshTrackerList();
-                }
-            });
-
-            rbNone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (appNoticeData != null) {
-                        appNoticeData.setTrackerOnOffState(false);
-                    }
-                    rbAll.setChecked(false);
-                    rbNone.setChecked(true);
-                    Session.set(Session.APPNOTICE_NONE_BTN_SELECT, true);   // If they selected "None", remember it.
-                    Session.set(Session.APPNOTICE_ALL_BTN_SELECT, false);   // If they selected "None", remember that "All" wasn't the last set state.
-
-                    refreshTrackerList();
-                }
-            });
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.show();
         }
+
+        TabLayout tab_layout = (TabLayout) view.findViewById(R.id.tab_layout);
+        Resources resources = getActivity().getResources();
+        tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_optional_title)));
+        tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_essential_title)));
+        tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_webbased_title)));
+
+        final ViewPager view_pager = (ViewPager) view.findViewById(R.id.view_pager);
+
+        managePreferences_viewPager_adapter = new ManagePreferences_ViewPager_Adapter(getChildFragmentManager(), tab_layout.getTabCount());
+
+        view_pager.setAdapter(managePreferences_viewPager_adapter);
+
+        view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
+
+        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                view_pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         return view;
     }
 
-    protected void refreshTrackerList() {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
-        if (trackerArrayAdapter != null) {
-            trackerArrayAdapter.notifyDataSetChanged();
-        }
+        if (AppNotice_Activity.isConsentActive) {
+            if (AppNotice_Activity.isImpliedMode) {
+                // If implied mode, hide the explicit button layout
+                explicitButtonLayout.setVisibility(View.GONE);
 
-        if (trackerListView == null) {
-            trackerListView = (ListView) getActivity().findViewById(R.id.tracker_list);
-        }
+                // If implied mode, show the snackbar
+                CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                appNotice_activity.handleTrackerStateChanges();
 
-        if (trackerListView != null) {
-            trackerListView.invalidate();
+                                // Let the calling class know the selected option
+                                AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
+
+                                if (AppNotice_Activity.appNotice_callback != null) {
+                                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                                }
+
+                                // Close this fragment
+                                AppNotice_Activity.isConsentActive = false;
+                                appNotice_activity.finish();
+                            }
+                        });
+
+                snackbar.show();
+            } else {
+                // If explicit mode, show the explicit button layout
+                explicitButtonLayout.setVisibility(View.VISIBLE);
+
+                // Watch for button clicks.
+                AppCompatButton preferences_button_accept = (AppCompatButton)getView().findViewById(R.id.preferences_button_accept);
+                preferences_button_accept.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        // Send notice for this event
+                        AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_ACCEPT);
+
+                        // Remember in a persistent way that the explicit notice has been accepted
+                        AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
+
+                        appNotice_activity.handleTrackerStateChanges();
+
+                        // Let the calling class know the selected option
+                        AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
+                        if (AppNotice_Activity.appNotice_callback != null && !appNotice_activity.isFinishing()) {
+                            AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                        }
+
+                        // Close this fragment
+                        AppNotice_Activity.isConsentActive = false;
+                        appNotice_activity.finish();
+                    }
+                });
+
+                AppCompatButton preferences_button_decline = (AppCompatButton)getView().findViewById(R.id.preferences_button_decline);
+                preferences_button_decline.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        ExplicitDecline_Fragment fragment = new ExplicitDecline_Fragment();
+                        FragmentManager fragmentManager = appNotice_activity.getSupportFragmentManager();
+                        FragmentTransaction ft = fragmentManager.beginTransaction();
+                        ft.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_DECLINE);
+                        ft.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_DECLINE);
+                        ft.commit();
+                    }
+                });
+            }
+        } else {
+            // If not in a consent flow, hide the explicit button layout
+            explicitButtonLayout.setVisibility(View.GONE);
         }
     }
 
@@ -147,100 +167,13 @@ public class ManagePreferences_Fragment extends Fragment {
     public void onResume()
     {
         super.onResume();
-        refreshTrackerList();
-        setAllNoneControlState();
 
         getActivity().setTitle(R.string.ghostery_preferences_header);
     }
 
     public void onBackPressed() {
-        saveTrackerStates();
-        sendOptInOutNotices();    // Send opt-in/out ping-back
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Bundle arguments = new Bundle();
-
-        int i = item.getItemId();
-        if (item.getItemId() == android.R.id.home) {
-            saveTrackerStates();
-            sendOptInOutNotices();    // Send opt-in/out ping-back
-
-            onBackPressed();
-        }
-
-        return true;
-    }
-
-    private void sendOptInOutNotices() {
-        // Opt-in/out ping-back parameters
-        Boolean allBtnSelected = (boolean)Session.get(Session.APPNOTICE_ALL_BTN_SELECT, false);
-        Boolean noneBtnSelected = (boolean)Session.get(Session.APPNOTICE_NONE_BTN_SELECT, false);
-        int pingBackCount = 0;      // Count the ping-backs
-
-        // Send opt-in/out ping-back for each changed non-essential tracker
-        if (trackerArrayList != null && trackerArrayListClone != null &&
-                trackerArrayList.size() == trackerArrayListClone.size()) {
-
-            for (int i = 0; i < trackerArrayList.size(); i++) {
-                Tracker tracker = trackerArrayList.get(i);
-                Tracker trackerClone = trackerArrayListClone.get(i);
-
-                // If the tracker is non-essential and is changed...
-                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
-                    Boolean optOut = tracker.isOn() == false;
-                    Boolean uniqueVisit = ((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
-                    Boolean firstOptOut = pingBackCount == 0;
-                    Boolean selectAll = ((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
-
-                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
-                    pingBackCount++;
-                }
-            }
-        }
-    }
-
-    public void saveTrackerStates() {
-        if (appNoticeData != null) {
-            appNoticeData.saveTrackerStates();
-
-            // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
-            int trackerStateChangeCount = appNoticeData.getTrackerStateChangeCount(trackerArrayListClone);
-            if (trackerStateChangeCount > 0 && !(boolean)Session.get(Session.APPNOTICE_PREF_OPENED_FROM_DIALOG, false)) {
-                AppNotice_Callback appNotice_callback = (AppNotice_Callback)Session.get(Session.APPNOTICE_CALLBACK);
-                appNotice_callback.onTrackerStateChanged(appNoticeData.getTrackerHashMap(true));
-            }
-        }
-    }
-
-    public void setAllNoneControlState() {
-        if (appNoticeData != null) {
-            int nonEssentialTrackerCount = appNoticeData.getNonEssentialTrackerCount();
-            AppCompatRadioButton rbAll = (AppCompatRadioButton)getActivity().findViewById(R.id.rb_all);
-            AppCompatRadioButton rbNone = (AppCompatRadioButton)getActivity().findViewById(R.id.rb_none);
-
-            if (nonEssentialTrackerCount > 0) {
-                int trackerOnOffStates = appNoticeData.getTrackerOnOffStates();
-                if (trackerOnOffStates == 1) {              // All on
-                    rbAll.setChecked(true);
-                    rbNone.setChecked(false);
-                } else if (trackerOnOffStates == -1) {      // None on
-                    rbAll.setChecked(false);
-                    rbNone.setChecked(true);
-                } else {                                    // Some on, some off
-                    rbAll.setChecked(false);
-                    rbNone.setChecked(false);
-                }
-            } else {
-                // Set both to unchecked and disabled
-                rbAll.setChecked(false);
-                rbNone.setChecked(false);
-                rbAll.setEnabled(false);
-                rbNone.setEnabled(false);
-            }
-        }
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
+        appNotice_activity.handleTrackerStateChanges();
     }
 
 }

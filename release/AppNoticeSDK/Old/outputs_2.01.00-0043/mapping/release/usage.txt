@@ -1,0 +1,103 @@
+com.ghostery.privacy.appnoticesdk.AppNotice:
+    private static final java.lang.String TAG
+    40:57:private AppNotice(android.app.Activity,java.lang.String,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
+com.ghostery.privacy.appnoticesdk.AppNotice_Activity:
+    public static final java.lang.String FRAGMENT_TAG_IMPLIED_CONSENT
+    public static final java.lang.String FRAGMENT_TAG_EXPLICIT_CONSENT
+    public static final java.lang.String FRAGMENT_TAG_MANAGE_PREFERENCES
+    public static final java.lang.String FRAGMENT_TAG_TRACKER_DETAIL
+    public static final java.lang.String FRAGMENT_TAG_LEARN_MORE
+    public static final java.lang.String FRAGMENT_TAG_HOST_SETTINGS
+com.ghostery.privacy.appnoticesdk.BuildConfig
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter:
+    private static final java.lang.String TAG
+com.ghostery.privacy.appnoticesdk.adapter.TrackerArrayAdapter$ViewHolder:
+    public java.lang.Boolean isOn
+com.ghostery.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment:
+    private static final java.lang.String TAG
+com.ghostery.privacy.appnoticesdk.fragments.ImpliedConsent_Fragment:
+    private static final java.lang.String TAG
+com.ghostery.privacy.appnoticesdk.fragments.LearnMore_Fragment:
+    public static final java.lang.String ARG_ITEM_ID
+com.ghostery.privacy.appnoticesdk.fragments.ManagePreferences_Fragment:
+    private boolean mTwoPane
+com.ghostery.privacy.appnoticesdk.fragments.TrackerDetail_Fragment:
+    public static final java.lang.String ARG_ITEM_ID
+com.ghostery.privacy.appnoticesdk.model.AppNoticeData:
+    private static final java.lang.String TAG
+    private static final long ELAPSED_30_DAYS_MILLIS
+    private static final java.lang.String URL_JSON_REQUEST
+    private static final java.lang.String URL_JSON_REQUEST_VIA_TOKEN
+    private static final java.lang.String URL_SDK_OPT_IN_OUT
+    private static final java.lang.String URL_SDK_START_CONSENT_FLOW
+    private static final java.lang.String URL_SDK_IMPLIED_INFO_PREF
+    private static final java.lang.String URL_SDK_EXPLICIT_INFO_PREF
+    private static final java.lang.String URL_SDK_EXPLICIT_INFO_ACCEPT
+    private static final java.lang.String URL_SDK_EXPLICIT_INFO_DECLINE
+    private static final java.lang.String URL_SDK_PREF_DIRECT
+    private static final java.lang.String NON_JSON_PREFIX
+    private static final java.lang.String NON_JSON_POSTFIX
+    private static final java.lang.String FILE_NOT_FOUND
+    private static final java.lang.String TAG_TRACKERS_VIA_TOKEN
+    private static final java.lang.String TAG_TRACKERS
+    95:95:public int getCompanyId()
+    96:96:public void setAppNoticeToken(java.lang.String)
+    104:104:public int getImpliedFlowSessionDisplayMax()
+com.ghostery.privacy.appnoticesdk.model.Tracker:
+    private static final java.lang.String TAG
+    private static final java.lang.String CAT_ESSENTIAL
+    private static final java.lang.String TAG_CATEGORY_VIA_TOKEN
+    private static final java.lang.String TAG_TRACKERID_VIA_TOKEN
+    private static final java.lang.String TAG_NAME_VIA_TOKEN
+    private static final java.lang.String TAG_LOGO_URL_VIA_TOKEN
+    private static final java.lang.String TAG_DESCRIPTION_VIA_TOKEN
+    private static final java.lang.String TAG_PRIVACY_URL_VIA_TOKEN
+    private static final java.lang.String TAG_CATEGORY
+    private static final java.lang.String TAG_TRACKERID
+    private static final java.lang.String TAG_NAME
+    private static final java.lang.String TAG_LOGO_URL
+    private static final java.lang.String TAG_DESCRIPTION
+    private static final java.lang.String TAG_PRIVACY_URL
+com.ghostery.privacy.appnoticesdk.utils.AppData:
+    protected static final int APPDATA_VERSION_VALUE
+    public static final java.lang.String APPDATA_FILENAME_END
+    public static final java.lang.String APPDATA_VERSION
+    public static final java.lang.String APPDATA_IMPLICIT_LAST_DISPLAY_TIME
+    public static final java.lang.String APPDATA_IMPLICIT_DISPLAY_COUNT
+    public static final java.lang.String APPDATA_EXPLICIT_ACCEPTED
+    public static final java.lang.String APPDATA_TRACKERSTATES
+    public static final java.lang.String APPDATA_PREV_NOTICE_ID
+    public static final java.lang.String APPDATA_PREV_JSON
+    18:18:public AppData()
+    46:60:protected static void upgradeFromOldFiles(android.content.Context)
+    63:83:protected static void copySharedPreferences(android.content.SharedPreferences)
+    134:138:public static void remVal(java.lang.String)
+com.ghostery.privacy.appnoticesdk.utils.FileDownloader:
+    15:15:public FileDownloader()
+com.ghostery.privacy.appnoticesdk.utils.FileWriter:
+    19:19:public FileWriter()
+    23:31:public static void writeFile(android.content.Context,java.lang.String,java.lang.String)
+    45:55:public static void writeObject(android.content.Context,java.lang.Object,java.lang.String)
+com.ghostery.privacy.appnoticesdk.utils.Network
+com.ghostery.privacy.appnoticesdk.utils.ServiceHandler:
+    private static final java.lang.String TAG
+    private static final int httpConnectTimeoutDefault
+    private static final int httpReadTimeoutDefault
+    private static final java.lang.String APP_NOTICE_USER
+    private static final java.lang.String APP_NOTICE_PASSWORD
+    86:117:public static java.lang.String postRequest(java.lang.String,java.lang.String)
+com.ghostery.privacy.appnoticesdk.utils.Session:
+    private static final java.lang.String TAG
+    public static final java.lang.String APPNOTICE_DATA
+    public static final java.lang.String APPNOTICE_CALLBACK
+    public static final java.lang.String APPNOTICE_ALL_BTN_SELECT
+    public static final java.lang.String APPNOTICE_NONE_BTN_SELECT
+    public static final java.lang.String APPNOTICE_PREF_OPENED_FROM_CONSENT
+    public static final java.lang.String SYS_CURRENT_SESSION_COUNT
+    9:9:public Session()
+    44:47:public static void remove(java.lang.String)
+    54:54:public static boolean isSet(java.lang.String)
+com.ghostery.privacy.appnoticesdk.utils.Util:
+    private static final java.lang.String TAG
+    public static final java.lang.String THREAD_INITTRACKERLIST
+    21:21:public Util()

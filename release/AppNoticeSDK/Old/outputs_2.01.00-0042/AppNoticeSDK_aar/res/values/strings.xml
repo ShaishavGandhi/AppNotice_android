@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">.SDK as Module: FireBall</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="btn_consent_flow">Consent Flow</string>
+    <string name="btn_manage_preferences">Manage Preferences</string>
+    <string name="btn_get_preferences">Get Preferences</string>
+    <string name="btn_get_accept_state">Get Accept State</string>
+    <string name="btn_reset_sdk">Reset SDK</string>
+    <string name="btn_reset_app">Reset App</string>
+    <string name="btn_close_app">Close App</string>
+    <string name="hint_companyId">Company ID</string>
+    <string name="hint_noticeId">Notice ID</string>
+    <string name="textview_implied_30day_max">30-Day Max</string>
+    <string name="checkBox_explicitStrict">Explicit Strict</string>
+    <string name="checkBox_hybridApp">Hybrid App</string>
+    <string name="message_get_tracker_preferences">Get Tracker Preferences</string>
+    <string name="message_option_selected">Option Selected</string>
+    <string name="message_tracking_declined">Tracking Declined</string>
+    <string name="message_dialog_skipped">Dialog skipped</string>
+    <string name="message_explicit_tracking_accepted">Tracking accepted</string>
+    <string name="message_explicit_tracking_not_accepted">Tracking not accepted</string>
+    <string name="message_tracker_state_changed">Tracker State Changed</string>
+
+    <!-- Decline Confirmation dialog -->
+    <string name="declineConfirmDialog_title">Declined Consent</string>
+    <string name="declineConfirmDialog_message">To enjoy the full functionality of this app, you must either upgrade to the paid version or accept the privacy preferences in this version. Please restart this app if you would like to accept. This app will now continue with limited functionality.</string>
+    <string name="declineConfirmDialog_posBtn">OK</string>
+
+    <!-- Strings related to Settings -->
+    <string name="title_activity_hybrid_privacy_settings">Legal and Privacy</string>
+    <string name="pref_terms_of_use">Terms of Use</string>
+    <string name="pref_privacy_policy">Privacy Policy</string>
+    <string name="pref_web_based_privacy">Web-based Privacy</string>
+    <string name="pref_in_app_privacy">In-app Privacy</string>
+
+</resources>

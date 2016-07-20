@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
@@ -37,8 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private Button btn_reset_sdk;
     private Button btn_reset_app;
     private Button btn_close_app;
-    private Boolean isHybridApp;
-    private Boolean isExplicitStrict;
+    public static boolean isInitialized = false;
 
     // Tracker ID tags
     private final static int ADMOB_TRACKERID = 464;
@@ -49,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Context context = App.getContext();
+        isInitialized = true;
     }
 
     @Nullable
@@ -67,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
         String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
         String implied30dayDisplayMaxString = Util.getSharedPreference(this, Util.SP_IS_30DAY_MAX, "0");
-        String isHybridAppString = Util.getSharedPreference(this, Util.SP_IS_HYBRIDAPP, "");
-        String isExplicitStrictString = Util.getSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, "1");
 
         AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
         companyIdEditText.setText(companyIdString);
@@ -86,16 +83,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         AppCompatEditText implied30dayDisplayMaxEditText = (AppCompatEditText)findViewById(R.id.editText_implied_30day_max);
         implied30dayDisplayMaxEditText.setText(implied30dayDisplayMaxString);
-
-        AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
-        if (isExplicitStrictString != null) {
-            checkBox_explicitStrict.setChecked(isExplicitStrictString.equals("1"));
-        }
-
-        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (isHybridAppString != null) {
-            checkBox_hybridApp.setChecked(isHybridAppString.equals("1"));
-        }
 
         btn_consent_flow = (AppCompatButton) findViewById(R.id.btn_consent_flow) ;
         btn_manage_preferences = (AppCompatButton) findViewById(R.id.btn_manage_preferences) ;
@@ -123,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int noticeId = 0;
         Boolean isImplied = true;
         int implied30dayDisplayMax = 0;
-        isHybridApp = true;
-        isExplicitStrict = true;
 
         AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
         if (tv != null) {
@@ -156,23 +141,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         }
 
-        AppCompatCheckBox checkBox_explicitStrict = (AppCompatCheckBox)this.findViewById(R.id.checkBox_explicitStrict);
-        if (checkBox_explicitStrict != null) {
-            isExplicitStrict = checkBox_explicitStrict.isChecked();
-        }
-
-        AppCompatCheckBox checkBox_hybridApp = (AppCompatCheckBox)this.findViewById(R.id.checkBox_hybridApp);
-        if (checkBox_hybridApp != null) {
-            isHybridApp = checkBox_hybridApp.isChecked();
-        }
-
         // Save these values as defaults for next session
         Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_30DAY_MAX, String.valueOf(implied30dayDisplayMax));
-        Util.setSharedPreference(this, Util.SP_IS_HYBRIDAPP, isHybridApp ? "1" : "0");
-        Util.setSharedPreference(this, Util.SP_IS_EXPLICITSTRICT, isExplicitStrict ? "1" : "0");
 
 		if (noticeIdString.length() == 0 || (companyIdString.length() == 0 && !usingToken)) {
 			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
@@ -183,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 try {
                     companyId = Integer.valueOf(companyIdString);
                     noticeId = Integer.valueOf(noticeIdString);
-                    appNotice = new AppNotice(this, companyId, noticeId, this);
+                    appNotice = new AppNotice(this, companyId, noticeId, this, isImplied);
                 } catch (NumberFormatException e) {
                     Toast.makeText(this, "CID and NID must be integers.", Toast.LENGTH_LONG).show();
                     return;
@@ -232,15 +205,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			} else if (view == btn_consent_flow) {
                 if (isImplied) {
-                    appNotice.startImpliedConsentFlow(implied30dayDisplayMax);
+                    appNotice.startConsentFlow(implied30dayDisplayMax);
                 } else {
-                    appNotice.startExplicitConsentFlow(isExplicitStrict);
+                    appNotice.startConsentFlow();
                 }
             }
 		}
     }
 
-    // Handle callbacks for the App Notice Consent SDK
+    // Handle callbacks for the App Notice SDK
     @Override
     public void onOptionSelected(boolean isAccepted, HashMap<Integer, Boolean> trackerHashMap) {
         // Handle your response
@@ -249,8 +222,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_option_selected)); // Show preference results in a dialog
         } else {
             try {
-                DeclineConfirmation_DialogFragment dialog = new DeclineConfirmation_DialogFragment();
-                dialog.show(getFragmentManager(), "DeclineConfirmation_DialogFragment");
+                showMessage(getString(R.string.declineConfirmDialog_title), getString(R.string.declineConfirmDialog_message));
                 showTrackerPreferenceResults(trackerHashMap, getResources().getString(R.string.message_tracking_declined)); // Show preference results in a dialog
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Error while trying to display the decline-confirmation dialog.", e);
@@ -284,21 +256,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     }
 
-    @Override
-    public boolean onManagePreferencesClicked() {
-        Boolean wasHandled = false;
-        if (isHybridApp) {
-            // Open local preferences screen
-            Intent i = new Intent(getBaseContext(), HybridPrivacySettings.class);
-            startActivity(i);
-            wasHandled = true;  // Handled
-
-        } else {
-            wasHandled = false; // Not handled
-        }
-        return wasHandled;
-    }
-
     private void showTrackerPreferenceResults(HashMap<Integer, Boolean> trackerHashMap, String title) {
         String prefResults = "";
         if (trackerHashMap == null || trackerHashMap.size() == 0) {
@@ -324,12 +281,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         alert.show();
     }
 
-    private void showMessage(String title) {
-//        String prefResults = "";
-
+    private void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
-//        builder.setMessage(prefResults);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showMessage(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
         builder.setCancelable(false);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
