@@ -167,4 +167,49 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         }
     }
 
+    public void handleTrackerStateChanges() {
+        saveTrackerStates();
+        sendOptInOutNotices();
+    }
+
+    public void sendOptInOutNotices() {
+        // Opt-in/out ping-back parameters
+        int pingBackCount = 0;      // Count the ping-backs
+        AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
+
+        // Send opt-in/out ping-back for each changed non-essential tracker
+        if (appNoticeData.optionalTrackerArrayList != null && AppNotice_Activity.optionalTrackerArrayListClone != null &&
+                appNoticeData.optionalTrackerArrayList.size() == AppNotice_Activity.optionalTrackerArrayListClone.size()) {
+
+            for (int i = 0; i < appNoticeData.optionalTrackerArrayList.size(); i++) {
+                Tracker tracker = appNoticeData.optionalTrackerArrayList.get(i);
+                Tracker trackerClone = AppNotice_Activity.optionalTrackerArrayListClone.get(i);
+
+                // If the tracker is non-essential and is changed...
+                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
+                    Boolean optOut = tracker.isOn() == false;
+                    Boolean uniqueVisit = false;//((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
+                    Boolean firstOptOut = pingBackCount == 0;
+                    Boolean selectAll = false;//((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+
+                    // TODO: Get correct values for uniqueVisit and selectAll
+                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
+                    pingBackCount++;
+                }
+            }
+        }
+    }
+
+    public void saveTrackerStates() {
+        if (AppNotice_Activity.appNoticeData != null) {
+            AppNotice_Activity.appNoticeData.saveTrackerStates();
+
+            // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
+            int trackerStateChangeCount = AppNotice_Activity.appNoticeData.getTrackerStateChangeCount(AppNotice_Activity.optionalTrackerArrayListClone);
+            if (trackerStateChangeCount > 0 && !AppNotice_Activity.isConsentActive) {
+                AppNotice_Activity.appNotice_callback.onTrackerStateChanged(AppNotice_Activity.appNoticeData.getTrackerHashMap(true));
+            }
+        }
+    }
+
 }

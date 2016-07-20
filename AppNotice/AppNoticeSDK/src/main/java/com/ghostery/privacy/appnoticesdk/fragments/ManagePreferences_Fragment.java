@@ -22,7 +22,6 @@ import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
-import com.ghostery.privacy.appnoticesdk.model.Tracker;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
 
 /**
@@ -88,6 +87,7 @@ public class ManagePreferences_Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
         if (AppNotice_Activity.isConsentActive) {
             if (AppNotice_Activity.isImpliedMode) {
@@ -101,10 +101,10 @@ public class ManagePreferences_Fragment extends Fragment {
                         .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                handleTrackerStateChanges();
+                                appNotice_activity.handleTrackerStateChanges();
 
                                 // Let the calling class know the selected option
-                                AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
+                                AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
 
                                 if (AppNotice_Activity.appNotice_callback != null) {
                                     AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
@@ -112,7 +112,7 @@ public class ManagePreferences_Fragment extends Fragment {
 
                                 // Close this fragment
                                 AppNotice_Activity.isConsentActive = false;
-                                getActivity().finish();
+                                appNotice_activity.finish();
                             }
                         });
 
@@ -131,17 +131,17 @@ public class ManagePreferences_Fragment extends Fragment {
                         // Remember in a persistent way that the explicit notice has been accepted
                         AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
 
-                        handleTrackerStateChanges();
+                        appNotice_activity.handleTrackerStateChanges();
 
                         // Let the calling class know the selected option
-                        AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-                        if (AppNotice_Activity.appNotice_callback != null && !getActivity().isFinishing()) {
+                        AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
+                        if (AppNotice_Activity.appNotice_callback != null && !appNotice_activity.isFinishing()) {
                             AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
                         }
 
                         // Close this fragment
                         AppNotice_Activity.isConsentActive = false;
-                        getActivity().finish();
+                        appNotice_activity.finish();
                     }
                 });
 
@@ -149,7 +149,7 @@ public class ManagePreferences_Fragment extends Fragment {
                 preferences_button_decline.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         ExplicitDecline_Fragment fragment = new ExplicitDecline_Fragment();
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentManager fragmentManager = appNotice_activity.getSupportFragmentManager();
                         FragmentTransaction ft = fragmentManager.beginTransaction();
                         ft.replace(R.id.appnotice_fragment_container, fragment, AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_DECLINE);
                         ft.addToBackStack(AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_DECLINE);
@@ -172,52 +172,8 @@ public class ManagePreferences_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
-        handleTrackerStateChanges();
-    }
-
-    public void handleTrackerStateChanges() {
-        saveTrackerStates();
-        sendOptInOutNotices();
-    }
-
-    public void sendOptInOutNotices() {
-        // Opt-in/out ping-back parameters
-        int pingBackCount = 0;      // Count the ping-backs
-        AppNoticeData appNoticeData = AppNoticeData.getInstance(getActivity());
-
-        // Send opt-in/out ping-back for each changed non-essential tracker
-        if (appNoticeData.optionalTrackerArrayList != null && AppNotice_Activity.optionalTrackerArrayListClone != null &&
-                appNoticeData.optionalTrackerArrayList.size() == AppNotice_Activity.optionalTrackerArrayListClone.size()) {
-
-            for (int i = 0; i < appNoticeData.optionalTrackerArrayList.size(); i++) {
-                Tracker tracker = appNoticeData.optionalTrackerArrayList.get(i);
-                Tracker trackerClone = AppNotice_Activity.optionalTrackerArrayListClone.get(i);
-
-                // If the tracker is non-essential and is changed...
-                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
-                    Boolean optOut = tracker.isOn() == false;
-                    Boolean uniqueVisit = false;//((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
-                    Boolean firstOptOut = pingBackCount == 0;
-                    Boolean selectAll = false;//((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
-
-                    // TODO: Get correct values for uniqueVisit and selectAll
-                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
-                    pingBackCount++;
-                }
-            }
-        }
-    }
-
-    public void saveTrackerStates() {
-        if (AppNotice_Activity.appNoticeData != null) {
-            AppNotice_Activity.appNoticeData.saveTrackerStates();
-
-            // If trackers have been changed and a consent dialog is not showing, send an updated tracker state hashmap to the calling app
-            int trackerStateChangeCount = AppNotice_Activity.appNoticeData.getTrackerStateChangeCount(AppNotice_Activity.optionalTrackerArrayListClone);
-            if (trackerStateChangeCount > 0 && !AppNotice_Activity.isConsentActive) {
-                AppNotice_Activity.appNotice_callback.onTrackerStateChanged(AppNotice_Activity.appNoticeData.getTrackerHashMap(true));
-            }
-        }
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
+        appNotice_activity.handleTrackerStateChanges();
     }
 
 }

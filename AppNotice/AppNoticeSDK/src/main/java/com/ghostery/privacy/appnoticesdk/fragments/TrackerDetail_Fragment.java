@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
 import com.ghostery.privacy.appnoticesdk.model.AppNoticeData;
@@ -172,6 +175,41 @@ public class TrackerDetail_Fragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
+
+        if (AppNotice_Activity.isConsentActive) {
+            if (AppNotice_Activity.isImpliedMode) {
+                // If implied mode, show the snackbar
+                CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorlayout, R.string.ghostery_preferences_ready_message, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                appNotice_activity.handleTrackerStateChanges();
+
+                                // Let the calling class know the selected option
+                                AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
+
+                                if (AppNotice_Activity.appNotice_callback != null) {
+                                    AppNotice_Activity.appNotice_callback.onOptionSelected(true, appNoticeData.getTrackerHashMap(true));
+                                }
+
+                                // Close this fragment
+                                AppNotice_Activity.isConsentActive = false;
+                                appNotice_activity.finish();
+                            }
+                        });
+
+                snackbar.show();
+            }
+        }
     }
 
     @Override
