@@ -137,12 +137,6 @@ public class TrackerDetail_Fragment extends Fragment {
                                     appNoticeData.setTrackerOnOffState(tracker.uId, isOn);
                                 }
                             }
-
-                            // Show the snackbar with an accept/decline message
-                            CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
-                            int snackBarMessageId = isOn? R.string.ghostery_tracker_detail_opt_in : R.string.ghostery_tracker_detail_opt_out;
-                            Snackbar snackbar = Snackbar.make(coordinatorlayout, snackBarMessageId, Snackbar.LENGTH_LONG);
-                            snackbar.show();
                         }
                     });
                 }
