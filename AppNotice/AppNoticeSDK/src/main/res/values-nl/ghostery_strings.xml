@@ -49,7 +49,7 @@
 
     <!-- Tracker Detail -->
     <!-- Text for the "allow" checkbox line of the tracker detail screen -->
-    <string name="ghostery_tracker_detail_allow_technology">Allow?</string>
+    <string name="ghostery_tracker_detail_allow_technology">Allow</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
     <string name="ghostery_tracker_detail_learnmore">Meer informatie over hoe we informatie voor mobiele apps verzamelen en gebruiken, vindt u hier:</string>
     <!-- Text used in the case there is no learn-more link provided -->
