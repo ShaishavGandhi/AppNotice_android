@@ -62,7 +62,7 @@ public class ManagePreferences_Fragment extends Fragment {
 
         view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
 
-        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
