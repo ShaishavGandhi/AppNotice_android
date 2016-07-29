@@ -188,6 +188,9 @@ public class TrackerDetail_Fragment extends Fragment {
                             public void onClick(View view) {
                                 appNotice_activity.handleTrackerStateChanges();
 
+                                // Send notice for this event
+                                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+
                                 // Let the calling class know the selected option
                                 AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
 

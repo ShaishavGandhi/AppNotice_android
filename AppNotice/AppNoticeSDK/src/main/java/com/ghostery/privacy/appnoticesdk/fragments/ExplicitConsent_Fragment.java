@@ -59,7 +59,7 @@ public class ExplicitConsent_Fragment extends Fragment {
         preferences_button_port.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_PREF_CONSENT);
 
                 // Open the App Notice manage preferences fragment
                 Util.showManagePreferences(getActivity());
@@ -70,7 +70,7 @@ public class ExplicitConsent_Fragment extends Fragment {
         preferences_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_PREF_CONSENT);
 
                 // Open the App Notice manage preferences fragment
                 Util.showManagePreferences(getActivity());
@@ -81,7 +81,7 @@ public class ExplicitConsent_Fragment extends Fragment {
         accept_button_port.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_ACCEPT);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_ACCEPT);
 
                 // Remember in a persistent way that the explicit notice has been accepted
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
@@ -102,7 +102,7 @@ public class ExplicitConsent_Fragment extends Fragment {
         accept_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_ACCEPT);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_ACCEPT);
 
                 // Remember in a persistent way that the explicit notice has been accepted
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
@@ -123,6 +123,8 @@ public class ExplicitConsent_Fragment extends Fragment {
         decline_button_port.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // User cancelled the dialog...negating consent
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_DECLINE);
 
                 // Close this dialog
                 getActivity().onBackPressed();
@@ -133,6 +135,8 @@ public class ExplicitConsent_Fragment extends Fragment {
         decline_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // User cancelled the dialog...negating consent
+                // Send notice for this event
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_DECLINE);
 
                 // Close this dialog
                 getActivity().onBackPressed();
@@ -189,6 +193,9 @@ public class ExplicitConsent_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
+        // Send notice for this event
+        AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_DECLINE);
+
         ExplicitDecline_Fragment fragment = new ExplicitDecline_Fragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();

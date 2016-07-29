@@ -51,7 +51,7 @@ public class Util {
                             Log.d(TAG, "Done with initTrackerList from Util.showManagePreferences init.");
 
                             // Send notice for this event
-                            //AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
+                            //AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_PREF_DIRECT);
 
                             if (AppNotice_Activity.isConsentActive) {
                                 ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();

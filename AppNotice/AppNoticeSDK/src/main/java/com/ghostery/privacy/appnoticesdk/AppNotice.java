@@ -19,13 +19,15 @@ import java.util.HashMap;
  */
 public class AppNotice {
 
+    public final static String sdkVersionName = BuildConfig.VERSION_NAME;
+    public final static int sdkVersionCode = BuildConfig.VERSION_CODE;
     private static final String TAG = "AppNotice";
     private AppNoticeData appNoticeData;
     private AppNotice_Callback appNotice_callback;
     private static Activity extActivity = null;
 //    private static Context appContext;
     private static final HashMap<String, Object> sessionMap = new HashMap<String, Object>();
-    private static boolean isImpliedMode = true;
+    public static boolean isImpliedMode = true;
     private static boolean usingToken = true;
     private static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
 
@@ -101,7 +103,11 @@ public class AppNotice {
         startConsentFlow(true);
 
         // Send notice for this event
-        AppNoticeData.sendNotice(AppNoticeData.NoticeType.START_CONSENT_FLOW);
+        if (isImpliedMode) {
+            AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONSENT_START);
+        } else {
+            AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_CONSENT_START);
+        }
     }
 
     /**
@@ -138,9 +144,6 @@ public class AppNotice {
             } else {
                 // Open the App Notice manage preferences fragment
                 Util.showManagePreferences(extActivity);
-
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
             }
         } else {
 
@@ -161,9 +164,6 @@ public class AppNotice {
                             } else {
                                 // Open the App Notice manage preferences fragment
                                 Util.showManagePreferences(extActivity);
-
-                                // Send notice for this event
-                                AppNoticeData.sendNotice(AppNoticeData.NoticeType.PREF_DIRECT);
                             }
                         }
                     });
@@ -200,7 +200,6 @@ public class AppNotice {
                 if (isImpliedMode) {
                     Intent intent = new Intent(extActivity, AppNotice_Activity.class);
                     intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_IMPLIED_CONSENT);
-                    intent.putExtra("ISIMPLIEDMODE", isImpliedMode);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     extActivity.startActivity(intent);
 
@@ -210,7 +209,6 @@ public class AppNotice {
                 } else {
                     Intent intent = new Intent(extActivity, AppNotice_Activity.class);
                     intent.putExtra("FRAGMENT_TYPE", AppNotice_Activity.FRAGMENT_TAG_EXPLICIT_CONSENT);
-                    intent.putExtra("ISIMPLIEDMODE", isImpliedMode);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     extActivity.startActivity(intent);
                 }

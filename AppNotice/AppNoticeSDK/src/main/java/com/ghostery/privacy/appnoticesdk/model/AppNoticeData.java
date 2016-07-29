@@ -3,10 +3,14 @@ package com.ghostery.privacy.appnoticesdk.model;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.JSONGetterCallback;
 import com.ghostery.privacy.appnoticesdk.utils.AppData;
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 /**
@@ -59,24 +64,33 @@ public class AppNoticeData {
     private final static String URL_JSON_REQUEST = "https://c.betrad.com/pub/c/{0}/{1}.js";
     private final static String URL_JSON_REQUEST_VIA_TOKEN = "http://privacyapi.ghosterydev.com/api/v1/appnotice/configuration/{0}";
 
+    // Opt-in/out ping-back
     // 0 = Publisher ID; 1 = Owner Company ID, 2 = trackerId; 3 = optOut; 4 = uniqueVisit; 5 = firstOptOut; 6 = selectAll
     private final static String URL_SDK_OPT_IN_OUT = "https://l.betrad.com/oo/p.gif?pid={0}&ocid={1}&c={2}&et={3}&u={4}&i={5}&s={6}&m=4";
 
-    // 0 = Publisher ID; 1 = Owner Company ID
-    private final static String URL_SDK_START_CONSENT_FLOW = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4";
-    private final static String URL_SDK_IMPLIED_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&nt=4&d=1&mb=4&ic=1";
-    private final static String URL_SDK_EXPLICIT_INFO_PREF = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&ii=1&mb=4&nt=3&d=1";
-    private final static String URL_SDK_EXPLICIT_INFO_ACCEPT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=1";
-    private final static String URL_SDK_EXPLICIT_INFO_DECLINE = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&nt=3&aa=0";
-    private final static String URL_SDK_PREF_DIRECT = "http://l.betrad.com/pub/p.gif?pid={0}&ocid={1}&mb=4&aa=0&d=0";
+    // Event ping-back URLs for implied
+    private static String URL_SDK_IMPLIED_CONSENT_START;
+    private static String URL_SDK_IMPLIED_CONTINUE;
+    private static String URL_SDK_IMPLIED_PREF_CONSENT;
+    private static String URL_SDK_IMPLIED_PREF_DIRECT;
 
-    public enum NoticeType {
-        START_CONSENT_FLOW,
-        IMPLIED_INFO_PREF,
-        EXPLICIT_INFO_PREF,
-        EXPLICIT_INFO_ACCEPT,
-        EXPLICIT_INFO_DECLINE,
-        PREF_DIRECT
+    // Event ping-back URLs for explicit
+    private static String URL_SDK_EXPLICIT_CONSENT_START;
+    private static String URL_SDK_EXPLICIT_ACCEPT;
+    private static String URL_SDK_EXPLICIT_DECLINE;
+    private static String URL_SDK_EXPLICIT_PREF_CONSENT;
+    private static String URL_SDK_EXPLICIT_PREF_DIRECT;
+
+    public enum pingEvent {
+        IMPLIED_CONSENT_START,
+        IMPLIED_CONTINUE,
+        IMPLIED_PREF_CONSENT,
+        IMPLIED_PREF_DIRECT,
+        EXPLICIT_CONSENT_START,
+        EXPLICIT_ACCEPT,
+        EXPLICIT_DECLINE,
+        EXPLICIT_PREF_CONSENT,
+        EXPLICIT_PREF_DIRECT
     }
 
     // Non-JSON outer characters that surround the JSON structure
@@ -123,8 +137,46 @@ public class AppNoticeData {
     // Constructor
     private AppNoticeData() {
         instance = this;
+
+        // Build the event ping-back URL strings
+        String cid = String.valueOf(companyId);		// 1
+        String nid = String.valueOf(currentNoticeId);	// 0
+        String idInfo = "ocid=" + cid + "&pid=" + nid;
+
+        String sdkVersionCode = String.valueOf(AppNotice.sdkVersionCode);
+        String appVersion = getAppVersion();
+        String osVersion = Build.VERSION.RELEASE;
+        String language = Locale.getDefault().getLanguage();
+        String versionInfo = "&v=" + sdkVersionCode + "&av=" + appVersion + "&os=" + osVersion + "&l=" + language;
+
+        URL_SDK_IMPLIED_CONSENT_START =  "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=11&mb=4" + versionInfo;    //pid, ocid, nt = 11, v, av, mb, os, l
+        URL_SDK_IMPLIED_CONTINUE =       "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=11&mb=4&aa=1";    //pid, ocid, nt = 11, aa = 1, mb
+        URL_SDK_IMPLIED_PREF_CONSENT =   "http://l.betrad.com/pub/p.gif?" + idInfo + "&mb=11&mb=4&u=1";    //pid, ocid, nt = 11, u = 1, mb
+        URL_SDK_IMPLIED_PREF_DIRECT =    "http://l.betrad.com/pub/p.gif?" + idInfo + "&mb=11&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 11, u = 0,  v, av, mb, os, l
+
+        URL_SDK_EXPLICIT_CONSENT_START = "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4" + versionInfo;    //pid, ocid, nt = 12, v, av, mb, os, l
+        URL_SDK_EXPLICIT_ACCEPT =        "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&aa=1";    //pid, ocid, nt = 12, aa = 1, mb
+        URL_SDK_EXPLICIT_DECLINE =       "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&aa=0";    //pid, ocid, nt = 12, aa = 0, mb
+        URL_SDK_EXPLICIT_PREF_CONSENT =  "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&u=1";    //pid, ocid, nt = 12, u = 1, mb
+        URL_SDK_EXPLICIT_PREF_DIRECT =   "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 12, u = 0, v, av, mb, os, l
+
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
         implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
+    }
+
+    public static String getAppVersion() {
+        String appVersionName = "";
+        final PackageManager packageManager = activity.getPackageManager();
+        if (packageManager != null) {
+            try {
+                PackageInfo packageInfo = packageManager.getPackageInfo(activity.getPackageName(), 0);
+                int appVersionCode = packageInfo.versionCode;
+                appVersionName = packageInfo.versionName + "." + String.valueOf(appVersionCode);
+            } catch (PackageManager.NameNotFoundException e) {
+                appVersionName = "";
+            }
+        }
+        return appVersionName;
     }
 
     public HashMap<Integer, Boolean> getTrackerHashMap(boolean useTrackerIdAsInt) {
@@ -298,34 +350,39 @@ public class AppNoticeData {
     }
 
     // Sends a report back through the Site Notice Channel
-    public static void sendNotice(final NoticeType type) {
+    public static void sendNotice(final pingEvent type) {
         // Use a non-UI thread
         new Thread(){
             public void run(){
-                Object[] urlParams = new Object[2];
-                urlParams[0] = String.valueOf(currentNoticeId);	// 0
-                urlParams[1] = String.valueOf(companyId);		// 1
-
                 String uRL = "";
 
                 switch (type) {
-                    case START_CONSENT_FLOW:
-                        uRL = MessageFormat.format(URL_SDK_START_CONSENT_FLOW, urlParams);
+                    case IMPLIED_CONSENT_START:
+                        uRL = URL_SDK_IMPLIED_CONSENT_START;
                         break;
-                    case IMPLIED_INFO_PREF:
-                        uRL = MessageFormat.format(URL_SDK_IMPLIED_INFO_PREF, urlParams);
+                    case IMPLIED_CONTINUE:
+                        uRL = URL_SDK_IMPLIED_CONTINUE;
                         break;
-                    case EXPLICIT_INFO_PREF:
-                        uRL = MessageFormat.format(URL_SDK_EXPLICIT_INFO_PREF, urlParams);
+                    case IMPLIED_PREF_CONSENT:
+                        uRL = URL_SDK_IMPLIED_PREF_CONSENT;
                         break;
-                    case EXPLICIT_INFO_ACCEPT:
-                        uRL = MessageFormat.format(URL_SDK_EXPLICIT_INFO_ACCEPT, urlParams);
+                    case IMPLIED_PREF_DIRECT:
+                        uRL = URL_SDK_IMPLIED_PREF_DIRECT;
                         break;
-                    case EXPLICIT_INFO_DECLINE:
-                        uRL = MessageFormat.format(URL_SDK_EXPLICIT_INFO_DECLINE, urlParams);
+                    case EXPLICIT_CONSENT_START:
+                        uRL = URL_SDK_EXPLICIT_CONSENT_START;
                         break;
-                    case PREF_DIRECT:
-                        uRL = MessageFormat.format(URL_SDK_PREF_DIRECT, urlParams);
+                    case EXPLICIT_ACCEPT:
+                        uRL = URL_SDK_EXPLICIT_ACCEPT;
+                        break;
+                    case EXPLICIT_DECLINE:
+                        uRL = URL_SDK_EXPLICIT_DECLINE;
+                        break;
+                    case EXPLICIT_PREF_CONSENT:
+                        uRL = URL_SDK_EXPLICIT_PREF_CONSENT;
+                        break;
+                    case EXPLICIT_PREF_DIRECT:
+                        uRL = URL_SDK_IMPLIED_PREF_DIRECT;
                         break;
                 }
 

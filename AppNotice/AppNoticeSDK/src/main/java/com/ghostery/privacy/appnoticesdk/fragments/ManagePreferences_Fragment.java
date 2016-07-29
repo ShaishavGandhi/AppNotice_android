@@ -103,6 +103,9 @@ public class ManagePreferences_Fragment extends Fragment {
                             public void onClick(View view) {
                                 appNotice_activity.handleTrackerStateChanges();
 
+                                // Send notice for this event
+                                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+
                                 // Let the calling class know the selected option
                                 AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
 
@@ -126,7 +129,7 @@ public class ManagePreferences_Fragment extends Fragment {
                 preferences_button_accept.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         // Send notice for this event
-                        AppNoticeData.sendNotice(AppNoticeData.NoticeType.EXPLICIT_INFO_ACCEPT);
+                        AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_ACCEPT);
 
                         // Remember in a persistent way that the explicit notice has been accepted
                         AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
@@ -148,6 +151,9 @@ public class ManagePreferences_Fragment extends Fragment {
                 AppCompatButton preferences_button_decline = (AppCompatButton)getView().findViewById(R.id.preferences_button_decline);
                 preferences_button_decline.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
+                        // Send notice for this event
+                        AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_DECLINE);
+
                         ExplicitDecline_Fragment fragment = new ExplicitDecline_Fragment();
                         FragmentManager fragmentManager = appNotice_activity.getSupportFragmentManager();
                         FragmentTransaction ft = fragmentManager.beginTransaction();

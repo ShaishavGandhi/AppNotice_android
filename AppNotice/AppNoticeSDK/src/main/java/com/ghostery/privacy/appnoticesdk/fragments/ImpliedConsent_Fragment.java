@@ -55,7 +55,7 @@ public class ImpliedConsent_Fragment extends Fragment {
         preferences_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_PREF_CONSENT);
 
                 // Open the App Notice manage preferences fragment
                 Util.showManagePreferences(getActivity());
@@ -66,7 +66,7 @@ public class ImpliedConsent_Fragment extends Fragment {
         preferences_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_PREF_CONSENT);
 
                 // Open the App Notice manage preferences fragment
                 Util.showManagePreferences(getActivity());
@@ -77,7 +77,7 @@ public class ImpliedConsent_Fragment extends Fragment {
         close_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
 
                 // Let the calling class know the selected option
                 if (AppNotice_Activity.appNotice_callback != null) {
@@ -95,7 +95,7 @@ public class ImpliedConsent_Fragment extends Fragment {
         close_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.NoticeType.IMPLIED_INFO_PREF);
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
 
                 // Let the calling class know the selected option
                 if (AppNotice_Activity.appNotice_callback != null) {
@@ -160,6 +160,9 @@ public class ImpliedConsent_Fragment extends Fragment {
 
     public void onBackPressed() {
         AppNotice_Activity.isConsentActive = false;
+
+        // Send notice for this event
+        AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
 
         // Let the calling class know the selected option
         if (AppNotice_Activity.appNotice_callback != null) {

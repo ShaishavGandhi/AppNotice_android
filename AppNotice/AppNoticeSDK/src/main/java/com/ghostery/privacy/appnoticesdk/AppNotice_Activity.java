@@ -57,10 +57,15 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
         String fragmentType = FRAGMENT_TAG_MANAGE_PREFERENCES;
         if (extras != null) {
             fragmentType = extras.getString("FRAGMENT_TYPE");
-            isImpliedMode = extras.getBoolean("ISIMPLIEDMODE");
         }
 
         if (fragmentType.equals(FRAGMENT_TAG_MANAGE_PREFERENCES)) {
+            // Send notice for this event
+            if (AppNotice.isImpliedMode) {
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_PREF_DIRECT);
+            } else {
+                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_PREF_DIRECT);
+            }
             ManagePreferences_Fragment fragment = new ManagePreferences_Fragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.appnotice_fragment_container, fragment, fragmentType);
