@@ -186,10 +186,9 @@ public class TrackerDetail_Fragment extends Fragment {
                         .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                appNotice_activity.handleTrackerStateChanges();
-
                                 // Send notice for this event
                                 AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+                                appNotice_activity.handleTrackerStateChanges();
 
                                 // Let the calling class know the selected option
                                 AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);

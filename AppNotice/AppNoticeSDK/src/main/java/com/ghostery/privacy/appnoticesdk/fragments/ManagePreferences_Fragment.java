@@ -101,10 +101,9 @@ public class ManagePreferences_Fragment extends Fragment {
                         .setAction(R.string.ghostery_preferences_continue_button, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                appNotice_activity.handleTrackerStateChanges();
-
                                 // Send notice for this event
                                 AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+                                appNotice_activity.handleTrackerStateChanges();
 
                                 // Let the calling class know the selected option
                                 AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
@@ -130,11 +129,10 @@ public class ManagePreferences_Fragment extends Fragment {
                     public void onClick(View v) {
                         // Send notice for this event
                         AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_ACCEPT);
+                        appNotice_activity.handleTrackerStateChanges();
 
                         // Remember in a persistent way that the explicit notice has been accepted
                         AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
-
-                        appNotice_activity.handleTrackerStateChanges();
 
                         // Let the calling class know the selected option
                         AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);

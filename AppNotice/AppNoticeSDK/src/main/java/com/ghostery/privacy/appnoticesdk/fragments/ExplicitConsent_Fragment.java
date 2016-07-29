@@ -41,8 +41,8 @@ public class ExplicitConsent_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -82,6 +82,8 @@ public class ExplicitConsent_Fragment extends Fragment {
             public void onClick(View v) {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_ACCEPT);
+                appNotice_activity.handleTrackerStateChanges();
+
 
                 // Remember in a persistent way that the explicit notice has been accepted
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);
@@ -103,6 +105,7 @@ public class ExplicitConsent_Fragment extends Fragment {
             public void onClick(View v) {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_ACCEPT);
+                appNotice_activity.handleTrackerStateChanges();
 
                 // Remember in a persistent way that the explicit notice has been accepted
                 AppData.setBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, true);

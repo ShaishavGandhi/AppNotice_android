@@ -179,27 +179,36 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
 
     public void sendOptInOutNotices() {
         // Opt-in/out ping-back parameters
-        int pingBackCount = 0;      // Count the ping-backs
         AppNoticeData appNoticeData = AppNoticeData.getInstance(this);
 
         // Send opt-in/out ping-back for each changed non-essential tracker
-        if (appNoticeData.optionalTrackerArrayList != null && AppNotice_Activity.optionalTrackerArrayListClone != null &&
-                appNoticeData.optionalTrackerArrayList.size() == AppNotice_Activity.optionalTrackerArrayListClone.size()) {
-
+        if (AppNotice_Activity.optionalTrackerArrayListClone == null) {
+            // If the manage preferences page wasn't displayed, there is no clone list. So send opt-in messages for each optional tracker.
             for (int i = 0; i < appNoticeData.optionalTrackerArrayList.size(); i++) {
                 Tracker tracker = appNoticeData.optionalTrackerArrayList.get(i);
-                Tracker trackerClone = AppNotice_Activity.optionalTrackerArrayListClone.get(i);
 
-                // If the tracker is non-essential and is changed...
-                if (!tracker.isEssential() && (tracker.isOn() != trackerClone.isOn())) {
-                    Boolean optOut = tracker.isOn() == false;
-                    Boolean uniqueVisit = false;//((allBtnSelected == false && noneBtnSelected == false) || pingBackCount == 0);
-                    Boolean firstOptOut = pingBackCount == 0;
-                    Boolean selectAll = false;//((allBtnSelected == true || noneBtnSelected == true) && pingBackCount == 0);
+                // If the tracker is non-essential and is uninitialized or changed...
+                Boolean optOut = false;
+                if (!tracker.isEssential()) {
+                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut);    // Send opt-in/out ping-back
+                }
+                tracker.setOnOffState(tracker.isOn());  // Make sure all trackers have a non-null on/off state
+            }
 
-                    // TODO: Get correct values for uniqueVisit and selectAll
-                    AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut, uniqueVisit, firstOptOut, selectAll);    // Send opt-in/out ping-back
-                    pingBackCount++;
+        } else {
+            if (appNoticeData.optionalTrackerArrayList != null &&
+                    appNoticeData.optionalTrackerArrayList.size() == AppNotice_Activity.optionalTrackerArrayListClone.size()) {
+
+                for (int i = 0; i < appNoticeData.optionalTrackerArrayList.size(); i++) {
+                    Tracker tracker = appNoticeData.optionalTrackerArrayList.get(i);
+                    Tracker trackerClone = AppNotice_Activity.optionalTrackerArrayListClone.get(i);
+
+                    // If the tracker is non-essential and is uninitialized or changed...
+                    if (!tracker.isEssential() && (trackerClone.isNull() || (tracker.isOn() != trackerClone.isOn()))) {
+                        Boolean optOut = tracker.isOn() == false;
+                        AppNoticeData.sendOptInOutNotice(tracker.getTrackerId(), optOut);    // Send opt-in/out ping-back
+                    }
+                    tracker.setOnOffState(tracker.isOn());  // Make sure all trackers have a non-null on/off state
                 }
             }
         }

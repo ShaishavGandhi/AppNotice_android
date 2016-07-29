@@ -36,7 +36,7 @@ public class Tracker {
     private String logo_url;
     private String description;
     private String privacy_url;
-    private boolean isOn = true;              // Not in JSON. Defaults to true and is managed within the SDK
+    private Boolean isOn = null;              // Not in JSON. Defaults to null (uninitialized, but true) and is managed within the SDK
 
     // Public getters and setters
     public String getCategory() { return category; }
@@ -45,7 +45,8 @@ public class Tracker {
     public String getLogo_url() { return logo_url; }
     public String getDescription() { return description; }
     public String getPrivacy_url() { return privacy_url; }
-    public boolean isOn() { return isOn; }
+    public boolean isOn() { return isOn == null? true : isOn; }
+    public boolean isNull() { return isOn == null; }
     public void setOnOffState(boolean isOn) { this.isOn = isOn; };
 
     // Constructors
@@ -68,7 +69,7 @@ public class Tracker {
                 logo_url = trackerJSONObject.isNull(TAG_LOGO_URL_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_LOGO_URL_VIA_TOKEN);
                 description = trackerJSONObject.isNull(TAG_DESCRIPTION_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_DESCRIPTION_VIA_TOKEN);
                 privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_PRIVACY_URL_VIA_TOKEN);
-                isOn = true;
+                isOn = null;    // Default to null (uninitialized, but on)
             } else {
                 category = trackerJSONObject.isNull(TAG_CATEGORY)? null : trackerJSONObject.getString(TAG_CATEGORY);
                 trackerId = trackerJSONObject.isNull(TAG_TRACKERID)? null : trackerJSONObject.getInt(TAG_TRACKERID);
@@ -76,7 +77,7 @@ public class Tracker {
                 logo_url = trackerJSONObject.isNull(TAG_LOGO_URL)? null : trackerJSONObject.getString(TAG_LOGO_URL);
                 description = trackerJSONObject.isNull(TAG_DESCRIPTION)? null : trackerJSONObject.getString(TAG_DESCRIPTION);
                 privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL)? null : trackerJSONObject.getString(TAG_PRIVACY_URL);
-                isOn = true;
+                isOn = null;    // Default to null (uninitialized, but on)
             }
         } catch (JSONException e) {
             Log.e(TAG, "JSONException while parsing the Tracker object.", e);

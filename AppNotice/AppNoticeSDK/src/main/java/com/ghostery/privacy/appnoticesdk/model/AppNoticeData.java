@@ -66,7 +66,7 @@ public class AppNoticeData {
 
     // Opt-in/out ping-back
     // 0 = Publisher ID; 1 = Owner Company ID, 2 = trackerId; 3 = optOut; 4 = uniqueVisit; 5 = firstOptOut; 6 = selectAll
-    private final static String URL_SDK_OPT_IN_OUT = "https://l.betrad.com/oo/p.gif?pid={0}&ocid={1}&c={2}&et={3}&u={4}&i={5}&s={6}&m=4";
+    private final static String URL_SDK_OPT_IN_OUT = "https://l.betrad.com/oo/p.gif?ocid={0}&pid={1}&c={2}&et={3}&m=4";
 
     // Event ping-back URLs for implied
     private static String URL_SDK_IMPLIED_CONSENT_START;
@@ -229,48 +229,48 @@ public class AppNoticeData {
         }
     }
 
-    // Sets all non-essential tracker on/off states to the specified value.
-    public void setTrackerOnOffState(boolean isOn) {
-        for (Tracker tracker : optionalTrackerArrayList) {
-            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
-                tracker.setOnOffState(isOn);
-            }
-        }
-    }
-
-    // Returns 1 if all on; 0 if some on and some off; -1 if all off
-    public int getTrackerOnOffStates() {
-        int trackerCount = 0;
-        int trackerOnCount = 0;
-        for (Tracker tracker : optionalTrackerArrayList) {
-            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
-                trackerCount++;
-                if (tracker.isOn()) {
-                    trackerOnCount++;
-                }
-            }
-        }
-
-        int trackerOnOffStates = trackerOnCount == trackerCount ? 1 : trackerOnCount == 0 ? -1 : 0;
-        return trackerOnOffStates;
-    }
-
-    // Returns the number of non-essential trackers
-    public int getNonEssentialTrackerCount() {
-        int nonEssentialTrackerCount = 0;    // Assume no changes
-
-        // Count non-essential trackers
-        for (int i = 0; i < optionalTrackerArrayList.size(); i++) {
-            Tracker tracker = optionalTrackerArrayList.get(i);
-
-            // If the tracker is non-essential...
-            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
-                nonEssentialTrackerCount++;
-            }
-        }
-
-        return nonEssentialTrackerCount;
-    }
+//    // Sets all non-essential tracker on/off states to the specified value.
+//    public void setTrackerOnOffState(boolean isOn) {
+//        for (Tracker tracker : optionalTrackerArrayList) {
+//            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
+//                tracker.setOnOffState(isOn);
+//            }
+//        }
+//    }
+//
+//    // Returns 1 if all on; 0 if some on and some off; -1 if all off
+//    public int getTrackerOnOffStates() {
+//        int trackerCount = 0;
+//        int trackerOnCount = 0;
+//        for (Tracker tracker : optionalTrackerArrayList) {
+//            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
+//                trackerCount++;
+//                if (tracker.isOn()) {
+//                    trackerOnCount++;
+//                }
+//            }
+//        }
+//
+//        int trackerOnOffStates = trackerOnCount == trackerCount ? 1 : trackerOnCount == 0 ? -1 : 0;
+//        return trackerOnOffStates;
+//    }
+//
+//    // Returns the number of non-essential trackers
+//    public int getNonEssentialTrackerCount() {
+//        int nonEssentialTrackerCount = 0;    // Assume no changes
+//
+//        // Count non-essential trackers
+//        for (int i = 0; i < optionalTrackerArrayList.size(); i++) {
+//            Tracker tracker = optionalTrackerArrayList.get(i);
+//
+//            // If the tracker is non-essential...
+//            if (!tracker.isEssential() && !isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
+//                nonEssentialTrackerCount++;
+//            }
+//        }
+//
+//        return nonEssentialTrackerCount;
+//    }
 
     public boolean isTrackerDuplicateOfEssentialTracker(int trackerId) {
         Boolean isTrackerDuplicateOfEssentialTracker = false;    // Assume not a duplicate
@@ -318,18 +318,15 @@ public class AppNoticeData {
     }
 
     // Sends an opt-in/out ping back through the opt-in-out chanel
-    public static void sendOptInOutNotice(final int trackerId, final boolean optOut, final boolean uniqueVisit, final boolean firstOptOut, final boolean selectAll) {
+    public static void sendOptInOutNotice(final int trackerId, final boolean optOut) {
         // Use a non-UI thread
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[7];
-                urlParams[0] = String.valueOf(currentNoticeId);	// 0
-                urlParams[1] = String.valueOf(companyId);		// 1
+                urlParams[1] = String.valueOf(companyId);		// 0
+                urlParams[0] = String.valueOf(currentNoticeId);	// 1
                 urlParams[2] = String.valueOf(trackerId);		// 2
                 urlParams[3] = optOut ? "1" : "0";  		    // 3
-                urlParams[4] = uniqueVisit ? "1" : "0";	    	// 4
-                urlParams[5] = firstOptOut ? "1" : "0";		    // 5
-                urlParams[6] = selectAll ? "1" : "0";	    	// 6
 
                 String uRL = MessageFormat.format(URL_SDK_OPT_IN_OUT, urlParams);
 

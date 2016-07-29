@@ -38,11 +38,12 @@ public class ImpliedConsent_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.ghostery_fragment_implied_consent, container, false);
         AppNotice_Activity.isConsentActive = true;
+
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -78,6 +79,7 @@ public class ImpliedConsent_Fragment extends Fragment {
             public void onClick(View v) {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+                appNotice_activity.handleTrackerStateChanges();
 
                 // Let the calling class know the selected option
                 if (AppNotice_Activity.appNotice_callback != null) {
@@ -96,6 +98,7 @@ public class ImpliedConsent_Fragment extends Fragment {
             public void onClick(View v) {
                 // Send notice for this event
                 AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+                appNotice_activity.handleTrackerStateChanges();
 
                 // Let the calling class know the selected option
                 if (AppNotice_Activity.appNotice_callback != null) {
@@ -159,10 +162,12 @@ public class ImpliedConsent_Fragment extends Fragment {
     }
 
     public void onBackPressed() {
+        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
         AppNotice_Activity.isConsentActive = false;
 
         // Send notice for this event
         AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONTINUE);
+        appNotice_activity.handleTrackerStateChanges();
 
         // Let the calling class know the selected option
         if (AppNotice_Activity.appNotice_callback != null) {
