@@ -126,9 +126,6 @@ public class ExplicitConsent_Fragment extends Fragment {
         decline_button_port.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // User cancelled the dialog...negating consent
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_DECLINE);
-
                 // Close this dialog
                 getActivity().onBackPressed();
             }
@@ -138,9 +135,6 @@ public class ExplicitConsent_Fragment extends Fragment {
         decline_button_land.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // User cancelled the dialog...negating consent
-                // Send notice for this event
-                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_DECLINE);
-
                 // Close this dialog
                 getActivity().onBackPressed();
             }
