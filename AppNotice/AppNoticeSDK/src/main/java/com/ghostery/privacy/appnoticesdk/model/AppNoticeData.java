@@ -139,26 +139,22 @@ public class AppNoticeData {
         instance = this;
 
         // Build the event ping-back URL strings
-        String cid = String.valueOf(companyId);		// 1
-        String nid = String.valueOf(currentNoticeId);	// 0
-        String idInfo = "ocid=" + cid + "&pid=" + nid;
-
         String sdkVersionCode = String.valueOf(AppNotice.sdkVersionCode);
         String appVersion = getAppVersion();
         String osVersion = Build.VERSION.RELEASE;
         String language = Locale.getDefault().getLanguage();
         String versionInfo = "&v=" + sdkVersionCode + "&av=" + appVersion + "&os=" + osVersion + "&l=" + language;
 
-        URL_SDK_IMPLIED_CONSENT_START =  "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=11&mb=4" + versionInfo;    //pid, ocid, nt = 11, v, av, mb, os, l
-        URL_SDK_IMPLIED_CONTINUE =       "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=11&mb=4&aa=1";    //pid, ocid, nt = 11, aa = 1, mb
-        URL_SDK_IMPLIED_PREF_CONSENT =   "http://l.betrad.com/pub/p.gif?" + idInfo + "&mb=11&mb=4&u=1";    //pid, ocid, nt = 11, u = 1, mb
-        URL_SDK_IMPLIED_PREF_DIRECT =    "http://l.betrad.com/pub/p.gif?" + idInfo + "&mb=11&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 11, u = 0,  v, av, mb, os, l
+        URL_SDK_IMPLIED_CONSENT_START =  "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4" + versionInfo;    //pid, ocid, nt = 11, v, av, mb, os, l
+        URL_SDK_IMPLIED_CONTINUE =       "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4&aa=1";    //pid, ocid, nt = 11, aa = 1, mb
+        URL_SDK_IMPLIED_PREF_CONSENT =   "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&mb=11&mb=4&u=1";    //pid, ocid, nt = 11, u = 1, mb
+        URL_SDK_IMPLIED_PREF_DIRECT =    "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&mb=11&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 11, u = 0,  v, av, mb, os, l
 
-        URL_SDK_EXPLICIT_CONSENT_START = "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4" + versionInfo;    //pid, ocid, nt = 12, v, av, mb, os, l
-        URL_SDK_EXPLICIT_ACCEPT =        "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&aa=1";    //pid, ocid, nt = 12, aa = 1, mb
-        URL_SDK_EXPLICIT_DECLINE =       "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&aa=0";    //pid, ocid, nt = 12, aa = 0, mb
-        URL_SDK_EXPLICIT_PREF_CONSENT =  "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&u=1";    //pid, ocid, nt = 12, u = 1, mb
-        URL_SDK_EXPLICIT_PREF_DIRECT =   "http://l.betrad.com/pub/p.gif?" + idInfo + "&nt=12&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 12, u = 0, v, av, mb, os, l
+        URL_SDK_EXPLICIT_CONSENT_START = "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4" + versionInfo;    //pid, ocid, nt = 12, v, av, mb, os, l
+        URL_SDK_EXPLICIT_ACCEPT =        "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4&aa=1";    //pid, ocid, nt = 12, aa = 1, mb
+        URL_SDK_EXPLICIT_DECLINE =       "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4&aa=0";    //pid, ocid, nt = 12, aa = 0, mb
+        URL_SDK_EXPLICIT_PREF_CONSENT =  "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4&u=1";    //pid, ocid, nt = 12, u = 1, mb
+        URL_SDK_EXPLICIT_PREF_DIRECT =   "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 12, u = 0, v, av, mb, os, l
 
         // Pre-populate the max values with defaults just in case the JSON object can't be retrieved
         implied_flow_session_display_max = implied_flow_session_display_max_default = activity.getResources().getInteger(R.integer.ghostery_implied_flow_session_display_max);
@@ -384,6 +380,12 @@ public class AppNoticeData {
                 }
 
                 if (uRL != null && uRL.length() > 0) {
+                    Object[] urlParams = new Object[7];
+                    urlParams[0] = String.valueOf(companyId);		// 0
+                    urlParams[1] = String.valueOf(currentNoticeId);	// 1
+
+                    uRL = MessageFormat.format(uRL, urlParams);
+
                     Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
                     try{
 //                        if (Network.isNetworkAvailable(fragmentActivity)) {
