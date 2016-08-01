@@ -147,8 +147,8 @@ public class AppNoticeData {
 
         URL_SDK_IMPLIED_CONSENT_START =  "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4" + versionInfo;    //pid, ocid, nt = 11, v, av, mb, os, l
         URL_SDK_IMPLIED_CONTINUE =       "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4&aa=1";    //pid, ocid, nt = 11, aa = 1, mb
-        URL_SDK_IMPLIED_PREF_CONSENT =   "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&mb=11&mb=4&u=1";    //pid, ocid, nt = 11, u = 1, mb
-        URL_SDK_IMPLIED_PREF_DIRECT =    "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&mb=11&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 11, u = 0,  v, av, mb, os, l
+        URL_SDK_IMPLIED_PREF_CONSENT =   "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4&u=1";    //pid, ocid, nt = 11, u = 1, mb
+        URL_SDK_IMPLIED_PREF_DIRECT =    "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4&u=0" + versionInfo;    //pid, ocid, nt = 11, u = 0,  v, av, mb, os, l
 
         URL_SDK_EXPLICIT_CONSENT_START = "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4" + versionInfo;    //pid, ocid, nt = 12, v, av, mb, os, l
         URL_SDK_EXPLICIT_ACCEPT =        "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=12&mb=4&aa=1";    //pid, ocid, nt = 12, aa = 1, mb
