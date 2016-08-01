@@ -28,5 +28,5 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
-    compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.1.0'
+    compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.2.0'
 }

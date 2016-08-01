@@ -2,6 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+// This is the library version used when deploying the artifact
+version = "2.2.0"
+
 android {
     compileSdkVersion 24
     buildToolsVersion '24.0.0'
@@ -11,7 +14,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 50
-        versionName "2.2.0"
+        versionName version
     }
 
     packagingOptions {
@@ -65,7 +68,7 @@ ext {
     siteUrl = 'https://github.com/ghostery/AppNoticeSDK-Android'
     gitUrl = 'https://github.com/ghostery/AppNoticeSDK-Android.git'
 
-    libraryVersion = '2.1.0'
+    libraryVersion = version
 
     developerId = 'ghostery'
     developerName = 'Jason Mitchel'
@@ -151,7 +154,7 @@ install {
     }
 }
 
-version = libraryVersion
+version = version
 
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
