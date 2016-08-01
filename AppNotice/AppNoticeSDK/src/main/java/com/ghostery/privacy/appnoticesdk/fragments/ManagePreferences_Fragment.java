@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.adapter.ManagePreferences_ViewPager_Adapter;
@@ -90,7 +91,7 @@ public class ManagePreferences_Fragment extends Fragment {
         final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
         if (AppNotice_Activity.isConsentActive) {
-            if (AppNotice_Activity.isImpliedMode) {
+            if (AppNotice.isImpliedMode) {
                 // If implied mode, hide the explicit button layout
                 explicitButtonLayout.setVisibility(View.GONE);
 

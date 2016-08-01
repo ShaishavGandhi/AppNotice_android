@@ -30,7 +30,6 @@ public class AppNotice_Activity extends AppCompatActivity implements AppCompatCa
     private FragmentManager fragmentManager;
     public static AppNotice_Callback appNotice_callback;
     public static boolean isConsentActive = false;
-    public static boolean isImpliedMode = true;
     public static AppNoticeData appNoticeData;
     public static ArrayList<Tracker> optionalTrackerArrayListClone;
 

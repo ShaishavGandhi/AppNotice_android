@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.ghostery.privacy.appnoticesdk.AppNotice;
 import com.ghostery.privacy.appnoticesdk.AppNotice_Activity;
 import com.ghostery.privacy.appnoticesdk.R;
 import com.ghostery.privacy.appnoticesdk.callbacks.LogoDownload_Callback;
@@ -178,7 +179,7 @@ public class TrackerDetail_Fragment extends Fragment {
         final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
         if (AppNotice_Activity.isConsentActive) {
-            if (AppNotice_Activity.isImpliedMode) {
+            if (AppNotice.isImpliedMode) {
                 // If implied mode, show the snackbar
                 CoordinatorLayout coordinatorlayout = (CoordinatorLayout)getView().findViewById(R.id.coordinatorLayout);
                 Snackbar snackbar = Snackbar
