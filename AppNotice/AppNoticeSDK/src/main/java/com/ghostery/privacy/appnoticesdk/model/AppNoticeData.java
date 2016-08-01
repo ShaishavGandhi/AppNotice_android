@@ -66,7 +66,7 @@ public class AppNoticeData {
 
     // Opt-in/out ping-back
     // 0 = Publisher ID; 1 = Owner Company ID, 2 = trackerId; 3 = optOut; 4 = uniqueVisit; 5 = firstOptOut; 6 = selectAll
-    private final static String URL_SDK_OPT_IN_OUT = "https://l.betrad.com/oo/p.gif?ocid={0}&pid={1}&c={2}&et={3}&m=4";
+    private final static String URL_SDK_OPT_IN_OUT = "https://l.betrad.com/oo/p.gif?ocid={0}&pid={1}&c={2}&et={3}&mb=4";
 
     // Event ping-back URLs for implied
     private static String URL_SDK_IMPLIED_CONSENT_START;
