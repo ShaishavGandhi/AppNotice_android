@@ -142,7 +142,7 @@ public class AppNoticeData {
         String sdkVersionCode = String.valueOf(AppNotice.sdkVersionCode);
         String appVersion = getAppVersion();
         String osVersion = Build.VERSION.RELEASE;
-        String language = Locale.getDefault().getLanguage();
+        String language = Locale.getDefault().toString();
         String versionInfo = "&v=" + sdkVersionCode + "&av=" + appVersion + "&os=" + osVersion + "&l=" + language;
 
         URL_SDK_IMPLIED_CONSENT_START =  "http://l.betrad.com/pub/p.gif?ocid={0}&pid={1}&nt=11&mb=4" + versionInfo;    //pid, ocid, nt = 11, v, av, mb, os, l
@@ -375,7 +375,7 @@ public class AppNoticeData {
                         uRL = URL_SDK_EXPLICIT_PREF_CONSENT;
                         break;
                     case EXPLICIT_PREF_DIRECT:
-                        uRL = URL_SDK_IMPLIED_PREF_DIRECT;
+                        uRL = URL_SDK_EXPLICIT_PREF_DIRECT;
                         break;
                 }
 
@@ -388,22 +388,22 @@ public class AppNoticeData {
 
                     Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
                     try{
-//                        if (Network.isNetworkAvailable(fragmentActivity)) {
-//                            // Split the supplied URL into usable parts for the service call
-//                            String[] uRlParts = uRL.split("\\?");
-//                            String[] params = uRlParts[1].split("\\&");
-//                            List paramList = new ArrayList();
-//                            for (String param : params) {
-//                                String[] paramParts = param.split("\\=");
-//                                BasicNameValuePair nameValuePair = new BasicNameValuePair(paramParts[0], paramParts[1]);
-//                                paramList.add(nameValuePair);
-//                            }
-//
-//                            ServiceHandler sh = new ServiceHandler();
-//                            String temp = sh.makeServiceCall(uRlParts[0], ServiceHandler.POST, paramList);
-//                        } else {
-//                            Log.e(TAG, "No network connection for sending notice beacon: (type=" + type + ")" + uRL);
-//                        }
+                        // if (Network.isNetworkAvailable(fragmentActivity)) {
+                        //     // Split the supplied URL into usable parts for the service call
+                        //     String[] uRlParts = uRL.split("\\?");
+                        //     String[] params = uRlParts[1].split("\\&");
+                        //     List paramList = new ArrayList();
+                        //     for (String param : params) {
+                        //         String[] paramParts = param.split("\\=");
+                        //         BasicNameValuePair nameValuePair = new BasicNameValuePair(paramParts[0], paramParts[1]);
+                        //         paramList.add(nameValuePair);
+                        //     }
+                        //
+                        //     ServiceHandler sh = new ServiceHandler();
+                        //     String temp = sh.makeServiceCall(uRlParts[0], ServiceHandler.POST, paramList);
+                        // } else {
+                        //     Log.e(TAG, "No network connection for sending notice beacon: (type=" + type + ")" + uRL);
+                        // }
                         ServiceHandler serviceHandler = new ServiceHandler();
                         String temp = serviceHandler.getRequest(uRL);
                     }catch(Exception e){
