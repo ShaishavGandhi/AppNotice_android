@@ -16,7 +16,7 @@ android {
         applicationId "com.ghostery.privacy.fireball_module"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 52
+        versionCode 53
         versionName "2.2.0"
     }
 
@@ -41,5 +41,5 @@ dependencies {
     releaseCompile project(path: ':AppNoticeSDK', configuration: 'release')
     debugCompile project(path: ':AppNoticeSDK', configuration: 'debug')
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
 }

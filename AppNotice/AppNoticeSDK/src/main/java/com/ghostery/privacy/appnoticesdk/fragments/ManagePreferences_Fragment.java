@@ -29,7 +29,8 @@ import com.ghostery.privacy.appnoticesdk.utils.AppData;
  *
  */
 public class ManagePreferences_Fragment extends Fragment {
-    ManagePreferences_ViewPager_Adapter managePreferences_viewPager_adapter;
+    private ManagePreferences_ViewPager_Adapter managePreferences_viewPager_adapter;
+    private AppNotice_Activity appNotice_activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class ManagePreferences_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.ghostery_fragment_manage_preferences, container, false);
+        appNotice_activity = (AppNotice_Activity) getActivity();
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -49,18 +51,34 @@ public class ManagePreferences_Fragment extends Fragment {
             actionBar.show();
         }
 
+        AppNoticeData appNoticeData = AppNoticeData.getInstance(appNotice_activity);
+        boolean showOptionalTab = appNoticeData.hasOptionalTrackers();
+        boolean showEssentailTab = appNoticeData.hasEssentialTrackers();
+        boolean showWebTab = getResources().getBoolean(R.bool.ghostery_show_web_tab);
+        ManagePreferences_ViewPager_Adapter.setActiveTabs(showOptionalTab, showEssentailTab, showWebTab);
+
         TabLayout tab_layout = (TabLayout) view.findViewById(R.id.tab_layout);
         Resources resources = getActivity().getResources();
-        tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_optional_title)));
-        tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_essential_title)));
-        tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_webbased_title)));
+        if (showOptionalTab) {
+            tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_optional_title)));
+        }
+        if (showEssentailTab) {
+            tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_essential_title)));
+        }
+        if (showWebTab) {
+            tab_layout.addTab(tab_layout.newTab().setText(resources.getString(R.string.ghostery_preferences_webbased_title)));
+        }
+
+        int tabCount = tab_layout.getTabCount();
+        if (tabCount <= 1) {
+            // This will force the single tab to be left aligned...and look more like a header row
+            tab_layout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
+
+        managePreferences_viewPager_adapter = new ManagePreferences_ViewPager_Adapter(getChildFragmentManager(), tabCount);
 
         final ViewPager view_pager = (ViewPager) view.findViewById(R.id.view_pager);
-
-        managePreferences_viewPager_adapter = new ManagePreferences_ViewPager_Adapter(getChildFragmentManager(), tab_layout.getTabCount());
-
         view_pager.setAdapter(managePreferences_viewPager_adapter);
-
         view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
 
         tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -88,7 +106,6 @@ public class ManagePreferences_Fragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         LinearLayout explicitButtonLayout = (LinearLayout)getView().findViewById(R.id.explicit_button_layout);
-        final AppNotice_Activity appNotice_activity = (AppNotice_Activity) getActivity();
 
         if (AppNotice_Activity.isConsentActive) {
             if (AppNotice.isImpliedMode) {

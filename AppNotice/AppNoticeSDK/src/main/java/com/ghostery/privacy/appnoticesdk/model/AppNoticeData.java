@@ -212,6 +212,24 @@ public class AppNoticeData {
         return null;
     }
 
+    // Returns true if there are essential trackers in the list, else false
+    public boolean hasEssentialTrackers() {
+        boolean hasEssential = essentialTrackerArrayList.size() > 0;
+        return hasEssential;
+    }
+
+    // Returns true if there are optional trackers in the list that aren't duplicates of essential trackers, else false
+    public boolean hasOptionalTrackers() {
+        boolean hasOptional = false;
+        for (Tracker tracker : optionalTrackerArrayList) {
+            if (!isTrackerDuplicateOfEssentialTracker(tracker.getTrackerId())) {
+                hasOptional = true;
+                break;  // Stop loop after first detection
+            }
+        }
+        return hasOptional;
+    }
+
     // Sets all the specified non-essential tracker (and all duplicate non-essential trackers) on/off state to the specified value.
     public void setTrackerOnOffState(int uId, boolean isOn) {
         Tracker selectedTracker = getTrackerById(uId);  // Get the tracker object for the specified tracker

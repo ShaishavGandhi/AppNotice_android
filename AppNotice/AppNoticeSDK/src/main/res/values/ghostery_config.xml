@@ -1,10 +1,12 @@
 <resources>
 
     <!-- Configuration-->
-    <!-- Height of the category divider on the privacy preferences screen -->
-    <dimen name="ghostery_list_category_divider_height">1dp</dimen>
-    <!-- Height of the list-item divider on the privacy preferences screen -->
-    <integer name="ghostery_list_divider_height">0</integer>
+    <!-- (Deprecated) Height of the category divider on the privacy preferences screen -->
+    <!--<dimen name="ghostery_list_category_divider_height">1dp</dimen>-->
+    <!-- (Deprecated) Height of the list-item divider on the privacy preferences screen -->
+    <!--<integer name="ghostery_list_divider_height">0</integer>-->
+    <!-- If true, the web-based tab will be shown, else it will not be shown -->
+    <bool name="ghostery_show_web_tab">false</bool>
 
     <!-- (Deprecated: Type is now determined by the start method that is called.) Consent flow type: true = Explicit, false = Implied. -->
     <!--<bool name="ghostery_consent_flow_type">true</bool>-->

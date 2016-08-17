@@ -218,7 +218,7 @@ public class AppNotice {
 
             } else {
                 // If not showing a notice, let the host app know
-                Boolean isAccepted = AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+                Boolean isAccepted = getAcceptedState();
                 Log.d(TAG, "optionalTrackerArrayList size = " + appNoticeData.optionalTrackerArrayList.size());
                 HashMap<Integer, Boolean> trackerHashMap = appNoticeData.getTrackerHashMap(true);
                 Log.d(TAG, "trackerHashMap size = " + trackerHashMap.size());
