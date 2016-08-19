@@ -79,6 +79,12 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
+task clean(type: Exec) {
+    ext.lockhunter = '\"C:\\Apps\\LockHunter\\LockHunter.exe\"'
+    def buildDir = file(new File("build"))
+    commandLine 'cmd', "$lockhunter", '/delete', '/silent', buildDir
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:24.1.1'

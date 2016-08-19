@@ -7,6 +7,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ghostery_AppNoticeTheme.Base" parent="@style/Theme.AppCompat" />
+    <style name="ghostery_AppNoticeTheme" parent="ghostery_AppNoticeTheme.Dark" />
 
 </resources>

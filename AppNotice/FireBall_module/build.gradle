@@ -37,6 +37,12 @@ android {
     }
 }
 
+task clean(type: Exec) {
+    ext.lockhunter = '\"C:\\Apps\\LockHunter\\LockHunter.exe\"'
+    def buildDir = file(new File("build"))
+    commandLine 'cmd', "$lockhunter", '/delete', '/silent', buildDir
+}
+
 dependencies {
     releaseCompile project(path: ':AppNoticeSDK', configuration: 'release')
     debugCompile project(path: ':AppNoticeSDK', configuration: 'debug')
