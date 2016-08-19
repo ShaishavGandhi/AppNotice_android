@@ -10,5 +10,8 @@
     <color name="ghosteryColorButtonTextSecondary">#666666</color>
     <color name="ghosteryColorButtonTextBorderless">#03A9F4</color>
     <color name="ghosteryColorPrivacyTools">#9FA2A4</color>
+    <color name="ghosteryColorPrimary.Dark">#000000</color>
+    <color name="ghosteryColorPrimaryDark.Dark">#0288D1</color>
+    <color name="ghosteryColorAccent.Dark">#40c4ff</color>
 
 </resources>

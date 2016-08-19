@@ -15,14 +15,6 @@
         android:paddingRight="12dp"
         android:paddingBottom="6dp" />
 
-    <View
-        android:id="@+id/divider_view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_marginLeft="4dip"
-        android:layout_marginRight="4dip"
-        android:background="@color/button_material_light" />
-
     <ListView
         android:id="@+id/tracker_list"
         android:layout_width="match_parent"

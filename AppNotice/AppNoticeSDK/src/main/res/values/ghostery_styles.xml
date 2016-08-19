@@ -2,7 +2,6 @@
 
     <!-- Application theme. -->
     <style name="ghostery_AppNoticeTheme" parent="ghostery_AppNoticeTheme.Base" />
-    <style name="ghostery_AppNoticeTheme.Dark" parent="ghostery_AppNoticeTheme.Base.Dark" />
 
     <style name="ghostery_AppNoticeTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">false</item>
@@ -16,10 +15,10 @@
     <style name="ghostery_AppNoticeTheme.Base.Dark" parent="Theme.AppCompat">
         <item name="windowNoTitle">false</item>
         <item name="windowActionBar">true</item>
-        <item name="colorPrimary">@color/ghosteryColorPrimary</item>
-        <item name="colorPrimaryDark">@color/ghosteryColorPrimaryDark</item>
-        <item name="colorAccent">@color/ghosteryColorAccent</item>
-        <item name="ghostery_colorBackgroundPrimary">@color/background_material_dark</item>
+        <item name="colorPrimary">@color/ghosteryColorPrimary.Dark</item>
+        <item name="colorPrimaryDark">@color/ghosteryColorPrimaryDark.Dark</item>
+        <item name="colorAccent">@color/ghosteryColorAccent.Dark</item>
+        <item name="ghostery_colorBackgroundPrimary">@color/ghosteryColorPrimary.Dark</item>
     </style>
 
     <style name="ghostery_AppNoticeTheme.Button" parent="ghostery_AppNoticeTheme">
