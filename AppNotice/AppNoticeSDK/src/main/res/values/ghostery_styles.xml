@@ -1,9 +1,8 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Application theme. -->
-    <style name="ghostery_AppNoticeTheme" parent="ghostery_AppNoticeTheme.Base">
-
-    </style>
+    <style name="ghostery_AppNoticeTheme" parent="ghostery_AppNoticeTheme.Base" />
+    <style name="ghostery_AppNoticeTheme.Dark" parent="ghostery_AppNoticeTheme.Base.Dark" />
 
     <style name="ghostery_AppNoticeTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">false</item>
@@ -11,6 +10,16 @@
         <item name="colorPrimary">@color/ghosteryColorPrimary</item>
         <item name="colorPrimaryDark">@color/ghosteryColorPrimaryDark</item>
         <item name="colorAccent">@color/ghosteryColorAccent</item>
+        <item name="ghostery_colorBackgroundPrimary">@color/ghosteryColorPrimary</item>
+    </style>
+
+    <style name="ghostery_AppNoticeTheme.Base.Dark" parent="Theme.AppCompat">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="colorPrimary">@color/ghosteryColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ghosteryColorPrimaryDark</item>
+        <item name="colorAccent">@color/ghosteryColorAccent</item>
+        <item name="ghostery_colorBackgroundPrimary">@color/background_material_dark</item>
     </style>
 
     <style name="ghostery_AppNoticeTheme.Button" parent="ghostery_AppNoticeTheme">
