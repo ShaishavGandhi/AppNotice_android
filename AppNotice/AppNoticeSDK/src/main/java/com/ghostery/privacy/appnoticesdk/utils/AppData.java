@@ -26,6 +26,7 @@ public class AppData {
     public static final String APPDATA_IMPLIED_DISPLAY_COUNT = "implied_display_count";           // int
     public static final String APPDATA_EXPLICIT_ACCEPTED = "explicit_accepted";                     // Boolean
     public static final String APPDATA_TRACKERSTATES = "tracker_states";                            // String
+    public static final String APPDATA_PREV_APP_NOTICE_TOKEN = "previous_app_notice_token";         // String
     public static final String APPDATA_PREV_NOTICE_ID = "previous_notice_id";                       // int
     public static final String APPDATA_PREV_JSON = "previous_json";                                 // String
 

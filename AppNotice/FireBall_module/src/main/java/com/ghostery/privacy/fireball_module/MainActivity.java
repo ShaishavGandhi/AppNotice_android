@@ -154,8 +154,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
 		} else {
             if (usingToken) {
-//                appNotice = new AppNotice(this, noticeIdString, this);
+                // Use the SDK's token constructor
+                appNotice = new AppNotice(this, noticeIdString, this);
             } else {
+                // Use the SDK's CID/NID constructor
                 try {
                     companyId = Integer.valueOf(companyIdString);
                     noticeId = Integer.valueOf(noticeIdString);

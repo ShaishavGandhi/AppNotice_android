@@ -34,6 +34,56 @@ public class AppNotice {
     /**
      * AppNotice constructor -- implied mode
      * @param activity: Usually your start-up activity.
+     * @param appNoticeToken: The notice token for the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     */
+    public AppNotice(Activity activity, String appNoticeToken, AppNotice_Callback appNotice_callback) {
+        initAppNotice(activity, appNoticeToken, appNotice_callback, true);  // Init the SDK in implied mode
+    }
+
+    /**
+     * AppNotice constructor
+     * @param activity: Usually your start-up activity.
+     * @param appNoticeToken: The notice token for the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     * @param isImpliedMode: Initialize the SDK in either implied or explicit mode: true = implied; false = explicit.
+     */
+    public AppNotice(Activity activity, String appNoticeToken, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
+        initAppNotice(activity, appNoticeToken, appNotice_callback, isImpliedMode);
+    }
+
+    /**
+     * AppNotice initializer: Used for common functionality between the constructors
+     * @param activity: Usually your start-up activity.
+     * @param appNoticeToken: The notice token for the configuration created for this app.
+     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+     * @param isImpliedMode: Initialize the SDK in either implied or explicit mode: true = implied; false = explicit.
+     */
+    private void initAppNotice(Activity activity, String appNoticeToken, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
+        this.isImpliedMode = isImpliedMode;
+        usingToken = true;
+        extActivity = activity;
+        if (appNoticeToken == null || appNoticeToken.isEmpty()) {
+            throw(new IllegalArgumentException("Notice token must be a valid identifier."));
+        }
+
+        // Remember the provided callback
+        this.appNotice_callback = appNotice_callback;
+        AppNotice_Activity.appNotice_callback = appNotice_callback;
+
+        // Get either a new or initialized tracker config object
+        appNoticeData = AppNoticeData.getInstance(activity);
+
+        // Keep track of the company ID and the notice ID
+        appNoticeData.setCurrentAppNoticeToken(appNoticeToken);
+        AppNoticeData.appContext = activity.getApplicationContext();
+        AppNoticeData.usingToken = usingToken;
+    }
+
+
+    /**
+     * AppNotice constructor -- implied mode
+     * @param activity: Usually your start-up activity.
      * @param companyId: The company ID assigned to you for the App Notice SDK.
      * @param noticeId: The notice ID of the configuration created for this app.
      * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
@@ -119,6 +169,7 @@ public class AppNotice {
         AppData.remove(AppData.APPDATA_IMPLIED_DISPLAY_COUNT);
         AppData.remove(AppData.APPDATA_EXPLICIT_ACCEPTED);
         AppData.remove(AppData.APPDATA_TRACKERSTATES);
+        AppData.remove(AppData.APPDATA_PREV_APP_NOTICE_TOKEN);
         AppData.remove(AppData.APPDATA_PREV_NOTICE_ID);
         AppData.remove(AppData.APPDATA_PREV_JSON);
     }
@@ -214,7 +265,11 @@ public class AppNotice {
                 }
 
                 // Remember that a notice has been shown for this notice ID
-                appNoticeData.setPreviousNoticeId(appNoticeData.getNoticeId());
+                if (usingToken) {
+                    appNoticeData.setPreviousAppNoticeToken(appNoticeData.getCurrentAppNoticeToken());
+                } else {
+                    appNoticeData.setPreviousNoticeId(appNoticeData.getCurrentNoticeId());
+                }
 
             } else {
                 // If not showing a notice, let the host app know

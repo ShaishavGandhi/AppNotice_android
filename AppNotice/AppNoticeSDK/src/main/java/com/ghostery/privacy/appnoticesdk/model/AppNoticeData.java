@@ -42,8 +42,9 @@ public class AppNoticeData {
     private ProgressDialog progressDialog;
     private boolean isTrackerListInitialized = false;
     private boolean isInitialized = false;
-    private static String appNotice_token;
     private static int companyId;
+    private static String currentAppNoticeToken;
+    private static String previousAppNoticeToken;
     private static int currentNoticeId;
     private static int previousNoticeId;
     private int implied_flow_session_display_max_default = 1;
@@ -62,7 +63,7 @@ public class AppNoticeData {
 
     // 0 = company ID; 1 = pub-notice ID
     private final static String URL_JSON_REQUEST = "https://c.betrad.com/pub/c/{0}/{1}.js";
-    private final static String URL_JSON_REQUEST_VIA_TOKEN = "http://privacyapi.ghosterydev.com/api/v1/appnotice/configuration/{0}";
+    private final static String URL_JSON_REQUEST_VIA_TOKEN = "http://privacyapi.ghosterydev.com/api/v1/appnotice/configuration/";
 
     // Opt-in/out ping-back
     // 0 = Publisher ID; 1 = Owner Company ID, 2 = trackerId; 3 = optOut; 4 = uniqueVisit; 5 = firstOptOut; 6 = selectAll
@@ -99,6 +100,8 @@ public class AppNoticeData {
     private static final String FILE_NOT_FOUND = "File not found";
 
     // Field tags
+    private static final String TAG_COMPANY_ID = "companyId";                                           // Company ID (via token)
+    private static final String TAG_NOTICE_ID = "id";                                                   // Notice ID (via token)
     private static final String TAG_TRACKERS_VIA_TOKEN = "vendors";                                     // Tracker list
     private static final String TAG_TRACKERS = "trackers";                                              // Tracker list
 
@@ -110,9 +113,14 @@ public class AppNoticeData {
     public Boolean isTrackerListInitialized() { return isTrackerListInitialized; }
     public Boolean isInitialized() { return isInitialized; }
     public int getCompanyId() { return companyId; }
-    public void setAppNoticeToken(String appNotice_Token) { this.appNotice_token = appNotice_token; }
     public void setCompanyId(int companyId) { this.companyId = companyId; }
-    public int getNoticeId() { return currentNoticeId; }
+    public String getCurrentAppNoticeToken() { return currentAppNoticeToken; }
+    public void setCurrentAppNoticeToken(String currentAppNoticeToken) { AppNoticeData.currentAppNoticeToken = currentAppNoticeToken; }
+    public void setPreviousAppNoticeToken(String previousAppNoticeToken) {
+        this.previousAppNoticeToken = previousAppNoticeToken;
+        AppData.setString(AppData.APPDATA_PREV_APP_NOTICE_TOKEN, previousAppNoticeToken);
+    }
+    public int getCurrentNoticeId() { return currentNoticeId; }
     public void setCurrentNoticeId(int currentNoticeId) { this.currentNoticeId = currentNoticeId; }
     public void setPreviousNoticeId(int previousNoticeId) {
         this.previousNoticeId = previousNoticeId;
@@ -337,8 +345,8 @@ public class AppNoticeData {
         new Thread(){
             public void run(){
                 Object[] urlParams = new Object[7];
-                urlParams[1] = String.valueOf(companyId);		// 0
-                urlParams[0] = String.valueOf(currentNoticeId);	// 1
+                urlParams[0] = String.valueOf(companyId);		// 0
+                urlParams[1] = String.valueOf(currentNoticeId);	// 1
                 urlParams[2] = String.valueOf(trackerId);		// 2
                 urlParams[3] = optOut ? "1" : "0";  		    // 3
 
@@ -401,7 +409,6 @@ public class AppNoticeData {
                     Object[] urlParams = new Object[7];
                     urlParams[0] = String.valueOf(companyId);		// 0
                     urlParams[1] = String.valueOf(currentNoticeId);	// 1
-
                     uRL = MessageFormat.format(uRL, urlParams);
 
                     Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
@@ -439,6 +446,7 @@ public class AppNoticeData {
         implied_flow_session_display_max = implied_flow_session_display_max_default;
 
         previousNoticeId = AppData.getInteger(AppData.APPDATA_PREV_NOTICE_ID, 0);
+        previousAppNoticeToken = AppData.getString(AppData.APPDATA_PREV_APP_NOTICE_TOKEN, "");
 
         isInitialized = true;
     }
@@ -498,10 +506,18 @@ public class AppNoticeData {
 
         if (implied30dayDisplayMax <= 0) {
             // If the notice ID has changed, we need to show the notice again
-            if (currentNoticeId == previousNoticeId) {
-                showNotice = false;
+            if (usingToken) {
+                if (currentAppNoticeToken == previousAppNoticeToken) {
+                    showNotice = false;
+                } else {
+                    showNotice = true;
+                }
             } else {
-                showNotice = true;
+                if (currentNoticeId == previousNoticeId) {
+                    showNotice = false;
+                } else {
+                    showNotice = true;
+                }
             }
         } else {
             long currentTime = System.currentTimeMillis();
@@ -635,6 +651,9 @@ public class AppNoticeData {
                 try {
                     String trackerJSONString;
                     if (usingToken) {
+                        companyId = jsonObj.getInt(TAG_COMPANY_ID);
+                        currentNoticeId = jsonObj.getInt(TAG_NOTICE_ID);
+
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS_VIA_TOKEN)? null : jsonObj.getString(TAG_TRACKERS_VIA_TOKEN);
                     } else {
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS)? null : jsonObj.getString(TAG_TRACKERS);
@@ -758,8 +777,13 @@ public class AppNoticeData {
 
             // Make a request to url for the AppNoticeData info
             String url = getFormattedJSONUrl();
+            String jsonStr = "";
 
-            String jsonStr = serviceHandler.getRequest(url);
+            if (usingToken) {
+                jsonStr = serviceHandler.getRequest(url, currentAppNoticeToken);
+            } else {
+                jsonStr = serviceHandler.getRequest(url);
+            }
             fillTrackerList(jsonStr);
 
             // If this JSON string was parsed successfully, cache it for later use
@@ -810,9 +834,7 @@ public class AppNoticeData {
         protected String getFormattedJSONUrl() {
             String formattedJSONUrl = "";
             if (usingToken) {
-                Object[] urlParams = new Object[1];
-                urlParams[0] = String.valueOf(appNotice_token);			// 0
-                formattedJSONUrl = MessageFormat.format(URL_JSON_REQUEST_VIA_TOKEN, urlParams);
+                formattedJSONUrl = URL_JSON_REQUEST_VIA_TOKEN;
             } else {
                 Object[] urlParams = new Object[2];
                 urlParams[0] = String.valueOf(companyId);			// 0

@@ -5,7 +5,6 @@ package com.ghostery.privacy.appnoticesdk.utils;
  */
 
 import android.content.res.Resources;
-import android.util.Base64;
 import android.util.Log;
 
 import com.ghostery.privacy.appnoticesdk.R;
@@ -26,8 +25,7 @@ public class ServiceHandler {
     private static int httpReadTimeout;	// In millis
     private static final int httpConnectTimeoutDefault = 15000;	// In millis
     private static final int httpReadTimeoutDefault = 10000;	// In millis
-    private final static String APP_NOTICE_USER = "nfoster@ghostery.com";
-    private final static String APP_NOTICE_PASSWORD = "betterads";
+    private static String appNoticeToken;
 
     public ServiceHandler() {
 		try {
@@ -37,6 +35,12 @@ public class ServiceHandler {
             Log.e(TAG, "Getting req timeout", e);
 		}
 	}
+
+    public static String getRequest(String urlVal, String appNoticeToken) {
+        ServiceHandler.appNoticeToken = appNoticeToken;
+        String result = getRequest(urlVal);
+        return result;
+    }
 
     public static String getRequest(String urlVal) {
         String Content = null;
@@ -48,10 +52,9 @@ public class ServiceHandler {
             httpURLConnection.setConnectTimeout(httpConnectTimeout);
             httpURLConnection.setReadTimeout(httpReadTimeout);
 
-            if (AppNoticeData.usingToken) {
-                String userCredentials = APP_NOTICE_USER + ":" + APP_NOTICE_PASSWORD;
-                String basicAuth = "Basic " + Base64.encodeToString(userCredentials.getBytes("UTF-8"), android.util.Base64.NO_WRAP);
-                httpURLConnection.setRequestProperty("Authorization", basicAuth);
+            if (AppNoticeData.usingToken && appNoticeToken != null) {
+//                String basicAuth = "token " + Base64.encodeToString(appNoticeToken.getBytes("UTF-8"), android.util.Base64.NO_WRAP);
+                httpURLConnection.setRequestProperty("Authorization", "token " + appNoticeToken);
             }
 
             bufferedReader = new BufferedReader(new InputStreamReader(
