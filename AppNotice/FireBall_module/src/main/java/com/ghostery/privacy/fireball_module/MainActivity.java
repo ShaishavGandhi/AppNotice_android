@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         }
 
         Boolean usingToken = false;
-        if (!noticeIdString.isEmpty() && noticeIdString.length() > 5) {
+        if (!noticeIdString.isEmpty() && noticeIdString.length() > 8) {
             usingToken = true;
         }
 

@@ -32,7 +32,7 @@ task clean(type: Exec) {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.2.0-rc5'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.2.0-rc6'
 }
