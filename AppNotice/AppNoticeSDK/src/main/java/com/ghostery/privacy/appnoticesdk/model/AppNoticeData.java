@@ -58,6 +58,7 @@ public class AppNoticeData {
     public static boolean usingToken = true;
     public static int implied30dayDisplayMax = 0;  // Default to mode-0. 0 displays on first start and every notice ID change. 1+ is the max number of times to display the consent screen on start up in a 30-day period.
     public static int impliedFlow_SessionCount;
+    private static boolean sendConsentStartNoticeLater = true;
 
     private final static long ELAPSED_30_DAYS_MILLIS = 2592000000L;     // Number of milliseconds in 30 days
 
@@ -370,75 +371,82 @@ public class AppNoticeData {
 
     // Sends a report back through the Site Notice Channel
     public static void sendNotice(final pingEvent type) {
-        // Use a non-UI thread
-        new Thread(){
-            public void run(){
-                String uRL = "";
+        if (currentNoticeId > 0) {
+            // If we already have the company ID and notice ID, send now
+            // Use a non-UI thread
+            new Thread(){
+                public void run(){
+                    String uRL = "";
 
-                switch (type) {
-                    case IMPLIED_CONSENT_START:
-                        uRL = URL_SDK_IMPLIED_CONSENT_START;
-                        break;
-                    case IMPLIED_CONTINUE:
-                        uRL = URL_SDK_IMPLIED_CONTINUE;
-                        break;
-                    case IMPLIED_PREF_CONSENT:
-                        uRL = URL_SDK_IMPLIED_PREF_CONSENT;
-                        break;
-                    case IMPLIED_PREF_DIRECT:
-                        uRL = URL_SDK_IMPLIED_PREF_DIRECT;
-                        break;
-                    case EXPLICIT_CONSENT_START:
-                        uRL = URL_SDK_EXPLICIT_CONSENT_START;
-                        break;
-                    case EXPLICIT_ACCEPT:
-                        uRL = URL_SDK_EXPLICIT_ACCEPT;
-                        break;
-                    case EXPLICIT_DECLINE:
-                        uRL = URL_SDK_EXPLICIT_DECLINE;
-                        break;
-                    case EXPLICIT_PREF_CONSENT:
-                        uRL = URL_SDK_EXPLICIT_PREF_CONSENT;
-                        break;
-                    case EXPLICIT_PREF_DIRECT:
-                        uRL = URL_SDK_EXPLICIT_PREF_DIRECT;
-                        break;
-                }
-
-                if (uRL != null && uRL.length() > 0) {
-                    Object[] urlParams = new Object[7];
-                    urlParams[0] = String.valueOf(companyId);		// 0
-                    urlParams[1] = String.valueOf(currentNoticeId);	// 1
-                    uRL = MessageFormat.format(uRL, urlParams);
-
-                    Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
-                    try{
-                        // if (Network.isNetworkAvailable(fragmentActivity)) {
-                        //     // Split the supplied URL into usable parts for the service call
-                        //     String[] uRlParts = uRL.split("\\?");
-                        //     String[] params = uRlParts[1].split("\\&");
-                        //     List paramList = new ArrayList();
-                        //     for (String param : params) {
-                        //         String[] paramParts = param.split("\\=");
-                        //         BasicNameValuePair nameValuePair = new BasicNameValuePair(paramParts[0], paramParts[1]);
-                        //         paramList.add(nameValuePair);
-                        //     }
-                        //
-                        //     ServiceHandler sh = new ServiceHandler();
-                        //     String temp = sh.makeServiceCall(uRlParts[0], ServiceHandler.POST, paramList);
-                        // } else {
-                        //     Log.e(TAG, "No network connection for sending notice beacon: (type=" + type + ")" + uRL);
-                        // }
-                        ServiceHandler serviceHandler = new ServiceHandler();
-                        String temp = serviceHandler.getRequest(uRL);
-                    }catch(Exception e){
-                        Log.e(TAG, "Error sending notice beacon: (type=" + type + ")" + uRL, e);
+                    switch (type) {
+                        case IMPLIED_CONSENT_START:
+                            uRL = URL_SDK_IMPLIED_CONSENT_START;
+                            break;
+                        case IMPLIED_CONTINUE:
+                            uRL = URL_SDK_IMPLIED_CONTINUE;
+                            break;
+                        case IMPLIED_PREF_CONSENT:
+                            uRL = URL_SDK_IMPLIED_PREF_CONSENT;
+                            break;
+                        case IMPLIED_PREF_DIRECT:
+                            uRL = URL_SDK_IMPLIED_PREF_DIRECT;
+                            break;
+                        case EXPLICIT_CONSENT_START:
+                            uRL = URL_SDK_EXPLICIT_CONSENT_START;
+                            break;
+                        case EXPLICIT_ACCEPT:
+                            uRL = URL_SDK_EXPLICIT_ACCEPT;
+                            break;
+                        case EXPLICIT_DECLINE:
+                            uRL = URL_SDK_EXPLICIT_DECLINE;
+                            break;
+                        case EXPLICIT_PREF_CONSENT:
+                            uRL = URL_SDK_EXPLICIT_PREF_CONSENT;
+                            break;
+                        case EXPLICIT_PREF_DIRECT:
+                            uRL = URL_SDK_EXPLICIT_PREF_DIRECT;
+                            break;
                     }
-                } else {
-                    Log.e(TAG, "No URL found due to incorrect notification type.");
+
+                    if (uRL != null && uRL.length() > 0) {
+                        Object[] urlParams = new Object[7];
+                        urlParams[0] = String.valueOf(companyId);		// 0
+                        urlParams[1] = String.valueOf(currentNoticeId);	// 1
+                        uRL = MessageFormat.format(uRL, urlParams);
+
+                        Log.d(TAG, "Sending notice beacon: (type=" + type + ") " + uRL);
+                        try{
+                            // if (Network.isNetworkAvailable(fragmentActivity)) {
+                            //     // Split the supplied URL into usable parts for the service call
+                            //     String[] uRlParts = uRL.split("\\?");
+                            //     String[] params = uRlParts[1].split("\\&");
+                            //     List paramList = new ArrayList();
+                            //     for (String param : params) {
+                            //         String[] paramParts = param.split("\\=");
+                            //         BasicNameValuePair nameValuePair = new BasicNameValuePair(paramParts[0], paramParts[1]);
+                            //         paramList.add(nameValuePair);
+                            //     }
+                            //
+                            //     ServiceHandler sh = new ServiceHandler();
+                            //     String temp = sh.makeServiceCall(uRlParts[0], ServiceHandler.POST, paramList);
+                            // } else {
+                            //     Log.e(TAG, "No network connection for sending notice beacon: (type=" + type + ")" + uRL);
+                            // }
+                            ServiceHandler serviceHandler = new ServiceHandler();
+                            String temp = serviceHandler.getRequest(uRL);
+                        }catch(Exception e){
+                            Log.e(TAG, "Error sending notice beacon: (type=" + type + ")" + uRL, e);
+                        }
+                    } else {
+                        Log.e(TAG, "No URL found due to incorrect notification type.");
+                    }
                 }
-            }
-        }.start();
+            }.start();
+            sendConsentStartNoticeLater = false;
+        } else {
+            // If we don't have the company ID and notice ID, send later
+            sendConsentStartNoticeLater = true;
+        }
     }
 
     // Init
@@ -653,6 +661,15 @@ public class AppNoticeData {
                     if (usingToken) {
                         companyId = jsonObj.getInt(TAG_COMPANY_ID);
                         currentNoticeId = jsonObj.getInt(TAG_NOTICE_ID);
+
+                        if (sendConsentStartNoticeLater) {
+                            // Send notice for this event
+                            if (AppNotice.isImpliedMode) {
+                                AppNoticeData.sendNotice(AppNoticeData.pingEvent.IMPLIED_CONSENT_START);
+                            } else {
+                                AppNoticeData.sendNotice(AppNoticeData.pingEvent.EXPLICIT_CONSENT_START);
+                            }
+                        }
 
                         trackerJSONString = jsonObj.isNull(TAG_TRACKERS_VIA_TOKEN)? null : jsonObj.getString(TAG_TRACKERS_VIA_TOKEN);
                     } else {
