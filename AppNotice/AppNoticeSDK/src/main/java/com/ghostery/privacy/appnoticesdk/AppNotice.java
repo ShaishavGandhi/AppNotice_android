@@ -61,7 +61,7 @@ public class AppNotice {
      */
     private void initAppNotice(Activity activity, String appNoticeToken, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
         this.isImpliedMode = isImpliedMode;
-        usingToken = true;
+        AppNoticeData.usingToken = true;
         extActivity = activity;
         if (appNoticeToken == null || appNoticeToken.isEmpty()) {
             throw(new IllegalArgumentException("Notice token must be a valid identifier."));
@@ -77,7 +77,6 @@ public class AppNotice {
         // Keep track of the company ID and the notice ID
         appNoticeData.setCurrentAppNoticeToken(appNoticeToken);
         AppNoticeData.appContext = activity.getApplicationContext();
-        AppNoticeData.usingToken = usingToken;
     }
 
 
@@ -114,7 +113,7 @@ public class AppNotice {
      */
     private void initAppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
         this.isImpliedMode = isImpliedMode;
-        usingToken = false;
+        AppNoticeData.usingToken = false;
         extActivity = activity;
         if ((companyId <= 0) || (noticeId <= 0)) {
             throw(new IllegalArgumentException("Company ID and notice ID must both be valid identifiers."));
@@ -131,7 +130,6 @@ public class AppNotice {
         appNoticeData.setCompanyId(companyId);
         appNoticeData.setCurrentNoticeId(noticeId);
         AppNoticeData.appContext = activity.getApplicationContext();
-        AppNoticeData.usingToken = usingToken;
     }
 
     /**

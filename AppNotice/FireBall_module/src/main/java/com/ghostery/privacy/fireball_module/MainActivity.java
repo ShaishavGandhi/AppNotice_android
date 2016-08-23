@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		} else {
             if (usingToken) {
                 // Use the SDK's token constructor
-                appNotice = new AppNotice(this, noticeIdString, this);
+                appNotice = new AppNotice(this, noticeIdString, this, isImplied);
             } else {
                 // Use the SDK's CID/NID constructor
                 try {
