@@ -515,7 +515,7 @@ public class AppNoticeData {
         if (implied30dayDisplayMax <= 0) {
             // If the notice ID has changed, we need to show the notice again
             if (usingToken) {
-                if (currentAppNoticeToken == previousAppNoticeToken) {
+                if (currentAppNoticeToken.equals(previousAppNoticeToken)) {
                     showNotice = false;
                 } else {
                     showNotice = true;
@@ -558,14 +558,26 @@ public class AppNoticeData {
     // Determine if the Explicit notice should be shown. True = show notice; False = don't show notice.
     public boolean getExplicitNoticeDisplayStatus() {
         Boolean displayStatus = true;     // Assume we need to show the notice
-        if (currentNoticeId != previousNoticeId) {
-            // If the notice ID has changed, we need to show the notice again
-            displayStatus = true;
+        if (usingToken) {
+            if (currentAppNoticeToken.equals(previousAppNoticeToken)) {
+                // If the token is the same, see if this has been accepted
+                Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+                displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
+            } else {
+                // If the token has changed, we need to show the notice again
+                displayStatus = true;
+            }
         } else {
-            // If the notice ID is the same, see if this has been accepted
-            Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
-            displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
-        }
+            if (currentNoticeId != previousNoticeId) {
+                // If the notice ID has changed, we need to show the notice again
+                displayStatus = true;
+            } else {
+                // If the notice ID is the same, see if this has been accepted
+                Boolean isExplicitAccepted = (boolean) AppData.getBoolean(AppData.APPDATA_EXPLICIT_ACCEPTED, false);
+                displayStatus = !isExplicitAccepted;     // If not accepted, display notice; and vice-versa
+            }
+
+            }
         return displayStatus;
     }
 
