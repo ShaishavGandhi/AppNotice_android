@@ -16,6 +16,7 @@ public class Tracker {
     private static final String TAG_CATEGORY_VIA_TOKEN = "category";
     private static final String TAG_TRACKERID_VIA_TOKEN = "id";
     private static final String TAG_NAME_VIA_TOKEN = "name";
+    private static final String TAG_ESSENTIAL = "essential";
     private static final String TAG_LOGO_URL_VIA_TOKEN = "logoUrl";
     private static final String TAG_DESCRIPTION_VIA_TOKEN = "description";
     private static final String TAG_PRIVACY_URL_VIA_TOKEN = "privacyUrl";
@@ -33,6 +34,7 @@ public class Tracker {
     private String category;
     private int trackerId;
     private String name;
+    private boolean essential;
     private String logo_url;
     private String description;
     private String privacy_url;
@@ -66,6 +68,7 @@ public class Tracker {
                 category = trackerJSONObject.isNull(TAG_CATEGORY_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_CATEGORY_VIA_TOKEN);
                 trackerId = trackerJSONObject.isNull(TAG_TRACKERID_VIA_TOKEN)? null : trackerJSONObject.getInt(TAG_TRACKERID_VIA_TOKEN);
                 name = trackerJSONObject.isNull(TAG_NAME_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_NAME_VIA_TOKEN);
+                essential = trackerJSONObject.isNull(TAG_ESSENTIAL)? false : trackerJSONObject.getBoolean(TAG_ESSENTIAL);
                 logo_url = trackerJSONObject.isNull(TAG_LOGO_URL_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_LOGO_URL_VIA_TOKEN);
                 description = trackerJSONObject.isNull(TAG_DESCRIPTION_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_DESCRIPTION_VIA_TOKEN);
                 privacy_url = trackerJSONObject.isNull(TAG_PRIVACY_URL_VIA_TOKEN)? null : trackerJSONObject.getString(TAG_PRIVACY_URL_VIA_TOKEN);
@@ -88,7 +91,13 @@ public class Tracker {
     }
 
     public boolean isEssential() {
-        return (category.equalsIgnoreCase(CAT_ESSENTIAL));
+        boolean isEssential = false;
+        if ( AppNoticeData.usingToken) {
+            isEssential = essential;
+        } else {
+            isEssential = category.equalsIgnoreCase(CAT_ESSENTIAL);
+        }
+        return isEssential;
     }
 
 }
