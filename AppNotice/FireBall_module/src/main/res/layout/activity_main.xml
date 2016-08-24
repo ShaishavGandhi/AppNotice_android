@@ -41,17 +41,8 @@
         <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText_companyId"
-            android:hint="@string/hint_companyId"
-            android:gravity="center_horizontal" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/editText_noticeId"
-            android:hint="@string/hint_noticeId"
+            android:hint="@string/hint_notice_token"
             android:gravity="center_horizontal"
             android:inputType="text" />
 

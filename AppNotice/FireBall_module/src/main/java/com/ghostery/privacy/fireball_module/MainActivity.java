@@ -65,13 +65,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         super.onResume();
 
         // If there are saved IDs, use them
-        String companyIdString = Util.getSharedPreference(this, Util.SP_COMPANY_ID, "");
         String noticeIdString = Util.getSharedPreference(this, Util.SP_NOTICE_ID, "");
         String isImplied_String = Util.getSharedPreference(this, Util.SP_IS_IMPLIED, "1");
         String implied30dayDisplayMaxString = Util.getSharedPreference(this, Util.SP_IS_30DAY_MAX, "0");
-
-        AppCompatEditText companyIdEditText = (AppCompatEditText)findViewById(R.id.editText_companyId);
-        companyIdEditText.setText(companyIdString);
 
         AppCompatEditText noticeIdEditText = (AppCompatEditText)findViewById(R.id.editText_noticeId);
         noticeIdEditText.setText(noticeIdString);
@@ -107,26 +103,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onClick(View view) {
 
-        String companyIdString = "";
         String noticeIdString = "";
-        int companyId = 0;
         int noticeId = 0;
         Boolean isImplied = true;
         int implied30dayDisplayMax = 0;
 
-        AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_companyId);
-        if (tv != null) {
-            companyIdString = tv.getText().toString();
-        }
-
-        tv = (AppCompatEditText)this.findViewById(R.id.editText_noticeId);
+        AppCompatEditText tv = (AppCompatEditText)this.findViewById(R.id.editText_noticeId);
         if (tv != null) {
             noticeIdString = tv.getText().toString();
-        }
-
-        Boolean usingToken = false;
-        if (!noticeIdString.isEmpty() && noticeIdString.length() > 8) {
-            usingToken = true;
         }
 
         AppCompatRadioButton radioButton_implied = (AppCompatRadioButton)this.findViewById(R.id.radioButton_implied);
@@ -145,28 +129,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         }
 
         // Save these values as defaults for next session
-        Util.setSharedPreference(this, Util.SP_COMPANY_ID, companyIdString);
         Util.setSharedPreference(this, Util.SP_NOTICE_ID, noticeIdString);
         Util.setSharedPreference(this, Util.SP_IS_IMPLIED, isImplied ? "1" : "0");
         Util.setSharedPreference(this, Util.SP_IS_30DAY_MAX, String.valueOf(implied30dayDisplayMax));
 
-		if (noticeIdString.length() == 0 || (companyIdString.length() == 0 && !usingToken)) {
-			Toast.makeText(this, "You must supply a Company ID and Notice ID...or a token in the Notice ID field.", Toast.LENGTH_LONG).show();
+		if (noticeIdString.length() == 0) {
+			Toast.makeText(this, "You must supply a token in the Notice Token field.", Toast.LENGTH_LONG).show();
 		} else {
-            if (usingToken) {
-                // Use the SDK's token constructor
-                appNotice = new AppNotice(this, noticeIdString, this, isImplied);
-            } else {
-                // Use the SDK's CID/NID constructor
-                try {
-                    companyId = Integer.valueOf(companyIdString);
-                    noticeId = Integer.valueOf(noticeIdString);
-                    appNotice = new AppNotice(this, companyId, noticeId, this, isImplied);
-                } catch (NumberFormatException e) {
-                    Toast.makeText(this, "CID and NID must be integers.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-            }
+            // Use the SDK's token constructor
+            appNotice = new AppNotice(this, noticeIdString, this, isImplied);
 
 			if (view == btn_reset_sdk) {
 				appNotice.resetSDK();

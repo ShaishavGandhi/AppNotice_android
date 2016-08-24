@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
  * Created by Steven.Overson on 3/27/2015.
  */
 public class Util {
-    public static final String SP_COMPANY_ID = "sp_companyId";
     public static final String SP_NOTICE_ID = "sp_noticeId";
     public static final String SP_IS_IMPLIED = "sp_isImplied";
     public static final String SP_IS_30DAY_MAX = "sp_implied30DayMax";

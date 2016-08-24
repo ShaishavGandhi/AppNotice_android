@@ -79,58 +79,58 @@ public class AppNotice {
         AppNoticeData.appContext = activity.getApplicationContext();
     }
 
-
-    /**
-     * AppNotice constructor -- implied mode
-     * @param activity: Usually your start-up activity.
-     * @param companyId: The company ID assigned to you for the App Notice SDK.
-     * @param noticeId: The notice ID of the configuration created for this app.
-     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
-     */
-    public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
-        initAppNotice(activity, companyId, noticeId, appNotice_callback, true);  // Init the SDK in implied mode
-    }
-
-    /**
-     * AppNotice constructor
-     * @param activity: Usually your start-up activity.
-     * @param companyId: The company ID assigned to you for the App Notice SDK.
-     * @param noticeId: The notice ID of the configuration created for this app.
-     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
-     * @param isImpliedMode: Initialize the SDK in either implied or explicit mode: true = implied; false = explicit.
-     */
-    public AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
-        initAppNotice(activity, companyId, noticeId, appNotice_callback, isImpliedMode);
-    }
-
-    /**
-     * AppNotice initializer: Used for common functionality between the constructors
-     * @param activity: Usually your start-up activity.
-     * @param companyId: The company ID assigned to you for the App Notice SDK.
-     * @param noticeId: The notice ID of the configuration created for this app.
-     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
-     * @param isImpliedMode: Initialize the SDK in either implied or explicit mode: true = implied; false = explicit.
-     */
-    private void initAppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
-        this.isImpliedMode = isImpliedMode;
-        AppNoticeData.usingToken = false;
-        extActivity = activity;
-        if ((companyId <= 0) || (noticeId <= 0)) {
-            throw(new IllegalArgumentException("Company ID and notice ID must both be valid identifiers."));
-        }
-
-        // Remember the provided callback
-        this.appNotice_callback = appNotice_callback;
-        AppNotice_Activity.appNotice_callback = appNotice_callback;
-
-        // Get either a new or initialized tracker config object
-        appNoticeData = AppNoticeData.getInstance(activity);
-
-        // Keep track of the company ID and the notice ID
-        appNoticeData.setCompanyId(companyId);
-        appNoticeData.setCurrentNoticeId(noticeId);
-        AppNoticeData.appContext = activity.getApplicationContext();
-    }
+// Deprecated CID/PID API. Remove in a future version.
+//    /**
+//     * AppNotice constructor -- implied mode
+//     * @param activity: Usually your start-up activity.
+//     * @param companyId: The company ID assigned to you for the App Notice SDK.
+//     * @param noticeId: The notice ID of the configuration created for this app.
+//     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+//     */
+//    private AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback) {
+//        initAppNotice(activity, companyId, noticeId, appNotice_callback, true);  // Init the SDK in implied mode
+//    }
+//
+//    /**
+//     * AppNotice constructor
+//     * @param activity: Usually your start-up activity.
+//     * @param companyId: The company ID assigned to you for the App Notice SDK.
+//     * @param noticeId: The notice ID of the configuration created for this app.
+//     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+//     * @param isImpliedMode: Initialize the SDK in either implied or explicit mode: true = implied; false = explicit.
+//     */
+//    private AppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
+//        initAppNotice(activity, companyId, noticeId, appNotice_callback, isImpliedMode);
+//    }
+//
+//    /**
+//     * AppNotice initializer: Used for common functionality between the constructors
+//     * @param activity: Usually your start-up activity.
+//     * @param companyId: The company ID assigned to you for the App Notice SDK.
+//     * @param noticeId: The notice ID of the configuration created for this app.
+//     * @param appNotice_callback: An AppNotice_Callback object that handles the various callbacks from the SDK to the host app.
+//     * @param isImpliedMode: Initialize the SDK in either implied or explicit mode: true = implied; false = explicit.
+//     */
+//    private void initAppNotice(Activity activity, int companyId, int noticeId, AppNotice_Callback appNotice_callback, boolean isImpliedMode) {
+//        this.isImpliedMode = isImpliedMode;
+//        AppNoticeData.usingToken = false;
+//        extActivity = activity;
+//        if ((companyId <= 0) || (noticeId <= 0)) {
+//            throw(new IllegalArgumentException("Company ID and notice ID must both be valid identifiers."));
+//        }
+//
+//        // Remember the provided callback
+//        this.appNotice_callback = appNotice_callback;
+//        AppNotice_Activity.appNotice_callback = appNotice_callback;
+//
+//        // Get either a new or initialized tracker config object
+//        appNoticeData = AppNoticeData.getInstance(activity);
+//
+//        // Keep track of the company ID and the notice ID
+//        appNoticeData.setCompanyId(companyId);
+//        appNoticeData.setCurrentNoticeId(noticeId);
+//        AppNoticeData.appContext = activity.getApplicationContext();
+//    }
 
     /**
      * Starts the App Notice Implied Consent flow with an option to specify max displays in a 30-day period.
