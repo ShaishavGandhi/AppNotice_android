@@ -5063,7 +5063,6 @@ com.ghostery.privacy.appnoticesdk.AppNotice:
     public static final java.lang.String sdkVersionName
     public static final int sdkVersionCode
     40:42:public AppNotice(android.app.Activity,java.lang.String,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
-    90:92:public AppNotice(android.app.Activity,int,int,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback)
 com.ghostery.privacy.appnoticesdk.R:
     9:9:public R()
 com.ghostery.privacy.appnoticesdk.R$anim
@@ -5088,7 +5087,7 @@ com.ghostery.privacy.waterdrop_aar.MainActivity:
     private static final java.lang.String TAG
     private com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback appNotice_Callback
     private static final int ADMOB_TRACKERID
-    317:317:public static com.ghostery.privacy.appnoticesdk.AppNotice getAppNotice()
+    288:288:public static com.ghostery.privacy.appnoticesdk.AppNotice getAppNotice()
 com.ghostery.privacy.waterdrop_aar.R
 com.ghostery.privacy.waterdrop_aar.R$anim
 com.ghostery.privacy.waterdrop_aar.R$attr
@@ -5103,11 +5102,10 @@ com.ghostery.privacy.waterdrop_aar.R$string
 com.ghostery.privacy.waterdrop_aar.R$style
 com.ghostery.privacy.waterdrop_aar.R$styleable
 com.ghostery.privacy.waterdrop_aar.Util:
-    public static final java.lang.String SP_COMPANY_ID
     public static final java.lang.String SP_NOTICE_ID
     public static final java.lang.String SP_IS_IMPLIED
     public static final java.lang.String SP_IS_30DAY_MAX
     public static final java.lang.String PREF_USER_LEARNED_DRAWER
     11:11:public Util()
-    36:40:public static void setSharedPreference_boolean(android.app.Activity,java.lang.String,boolean)
-    43:44:public static boolean getSharedPreference_boolean(android.app.Activity,java.lang.String,boolean)
+    35:39:public static void setSharedPreference_boolean(android.app.Activity,java.lang.String,boolean)
+    42:43:public static boolean getSharedPreference_boolean(android.app.Activity,java.lang.String,boolean)

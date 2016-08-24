@@ -17303,8 +17303,6 @@ com.ghostery.privacy.appnoticesdk.AppNotice -> com.ghostery.privacy.appnoticesdk
     int f -> g
     51:53:void <init>(android.app.Activity,java.lang.String,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback,boolean) -> <init>
     63:80:void a(android.app.Activity,java.lang.String,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback,boolean) -> a
-    102:104:void <init>(android.app.Activity,int,int,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback,boolean) -> <init>
-    115:133:void a(android.app.Activity,int,int,com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback,boolean) -> a
     142:145:void startConsentFlow(int) -> a
     151:159:void startConsentFlow() -> a
     165:173:void resetSDK() -> b
@@ -17873,36 +17871,34 @@ com.ghostery.privacy.appnoticesdk.c.a -> com.ghostery.privacy.appnoticesdk.c.a:
     boolean g -> g
     114:114:java.lang.Boolean a() -> a
     115:115:java.lang.Boolean b() -> b
-    117:117:void a(int) -> a
     118:118:java.lang.String c() -> c
     119:119:void a(java.lang.String) -> a
     121:123:void b(java.lang.String) -> b
     124:124:int d() -> d
-    125:125:void b(int) -> b
-    127:129:void c(int) -> c
+    127:129:void a(int) -> a
     136:143:com.ghostery.privacy.appnoticesdk.c.a a(android.app.Activity) -> a
     43:170:void <init>() -> <init>
     173:184:java.lang.String e() -> e
     188:200:java.util.HashMap a(boolean) -> a
     204:210:java.util.ArrayList f() -> f
-    216:221:com.ghostery.privacy.appnoticesdk.c.k d(int) -> d
+    216:221:com.ghostery.privacy.appnoticesdk.c.k b(int) -> b
     226:227:boolean g() -> g
     232:239:boolean h() -> h
     244:253:void a(int,boolean) -> a
-    299:318:boolean e(int) -> e
+    299:318:boolean c(int) -> c
     323:340:int a(java.util.ArrayList) -> a
     346:370:void b(int,boolean) -> b
     374:450:void a(com.ghostery.privacy.appnoticesdk.c.j) -> a
     454:460:void i() -> i
     464:509:void a(com.ghostery.privacy.appnoticesdk.callbacks.a) -> a
     513:555:boolean j() -> j
-    560:569:boolean k() -> k
-    573:586:void l() -> l
-    589:595:void m() -> m
-    598:609:void n() -> n
-    613:641:java.util.HashMap o() -> o
-    646:756:void c(java.lang.String) -> c
-    867:868:void p() -> p
+    560:581:boolean k() -> k
+    585:598:void l() -> l
+    601:607:void m() -> m
+    610:621:void n() -> n
+    625:653:java.util.HashMap o() -> o
+    658:768:void c(java.lang.String) -> c
+    879:880:void p() -> p
     37:37:int q() -> q
     37:37:int r() -> r
     37:37:java.lang.String s() -> s
@@ -17943,27 +17939,27 @@ com.ghostery.privacy.appnoticesdk.c.e -> com.ghostery.privacy.appnoticesdk.c.e:
     502:505:void run() -> run
 com.ghostery.privacy.appnoticesdk.c.f -> com.ghostery.privacy.appnoticesdk.c.f:
     com.ghostery.privacy.appnoticesdk.c.a a -> a
-    694:694:void <init>(com.ghostery.privacy.appnoticesdk.c.a) -> <init>
-    697:725:int a(com.ghostery.privacy.appnoticesdk.c.k,com.ghostery.privacy.appnoticesdk.c.k) -> a
-    694:694:int compare(java.lang.Object,java.lang.Object) -> compare
+    706:706:void <init>(com.ghostery.privacy.appnoticesdk.c.a) -> <init>
+    709:737:int a(com.ghostery.privacy.appnoticesdk.c.k,com.ghostery.privacy.appnoticesdk.c.k) -> a
+    706:706:int compare(java.lang.Object,java.lang.Object) -> compare
 com.ghostery.privacy.appnoticesdk.c.g -> com.ghostery.privacy.appnoticesdk.c.g:
     int[] a -> a
     381:381:void <clinit>() -> <clinit>
 com.ghostery.privacy.appnoticesdk.c.h -> com.ghostery.privacy.appnoticesdk.c.h:
     com.ghostery.privacy.appnoticesdk.callbacks.a b -> b
     com.ghostery.privacy.appnoticesdk.c.a a -> a
-    767:769:void <init>(com.ghostery.privacy.appnoticesdk.c.a,com.ghostery.privacy.appnoticesdk.callbacks.a) -> <init>
-    773:788:void onPreExecute() -> onPreExecute
-    793:813:java.lang.Void a(java.lang.Void[]) -> a
-    818:849:void a(java.lang.Void) -> a
-    852:861:java.lang.String a() -> a
-    763:763:void onPostExecute(java.lang.Object) -> onPostExecute
-    763:763:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-    763:763:com.ghostery.privacy.appnoticesdk.callbacks.a a(com.ghostery.privacy.appnoticesdk.c.h) -> a
+    779:781:void <init>(com.ghostery.privacy.appnoticesdk.c.a,com.ghostery.privacy.appnoticesdk.callbacks.a) -> <init>
+    785:800:void onPreExecute() -> onPreExecute
+    805:825:java.lang.Void a(java.lang.Void[]) -> a
+    830:861:void a(java.lang.Void) -> a
+    864:873:java.lang.String a() -> a
+    775:775:void onPostExecute(java.lang.Object) -> onPostExecute
+    775:775:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    775:775:com.ghostery.privacy.appnoticesdk.callbacks.a a(com.ghostery.privacy.appnoticesdk.c.h) -> a
 com.ghostery.privacy.appnoticesdk.c.i -> com.ghostery.privacy.appnoticesdk.c.i:
     com.ghostery.privacy.appnoticesdk.c.h a -> a
-    842:842:void <init>(com.ghostery.privacy.appnoticesdk.c.h) -> <init>
-    845:846:void run() -> run
+    854:854:void <init>(com.ghostery.privacy.appnoticesdk.c.h) -> <init>
+    857:858:void run() -> run
 com.ghostery.privacy.appnoticesdk.c.j -> com.ghostery.privacy.appnoticesdk.c.j:
     com.ghostery.privacy.appnoticesdk.c.j a -> a
     com.ghostery.privacy.appnoticesdk.c.j b -> b
@@ -17984,22 +17980,23 @@ com.ghostery.privacy.appnoticesdk.c.k -> com.ghostery.privacy.appnoticesdk.c.k:
     java.lang.String b -> b
     int c -> c
     java.lang.String d -> d
-    java.lang.String e -> e
+    boolean e -> e
     java.lang.String f -> f
     java.lang.String g -> g
-    java.lang.Boolean h -> h
-    42:42:java.lang.String a() -> a
-    43:43:int b() -> b
-    44:44:java.lang.String c() -> c
-    45:45:java.lang.String d() -> d
-    46:46:java.lang.String e() -> e
-    47:47:java.lang.String f() -> f
-    48:48:boolean g() -> g
-    49:49:boolean h() -> h
-    50:50:void a(boolean) -> a
-    39:61:void <init>(com.ghostery.privacy.appnoticesdk.c.k) -> <init>
-    39:88:void <init>(org.json.JSONObject) -> <init>
-    91:91:boolean i() -> i
+    java.lang.String h -> h
+    java.lang.Boolean i -> i
+    44:44:java.lang.String a() -> a
+    45:45:int b() -> b
+    46:46:java.lang.String c() -> c
+    47:47:java.lang.String d() -> d
+    48:48:java.lang.String e() -> e
+    49:49:java.lang.String f() -> f
+    50:50:boolean g() -> g
+    51:51:boolean h() -> h
+    52:52:void a(boolean) -> a
+    41:63:void <init>(com.ghostery.privacy.appnoticesdk.c.k) -> <init>
+    41:91:void <init>(org.json.JSONObject) -> <init>
+    94:100:boolean i() -> i
 com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback -> com.ghostery.privacy.appnoticesdk.d.a:
     void onOptionSelected(boolean,java.util.HashMap) -> a
     void onNoticeSkipped(boolean,java.util.HashMap) -> b
@@ -18103,29 +18100,29 @@ com.ghostery.privacy.waterdrop_aar.MainActivity -> com.ghostery.privacy.waterdro
     28:28:void <init>() -> <init>
     48:55:void onCreate(android.os.Bundle) -> onCreate
     60:60:android.view.View onCreateView(java.lang.String,android.content.Context,android.util.AttributeSet) -> onCreateView
-    65:105:void onResume() -> onResume
-    110:219:void onClick(android.view.View) -> onClick
-    225:236:void onOptionSelected(boolean,java.util.HashMap) -> a
-    240:244:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    249:256:void onNoticeSkipped(boolean,java.util.HashMap) -> b
-    260:262:void onTrackerStateChanged(java.util.HashMap) -> a
-    265:287:void showTrackerPreferenceResults(java.util.HashMap,java.lang.String) -> a
-    290:301:void showMessage(java.lang.String,java.lang.String) -> a
-    304:314:void showMessage(java.lang.String) -> a
+    65:101:void onResume() -> onResume
+    106:190:void onClick(android.view.View) -> onClick
+    196:207:void onOptionSelected(boolean,java.util.HashMap) -> a
+    211:215:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    220:227:void onNoticeSkipped(boolean,java.util.HashMap) -> b
+    231:233:void onTrackerStateChanged(java.util.HashMap) -> a
+    236:258:void showTrackerPreferenceResults(java.util.HashMap,java.lang.String) -> a
+    261:272:void showMessage(java.lang.String,java.lang.String) -> a
+    275:285:void showMessage(java.lang.String) -> a
     40:40:void <clinit>() -> <clinit>
 com.ghostery.privacy.waterdrop_aar.MainActivity$1 -> com.ghostery.privacy.waterdrop_aar.a:
     com.ghostery.privacy.waterdrop_aar.MainActivity this$0 -> a
-    280:280:void <init>(com.ghostery.privacy.waterdrop_aar.MainActivity) -> <init>
-    282:283:void onClick(android.content.DialogInterface,int) -> onClick
+    251:251:void <init>(com.ghostery.privacy.waterdrop_aar.MainActivity) -> <init>
+    253:254:void onClick(android.content.DialogInterface,int) -> onClick
 com.ghostery.privacy.waterdrop_aar.MainActivity$2 -> com.ghostery.privacy.waterdrop_aar.b:
     com.ghostery.privacy.waterdrop_aar.MainActivity this$0 -> a
-    294:294:void <init>(com.ghostery.privacy.waterdrop_aar.MainActivity) -> <init>
-    296:297:void onClick(android.content.DialogInterface,int) -> onClick
+    265:265:void <init>(com.ghostery.privacy.waterdrop_aar.MainActivity) -> <init>
+    267:268:void onClick(android.content.DialogInterface,int) -> onClick
 com.ghostery.privacy.waterdrop_aar.MainActivity$3 -> com.ghostery.privacy.waterdrop_aar.c:
     com.ghostery.privacy.waterdrop_aar.MainActivity this$0 -> a
-    307:307:void <init>(com.ghostery.privacy.waterdrop_aar.MainActivity) -> <init>
-    309:310:void onClick(android.content.DialogInterface,int) -> onClick
+    278:278:void <init>(com.ghostery.privacy.waterdrop_aar.MainActivity) -> <init>
+    280:281:void onClick(android.content.DialogInterface,int) -> onClick
 com.ghostery.privacy.waterdrop_aar.Util -> com.ghostery.privacy.waterdrop_aar.d:
-    24:28:void setSharedPreference(android.app.Activity,java.lang.String,java.lang.String) -> a
-    31:32:java.lang.String getSharedPreference(android.app.Activity,java.lang.String,java.lang.String) -> b
-    48:52:void clearSharedPreferences(android.app.Activity,java.lang.String) -> a
+    23:27:void setSharedPreference(android.app.Activity,java.lang.String,java.lang.String) -> a
+    30:31:java.lang.String getSharedPreference(android.app.Activity,java.lang.String,java.lang.String) -> b
+    47:51:void clearSharedPreferences(android.app.Activity,java.lang.String) -> a
