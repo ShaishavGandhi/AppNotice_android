@@ -40,7 +40,7 @@
     <!-- Text of the privacy tools message at the bottom of the privacy preferences screen. -->
     <string name="ghostery_preferences_controls_message">Privacy controls by Ghostery, Inc.</string>
     <!-- Text of the message on the implied manage preferences snackbar. -->
-    <string name="ghostery_preferences_ready_message">Ready to go?</string>
+    <string name="ghostery_preferences_ready_message">Get started</string>
     <!-- Text of the action on the implied manage preferences snackbar. -->
     <string name="ghostery_preferences_continue_button">Continue</string>
     <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
