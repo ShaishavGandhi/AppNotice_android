@@ -151,10 +151,11 @@ public class TrackerDetail_Fragment extends Fragment {
             if (textView_learn_more_url != null) {
                 Boolean isUrlValid = Util.checkURL(learnMoreUrl);
                 if (isUrlValid) {
+                    textView_learn_more.setVisibility(View.VISIBLE);
                     textView_learn_more_url.setVisibility(View.VISIBLE);
                     textView_learn_more_url.setText(learnMoreUrl);
                 } else {
-                    textView_learn_more.setText(R.string.ghostery_tracker_detail_learnmore_not_provided);
+                    textView_learn_more.setVisibility(View.GONE);
                     textView_learn_more_url.setVisibility(View.GONE);
                 }
 
