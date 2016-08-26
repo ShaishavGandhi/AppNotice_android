@@ -10,7 +10,7 @@
     <!-- Text of the Accept button in the Explicit Consent flow screen when all will be accepted. -->
     <string name="ghostery_consent_button_accept_all">Aceitar Todas</string>
     <!-- Text of the Accept button in the Explicit Consent flow screen when less than all will be accepted. -->
-    <string name="ghostery_consent_button_accept">Accept</string>
+    <string name="ghostery_consent_button_accept">Aceitar</string>
     <!-- Text of the Decline button in the Explicit Consent flow screen. -->
     <string name="ghostery_consent_button_decline">Recusar Todas</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow screen. -->
@@ -18,7 +18,7 @@
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
     <string name="ghostery_consent_header_text">Preocupamo-nos com a sua privacidade</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
-    <string name="ghostery_pleaseWait">Please Wait...</string>
+    <string name="ghostery_pleaseWait">Por favor aguarde...</string>
 
     <!-- Manage Preferences Text -->
     <!-- Title text on the privacy preferences screen. -->

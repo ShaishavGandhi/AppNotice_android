@@ -18,7 +18,7 @@
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
     <string name="ghostery_consent_header_text">La protection de votre vie privée nous tient à cœur</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
-    <string name="ghostery_pleaseWait">Veuillez patienter...</string>
+    <string name="ghostery_pleaseWait">S\'il vous plaît patienter...</string>
 
     <!-- Manage Preferences Text -->
     <!-- Title text on the privacy preferences screen. -->
