@@ -5,14 +5,14 @@ repositories {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.1'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.ghostery.privacy.waterdrop_aar"
         minSdkVersion 14
-        targetSdkVersion 24
-        versionCode 56
+        targetSdkVersion 25
+        versionCode 57
         versionName "2.2.0"
     }
     buildTypes {
@@ -25,14 +25,14 @@ android {
     }
 }
 
-task clean(type: Exec) {
-    ext.lockhunter = '\"C:\\Apps\\LockHunter\\LockHunter.exe\"'
-    def buildDir = file(new File("build"))
-    commandLine 'cmd', "$lockhunter", '/delete', '/silent', buildDir
-}
+//task clean(type: Exec) {
+//    ext.lockhunter = '\"C:\\Apps\\LockHunter\\LockHunter.exe\"'
+//    def buildDir = file(new File("build"))
+//    commandLine 'cmd', "$lockhunter", '/delete', '/silent', buildDir
+//}
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.2.0-rc9'
 }
