@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import com.ghostery.privacy.appnoticesdk.utils.Util;
  */
 public class TrackerDetail_Fragment extends Fragment {
 
+    private static final String TAG = "TrackerDetail_Fragment";
     private AppNoticeData appNoticeData;
 
     /**
@@ -148,17 +150,20 @@ public class TrackerDetail_Fragment extends Fragment {
             AppCompatTextView textView_learn_more = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more));
             AppCompatTextView textView_learn_more_url = ((AppCompatTextView) rootView.findViewById(R.id.textView_learn_more_url));
             String learnMoreUrl = tracker.getPrivacy_url();
-            if (textView_learn_more_url != null) {
-                Boolean isUrlValid = Util.checkURL(learnMoreUrl);
-                if (isUrlValid) {
-                    textView_learn_more.setVisibility(View.VISIBLE);
-                    textView_learn_more_url.setVisibility(View.VISIBLE);
-                    textView_learn_more_url.setText(learnMoreUrl);
-                } else {
-                    textView_learn_more.setVisibility(View.GONE);
-                    textView_learn_more_url.setVisibility(View.GONE);
-                }
 
+            Boolean isUrlValid = false;
+            try {
+                isUrlValid = Util.checkURL(learnMoreUrl);
+            } catch (Exception e) {
+                isUrlValid = false;
+                Log.e(TAG, "Determining if URL is valid", e);
+            }
+
+            if (textView_learn_more_url != null && isUrlValid) {
+                textView_learn_more.setVisibility(View.VISIBLE);
+                textView_learn_more.setText(getResources().getString(R.string.ghostery_tracker_detail_learnmore));
+                textView_learn_more_url.setVisibility(View.VISIBLE);
+                textView_learn_more_url.setText(learnMoreUrl);
                 textView_learn_more_url.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -167,6 +172,9 @@ public class TrackerDetail_Fragment extends Fragment {
                         startActivity(i);
                     }
                 });
+            } else {
+                textView_learn_more.setText(getResources().getString(R.string.ghostery_tracker_detail_learnmore_not_provided));
+                textView_learn_more_url.setVisibility(View.GONE);
             }
         }
 

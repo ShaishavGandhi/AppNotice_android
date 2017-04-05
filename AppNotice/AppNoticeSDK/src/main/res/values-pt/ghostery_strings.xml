@@ -2,60 +2,62 @@
 
     <!--Consent Screen Text -->
     <!-- Text of the message nn the Implied Consent screen. -->
-    <string name="ghostery_manage_preferences_implied_message">Esta aplicação utiliza tecnologias de modo a que nós e os nossos parceiros nos lembremos de si e entendamos como utiliza a nossa aplicação. Para ver uma lista destas tecnologias e decidir se podem ser utilizadas, defina as suas preferências abaixo. Optar pela utilização desta aplicação será considerado como aprovado.</string>
+    <string name="ghostery_manage_preferences_implied_message">Este aplicativo usa tecnologias de maneira que nós e os nossos parceiros se lembrem de você e entendam como você  usa o nosso aplicativo. Para ver uma lista destas tecnologias e decidir se elas podem ser usadas, por favor defina suas preferências abaixo.  Optar pelo uso deste aplicativo será considerado como aprovado.</string>
     <!-- Text of the message on the Explicit Consent screen. -->
-    <string name="ghostery_manage_preferences_explicit_message">Esta aplicação utiliza tecnologias de modo a que nós e os nossos parceiros nos lembremos de si e entendamos como utiliza a nossa aplicação. Para ver uma lista destas tecnologias e decidir se podem ser utilizadas, defina as suas preferências.\n\nAntes de continuar, deve aceitar, recusar ou gerir as suas preferências de privacidade abaixo.</string>
+    <string name="ghostery_manage_preferences_explicit_message">Este aplicativo usa tecnologias de maneira que nós e os nossos parceiros se lembrem de você e entendam como você  usa o nosso aplicativo. Para ver uma lista dessas tecnologias e decidir se elas podem ser usadas, defina suas preferências.\n\nAntes de proceder, você deve aceitar, recusar ou definir suas preferências de privacidade abaixo.</string>
     <!-- Text of the close button in the Implied Consent flow screen. -->
     <string name="ghostery_consent_button_close">Continuar</string>
     <!-- Text of the Accept button in the Explicit Consent flow screen when all will be accepted. -->
-    <string name="ghostery_consent_button_accept_all">Aceitar Todas</string>
+    <string name="ghostery_consent_button_accept_all">Aceitar tudo</string>
     <!-- Text of the Accept button in the Explicit Consent flow screen when less than all will be accepted. -->
     <string name="ghostery_consent_button_accept">Aceitar</string>
     <!-- Text of the Decline button in the Explicit Consent flow screen. -->
-    <string name="ghostery_consent_button_decline">Recusar Todas</string>
+    <string name="ghostery_consent_button_decline">Recusar tudo</string>
     <!-- Text of the Manage Preferences button in the Explicit Consent flow screen. -->
-    <string name="ghostery_consent_button_preferences">Gerir Preferências</string>
+    <string name="ghostery_consent_button_preferences">Definir preferências</string>
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
-    <string name="ghostery_consent_header_text">Preocupamo-nos com a sua privacidade</string>
+    <string name="ghostery_consent_header_text">Nós nos preocupamos com sua privacidade</string>
     <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
-    <string name="ghostery_pleaseWait">Por favor aguarde...</string>
+    <string name="ghostery_pleaseWait">Aguarde...</string>
 
     <!-- Manage Preferences Text -->
     <!-- Title text on the privacy preferences screen. -->
     <string name="ghostery_preferences_header">Preferências de Privacidade</string>
     <!-- Text of the description section near the top of the privacy preferences screen. -->
-    <string name="ghostery_preferences_description">Saiba mais sobre as tecnologias utilizadas nesta aplicação consultando a lista abaixo.</string>
+    <string name="ghostery_preferences_description">Saiba mais sobre as tecnologias usadas neste aplicativo consultando a lista abaixo.</string>
     <!-- Text of the title of optional trackers tab. -->
     <string name="ghostery_preferences_optional_title">Opcional</string>
     <!-- Text of the title of essential trackers tab. -->
     <string name="ghostery_preferences_essential_title">Essencial</string>
     <!-- Text of the title of web-based trackers tab. -->
-    <string name="ghostery_preferences_webbased_title">Baseado na Web</string>
+    <string name="ghostery_preferences_webbased_title">Baseado na web</string>
     <!-- Text of the message above the list of optional trackers. -->
-    <string name="ghostery_preferences_optional_message">As seguintes tecnologias opcionais podem ser desativadas de acordo com a sua preferência.</string>
+    <string name="ghostery_preferences_optional_message">As seguintes tecnologias opcionais podem ser desativadas a seu critério. </string>
     <!-- Text of the message above the list of essential trackers. -->
-    <string name="ghostery_preferences_essential_message">As seguintes tecnologias são essencialmente necessárias para o funcionamento da aplicação e são listadas apenas para fins informativos.</string>
+    <string name="ghostery_preferences_essential_message">As seguintes tecnologias são essencialmente necessárias para o funcionamento do aplicativo e são listadas apenas para fins informativos. </string>
     <!-- Text of the message above the list of web-based trackers. -->
-    <string name="ghostery_preferences_webbased_message">Algumas partes desta aplicação utilizam webviews que podem utilizar cookies. Os opt-out são baseados em cookies e estão disponíveis dentro das configurações da aplicação.</string>
+    <string name="ghostery_preferences_webbased_message">Algumas partes deste aplicativo utilizam webviews, que podem usar cookies. Os opt-out são baseados em cookies estão disponíveis dentro das configurações do aplicativo</string>
     <!-- Text of the privacy tools message at the bottom of the privacy preferences screen. -->
-    <string name="ghostery_preferences_controls_message">Controlos de Privacidade por Ghostery, Inc.</string>
+    <string name="ghostery_preferences_controls_message">Controles de Privacidade por Ghostery, Inc</string>
     <!-- Text of the message on the implied manage preferences snackbar. -->
-    <string name="ghostery_preferences_ready_message">Iniciar</string>
+    <string name="ghostery_preferences_ready_message">Pronto?</string>
     <!-- Text of the action on the implied manage preferences snackbar. -->
     <string name="ghostery_preferences_continue_button">Continuar</string>
     <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
-    <string name="ghostery_preferences_empty_list">The list of trackers could not be loaded. Please ensure you have internet access, and try again later.</string>
+    <string name="ghostery_preferences_empty_list">Não foi possível carregar a lista de rastreadores. Certifique-se de que você tem acesso à Internet e tente novamente mais tarde.</string>
 
     <!-- Tracker Detail -->
     <!-- Text for the "allow" checkbox line of the tracker detail screen -->
     <string name="ghostery_tracker_detail_allow_technology">Permitir</string>
     <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
-    <string name="ghostery_tracker_detail_learnmore">Para saber mais, visite:</string>
+    <string name="ghostery_tracker_detail_learnmore">Para saber mais, acesse:</string>
+    <!-- Text used in the case there is no learn-more link provided -->
+    <string name="ghostery_tracker_detail_learnmore_not_provided">Política de privacidade não fornecida.</string>
 
     <!-- Explicit Decline Consent -->
     <!-- Title text for the Explicit Decline Consent screen -->
-    <string name="ghostery_explicit_decline_header_text">É necessário o seu consentimento</string>
+    <string name="ghostery_explicit_decline_header_text">Seu consentimento é necessário</string>
     <!-- Message text for the Explicit Decline Consent screen -->
-    <string name="ghostery_explicit_decline_message_text">Para usar esta aplicação é necessário o seu consentimento para que possamos utilizar as tecnologias. Pode voltar e modificar as suas preferências de privacidade desativando qualquer tecnologia opcional ou desinstalando a aplicação.</string>
+    <string name="ghostery_explicit_decline_message_text">Para usar este aplicativo, o seu consentimento para que possamos usar as tecnologias é necessário. Você pode voltar e modificar suas preferências de privacidade desligando qualquer tecnologia opcional ou desinstalando o aplicativo</string>
 
 </resources>
