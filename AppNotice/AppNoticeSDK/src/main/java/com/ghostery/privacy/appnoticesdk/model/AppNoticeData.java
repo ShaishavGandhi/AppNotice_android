@@ -64,7 +64,7 @@ public class AppNoticeData {
 
     // 0 = company ID; 1 = pub-notice ID
     private final static String URL_JSON_REQUEST = "https://c.betrad.com/pub/c/{0}/{1}.js";
-    private final static String URL_JSON_REQUEST_VIA_TOKEN = "http://privacyapi.ghosterydev.com/api/v1/appnotice/configuration/";
+    private final static String URL_JSON_REQUEST_VIA_TOKEN = "http://privacyapi.evidon.com/api/v1/appnotice/configuration/";
 
     // Opt-in/out ping-back
     // 0 = Publisher ID; 1 = Owner Company ID, 2 = trackerId; 3 = optOut; 4 = uniqueVisit; 5 = firstOptOut; 6 = selectAll
