@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Evidon SDK colors - light theme -->
+    <color name="evidonColorPrimary">#03a9f4</color>
+    <color name="evidonColorPrimaryDark">#0288D1</color>
+    <color name="evidonColorAccent">#40c4ff</color>
+
+    <!-- Evidon SDK colors - dark theme -->
+    <color name="evidonColorPrimary.Dark">#000000</color>
+    <color name="evidonColorPrimaryDark.Dark">#0288D1</color>
+    <color name="evidonColorAccent.Dark">#40c4ff</color>
+
+    <!-- Evidon SDK misc custom colors -->
+    <color name="evidonColorButtonPrimary">#03A9F4</color>
+    <color name="evidonColorButtonTextPrimary">#FFFFFF</color>
+    <color name="evidonColorButtonSecondary">#CCCCCC</color>
+    <color name="evidonColorButtonTextSecondary">#666666</color>
+    <color name="evidonColorButtonTextBorderless">#03A9F4</color>
+    <color name="evidonColorPrivacyTools">#9FA2A4</color>
+
+</resources>

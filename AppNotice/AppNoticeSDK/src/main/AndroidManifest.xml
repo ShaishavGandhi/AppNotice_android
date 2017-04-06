@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ghostery.privacy.appnoticesdk">
+    package="com.evidon.privacy.appnoticesdk">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -8,14 +8,14 @@
 
     <application android:allowBackup="true">
         <activity
-            android:name="com.ghostery.privacy.appnoticesdk.AppNotice_Activity"
+            android:name="com.evidon.privacy.appnoticesdk.AppNotice_Activity"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:excludeFromRecents="true"
             android:label=""
             android:screenOrientation="unspecified"
-            android:theme="@style/ghostery_AppNoticeTheme"
+            android:theme="@style/evidon_AppNoticeTheme"
             >
         </activity>
     </application>
