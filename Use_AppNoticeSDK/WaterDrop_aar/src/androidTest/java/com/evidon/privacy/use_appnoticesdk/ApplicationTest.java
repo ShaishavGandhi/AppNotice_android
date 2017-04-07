@@ -1,4 +1,4 @@
-package com.ghostery.privacy.use_appnoticesdk;
+package com.evidon.privacy.use_appnoticesdk;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

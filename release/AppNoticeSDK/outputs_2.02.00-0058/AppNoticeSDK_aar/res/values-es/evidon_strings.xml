@@ -1,0 +1,63 @@
+<resources>
+
+    <!--Consent Screen Text -->
+    <!-- Text of the message nn the Implied Consent screen. -->
+    <string name="evidon_manage_preferences_implied_message">Esta aplicación usa tecnologías que permiten que nosotros y nuestros colaboradores le recordemos y podamos entender cómo usa la aplicación. Para ver una lista de estas tecnologías y decidir si permite su uso, gestione sus preferencias a continuación. Si sigue utilizando esta aplicación se considerará que ha dado su consentimiento.</string>
+    <!-- Text of the message on the Explicit Consent screen. -->
+    <string name="evidon_manage_preferences_explicit_message">Esta aplicación usa tecnologías que permiten que nosotros y nuestros colaboradores le recordemos y podamos entender cómo usa la aplicación. Para ver una lista de estas tecnologías y decidir si permite su uso, gestione sus preferencias más abajo.\n\nAntes de proceder, debe aceptar, rechazar o gestionar sus preferencias de privacidad a continuación.</string>
+    <!-- Text of the close button in the Implied Consent flow screen. -->
+    <string name="evidon_consent_button_close">Continuar</string>
+    <!-- Text of the Accept button in the Explicit Consent flow screen when all will be accepted. -->
+    <string name="evidon_consent_button_accept_all">Aceptar todo</string>
+    <!-- Text of the Accept button in the Explicit Consent flow screen when less than all will be accepted. -->
+    <string name="evidon_consent_button_accept">Aceptar</string>
+    <!-- Text of the Decline button in the Explicit Consent flow screen. -->
+    <string name="evidon_consent_button_decline">Rechazar todo</string>
+    <!-- Text of the Manage Preferences button in the Explicit Consent flow screen. -->
+    <string name="evidon_consent_button_preferences">Gestionar preferencias</string>
+    <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
+    <string name="evidon_consent_header_text">Nos importa su privacidad</string>
+    <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
+    <string name="evidon_pleaseWait">Espere...</string>
+
+    <!-- Manage Preferences Text -->
+    <!-- Title text on the privacy preferences screen. -->
+    <string name="evidon_preferences_header">Preferencias de privacidad</string>
+    <!-- Text of the description section near the top of the privacy preferences screen. -->
+    <string name="evidon_preferences_description">Para más información sobre las tecnologías usadas en esta aplicación, consulte la lista que se muestra a continuación.</string>
+    <!-- Text of the title of optional trackers tab. -->
+    <string name="evidon_preferences_optional_title">Opcionales</string>
+    <!-- Text of the title of essential trackers tab. -->
+    <string name="evidon_preferences_essential_title">Esenciales</string>
+    <!-- Text of the title of web-based trackers tab. -->
+    <string name="evidon_preferences_webbased_title">Vía Web</string>
+    <!-- Text of the message above the list of optional trackers. -->
+    <string name="evidon_preferences_optional_message">Las siguientes tecnologías opcionales pueden desactivarse si lo desea.</string>
+    <!-- Text of the message above the list of essential trackers. -->
+    <string name="evidon_preferences_essential_message">Las siguientes tecnologías esenciales son necesarias para que la aplicación funcione y se enumeran solo a título informativo.</string>
+    <!-- Text of the message above the list of web-based trackers. -->
+    <string name="evidon_preferences_webbased_message">Algunas partes de esta aplicación usan vistas web que pueden usar cookies.  Puede desactivar cookies ulteriormente, en configuraciones de la aplicación.</string>
+    <!-- Text of the privacy tools message at the bottom of the privacy preferences screen. -->
+    <string name="evidon_preferences_controls_message">Controles de privacidad, Evidon, Inc.</string>
+    <!-- Text of the message on the implied manage preferences snackbar. -->
+    <string name="evidon_preferences_ready_message">¿Está listo?</string>
+    <!-- Text of the action on the implied manage preferences snackbar. -->
+    <string name="evidon_preferences_continue_button">Continuar</string>
+    <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
+    <string name="evidon_preferences_empty_list">No se puede cargar la lista de rastreadores. Compruebe que dispone de acceso a Internet y vuelva a intentarlo más tarde.</string>
+
+    <!-- Tracker Detail -->
+    <!-- Text for the "allow" checkbox line of the tracker detail screen -->
+    <string name="evidon_tracker_detail_allow_technology">Permitir</string>
+    <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
+    <string name="evidon_tracker_detail_learnmore">Para obtener más información, visite:</string>
+    <!-- Text used in the case there is no learn-more link provided -->
+    <string name="evidon_tracker_detail_learnmore_not_provided">No se brinda Política de privacidad.</string>
+
+    <!-- Explicit Decline Consent -->
+    <!-- Title text for the Explicit Decline Consent screen -->
+    <string name="evidon_explicit_decline_header_text">Se requiere su consentimiento.</string>
+    <!-- Message text for the Explicit Decline Consent screen -->
+    <string name="evidon_explicit_decline_message_text">Para usar esta aplicación, debe dar su consentimiento a nuestro uso de tecnologías. Puede regresar y modificar sus preferencias de privacidad desactivando cualquier tecnología opcional, o desinstalar la aplicación.</string>
+
+</resources>

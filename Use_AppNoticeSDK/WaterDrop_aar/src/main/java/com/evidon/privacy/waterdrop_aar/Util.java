@@ -1,4 +1,4 @@
-package com.ghostery.privacy.waterdrop_aar;
+package com.evidon.privacy.waterdrop_aar;
 
 import android.app.Activity;
 import android.content.Context;

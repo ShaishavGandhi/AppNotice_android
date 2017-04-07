@@ -65,8 +65,8 @@ ext {
 
     libraryDescription = 'Plugin to facilitate privacy preference management.'
 
-    siteUrl = 'https://github.com/evidon/AppNoticeSDK-Android'
-    gitUrl = 'https://github.com/evidon/AppNoticeSDK-Android.git'
+    siteUrl = 'https://github.com/evidon/AppNotice_android'
+    gitUrl = 'https://github.com/evidon/AppNotice_android.git'
 
     libraryVersion = version
 

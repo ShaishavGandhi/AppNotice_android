@@ -1,4 +1,4 @@
-package com.ghostery.privacy.waterdrop_aar;
+package com.evidon.privacy.waterdrop_aar;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,8 +18,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.ghostery.privacy.appnoticesdk.AppNotice;
-import com.ghostery.privacy.appnoticesdk.callbacks.AppNotice_Callback;
+import com.evidon.privacy.appnoticesdk.AppNotice;
+import com.evidon.privacy.appnoticesdk.callbacks.AppNotice_Callback;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,8 +146,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			} else if (view == btn_reset_app) {
 				// Reset the app
-				Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module");
-				//Util.clearSharedPreferences(this, "com.ghostery.privacy.use_sdk_module_preferences");
+				Util.clearSharedPreferences(this, "com.evidon.privacy.use_sdk_module");
+				//Util.clearSharedPreferences(this, "com.evidon.privacy.use_sdk_module_preferences");
 
 				// Close the app
 				this.finish();
