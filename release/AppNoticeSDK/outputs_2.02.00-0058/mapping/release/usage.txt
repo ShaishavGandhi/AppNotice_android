@@ -1,0 +1,94 @@
+com.evidon.privacy.appnoticesdk.AppNotice:
+    private static final java.lang.String TAG
+com.evidon.privacy.appnoticesdk.AppNotice_Activity:
+    public static final java.lang.String FRAGMENT_TAG_IMPLIED_CONSENT
+    public static final java.lang.String FRAGMENT_TAG_EXPLICIT_CONSENT
+    public static final java.lang.String FRAGMENT_TAG_MANAGE_PREFERENCES
+    public static final java.lang.String FRAGMENT_TAG_TRACKER_DETAIL
+    public static final java.lang.String FRAGMENT_TAG_EXPLICIT_DECLINE
+com.evidon.privacy.appnoticesdk.BuildConfig
+com.evidon.privacy.appnoticesdk.adapter.TrackerArrayAdapter:
+    private static final java.lang.String TAG
+com.evidon.privacy.appnoticesdk.adapter.TrackerArrayAdapter$ViewHolder:
+    public java.lang.Boolean isOn
+com.evidon.privacy.appnoticesdk.fragments.ExplicitConsent_Fragment:
+    private static final java.lang.String TAG
+com.evidon.privacy.appnoticesdk.fragments.ExplicitDecline_Fragment:
+    private static final java.lang.String TAG
+    89:89:public void onBackPressed()
+com.evidon.privacy.appnoticesdk.fragments.ImpliedConsent_Fragment:
+    private static final java.lang.String TAG
+com.evidon.privacy.appnoticesdk.fragments.ManagePreferences_TrackerList_Fragment:
+    private boolean mTwoPane
+com.evidon.privacy.appnoticesdk.fragments.ManagePreferences_WebBased_Fragment:
+    private boolean mTwoPane
+    54:54:public void onBackPressed()
+com.evidon.privacy.appnoticesdk.fragments.TrackerDetail_Fragment:
+    private static final java.lang.String TAG
+    public static final java.lang.String ARG_ITEM_ID
+com.evidon.privacy.appnoticesdk.model.AppNoticeData:
+    private static final java.lang.String TAG
+    private static final long ELAPSED_30_DAYS_MILLIS
+    private static final java.lang.String URL_JSON_REQUEST
+    private static final java.lang.String URL_JSON_REQUEST_VIA_TOKEN
+    private static final java.lang.String URL_SDK_OPT_IN_OUT
+    private static final java.lang.String NON_JSON_PREFIX
+    private static final java.lang.String NON_JSON_POSTFIX
+    private static final java.lang.String FILE_NOT_FOUND
+    private static final java.lang.String TAG_COMPANY_ID
+    private static final java.lang.String TAG_NOTICE_ID
+    private static final java.lang.String TAG_TRACKERS_VIA_TOKEN
+    private static final java.lang.String TAG_TRACKERS
+    116:116:public int getCompanyId()
+    117:117:public void setCompanyId(int)
+    125:125:public void setCurrentNoticeId(int)
+    130:130:public int getImpliedFlowSessionDisplayMax()
+com.evidon.privacy.appnoticesdk.model.Tracker:
+    private static final java.lang.String TAG
+    private static final java.lang.String CAT_ESSENTIAL
+    private static final java.lang.String TAG_CATEGORY_VIA_TOKEN
+    private static final java.lang.String TAG_TRACKERID_VIA_TOKEN
+    private static final java.lang.String TAG_NAME_VIA_TOKEN
+    private static final java.lang.String TAG_ESSENTIAL
+    private static final java.lang.String TAG_LOGO_URL_VIA_TOKEN
+    private static final java.lang.String TAG_DESCRIPTION_VIA_TOKEN
+    private static final java.lang.String TAG_PRIVACY_URL_VIA_TOKEN
+    private static final java.lang.String TAG_CATEGORY
+    private static final java.lang.String TAG_TRACKERID
+    private static final java.lang.String TAG_NAME
+    private static final java.lang.String TAG_LOGO_URL
+    private static final java.lang.String TAG_DESCRIPTION
+    private static final java.lang.String TAG_PRIVACY_URL
+com.evidon.privacy.appnoticesdk.utils.AppData:
+    protected static final int APPDATA_VERSION_VALUE
+    public static final java.lang.String APPDATA_FILENAME_END
+    public static final java.lang.String APPDATA_VERSION
+    public static final java.lang.String APPDATA_IMPLIED_LAST_DISPLAY_TIME
+    public static final java.lang.String APPDATA_IMPLIED_DISPLAY_COUNT
+    public static final java.lang.String APPDATA_EXPLICIT_ACCEPTED
+    public static final java.lang.String APPDATA_TRACKERSTATES
+    public static final java.lang.String APPDATA_PREV_APP_NOTICE_TOKEN
+    public static final java.lang.String APPDATA_PREV_NOTICE_ID
+    public static final java.lang.String APPDATA_PREV_JSON
+    18:18:public AppData()
+    47:61:protected static void upgradeFromOldFiles(android.content.Context)
+    64:84:protected static void copySharedPreferences(android.content.SharedPreferences)
+    135:139:public static void remVal(java.lang.String)
+com.evidon.privacy.appnoticesdk.utils.FileDownloader:
+    15:15:public FileDownloader()
+com.evidon.privacy.appnoticesdk.utils.FileWriter:
+    19:19:public FileWriter()
+    23:31:public static void writeFile(android.content.Context,java.lang.String,java.lang.String)
+    45:55:public static void writeObject(android.content.Context,java.lang.Object,java.lang.String)
+com.evidon.privacy.appnoticesdk.utils.Network
+com.evidon.privacy.appnoticesdk.utils.ServiceHandler:
+    private static final java.lang.String TAG
+    private static final int httpConnectTimeoutDefault
+    private static final int httpReadTimeoutDefault
+    86:117:public static java.lang.String postRequest(java.lang.String,java.lang.String)
+com.evidon.privacy.appnoticesdk.utils.SnackbarBehavior:
+    private static final java.lang.String TAG
+com.evidon.privacy.appnoticesdk.utils.Util:
+    private static final java.lang.String TAG
+    public static final java.lang.String THREAD_INITTRACKERLIST
+    21:21:public Util()

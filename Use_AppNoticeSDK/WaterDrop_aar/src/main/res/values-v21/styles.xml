@@ -5,6 +5,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <style name="ghostery_AppNoticeTheme" parent="ghostery_AppNoticeTheme.Base.Dark" />
+    <style name="evidon_AppNoticeTheme" parent="evidon_AppNoticeTheme.Base.Dark" />
 
 </resources>

@@ -29,8 +29,8 @@
     <string name="declineConfirmDialog_message">(Invalid state)</string>
     <string name="declineConfirmDialog_posBtn">OK</string>
 
-    <!-- Ghostery App Notice SDK Customization -->
+    <!-- Evidon App Notice SDK Customization -->
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
-    <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
+    <string name="evidon_dialog_header_text">WaterDrop Cares About Your Privacy</string>
 
 </resources>

@@ -9,10 +9,10 @@ android {
     buildToolsVersion '25.0.2'
 
     defaultConfig {
-        applicationId "com.ghostery.privacy.waterdrop_aar"
+        applicationId "com.evidon.privacy.waterdrop_aar"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 57
+        versionCode 58
         versionName "2.2.0"
     }
     buildTypes {
@@ -34,5 +34,5 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-    compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.2.0-rc10'
+    compile 'com.ghostery.privacy.appnoticesdk:AppNoticeSDK:2.2.0-rc12'
 }

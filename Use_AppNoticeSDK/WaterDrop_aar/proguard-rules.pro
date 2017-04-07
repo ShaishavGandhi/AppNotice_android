@@ -88,7 +88,7 @@
     public static <fields>;
 }
 
-# Ghostery App Notice SDK
+# Evidon App Notice SDK
 -dontwarn android.content.res.**
 
 
