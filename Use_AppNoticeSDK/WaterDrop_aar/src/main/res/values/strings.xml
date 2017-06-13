@@ -14,8 +14,7 @@
     <string name="btn_reset_sdk">Reset SDK</string>
     <string name="btn_reset_app">Reset App</string>
     <string name="btn_close_app">Close App</string>
-    <string name="hint_companyId">Company ID</string>
-    <string name="hint_noticeId">Notice ID</string>
+    <string name="hint_notice_token">Notice Token</string>
     <string name="textview_implied_30day_max">Implied 30-Day Max</string>
     <string name="message_get_tracker_preferences">Get Tracker Preferences</string>
     <string name="message_option_selected">Option Selected</string>
@@ -30,8 +29,8 @@
     <string name="declineConfirmDialog_message">(Invalid state)</string>
     <string name="declineConfirmDialog_posBtn">OK</string>
 
-    <!-- Ghostery App Notice SDK Customization -->
+    <!-- Evidon App Notice SDK Customization -->
     <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
-    <string name="ghostery_dialog_header_text">WaterDrop Cares About Your Privacy</string>
+    <string name="evidon_dialog_header_text">WaterDrop Cares About Your Privacy</string>
 
 </resources>

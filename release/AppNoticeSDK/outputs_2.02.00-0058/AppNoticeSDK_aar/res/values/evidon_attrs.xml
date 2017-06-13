@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="AppNoticeSDK">
+        <attr name="evidon_colorBackgroundPrimary" format="reference|color" />
+    </declare-styleable>
+
+</resources>

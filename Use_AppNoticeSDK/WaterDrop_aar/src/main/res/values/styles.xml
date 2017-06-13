@@ -7,6 +7,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ghostery_AppNoticeTheme.Base" parent="@style/Theme.AppCompat" />
+    <style name="evidon_AppNoticeTheme" parent="evidon_AppNoticeTheme.Base.Dark" />
 
 </resources>

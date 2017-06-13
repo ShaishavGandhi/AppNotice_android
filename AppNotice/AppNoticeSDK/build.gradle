@@ -1,15 +1,20 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+// This is the library version used when deploying the artifact
+version = "2.2.0"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.0'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
     publishNonDefault true
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 24
-        versionCode 49
-        versionName "2.1.0"
+        targetSdkVersion 25
+        versionCode 58
+        versionName version
     }
 
     packagingOptions {
@@ -18,7 +23,7 @@ android {
 
     signingConfigs {
         testConfig {
-            storeFile file("C:/Dev/Keystore/ghostery_release.keystore")
+            storeFile file("C:/Dev/Keystore/evidon_release.keystore")
             storePassword "1t9hv8vH673LD6626p19)I_2N0348O!1Uu383,53104w7{5Q2g5F7w5H9f4,67Ty7Y3>AGK37f#39vgkQ0~oE33Sc3138R4}X8x3"
             keyAlias "evidon"
             keyPassword "1t9hv8vH673LD6626p19)I_2N0348O!1Uu383,53104w7{5Q2g5F7w5H9f4,67Ty7Y3>AGK37f#39vgkQ0~oE33Sc3138R4}X8x3"
@@ -39,11 +44,52 @@ android {
     }
 }
 
+android.libraryVariants.all { variant ->
+    if (variant.buildType.name == 'release') {
+        def oldFile = variant.outputs.get(0).getOutputFile()
+        if (oldFile.name.contains("release")) {
+            def newPath = oldFile.name.replace("release.aar", version.toString() + ".aar")
+            variant.outputs.get(0).
+                    setOutputFile(new File(oldFile.parentFile.toString(), newPath.toString()))
+        }
+    }
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'app-notice'
+
+    publishedGroupId = 'com.evidon.privacy.appnoticesdk'
+    libraryName = 'AppNotice'
+    artifact = 'app-notice'
+
+    libraryDescription = 'Plugin to facilitate privacy preference management.'
+
+    siteUrl = 'https://github.com/evidon/AppNotice_android'
+    gitUrl = 'https://github.com/evidon/AppNotice_android.git'
+
+    libraryVersion = version
+
+    developerId = 'evidon'
+    developerName = 'Jason Mitchel'
+    developerEmail = 'jmitchell@evidon.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+//task clean(type: Exec) {
+//    ext.lockhunter = '\"C:\\Apps\\LockHunter\\LockHunter.exe\"'
+//    def buildDir = file(new File("build"))
+//    commandLine 'cmd', "$lockhunter", '/delete', '/silent', buildDir
+//}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:support-v4:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:design:25.3.1'
 }
 
 android.libraryVariants.all { variant ->
@@ -71,5 +117,103 @@ android.libraryVariants.all { variant ->
 //        exclude '**/R.class', '**/R$*.class'
 //        exclude '**/R.html', '**/R.*.html'
         exclude '**/BuildConfig.class'
+    }
+}
+
+group = "AppNotice"                               // Maven Group ID for the artifact
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                groupId publishedGroupId
+                artifactId 'AppNoticeSDK'
+
+                // Add your description here
+                name 'AppNoticeSDK'
+                description libraryDescription
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+version = version
+
+if (project.hasProperty("android")) { // Android libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+} else { // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+}
+
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty("bintray.gpg.password")
+                //Optional. The passphrase for GPG signing'
+            }
+        }
     }
 }

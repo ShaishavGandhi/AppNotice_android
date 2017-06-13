@@ -1,0 +1,39 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Application theme. -->
+    <style name="evidon_AppNoticeTheme" parent="evidon_AppNoticeTheme.Base" />
+
+    <style name="evidon_AppNoticeTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="colorPrimary">@color/evidonColorPrimary</item>
+        <item name="colorPrimaryDark">@color/evidonColorPrimaryDark</item>
+        <item name="colorAccent">@color/evidonColorAccent</item>
+        <item name="evidon_colorBackgroundPrimary">@color/evidonColorPrimary</item>
+    </style>
+
+    <style name="evidon_AppNoticeTheme.Base.Dark" parent="Theme.AppCompat">
+        <item name="windowNoTitle">false</item>
+        <item name="windowActionBar">true</item>
+        <item name="colorPrimary">@color/evidonColorPrimary</item>
+        <item name="colorPrimaryDark">@color/evidonColorPrimaryDark</item>
+        <item name="colorAccent">@color/evidonColorAccent</item>
+        <item name="evidon_colorBackgroundPrimary">@color/evidonColorPrimary.Dark</item>
+    </style>
+
+    <style name="evidon_AppNoticeTheme.Button" parent="evidon_AppNoticeTheme">
+        <item name="colorAccent">@color/evidonColorButtonPrimary</item>
+        <item name="android:textColor">@color/evidonColorButtonTextPrimary</item>
+    </style>
+
+    <style name="evidon_AppNoticeTheme.Button.Secondary" parent="evidon_AppNoticeTheme">
+        <item name="colorAccent">@color/evidonColorButtonSecondary</item>
+        <item name="android:textColor">@color/evidonColorButtonTextSecondary</item>
+    </style>
+
+    <style name="evidon_inverse_button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/evidonColorButtonTextPrimary</item>
+        <item name="android:textColor">@color/evidonColorPrimary</item>
+    </style>
+
+</resources>

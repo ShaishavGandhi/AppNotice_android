@@ -28,23 +28,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:layout_gravity="center" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/sdk_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SDK Version"
             android:layout_gravity="center"
             android:paddingBottom="32dp" />
 
         <android.support.v7.widget.AppCompatEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText_companyId"
-            android:hint="@string/hint_companyId"
-            android:gravity="center_horizontal" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/editText_noticeId"
-            android:hint="@string/hint_noticeId"
+            android:hint="@string/hint_notice_token"
             android:gravity="center_horizontal"
             android:inputType="text" />
 

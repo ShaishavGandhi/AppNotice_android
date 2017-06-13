@@ -1,0 +1,63 @@
+<resources>
+
+    <!--Consent Screen Text -->
+    <!-- Text of the message nn the Implied Consent screen. -->
+    <string name="ghostery_manage_preferences_implied_message">Questa app utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco di queste tecnologie e scegliere se possono essere utilizzate, gestisci le tue preferenze nel seguito. L\'ulteriore utilizzo dell\'app varrà come consenso.</string>
+    <!-- Text of the message on the Explicit Consent screen. -->
+    <string name="ghostery_manage_preferences_explicit_message">Questa app utilizza tecnologie per consentire a noi e ai nostri partner di ricordarci di te e capire come utilizzi la nostra app.  Per visualizzare un elenco di queste tecnologie e scegliere se possono essere utilizzate, gestisci le tue preferenze.\n\nPrima di procedere devi accettare, rifiutare o gestire le tue preferenze di privacy nel seguito.</string>
+    <!-- Text of the close button in the Implied Consent flow screen. -->
+    <string name="ghostery_consent_button_close">Continua</string>
+    <!-- Text of the Accept button in the Explicit Consent flow screen when all will be accepted. -->
+    <string name="ghostery_consent_button_accept_all">Accetta Tutto</string>
+    <!-- Text of the Accept button in the Explicit Consent flow screen when less than all will be accepted. -->
+    <string name="ghostery_consent_button_accept">Accettare</string>
+    <!-- Text of the Decline button in the Explicit Consent flow screen. -->
+    <string name="ghostery_consent_button_decline">Rifiuta Tutto</string>
+    <!-- Text of the Manage Preferences button in the Explicit Consent flow screen. -->
+    <string name="ghostery_consent_button_preferences">Gestisci Preferenze</string>
+    <!-- Text of the title in both the Explicit Consent and Implied Consent screens. -->
+    <string name="ghostery_consent_header_text">Per noi la tua privacy è importante</string>
+    <!-- Text of the Please-wait message that is displayed while downloading the app-notice preferences -->
+    <string name="ghostery_pleaseWait">Si prega di attendere...</string>
+
+    <!-- Manage Preferences Text -->
+    <!-- Title text on the privacy preferences screen. -->
+    <string name="ghostery_preferences_header">Preferenze di privacy</string>
+    <!-- Text of the description section near the top of the privacy preferences screen. -->
+    <string name="ghostery_preferences_description">Per maggiori informazioni sulle tecnologie utilizzate in questa app rivedi l\'elenco nel seguito.</string>
+    <!-- Text of the title of optional trackers tab. -->
+    <string name="ghostery_preferences_optional_title">Opzionale</string>
+    <!-- Text of the title of essential trackers tab. -->
+    <string name="ghostery_preferences_essential_title">Essenziale</string>
+    <!-- Text of the title of web-based trackers tab. -->
+    <string name="ghostery_preferences_webbased_title">Basato sul Web</string>
+    <!-- Text of the message above the list of optional trackers. -->
+    <string name="ghostery_preferences_optional_message">Le seguenti tecnologie opzionali possono essere disabilitate a tua discrezione.</string>
+    <!-- Text of the message above the list of essential trackers. -->
+    <string name="ghostery_preferences_essential_message">Le seguenti tecnologie essenziali sono necessarie per il funzionamento della app e sono elencate solo a scopo informativo.</string>
+    <!-- Text of the message above the list of web-based trackers. -->
+    <string name="ghostery_preferences_webbased_message">Alcune parti di questa app utilizzano webview, che potrebbero utilizzare cookie. La negazione del consenso basata su cookie è disponibile in seguito nelle impostazioni della app.</string>
+    <!-- Text of the privacy tools message at the bottom of the privacy preferences screen. -->
+    <string name="ghostery_preferences_controls_message">Controlli sulla privacy di Ghostery, Inc.</string>
+    <!-- Text of the message on the implied manage preferences snackbar. -->
+    <string name="ghostery_preferences_ready_message">Iniziamo</string>
+    <!-- Text of the action on the implied manage preferences snackbar. -->
+    <string name="ghostery_preferences_continue_button">Continua</string>
+    <!-- Text that is displayed when no vendors are available for display on the privacy preferences screen -->
+    <string name="ghostery_preferences_empty_list">Impossibile caricare l\'elenco di tracker. Verificare l\'accesso a Internet e riprovare più tardi.</string>
+
+    <!-- Tracker Detail -->
+    <!-- Text for the "allow" checkbox line of the tracker detail screen -->
+    <string name="ghostery_tracker_detail_allow_technology">Consentire</string>
+    <!-- Text of the learn-more paragraph above the learn-more link on the vendor detail screen -->
+    <string name="ghostery_tracker_detail_learnmore">Per ulteriori informazioni, visitare il sito:</string>
+    <!-- Text used in the case there is no learn-more link provided -->
+    <string name="ghostery_tracker_detail_learnmore_not_provided">(it)Privacy Policy not provided.</string>
+
+    <!-- Explicit Decline Consent -->
+    <!-- Title text for the Explicit Decline Consent screen -->
+    <string name="ghostery_explicit_decline_header_text">Il tuo consenso è richiesto</string>
+    <!-- Message text for the Explicit Decline Consent screen -->
+    <string name="ghostery_explicit_decline_message_text">Per utilizzare questa app, è richiesto il tuo consenso al nostro utilizzo delle tecnologie. Puoi tornare indietro e modificare le tue preferenze di privacy disattivando qualsiasi tecnologia opzionale o disinstallare la app.</string>
+
+</resources>
